@@ -1,0 +1,26 @@
+# rules for component cell assignment
+
+all components on the path are visible
+all interfaces adjacent to the path are visible
+interfaces may be assigned to cells adjacent to the path
+devices may be assigned to cells not on the path
+doors, valves, buttons, and handwheels may be assigned to cells on the path
+
+# tasks
+
+create System.get_device_dependencies method
+add level welcome message
+add level completion message
+
+Welcome
+Begin loop
+Describe surroundings
+
+Capture action
+    Use Interface
+        List of available interfaces ( list of numerically indexed interfaces )
+        Get interface message on select
+        start Interface loop
+            List of devices (list of numerically indexed devices )
+            Toggle device state
+                Get device message
