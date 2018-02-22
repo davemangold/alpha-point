@@ -5,7 +5,8 @@ player_config = {}
 
 levels_config = {
     'levels': {
-        '0': {
+        0: {
+            'name': 'Airlock',
             'map': {
                 'x_dimension': 5,
                 'y_dimension': 5,
@@ -25,7 +26,7 @@ levels_config = {
                 'coord_enter': (0, 3),  # begin
                 'coord_exit': (4, 0),  # end
                 'orientation_enter': 0,
-                'msg_enter': 'Welcome to Level 0.',
+                'msg_enter': 'Welcome to Airlock.',
                 'msg_exit': 'Congratulations! You completed the level.'
             },
             'system': {
@@ -33,6 +34,7 @@ levels_config = {
                     {
                         'id': 0,
                         'name': 'entrance door button',
+                        'description': 'button',
                         'type': 'button',
                         'enabled': False,
                         'x': 0,
@@ -42,6 +44,7 @@ levels_config = {
                     {
                         'id': 1,
                         'name': 'door circuit toggleswitch',
+                        'description': 'switch',
                         'type': 'toggleswitch',
                         'enabled': True,
                         'x': 2,
@@ -51,6 +54,7 @@ levels_config = {
                     {  # TEST
                         'id': 4,
                         'name': 'test',
+                        'description': 'handwheel',
                         'type': 'handwheel',
                         'enabled': True,
                         'x': 2,
@@ -59,7 +63,8 @@ levels_config = {
                     },
                     {  # TEST
                         'id': 5,
-                        'name': 'test',
+                        'name': 'subsystem terminal',
+                        'description': 'subsystem terminal',
                         'type': 'terminal',
                         'enabled': True,
                         'x': 3,
@@ -69,6 +74,7 @@ levels_config = {
                     {
                         'id': 2,
                         'name': 'system terminal',
+                        'description': 'system terminal',
                         'type': 'terminal',
                         'enabled': True,
                         'x': 4,
@@ -78,6 +84,7 @@ levels_config = {
                     {
                         'id': 3,
                         'name': 'exit door button',
+                        'description': 'button',
                         'type': 'button',
                         'enabled': True,
                         'x': 4,
@@ -89,6 +96,7 @@ levels_config = {
                     {
                         'id': 0,
                         'name': 'entrance door',
+                        'description': 'entrance door',
                         'type': 'door',
                         'enabled': False,
                         'active': False,
@@ -99,6 +107,7 @@ levels_config = {
                     {
                         'id': 1,
                         'name': 'door circuit switch',
+                        'description': 'door circuit',
                         'type': 'switch',
                         'enabled': True,
                         'active': False,
@@ -109,6 +118,7 @@ levels_config = {
                     {
                         'id': 2,
                         'name': 'exit door',
+                        'description': 'door',
                         'type': 'door',
                         'enabled': True,
                         'active': False,

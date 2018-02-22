@@ -160,7 +160,7 @@ class System(object):
 
         return self.devices.pop(device)
 
-    def link(self, interface, device):
+    def link_components(self, interface, device):
         """Link an interface to a device."""
 
         if interface not in self.interfaces:
@@ -197,6 +197,7 @@ class System(object):
             interface = InterfaceFactory.make_interface(self, config_interface['type'])
             interface.config_id = config_interface['id']
             interface.name = config_interface['name']
+            interface.description = config_interface['description']
             interface.enabled = config_interface['enabled']
             interface.x = config_interface['x']
             interface.y = config_interface['y']
@@ -206,6 +207,7 @@ class System(object):
             device = DeviceFactory.make_device(self, config_device['type'])
             device.config_id = config_device['id']
             device.name = config_device['name']
+            device.description = config_device['description']
             device.enabled = config_device['enabled']
             device.active = config_device['active']
             device.x = config_device['x']
@@ -220,7 +222,7 @@ class System(object):
         for config_link in system_config['links']:
             interface = self.get_interface(config_id=config_link['interface_id'])
             device = self.get_device(config_id=config_link['device_id'])
-            self.link(interface, device)
+            self.link_components(interface, device)
 
 
 class MapCell(object):
@@ -415,6 +417,7 @@ class Level(object):
         self.game = game
         self.map = Map(self)
         self.system = System(self)
+        self.number = 0
 
     def build_from_config(self, level_config):
         """Build the level from a config dictionary."""
