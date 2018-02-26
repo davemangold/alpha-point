@@ -5,6 +5,7 @@ import utility
 import exception
 from random import randrange
 from random import random
+from config import levels_config
 
 
 class BaseUI(object):
@@ -58,22 +59,23 @@ class BaseUI(object):
         self.clear_screen()
         print(self.get_ui())
 
+
 # in progress
 class StartUI(BaseUI):
     """Game user interface presented to the player when a level is completed."""
 
     def __init__(self, *args, **kwargs):
-        super(LevelCompleteUI, self).__init__(*args, **kwargs)
+        super(StartUI, self).__init__(*args, **kwargs)
 
     def process_input(self, value):
         """Call the appropriate method based on input value."""
 
         # process action input
         if value.isdigit():
-            if value == '1':
-                self.restart_level()
-            elif value == '2':
-                self.next_level()
+            try:
+                self.start_level(int(value))
+            except KeyError:
+                self.alert = "Sorry, that's not a valid level."
         # process quit input
         elif value == 'q':
             self.clear_screen()
@@ -121,8 +123,9 @@ class StartUI(BaseUI):
     def get_action(self):
         """Return the text that represents available actions."""
 
-        ui_actions = ('1. Restart level\n'
-                      '2. Play next level')
+        ui_actions = '\n'.join(
+            ['{0}. {1}'.format(k, v['name'])
+             for k, v in sorted(levels_config['levels'].items())])
 
         return ui_actions
 
@@ -137,23 +140,13 @@ class StartUI(BaseUI):
     def get_welcome(self):
         """Return terminal welcome message text."""
 
-        return "Congratulations! You completed the level."
+        return "Welcome to Alpha Point."
 
-    def display(self):
-        """Display the UI."""
+    def start_level(self, level_number=1):
+        """Start the game with the specified level number."""
 
-        self.clear_screen()
-        print(self.get_ui())
-
-    def restart_level(self):
-        """Restart the current level."""
-
-        self.alert = 'RESTART LEVEL!'
-
-    def next_level(self):
-        """Go to the next level."""
-
-        self.alert = 'NEXT LEVEL!'
+        self.game.setup(level_number)
+        self.game.gameui = MainUI(self.game)
 
 
 class MainUI(BaseUI):
@@ -206,8 +199,7 @@ class MainUI(BaseUI):
             elif value == 'r':
                 self.restart_level()
             elif value == 'q':
-                self.clear_screen()
-                sys.exit()
+                self.leave()
             # the value wasn't handled
             else:
                 self.alert = "I don't know what you mean."
@@ -290,7 +282,7 @@ class MainUI(BaseUI):
 
         commands = ('\nMOVEMENT\tMAP\t\tMISC\n\n'
                     'i - move up\tP - Player\tr - restart\n'
-                    'k - move down\t. - Path\tq - quit\n'
+                    'k - move down\t. - Path\tq - main menu\n'
                     'j - move left\n'
                     'l - move right')
 
@@ -303,6 +295,11 @@ class MainUI(BaseUI):
         this_level = self.game.level.number
         self.game.__init__()
         self.game.setup(level_number=this_level)
+
+    def leave(self):
+        """Leave the game and return to the start menu."""
+
+        self.game.gameui = StartUI(self.game)
 
 
 class TerminalUI(BaseUI):
@@ -518,6 +515,7 @@ class LevelCompleteUI(BaseUI):
         this_level = self.game.level.number
         self.game.__init__()
         self.game.setup(level_number=this_level + 1)
+
 
 # in progress
 class GameCompleteUI(BaseUI):

@@ -417,7 +417,7 @@ class Level(object):
         self.game = game
         self.map = Map(self)
         self.system = System(self)
-        self.number = 0
+        self.number = 1
 
     def build_from_config(self, level_config):
         """Build the level from a config dictionary."""

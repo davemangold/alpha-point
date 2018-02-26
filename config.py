@@ -5,7 +5,7 @@ player_config = {}
 
 levels_config = {
     'levels': {
-        0: {
+        1: {
             'name': 'Airlock',
             'map': {
                 'x_dimension': 5,
