@@ -14,6 +14,7 @@ class BaseUI(object):
     def __init__(self, game, *args, **kwargs):
         self.game = game
         self.alert = None
+        self.separator = '-' * 60
 
     def process_input(self, value):
         """Call the appropriate method based on input value."""
@@ -60,7 +61,6 @@ class BaseUI(object):
         print(self.get_ui())
 
 
-# in progress
 class StartUI(BaseUI):
     """Game user interface presented to the player when a level is completed."""
 
@@ -104,19 +104,18 @@ class StartUI(BaseUI):
 
         ui_elements = []
 
-        ui_separator = 44 * '-'
         ui_commands = self.get_commands()
         ui_welcome = self.get_welcome()
         ui_alert = self.get_alert()
         ui_action = self.get_action()
 
         ui_elements.append(ui_commands)
-        ui_elements.append(ui_separator)
+        ui_elements.append(self.separator)
         ui_elements.append(ui_welcome)
         ui_elements.append(ui_action)
         if ui_alert is not None:
             ui_elements.append(ui_alert)
-        ui_elements.append(ui_separator)
+        ui_elements.append(self.separator)
 
         return '\n\n'.join(ui_elements) + '\n'
 
@@ -132,8 +131,7 @@ class StartUI(BaseUI):
     def get_commands(self):
         """Return the universal commands."""
 
-        commands = ('\nMISC\n\n'
-                    'q - leave the game')
+        commands = '\nq - leave the game'
 
         return commands
 
@@ -154,30 +152,6 @@ class MainUI(BaseUI):
 
     def __init__(self, *args, **kwargs):
         super(MainUI, self).__init__(*args, **kwargs)
-
-    def get_ui(self):
-        """Get the full UI text."""
-
-        ui_elements = []
-
-        ui_separator = 44 * '-'
-        ui_commands = self.get_commands()
-        ui_map = self.get_map()
-        ui_alert = self.get_alert()
-        ui_report = self.game.player.report_visible_components()
-        ui_action = self.get_action()
-
-        ui_elements.append(ui_commands)
-        ui_elements.append(ui_separator)
-        ui_elements.append(ui_map)
-        ui_elements.append(ui_report)
-        if ui_action is not None:
-            ui_elements.append(ui_action)
-        if ui_alert is not None:
-            ui_elements.append(ui_alert)
-        ui_elements.append(ui_separator)
-
-        return '\n\n'.join(ui_elements) + '\n'
 
     def process_input(self, value):
         """Call the appropriate method based on input value."""
@@ -280,13 +254,35 @@ class MainUI(BaseUI):
     def get_commands(self):
         """Return the universal commands."""
 
-        commands = ('\nMOVEMENT\tMAP\t\tMISC\n\n'
-                    'i - move up\tP - Player\tr - restart\n'
-                    'k - move down\t. - Path\tq - main menu\n'
+        commands = ('\ni - move up\tr - restart level\tP - Player\n'
+                    'k - move down\tq - main menu\t\t. - Path\n'
                     'j - move left\n'
                     'l - move right')
 
         return commands
+
+    def get_ui(self):
+        """Get the full UI text."""
+
+        ui_elements = []
+
+        ui_commands = self.get_commands()
+        ui_map = self.get_map()
+        ui_alert = self.get_alert()
+        ui_report = self.game.player.report_visible_components()
+        ui_action = self.get_action()
+
+        ui_elements.append(ui_commands)
+        ui_elements.append(self.separator)
+        ui_elements.append(ui_map)
+        ui_elements.append(ui_report)
+        if ui_action is not None:
+            ui_elements.append(ui_action)
+        if ui_alert is not None:
+            ui_elements.append(ui_alert)
+        ui_elements.append(self.separator)
+
+        return '\n\n'.join(ui_elements) + '\n'
 
     def restart_level(self):
         """Restart the current level."""
@@ -348,20 +344,19 @@ class TerminalUI(BaseUI):
 
         ui_elements = []
 
-        ui_separator = 44 * '-'
         ui_commands = self.get_commands()
         ui_welcome = self.get_welcome()
         ui_alert = self.get_alert()
         ui_action = self.get_action()
 
         ui_elements.append(ui_commands)
-        ui_elements.append(ui_separator)
+        ui_elements.append(self.separator)
         ui_elements.append(ui_welcome)
         if ui_action is not None:
             ui_elements.append(ui_action)
         if ui_alert is not None:
             ui_elements.append(ui_alert)
-        ui_elements.append(ui_separator)
+        ui_elements.append(self.separator)
 
         return '\n\n'.join(ui_elements) + '\n'
 
@@ -380,8 +375,7 @@ class TerminalUI(BaseUI):
     def get_commands(self):
         """Return the universal commands."""
 
-        commands = ('\nMISC\n\n'
-                    'q - leave the {0}'.format(self.terminal))
+        commands = ('\nq - leave the {0}'.format(self.terminal))
 
         return commands
 
@@ -431,8 +425,7 @@ class LevelCompleteUI(BaseUI):
         elif value == '2':
             self.next_level()
         elif value == 'q':
-            self.clear_screen()
-            sys.exit()
+            self.leave()
         # the value wasn't handled
         else:
             self.alert = "Sorry, that's not an option."
@@ -457,19 +450,18 @@ class LevelCompleteUI(BaseUI):
 
         ui_elements = []
 
-        ui_separator = 44 * '-'
         ui_commands = self.get_commands()
         ui_welcome = self.get_welcome()
         ui_alert = self.get_alert()
         ui_action = self.get_action()
 
         ui_elements.append(ui_commands)
-        ui_elements.append(ui_separator)
+        ui_elements.append(self.separator)
         ui_elements.append(ui_welcome)
         ui_elements.append(ui_action)
         if ui_alert is not None:
             ui_elements.append(ui_alert)
-        ui_elements.append(ui_separator)
+        ui_elements.append(self.separator)
 
         return '\n\n'.join(ui_elements) + '\n'
 
@@ -484,8 +476,7 @@ class LevelCompleteUI(BaseUI):
     def get_commands(self):
         """Return the universal commands."""
 
-        commands = ('\nMISC\n\n'
-                    'q - leave the game')
+        commands = '\nq - main menu'
 
         return commands
 
@@ -515,6 +506,54 @@ class LevelCompleteUI(BaseUI):
         this_level = self.game.level.number
         self.game.__init__()
         self.game.setup(level_number=this_level + 1)
+
+    def leave(self):
+        """Leave the game and return to the start menu."""
+
+        self.game.gameui = StartUI(self.game)
+
+
+class StoryUI(BaseUI):
+    """Game user interface for a system terminal object."""
+
+    def __init__(self, *args, **kwargs):
+        super(StoryUI, self).__init__(*args, **kwargs)
+        self.precedent = self.game.gameui
+
+    def process_input(self, value):
+        """Call the appropriate method based on input value."""
+
+        self.leave()
+
+    def prompt(self, valid_responses=[]):
+        """Prompt the player for input."""
+
+        message = "Press any key to continue..."
+        response = input(message)
+        return response
+
+    def get_ui(self):
+        """Get the full UI text."""
+
+        ui_elements = []
+
+        ui_story_text = self.get_story_text()
+
+        ui_elements.append(self.separator)
+        ui_elements.append(ui_story_text)
+        ui_elements.append(self.separator)
+
+        return '\n\n'.join(ui_elements) + '\n'
+
+    def get_story_text(self):
+        """Get the story text associated with the current cell."""
+
+        # show story text only once
+        pass
+
+    def leave(self):
+        # reset gameui to the ui that was active at the time this was created
+        self.game.gameui = self.precedent
 
 
 # in progress
@@ -561,19 +600,18 @@ class GameCompleteUI(BaseUI):
 
         ui_elements = []
 
-        ui_separator = 44 * '-'
         ui_commands = self.get_commands()
         ui_welcome = self.get_welcome()
         ui_alert = self.get_alert()
         ui_action = self.get_action()
 
         ui_elements.append(ui_commands)
-        ui_elements.append(ui_separator)
+        ui_elements.append(self.separator)
         ui_elements.append(ui_welcome)
         ui_elements.append(ui_action)
         if ui_alert is not None:
             ui_elements.append(ui_alert)
-        ui_elements.append(ui_separator)
+        ui_elements.append(self.separator)
 
         return '\n\n'.join(ui_elements) + '\n'
 
