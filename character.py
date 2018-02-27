@@ -39,6 +39,11 @@ class Character(object):
 
         return self.x, self.y
 
+    def current_cell(self):
+        """Get the cell at the location of this character."""
+
+        return self.game.level.map.get_cell(*self.location())
+
     def on_move_update(self):
         """Update attributes that are location-dependent."""
 

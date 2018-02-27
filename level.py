@@ -4,6 +4,7 @@ from interface import InterfaceFactory
 from device import Device
 from device import DeviceFactory
 from inventory import Inventory
+from config import levels_config
 
 
 class System(object):
@@ -190,8 +191,10 @@ class System(object):
             return "The device is already inactive."
         return device.toggle_active_state()
 
-    def build_from_config(self, system_config):
+    def build(self, level_number):
         """Build system from config dictionary."""
+
+        system_config = levels_config['levels'][level_number]['system']
 
         for config_interface in system_config['interfaces']:
             interface = InterfaceFactory.make_interface(self, config_interface['type'])
@@ -234,6 +237,9 @@ class MapCell(object):
         self.y = y
         self.interfaces = []
         self.devices = []
+        self.story_text = None
+        self.story_seen = False
+        self.visited = False
 
     def add_interface(self, interface):
         """Adds an interface to the map cell."""
@@ -329,22 +335,25 @@ class Map(object):
                 if y not in self.cells[x]:
                     self.cells[x][y] = MapCell(self, x, y)
 
-    def build_from_config(self, map_config):
+    def build(self, level_number):
         """Build the map from a config dictionary."""
+
+        map_config = levels_config['levels'][level_number]['map']
 
         self.x_dim = map_config['x_dimension']
         self.y_dim = map_config['y_dimension']
         enter_coord = map_config['coord_enter']
         exit_coord = map_config['coord_exit']
-        path_coords = map_config['path_coordinates']
 
         self.__build_cells(self.x_dim, self.y_dim)
 
         self.enter_cell = self.get_cell(*enter_coord)
         self.exit_cell = self.get_cell(*exit_coord)
 
-        for x, y in path_coords:
-            self.path.add_cell(self.get_cell(x, y))
+        for cell in map_config['path_cells']:
+            path_cell = self.get_cell(*cell['coordinates'])
+            path_cell.story_text = cell['story_text']
+            self.path.add_cell(path_cell)
 
         for interface in self.level.system.interfaces:
             cell = self.get_cell(interface.x, interface.y)
@@ -419,15 +428,13 @@ class Level(object):
         self.system = System(self)
         self.number = 1
 
-    def build_from_config(self, level_config):
+    def build(self, level_number):
         """Build the level from a config dictionary."""
 
-        sys_config = level_config['system']
-        map_config = level_config['map']
-
         # system must be built before map
-        self.system.build_from_config(sys_config)
-        self.map.build_from_config(map_config)
+        self.system.build(level_number)
+        self.map.build(level_number)
+        self.number = level_number
 
     def is_complete(self):
         """Returns True if the player is at the final cell of the level, otherwise False."""

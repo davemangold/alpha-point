@@ -18,28 +18,26 @@ class Game(object):
     def set_level(self, level_number=1):
         """Set the game level."""
 
-        level_config = levels_config['levels'][level_number]
-
         level = Level(self)
-        level.build_from_config(level_config)
-        level.number = level_number
+        level.build(level_number)
         self.level = level
 
     def set_player(self):
         """Set the player based on the game level"""
 
-        level_config = levels_config['levels'][self.level.number]
+        enter_coords = levels_config['levels'][self.level.number]['map']['coord_enter']
 
         player = Player(self)
-        player.x = level_config['map']['coord_enter'][0]
-        player.y = level_config['map']['coord_enter'][1]
+        player.x = enter_coords[0]
+        player.y = enter_coords[1]
         self.player = player
 
     def setup(self, level_number=1):
         """Setup game elements before allowing play."""
 
+        # set level before player
         self.set_level(level_number)
-        self.set_player()  # set based on current level number
+        self.set_player()
 
     def mainloop(self):
         """The main game loop."""
@@ -47,4 +45,5 @@ class Game(object):
         while True:
             if self.level.is_complete() and isinstance(self.gameui, MainUI):
                 self.gameui = LevelCompleteUI(self)
+
             self.gameui.process_input(self.gameui.prompt())

@@ -10,18 +10,18 @@ levels_config = {
             'map': {
                 'x_dimension': 5,
                 'y_dimension': 5,
-                'path_coordinates': [  # path may include doors and valves which are visible
-                    (0, 4),
-                    (0, 3),
-                    (0, 2),
-                    (1, 2),
-                    (2, 2),
-                    (2, 1),
-                    (3, 2),
-                    (4, 2),
-                    (4, 1),
-                    (4, 0),
-                    (4, 3)
+                'path_cells': [
+                    {'coordinates': (0, 4), 'story_text': None},
+                    {'coordinates': (0, 3), 'story_text': 'Marcus breathed a sigh of relief as the airlock sealed behind him...'},
+                    {'coordinates': (0, 2), 'story_text': None},
+                    {'coordinates': (1, 2), 'story_text': None},
+                    {'coordinates': (2, 2), 'story_text': None},
+                    {'coordinates': (2, 1), 'story_text': None},
+                    {'coordinates': (3, 2), 'story_text': None},
+                    {'coordinates': (4, 2), 'story_text': None},
+                    {'coordinates': (4, 1), 'story_text': None},
+                    {'coordinates': (4, 0), 'story_text': None},
+                    {'coordinates': (4, 3), 'story_text': None}
                 ],
                 'coord_enter': (0, 3),  # begin
                 'coord_exit': (4, 0),  # end
