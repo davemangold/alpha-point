@@ -49,42 +49,6 @@ class Character(object):
 
         self.update_actions()
 
-    def move_up(self):
-        """Move character up one cell if possible"""
-
-        self.orientation = 0
-        up_cell = self.game.level.map.get_d4_cells(self.x, self.y)[0]
-        if self.__is_valid_move(up_cell):
-            self.y -= 1
-            self.on_move_update()
-
-    def move_right(self):
-        """Move character right one cell if possible"""
-
-        self.orientation = 1
-        right_cell = self.game.level.map.get_d4_cells(self.x, self.y)[1]
-        if self.__is_valid_move(right_cell):
-            self.x += 1
-            self.on_move_update()
-
-    def move_down(self):
-        """Move character down one cell if possible"""
-
-        self.orientation = 2
-        down_cell = self.game.level.map.get_d4_cells(self.x, self.y)[2]
-        if self.__is_valid_move(down_cell):
-            self.y += 1
-            self.on_move_update()
-
-    def move_left(self):
-        """Move character left one cell if possible"""
-
-        self.orientation = 3
-        left_cell = self.game.level.map.get_d4_cells(self.x, self.y)[3]
-        if self.__is_valid_move(left_cell):
-            self.x -= 1
-            self.on_move_update()
-
     def move_to(self, x, y):
         """Move character to specified x, y if it is a valid cell."""
 
@@ -93,6 +57,30 @@ class Character(object):
             self.x = x
             self.y = y
             self.on_move_update()
+
+    def move_up(self):
+        """Move character up one cell if possible"""
+
+        self.orientation = 0
+        self.move_to(self.x, self.y - 1)
+
+    def move_right(self):
+        """Move character right one cell if possible"""
+
+        self.orientation = 1
+        self.move_to(self.x + 1, self.y)
+
+    def move_down(self):
+        """Move character down one cell if possible"""
+
+        self.orientation = 2
+        self.move_to(self.x, self.y + 1)
+
+    def move_left(self):
+        """Move character left one cell if possible"""
+
+        self.orientation = 3
+        self.move_to(self.x - 1, self.y)
 
     def get_visible_components(self):
         """Return d4 components visible to the player."""
