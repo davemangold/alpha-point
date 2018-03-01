@@ -60,6 +60,18 @@ class BaseUI(object):
         self.clear_screen()
         print(self.get_ui())
 
+    def restart_level(self):
+        """Restart the current level."""
+
+        self.game.setup(self.game.level.number)
+        self.game.gameui = MainUI(self.game)
+
+    def next_level(self):
+        """Go to the next level."""
+
+        self.game.setup(self.game.level.number + 1)
+        self.game.gameui = MainUI(self.game)
+
 
 class StartUI(BaseUI):
     """Game user interface presented to the player when a level is completed."""
@@ -122,7 +134,8 @@ class StartUI(BaseUI):
 
         ui_actions = '\n'.join(
             ['{0}. {1}'.format(k, v['name'])
-             for k, v in sorted(levels_config['levels'].items())])
+             for k, v in sorted(levels_config['levels'].items())
+             if k > 0])
 
         return ui_actions
 
@@ -133,7 +146,7 @@ class StartUI(BaseUI):
 
         return commands
 
-    def start_level(self, level_number=1):
+    def start_level(self, level_number):
         """Start the game with the specified level number."""
 
         self.game.setup(level_number)
@@ -276,14 +289,6 @@ class MainUI(BaseUI):
         ui_elements.append(self.separator)
 
         return '\n\n'.join(ui_elements) + '\n'
-
-    def restart_level(self):
-        """Restart the current level."""
-
-        # self.alert = 'RESTART LEVEL!'
-        this_level = self.game.level.number
-        self.game.__init__()
-        self.game.setup(level_number=this_level)
 
     def leave(self):
         """Leave the game and return to the start menu."""
@@ -481,24 +486,6 @@ class LevelCompleteUI(BaseUI):
 
         return "Congratulations! You completed the level."
 
-    def display(self):
-        """Display the UI."""
-
-        self.clear_screen()
-        print(self.get_ui())
-
-    def restart_level(self):
-        """Restart the current level."""
-
-        self.game.setup(self.game.level.number)
-        self.game.gameui = MainUI(self.game)
-
-    def next_level(self):
-        """Go to the next level."""
-
-        self.game.setup(self.game.level.number + 1)
-        self.game.gameui = MainUI(self.game)
-
     def leave(self):
         """Leave the game and return to the start menu."""
 
@@ -520,7 +507,8 @@ class StoryUI(BaseUI):
     def prompt(self, valid_responses=[]):
         """Prompt the player for input."""
 
-        message = "Press any key to continue..."
+        self.display()
+        message = "Press Enter to continue..."
         response = input(message)
         return response
 
@@ -540,11 +528,13 @@ class StoryUI(BaseUI):
     def get_story_text(self):
         """Get the story text associated with the current cell."""
 
-        # show story text only once
-        pass
+        story_text = self.game.player.cell.story_text
+        formatted_text = utility.format_ui_text(story_text)
+        return formatted_text
 
     def leave(self):
         # reset gameui to the ui that was active at the time this was created
+        self.game.player.cell.story_seen = True
         self.game.gameui = self.precedent
 
 

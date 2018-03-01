@@ -2,6 +2,7 @@ from player import Player
 from level import Level
 from gameui import MainUI
 from gameui import StartUI
+from gameui import StoryUI
 from gameui import LevelCompleteUI
 from config import levels_config
 
@@ -15,7 +16,7 @@ class Game(object):
         self.gameui = StartUI(self)
         self.setup()
 
-    def set_level(self, level_number=1):
+    def set_level(self, level_number=0):
         """Set the game level."""
 
         level = Level(self)
@@ -28,14 +29,13 @@ class Game(object):
         enter_coords = levels_config['levels'][self.level.number]['map']['coord_enter']
 
         player = Player(self)
-        player.x = enter_coords[0]
-        player.y = enter_coords[1]
+        player.move_to(*enter_coords)
         self.player = player
 
-    def setup(self, level_number=1):
+    def setup(self, level_number=0):
         """Setup game elements before allowing play."""
 
-        # set level before player
+        # set level before setting player
         self.set_level(level_number)
         self.set_player()
 
@@ -43,7 +43,12 @@ class Game(object):
         """The main game loop."""
 
         while True:
-            if self.level.is_complete() and isinstance(self.gameui, MainUI):
-                self.gameui = LevelCompleteUI(self)
-
+            if isinstance(self.gameui, MainUI):
+                if self.player.cell.has_story_text() and not self.player.cell.story_seen:
+                    self.gameui = StoryUI(self)
+                if self.level.is_complete():
+                    if self.level.number == 0:
+                        self.gameui = StartUI(self)
+                    else:
+                        self.gameui = LevelCompleteUI(self)
             self.gameui.process_input(self.gameui.prompt())

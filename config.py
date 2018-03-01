@@ -1,10 +1,33 @@
 game_config = {}
 
-player_config = {}
+player_config = {
+    'name': 'Marcus'
+}
 
 
 levels_config = {
     'levels': {
+        0: {
+            'name': 'The Void',
+            'map': {
+                'x_dimension': 1,
+                'y_dimension': 2,
+                'path_cells': [
+                    {'coordinates': (0, 0), 'story_text': None},
+                    {'coordinates': (0, 1), 'story_text': 'This place is not for you. Be gone, interloper!'}
+                ],
+                'coord_enter': (0, 1),  # begin
+                'coord_exit': (0, 0),  # end
+                'orientation_enter': 0,
+                'msg_enter': 'Welcome to the void...',
+                'msg_exit': 'You are released into the aether...'
+            },
+            'system': {
+                'interfaces': [],
+                'devices': [],
+                'links': []
+            }
+        },
         1: {
             'name': 'Airlock',
             'map': {
@@ -12,9 +35,9 @@ levels_config = {
                 'y_dimension': 5,
                 'path_cells': [
                     {'coordinates': (0, 4), 'story_text': None},
-                    {'coordinates': (0, 3), 'story_text': 'Marcus breathed a sigh of relief as the airlock sealed behind him...'},
+                    {'coordinates': (0, 3), 'story_text': ('Marcus breathed a sigh of relief as the airlock sealed behind him...')},
                     {'coordinates': (0, 2), 'story_text': None},
-                    {'coordinates': (1, 2), 'story_text': None},
+                    {'coordinates': (1, 2), 'story_text': ('A glow emanated from the left side of the corridor ahead. "Is that a passage?", Marcus wondered... ')},
                     {'coordinates': (2, 2), 'story_text': None},
                     {'coordinates': (2, 1), 'story_text': None},
                     {'coordinates': (3, 2), 'story_text': None},

@@ -16,6 +16,7 @@ class Character(object):
         self.y = 0
         self.orientation = 0
         self.actions = {}
+        self.cell = self.get_map_cell()
 
     def __is_valid_move(self, cell):
 
@@ -39,7 +40,7 @@ class Character(object):
 
         return self.x, self.y
 
-    def current_cell(self):
+    def get_map_cell(self):
         """Get the cell at the location of this character."""
 
         return self.game.level.map.get_cell(*self.location())
@@ -48,6 +49,7 @@ class Character(object):
         """Update attributes that are location-dependent."""
 
         self.update_actions()
+        self.cell = self.get_map_cell()
 
     def move_to(self, x, y):
         """Move character to specified x, y if it is a valid cell."""

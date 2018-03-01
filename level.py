@@ -282,6 +282,11 @@ class MapCell(object):
 
         return len(self.devices) > 0
 
+    def has_story_text(self):
+        """Return True if there is story text associated with the cell, otherwise False."""
+
+        return self.story_text is not None
+
 
 class MapPath(object):
     """Path that the player can access."""
@@ -426,7 +431,7 @@ class Level(object):
         self.game = game
         self.map = Map(self)
         self.system = System(self)
-        self.number = 1
+        self.number = 0
 
     def build(self, level_number):
         """Build the level from a config dictionary."""

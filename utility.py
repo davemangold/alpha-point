@@ -92,3 +92,23 @@ def nested_list_to_text_map(nested_list):
     """Return a text map from a nested list."""
 
     return '\n'.join([' '.join(i) for i in nested_list])
+
+
+def format_ui_text(text):
+    """Format text to fit within UI."""
+
+    width = 60
+    words = text.split()
+    lines = []
+    line = ''
+    for w in words:
+        if len(line + w) + 1 <= width:
+            line += ' ' + w
+        else:
+            lines.append(line)
+            line = ''
+            line += ' ' + w
+    lines.append(line)
+    keep_lines = [line for line in lines if len(line) > 0]
+    formatted_text = '\n'.join(keep_lines)
+    return formatted_text
