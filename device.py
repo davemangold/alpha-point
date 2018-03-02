@@ -15,7 +15,8 @@ class Device(Component):
         self.description = 'generic device'
         self.active = False
         self.dependencies = []
-        self.msg_action_verb = "activate"
+        self.msg_action_true = "activate"
+        self.msg_action_false = "deactivate"
         self.msg_active_true = "The device is active."
         self.msg_active_false = "The device is not active."
         self.msg_toggle_active_true = "The device was activated."
@@ -30,7 +31,12 @@ class Device(Component):
     def action_text(self):
         """Return text description of the currently available action."""
 
-        return " ".join([self.msg_action_verb.title(), "the", str(self)])
+        action = self.msg_action_true
+
+        if self.active is True:
+            action = self.msg_action_false
+
+        return " ".join([action.title(), "the", str(self)])
 
     def toggle_active_state(self):
         """Toggle this device's active state."""
@@ -94,7 +100,8 @@ class Door(Device):
         self.name = 'door'
         self.description = 'door'
         self.visible = True  # only on map.path
-        self.msg_action_verb = "open"
+        self.msg_action_true = "open"
+        self.msg_action_false = "close"
         self.msg_active_true = "The door is open."
         self.msg_active_false = "The door is closed."
         self.msg_toggle_active_true = "The door opened."
@@ -109,7 +116,8 @@ class Switch(Device):
         super(Switch, self).__init__(*args, **kwargs)
         self.name = 'switch'
         self.description = 'switch'
-        self.msg_action_verb = "flip"
+        self.msg_action_true = "close"
+        self.msg_action_false = "open"
         self.msg_active_true = "The switch is closed."
         self.msg_active_false = "The switch is opened."
         self.msg_toggle_active_true = "The switch closed."
@@ -125,7 +133,8 @@ class Valve(Device):
         self.name = 'valve'
         self.description = 'valve'
         self.visible = True  # only on map.path
-        self.msg_action_verb = "open"
+        self.msg_action_true = "open"
+        self.msg_action_false = "close"
         self.msg_active_true = "The valve is open."
         self.msg_active_false = "The valve is closed."
         self.msg_toggle_active_true = "The valve opened."
@@ -141,7 +150,8 @@ class Camera(Device):
         self.name = 'camera'
         self.description = 'camera'
         self.visible = True  # only on map.path
-        self.msg_action_verb = "observe"
+        self.msg_action_true = "turn on"
+        self.msg_action_false = "turn off"
         self.msg_active_true = "The camera is on."
         self.msg_active_false = "The camera is off."
         self.msg_toggle_active_true = "The camera turned on."
@@ -156,7 +166,8 @@ class Sensor(Device):
         super(Sensor, self).__init__(*args, **kwargs)
         self.name = 'sensor'
         self.description = 'sensor'
-        self.msg_action_verb = "inspect"
+        self.msg_action_true = "turn on"
+        self.msg_action_false = "turn off"
         self.msg_active_true = "The sensor is on."
         self.msg_active_false = "The sensor is off."
         self.msg_toggle_active_true = "The sensor turned on."

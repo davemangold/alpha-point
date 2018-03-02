@@ -250,7 +250,7 @@ class MainUI(BaseUI):
 
         ui_actions = None
         player_actions = self.game.player.get_actions()
-        ui_actions_list = ['{0}. Use the {1}'.format(key, action.__self__)
+        ui_actions_list = ['{0}. {1}'.format(key, action.__self__.action_text())
                            for key, action in sorted(player_actions.items())]
         if len(ui_actions_list) > 0:
             ui_actions = '\n'.join(ui_actions_list)

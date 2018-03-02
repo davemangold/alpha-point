@@ -15,11 +15,17 @@ class Interface(Component):
         self.name = 'interface'
         self.description = 'generic interface'
         self.visible = True
+        self.msg_action_verb = 'use'
 
     def __add_to_system(self):
         """Add the interface to the parent system."""
 
         self.system.add_interface(self)
+
+    def action_text(self):
+        """Return text description of the currently available action."""
+
+        return " ".join([self.msg_action_verb.title(), "the", str(self)])
 
     def get_devices(self):
         """Return the devices linked to the interface."""
@@ -49,6 +55,7 @@ class Terminal(Interface):
         self.name = 'terminal'
         self.description = 'terminal'
         self.actions = {}
+        self.msg_action_verb = 'use'
 
     def use(self):
         """Interface loop that allows player to interact with the interface."""
@@ -85,6 +92,7 @@ class Button(Interface):
         super(Button, self).__init__(*args, **kwargs)
         self.name = 'button'
         self.description = 'button'
+        self.msg_action_verb = 'push'
 
 
 class Toggleswitch(Interface):
@@ -94,6 +102,7 @@ class Toggleswitch(Interface):
         super(Toggleswitch, self).__init__(*args, **kwargs)
         self.name = 'toggleswitch'
         self.description = 'toggleswitch'
+        self.msg_action_verb = 'flip'
 
 
 class Handwheel(Interface):
@@ -103,6 +112,7 @@ class Handwheel(Interface):
         super(Handwheel, self).__init__(*args, **kwargs)
         self.name = 'handwheel'
         self.description = 'handwheel'
+        self.msg_action_verb = 'turn'
 
 
 class Viewer(Interface):
@@ -112,6 +122,7 @@ class Viewer(Interface):
         super(Viewer, self).__init__(*args, **kwargs)
         self.name = 'viewer'
         self.description = 'viewer'
+        self.msg_action_verb = 'use'
 
 
 class Console(Interface):
@@ -121,6 +132,7 @@ class Console(Interface):
         super(Console, self).__init__(*args, **kwargs)
         self.name = 'monitor'
         self.description = 'monitor'
+        self.msg_action_verb = 'use'
 
 
 # Interface factory
