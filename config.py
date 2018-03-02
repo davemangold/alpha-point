@@ -119,7 +119,7 @@ levels_config = {
                     {
                         'id': 0,
                         'name': 'entrance door',
-                        'description': 'entrance door',
+                        'description': 'door',
                         'type': 'door',
                         'enabled': False,
                         'active': False,
@@ -130,7 +130,7 @@ levels_config = {
                     {
                         'id': 1,
                         'name': 'door circuit switch',
-                        'description': 'door circuit',
+                        'description': 'door switch',
                         'type': 'switch',
                         'enabled': True,
                         'active': False,
