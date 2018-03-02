@@ -130,7 +130,7 @@ levels_config = {
                     {
                         'id': 1,
                         'name': 'door circuit switch',
-                        'description': 'door switch',
+                        'description': 'door circuit',
                         'type': 'switch',
                         'enabled': True,
                         'active': False,

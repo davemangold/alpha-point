@@ -24,7 +24,7 @@ class BaseUI(object):
     def prompt(self, valid_responses=[]):
         """Prompt the player for input."""
 
-        message = "What should I do? "
+        message = "  What should I do? "
 
         while True:
             # update the display
@@ -54,11 +54,16 @@ class BaseUI(object):
 
         return 'Base UI'
 
+    @staticmethod
+    def decorate_ui(ui_text):
+
+        return '\n'.join(["  " + line for line in ui_text.split('\n')])
+
     def display(self):
         """Display the UI."""
 
         self.clear_screen()
-        print(self.get_ui())
+        print(self.decorate_ui(self.get_ui()))
 
     def restart_level(self):
         """Restart the current level."""
@@ -99,7 +104,7 @@ class StartUI(BaseUI):
     def prompt(self, valid_responses=[]):
         """Prompt the player for input."""
 
-        message = "Choose a level: "
+        message = "  Choose a level: "
 
         while True:
             # update the display
@@ -324,7 +329,7 @@ class TerminalUI(BaseUI):
     def prompt(self, valid_responses=[]):
         """Prompt the player for input."""
 
-        message = "{0}@apex-{1}:~$ ".format(self.game.player.name,
+        message = "  {0}@apex-{1}:~$ ".format(self.game.player.name,
                                             '-'.join(self.terminal.name.split()))
 
         while True:
@@ -386,7 +391,7 @@ class TerminalUI(BaseUI):
         """Display the UI."""
 
         self.clear_screen()
-        print(self.get_ui())
+        print(self.decorate_ui(self.get_ui()))
 
         if self.initial_flicker is True:
             self.display_flicker()
@@ -402,7 +407,7 @@ class TerminalUI(BaseUI):
         for i in intervals:
             self.clear_screen()
             time.sleep(i)
-            print(self.get_ui())
+            print(self.decorate_ui(self.get_ui()))
 
     def leave(self):
         # reset gameui to the ui that was active at the time this was created
@@ -434,7 +439,7 @@ class LevelCompleteUI(BaseUI):
     def prompt(self, valid_responses=[]):
         """Prompt the player for input."""
 
-        message = "Choose an option: "
+        message = "  Choose an option: "
 
         while True:
             # update the display
@@ -508,7 +513,7 @@ class StoryUI(BaseUI):
         """Prompt the player for input."""
 
         self.display()
-        message = "Press Enter to continue..."
+        message = "  Press Enter to continue..."
         response = input(message)
         return response
 
@@ -523,7 +528,7 @@ class StoryUI(BaseUI):
         ui_elements.append(ui_story_text)
         ui_elements.append(self.separator)
 
-        return '\n\n'.join(ui_elements) + '\n'
+        return '\n' + '\n\n'.join(ui_elements) + '\n'
 
     def get_story_text(self):
         """Get the story text associated with the current cell."""
@@ -565,7 +570,7 @@ class GameCompleteUI(BaseUI):
     def prompt(self, valid_responses=[]):
         """Prompt the player for input."""
 
-        message = "Choose an option: "
+        message = "  Choose an option: "
 
         while True:
             # update the display
@@ -622,7 +627,7 @@ class GameCompleteUI(BaseUI):
         """Display the UI."""
 
         self.clear_screen()
-        print(self.get_ui())
+        print(self.decorate_ui(self.get_ui()))
 
     def restart_level(self):
         """Restart the current level."""
