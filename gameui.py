@@ -5,6 +5,7 @@ import utility
 import exception
 from random import randrange
 from random import random
+from config import game_config
 from config import levels_config
 
 
@@ -47,6 +48,8 @@ class BaseUI(object):
 
         alert = self.alert
         self.alert = None
+        if alert is not None:
+            alert = utility.format_ui_text(alert)
         return alert
 
     def get_ui(self):
@@ -79,10 +82,85 @@ class BaseUI(object):
 
 
 class StartUI(BaseUI):
-    """Game user interface presented to the player when a level is completed."""
+    """Game user interface for a system terminal object."""
 
     def __init__(self, *args, **kwargs):
         super(StartUI, self).__init__(*args, **kwargs)
+        self.splash_seen = False
+        self.story_seen = False
+
+    def process_input(self, value):
+        """Call the appropriate method based on input value."""
+
+        if self.story_seen is True:
+            self.leave()
+
+    def prompt(self, valid_responses=[]):
+        """Prompt the player for input."""
+
+        self.display()
+        message = "  Press Enter to continue..."
+        response = input(message)
+        return response
+
+    def get_ui(self):
+        """Get the full UI text."""
+
+        ui_elements = []
+
+        ui_splash_text = self.get_splash_text()
+        ui_story_text = self.get_story_text()
+
+        if self.splash_seen is False:
+            ui_body_text = ui_splash_text
+        else:
+            ui_body_text = ui_story_text
+
+        ui_elements.append(self.separator)
+        ui_elements.append(ui_body_text)
+        ui_elements.append(self.separator)
+
+        return '\n' + '\n\n'.join(ui_elements) + '\n'
+
+    def display(self):
+        """Display the UI."""
+
+        ui_text = self.decorate_ui(self.get_ui())
+        ui_text_lines = ui_text.split('\n')
+        show_text = ui_text_lines[0]
+        print(show_text)
+        for line in ui_text_lines[1:]:
+            time.sleep(0.01)
+            show_text = '\n'.join([show_text, line])
+            self.clear_screen()
+            print(show_text)
+
+        if self.splash_seen is True:
+            self.story_seen = True
+        self.splash_seen = True
+
+    def get_splash_text(self):
+        """Get the game splash screen text."""
+
+        return game_config['splash_text']
+
+    def get_story_text(self):
+        """Return the story intro text."""
+
+        story_text = game_config['story_text']
+        formatted_text = utility.format_ui_text(story_text)
+        return formatted_text
+
+    def leave(self):
+
+        self.game.gameui = LevelsUI(self.game)
+
+
+class LevelsUI(BaseUI):
+    """Game user interface presented to the player when a level is completed."""
+
+    def __init__(self, *args, **kwargs):
+        super(LevelsUI, self).__init__(*args, **kwargs)
 
     def process_input(self, value):
         """Call the appropriate method based on input value."""
@@ -203,23 +281,23 @@ class MainUI(BaseUI):
 
         return utility.nested_list_to_text_map(map_list)
 
-    def add_map_interfaces(self, text_map):
-        """Add system interfaces to the map."""
-
-        map_list = utility.text_map_to_nested_list(text_map)
-        for interface in self.game.level.system.interfaces:
-            map_list[interface.y][interface.x] = 'I'
-
-        return utility.nested_list_to_text_map(map_list)
-
-    def add_map_devices(self, text_map):
-        """Add system interfaces to the map."""
-
-        map_list = utility.text_map_to_nested_list(text_map)
-        for device in self.game.level.system.devices:
-            map_list[device.y][device.x] = 'D'
-
-        return utility.nested_list_to_text_map(map_list)
+    # def add_map_interfaces(self, text_map):
+    #     """Add system interfaces to the map."""
+    #
+    #     map_list = utility.text_map_to_nested_list(text_map)
+    #     for interface in self.game.level.system.interfaces:
+    #         map_list[interface.y][interface.x] = 'I'
+    #
+    #     return utility.nested_list_to_text_map(map_list)
+    #
+    # def add_map_devices(self, text_map):
+    #     """Add system interfaces to the map."""
+    #
+    #     map_list = utility.text_map_to_nested_list(text_map)
+    #     for device in self.game.level.system.devices:
+    #         map_list[device.y][device.x] = 'D'
+    #
+    #     return utility.nested_list_to_text_map(map_list)
 
     def add_map_path(self, text_map):
         """Add map path to this map."""
@@ -280,7 +358,7 @@ class MainUI(BaseUI):
         ui_commands = self.get_commands()
         ui_map = self.get_map()
         ui_alert = self.get_alert()
-        ui_report = self.game.player.report_visible_components()
+        ui_report = utility.format_ui_text(self.game.player.report_visible_components())
         ui_action = self.get_action()
 
         ui_elements.append(ui_commands)
@@ -298,7 +376,7 @@ class MainUI(BaseUI):
     def leave(self):
         """Leave the game and return to the start menu."""
 
-        self.game.gameui = StartUI(self.game)
+        self.game.gameui = LevelsUI(self.game)
 
 
 class TerminalUI(BaseUI):
@@ -487,14 +565,14 @@ class LevelCompleteUI(BaseUI):
         return commands
 
     def get_welcome(self):
-        """Return terminal welcome message text."""
+        """Return UI welcome message text."""
 
         return "Congratulations! You completed the level."
 
     def leave(self):
         """Leave the game and return to the start menu."""
 
-        self.game.gameui = StartUI(self.game)
+        self.game.gameui = LevelsUI(self.game)
 
 
 class StoryUI(BaseUI):
@@ -529,6 +607,19 @@ class StoryUI(BaseUI):
         ui_elements.append(self.separator)
 
         return '\n' + '\n\n'.join(ui_elements) + '\n'
+
+    def display(self):
+        """Display the UI."""
+
+        ui_text = self.decorate_ui(self.get_ui())
+        ui_text_lines = ui_text.split('\n')
+        show_text = ui_text_lines[0]
+        print(show_text)
+        for line in ui_text_lines[1:]:
+            time.sleep(0.01)
+            show_text = '\n'.join([show_text, line])
+            self.clear_screen()
+            print(show_text)
 
     def get_story_text(self):
         """Get the story text associated with the current cell."""

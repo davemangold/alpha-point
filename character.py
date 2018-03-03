@@ -18,6 +18,11 @@ class Character(object):
         self.actions = {}
         self.cell = self.get_map_cell()
 
+    def __str__(self):
+        """A brief description."""
+
+        return self.name
+
     def __is_valid_move(self, cell):
 
         if cell is None:

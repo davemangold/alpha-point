@@ -1,6 +1,7 @@
 from player import Player
 from level import Level
 from gameui import MainUI
+from gameui import LevelsUI
 from gameui import StartUI
 from gameui import StoryUI
 from gameui import LevelCompleteUI
@@ -16,7 +17,7 @@ class Game(object):
         self.gameui = StartUI(self)
         self.setup()
 
-    def set_level(self, level_number=0):
+    def set_level(self, level_number):
         """Set the game level."""
 
         level = Level(self)
@@ -48,7 +49,7 @@ class Game(object):
                     self.gameui = StoryUI(self)
                 if self.level.is_complete():
                     if self.level.number == 0:
-                        self.gameui = StartUI(self)
+                        self.gameui = LevelsUI(self)
                     else:
                         self.gameui = LevelCompleteUI(self)
             self.gameui.process_input(self.gameui.prompt())

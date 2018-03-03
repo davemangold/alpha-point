@@ -36,7 +36,7 @@ class Device(Component):
         if self.active is True:
             action = self.msg_action_false
 
-        return " ".join([action.title(), "the", str(self)])
+        return " ".join([action.capitalize(), "the", str(self)])
 
     def toggle_active_state(self):
         """Toggle this device's active state."""
@@ -87,6 +87,11 @@ class Device(Component):
             if device.active != dependency['active_state']:
                 return False
         return True
+
+    def use(self):
+        """Use the device."""
+
+        self.toggle_active_state()
 
 
 # Device sub-classes that can be controlled by interfaces

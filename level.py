@@ -205,6 +205,7 @@ class System(object):
             interface.x = config_interface['x']
             interface.y = config_interface['y']
             interface.orientation = config_interface['orientation']
+            interface.msg_action_verb = config_interface['msg_action_verb']
 
         for config_device in system_config['devices']:
             device = DeviceFactory.make_device(self, config_device['type'])
@@ -215,6 +216,13 @@ class System(object):
             device.active = config_device['active']
             device.x = config_device['x']
             device.y = config_device['y']
+            device.msg_action_true = config_device['msg_action_true']
+            device.msg_action_false = config_device['msg_action_false']
+            device.msg_active_true = config_device['msg_active_true']
+            device.msg_active_false = config_device['msg_active_false']
+            device.msg_toggle_active_true = config_device['msg_toggle_active_true']
+            device.msg_toggle_active_false = config_device['msg_toggle_active_false']
+            device.msg_unmet_dependencies = config_device['msg_unmet_dependencies']
 
         for config_device in system_config['devices']:
             device = self.get_device(config_id=config_device['id'])

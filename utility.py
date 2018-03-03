@@ -25,38 +25,73 @@ def get_relative_direction_text(orientation, direction):
     return relative_directions[dirkeys[keyindex]]
 
 
-def build_component_report_text(orientation, d4_components):
+def build_component_list_text(component_list):
 
     article = 'a'
     conjunction = 'and'
     delimiter = ','
 
+    component_text = ''
+
+    if len(component_list) == 1:
+        component_text = ' '.join([article, str(component_list[0])])
+
+    elif len(component_list) == 2:
+        component_text = ' '.join([article, str(component_list[0]), conjunction, article, str(component_list[1])])
+
+    elif len(component_list) > 2:
+        working_text = (' ' + conjunction + ' ').join([article + ' ' + str(component) for component in component_list])
+        replace_count = working_text.count(' ' + conjunction) - 1
+        component_text = working_text.replace(' ' + conjunction, delimiter, replace_count)
+
+    return component_text
+
+
+def build_component_report_body(text_part_list):
+
+    conjunction = 'and'
+    delimiter = ','
+
+    body_text = ''
+
+    if len(text_part_list) == 1:
+        body_text += text_part_list[0]
+
+    elif len(text_part_list) == 2:
+        body_text += ' '.join([text_part_list[0], conjunction, text_part_list[1]])
+
+    elif len(text_part_list) > 2:
+        initial_parts = text_part_list[:-1]
+        final_part = text_part_list[-1]
+        initial_text_string = (delimiter + ' ').join(initial_parts)
+        body_text += (' ' + conjunction + ' ').join([initial_text_string, final_part])
+
+    return body_text
+
+
+def build_component_report_text(orientation, d4_components):
+
     report_open = 'There\'s'
     report_body = ''
-    body_parts = []
+    report_close = '.'
 
-    if any([len(component_list) > 0 for component_list in d4_components]):
-        for direction in range(len(d4_components)):
-            component_list = d4_components[direction]
-            if len(component_list) > 0:
-                this_part = delimiter.join([' ' + article + ' ' + str(interface) for interface in component_list]) + ' ' + get_relative_direction_text(orientation, direction)
-                if this_part.count(delimiter) == 1:
-                    this_part = this_part.replace(delimiter, ' ' + conjunction)
-                elif this_part.count(delimiter) > 1:
-                    this_part = this_part[::-1].replace(delimiter, (', ' + conjunction)[::-1])[::-1]
-                body_parts.append(this_part)
-        report_body += delimiter.join(body_parts)
-        report_close = '.'
+    body_part_list = []
+
+    for direction in range(len(d4_components)):
+        component_list = d4_components[direction]
+
+        if len(component_list) > 0:
+            this_text_part = build_component_list_text(component_list)
+            this_text_part += ' ' + get_relative_direction_text(orientation, direction)
+            body_part_list.append(this_text_part)
+
+    if len(body_part_list) > 0:
+        report_body += build_component_report_body(body_part_list)
     else:
         report_close = ' nothing around me.'
 
-    if len(body_parts) > 1:
-        if any(part.count(conjunction) > 0 for part in body_parts):
-            report_body = report_body[::-1].replace(delimiter, (', ' + conjunction)[::-1])[::-1]
-        else:
-            report_body = report_body.replace(delimiter, ' ' + conjunction)
+    report = report_open + ' ' + report_body + report_close
 
-    report = report_open + report_body + report_close
     return report
 
 
@@ -105,10 +140,10 @@ def format_ui_text(text):
         if len(line + w) + 1 <= width:
             line += ' ' + w
         else:
-            lines.append(line)
+            lines.append(line.strip())
             line = ''
             line += ' ' + w
-    lines.append(line)
+    lines.append(line.strip())
     keep_lines = [line for line in lines if len(line) > 0]
-    formatted_text = '\n'.join(keep_lines)
+    formatted_text = '\n'.join(keep_lines).strip()
     return formatted_text

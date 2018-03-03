@@ -17,8 +17,8 @@ class Component(object):
         self.y = 0
         self.orientation = 0
         self.visible = False
-        self.msg_enabled = "This component is enabled and can be used."
-        self.msg_disabled = "This component is disabled and cannot be used."
+        self.msg_enabled = "Something happened."
+        self.msg_disabled = "Hmm, Nothing happened."
 
     def __str__(self):
         """A brief description."""

@@ -25,7 +25,7 @@ class Interface(Component):
     def action_text(self):
         """Return text description of the currently available action."""
 
-        return " ".join([self.msg_action_verb.title(), "the", str(self)])
+        return " ".join([self.msg_action_verb.capitalize(), "the", str(self)])
 
     def get_devices(self):
         """Return the devices linked to the interface."""
@@ -41,7 +41,7 @@ class Interface(Component):
         if len(device_list) > 1:
             raise exception.InterfaceError("More than one device linked to interface.")
         device = device_list[0]
-        device.toggle_active_state()
+        device.use()
 
 
 # Interface sub-classes with which characters can interact
@@ -54,8 +54,8 @@ class Terminal(Interface):
         super(Terminal, self).__init__(*args, **kwargs)
         self.name = 'terminal'
         self.description = 'terminal'
-        self.actions = {}
         self.msg_action_verb = 'use'
+        self.actions = {}
 
     def use(self):
         """Interface loop that allows player to interact with the interface."""
@@ -67,7 +67,7 @@ class Terminal(Interface):
         """Return dictionary of actions based on terminal-linked devices."""
 
         device_list = self.get_devices()
-        actions = {device_list.index(device) + 1: device.toggle_active_state
+        actions = {device_list.index(device) + 1: device.use
                    for device in device_list}
         return actions
 
@@ -115,24 +115,24 @@ class Handwheel(Interface):
         self.msg_action_verb = 'turn'
 
 
-class Viewer(Interface):
-    """A viewer that provides a video feed but accepts no commands."""
-
-    def __init__(self, *args, **kwargs):
-        super(Viewer, self).__init__(*args, **kwargs)
-        self.name = 'viewer'
-        self.description = 'viewer'
-        self.msg_action_verb = 'use'
-
-
-class Console(Interface):
-    """A console that provides a sensor readout but accepts no commands."""
-
-    def __init__(self, *args, **kwargs):
-        super(Console, self).__init__(*args, **kwargs)
-        self.name = 'monitor'
-        self.description = 'monitor'
-        self.msg_action_verb = 'use'
+# class Viewer(Interface):
+#     """A viewer that provides a video feed but accepts no commands."""
+#
+#     def __init__(self, *args, **kwargs):
+#         super(Viewer, self).__init__(*args, **kwargs)
+#         self.name = 'viewer'
+#         self.description = 'viewer'
+#         self.msg_action_verb = 'use'
+#
+#
+# class Console(Interface):
+#     """A console that provides a sensor readout but accepts no commands."""
+#
+#     def __init__(self, *args, **kwargs):
+#         super(Console, self).__init__(*args, **kwargs)
+#         self.name = 'monitor'
+#         self.description = 'monitor'
+#         self.msg_action_verb = 'use'
 
 
 # Interface factory
@@ -150,8 +150,8 @@ class InterfaceFactory(object):
             return Toggleswitch(system)
         if interface_type.lower() == 'handwheel':
             return Handwheel(system)
-        if interface_type.lower() == 'viewer':
-            return Viewer(system)
-        if interface_type.lower() == 'console':
-            return Console(system)
+        # if interface_type.lower() == 'viewer':
+        #     return Viewer(system)
+        # if interface_type.lower() == 'console':
+        #     return Console(system)
         raise exception.InterfaceFactoryError("The specified interface type does not exist.")
