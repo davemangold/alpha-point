@@ -1,3 +1,6 @@
+from config import game_config
+
+
 def is_empty_response(response):
     """Returns True if the response is valid, otherwise False."""
 
@@ -132,7 +135,7 @@ def nested_list_to_text_map(nested_list):
 def format_ui_text(text):
     """Format text to fit within UI."""
 
-    width = 60
+    width = game_config['ui_width']
     words = text.split()
     lines = []
     line = ''
@@ -145,5 +148,5 @@ def format_ui_text(text):
             line += ' ' + w
     lines.append(line.strip())
     keep_lines = [line for line in lines if len(line) > 0]
-    formatted_text = '\n'.join(keep_lines).strip()
+    formatted_text = '\n'.join(keep_lines)
     return formatted_text

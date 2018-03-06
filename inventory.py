@@ -36,4 +36,4 @@ class Inventory(object):
     def get_items_by_name(self, name):
         """Return all items that match the provided name."""
 
-        return [item for item in self.items if name in item.name]
+        return [item for item in self.items if name.lower() in item.name.lower()]

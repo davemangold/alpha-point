@@ -18,7 +18,7 @@ class Component(object):
         self.orientation = 0
         self.visible = False
         self.msg_enabled = "Something happened."
-        self.msg_disabled = "Hmm, Nothing happened."
+        self.msg_disabled = "Nothing happened."
 
     def __str__(self):
         """A brief description."""

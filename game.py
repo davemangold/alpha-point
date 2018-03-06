@@ -27,10 +27,13 @@ class Game(object):
     def set_player(self):
         """Set the player based on the game level"""
 
-        enter_coords = levels_config['levels'][self.level.number]['map']['coord_enter']
+        map_config = levels_config['levels'][self.level.number]['map']
+        enter_coords = map_config['coord_enter']
+        enter_orientation = map_config['orientation_enter']
 
         player = Player(self)
         player.move_to(*enter_coords)
+        player.orientation = enter_orientation
         self.player = player
 
     def setup(self, level_number=0):

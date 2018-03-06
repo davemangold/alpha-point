@@ -15,7 +15,7 @@ class BaseUI(object):
     def __init__(self, game, *args, **kwargs):
         self.game = game
         self.alert = None
-        self.separator = '-' * 60
+        self.separator = '-' * game_config['ui_width']
 
     def process_input(self, value):
         """Call the appropriate method based on input value."""
@@ -60,7 +60,8 @@ class BaseUI(object):
     @staticmethod
     def decorate_ui(ui_text):
 
-        return '\n'.join(["  " + line for line in ui_text.split('\n')])
+        ui_text_decorated = '\n'.join(["  " + line for line in ui_text.split('\n')])
+        return ui_text_decorated
 
     def display(self):
         """Display the UI."""
@@ -87,12 +88,13 @@ class StartUI(BaseUI):
     def __init__(self, *args, **kwargs):
         super(StartUI, self).__init__(*args, **kwargs)
         self.splash_seen = False
-        self.story_seen = False
+        self.story_seen_1 = False
+        self.story_seen_2 = False
 
     def process_input(self, value):
         """Call the appropriate method based on input value."""
 
-        if self.story_seen is True:
+        if self.story_seen_2 is True:
             self.leave()
 
     def prompt(self, valid_responses=[]):
@@ -109,12 +111,15 @@ class StartUI(BaseUI):
         ui_elements = []
 
         ui_splash_text = self.get_splash_text()
-        ui_story_text = self.get_story_text()
+        ui_story_text_1 = self.get_story_text_1()
+        ui_story_text_2 = self.get_story_text_2()
 
         if self.splash_seen is False:
             ui_body_text = ui_splash_text
+        elif self.splash_seen is True and self.story_seen_1 is False:
+            ui_body_text = ui_story_text_1
         else:
-            ui_body_text = ui_story_text
+            ui_body_text = ui_story_text_2
 
         ui_elements.append(self.separator)
         ui_elements.append(ui_body_text)
@@ -135,8 +140,11 @@ class StartUI(BaseUI):
             self.clear_screen()
             print(show_text)
 
+        if self.story_seen_1 is True:
+            self.story_seen_2 = True
         if self.splash_seen is True:
-            self.story_seen = True
+            self.story_seen_1 = True
+
         self.splash_seen = True
 
     def get_splash_text(self):
@@ -144,10 +152,17 @@ class StartUI(BaseUI):
 
         return game_config['splash_text']
 
-    def get_story_text(self):
+    def get_story_text_1(self):
         """Return the story intro text."""
 
-        story_text = game_config['story_text']
+        story_text = game_config['story_text_1']
+        formatted_text = utility.format_ui_text(story_text)
+        return formatted_text
+
+    def get_story_text_2(self):
+        """Return the story intro text."""
+
+        story_text = game_config['story_text_2']
         formatted_text = utility.format_ui_text(story_text)
         return formatted_text
 
@@ -271,13 +286,15 @@ class MainUI(BaseUI):
         except exception.ActionError:
             self.alert = "That's not an option."
         except exception.InterfaceError:
-            self.alert = "There's something wrong with this thing!"
+            self.alert = "Dammit! There's something wrong with this thing."
 
     def add_map_player(self, text_map):
         """Add the player to the map."""
 
+        chars = {0: '^', 1: '>', 2: 'v', 3: '<'}
+        char = chars[self.game.player.orientation]
         map_list = utility.text_map_to_nested_list(text_map)
-        map_list[self.game.player.y][self.game.player.x] = 'P'
+        map_list[self.game.player.y][self.game.player.x] = char
 
         return utility.nested_list_to_text_map(map_list)
 
@@ -326,15 +343,17 @@ class MainUI(BaseUI):
         # text_map = self.add_map_devices(text_map)
         # text_map = self.add_map_interfaces(text_map)
         text_map = self.add_map_player(text_map)
-        return text_map + '\n'
+        map_width = len(text_map.split('\n')[0])
+        buffer_width = int((game_config['ui_width'] - map_width) / 2)
+        text_map = '\n'.join([' ' * buffer_width + line for line in text_map.split('\n')])
+        return text_map
 
     def get_action(self):
         """Return the text that represents available actions."""
 
         ui_actions = None
-        player_actions = self.game.player.get_actions()
         ui_actions_list = ['{0}. {1}'.format(key, action.__self__.action_text())
-                           for key, action in sorted(player_actions.items())]
+                           for key, action in sorted(self.game.player.actions.items())]
         if len(ui_actions_list) > 0:
             ui_actions = '\n'.join(ui_actions_list)
 
@@ -343,8 +362,8 @@ class MainUI(BaseUI):
     def get_commands(self):
         """Return the universal commands."""
 
-        commands = ('\ni - move up\tr - restart level\tP - Player\n'
-                    'k - move down\tq - main menu\t\t. - Path\n'
+        commands = ('\ni - move up\t\tr - restart level\tP - Player\n'
+                    'k - move down\t\tq - main menu\t\t. - Path\n'
                     'j - move left\n'
                     'l - move right')
 
@@ -364,6 +383,7 @@ class MainUI(BaseUI):
         ui_elements.append(ui_commands)
         ui_elements.append(self.separator)
         ui_elements.append(ui_map)
+        ui_elements.append(self.separator)
         ui_elements.append(ui_report)
         if ui_action is not None:
             ui_elements.append(ui_action)
