@@ -394,8 +394,8 @@ levels_config = {
                         'msg_action_false': 'close',
                         'msg_active_true': 'The valve is open.',
                         'msg_active_false': 'The valve is closed.',
-                        'msg_toggle_active_true': 'Your suit collapses. The internal door indicator glows green and reads "Airlock Pressurized".',
-                        'msg_toggle_active_false': 'Your suit expands. The internal door indicator glows red and reads "Airlock Purged".',
+                        'msg_toggle_active_true': 'My suit collapsed and the green internal door indicator reads "Airlock Pressurized".',
+                        'msg_toggle_active_false': 'My suit expanded and the red internal door indicator reads "Airlock Purged".',
                         'msg_unmet_dependencies': 'The valve isn\'t responding.',
                         'dependencies': []
                     },
@@ -425,6 +425,50 @@ levels_config = {
                     {'interface_id': 2, 'device_id': 2}
                 ]
             }
-        }
+        },
+        3: {
+            'name': 'Equipment',
+            'map': {
+                'x_dimension': 9,
+                'y_dimension': 9,
+                'path_cells': [
+                    {'coordinates': (4, 0), 'story_text': None},
+                    {'coordinates': (4, 1), 'story_text': None},
+                    {'coordinates': (4, 2), 'story_text': None},
+                    {'coordinates': (4, 3), 'story_text': None},
+                    {'coordinates': (4, 4), 'story_text': None},
+                    {'coordinates': (4, 5), 'story_text': None},
+                    {'coordinates': (4, 6), 'story_text': None},
+                    {'coordinates': (4, 7), 'story_text': None},
+                    {'coordinates': (4, 8), 'story_text': 'Equipment storage story text...'},
+                    {'coordinates': (3, 6), 'story_text': None},
+                    {'coordinates': (2, 6), 'story_text': None},
+                    {'coordinates': (1, 6), 'story_text': None},
+                    {'coordinates': (5, 6), 'story_text': None},
+                    {'coordinates': (6, 6), 'story_text': None},
+                    {'coordinates': (7, 6), 'story_text': None},
+                    {'coordinates': (3, 4), 'story_text': None},
+                    {'coordinates': (2, 4), 'story_text': None},
+                    {'coordinates': (1, 4), 'story_text': None},
+                    {'coordinates': (5, 4), 'story_text': None},
+                    {'coordinates': (6, 4), 'story_text': None},
+                    {'coordinates': (7, 4), 'story_text': None},
+                    {'coordinates': (3, 2), 'story_text': None},
+                    {'coordinates': (2, 2), 'story_text': None},
+                    {'coordinates': (1, 2), 'story_text': None},
+                    {'coordinates': (5, 2), 'story_text': None},
+                    {'coordinates': (6, 2), 'story_text': None},
+                    {'coordinates': (7, 2), 'story_text': None}
+                ],
+                'coord_enter': (4, 8),  # begin
+                'coord_exit': (4, 0),  # end
+                'orientation_enter': 0
+            },
+            'system': {
+                'interfaces': [],
+                'devices': [],
+                'links': []
+            }
+        },
     }
 }

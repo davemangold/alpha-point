@@ -6,7 +6,7 @@ class Inventory(object):
     """Inventory class to hold items."""
 
     def __init__(self, owner, *args, **kwargs):
-        self.owner = owner
+        self.owner = owner  # character or level
         self.items = []
 
     def add_item(self, item):
