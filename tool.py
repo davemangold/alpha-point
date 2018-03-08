@@ -6,14 +6,14 @@ class Tool(Item):
     """An item that can be used on a system component."""
 
     def __init__(self, *args, **kwargs):
-        super(self, Item).__init__(*args, **kwargs)
+        super(Tool, self).__init__(*args, **kwargs)
 
 
 class Wrench(Tool):
     """A tool that can be used to force a valve."""
 
     def __init__(self, *args, **kwargs):
-        super(self, Wrench).__init__(*args, **kwargs)
+        super(Wrench, self).__init__(*args, **kwargs)
 
 
 class ToolFactory(object):

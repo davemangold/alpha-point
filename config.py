@@ -43,7 +43,9 @@ levels_config = {
                 ],
                 'coord_enter': (0, 3),  # begin
                 'coord_exit': (4, 0),  # end
-                'orientation_enter': 0
+                'orientation_enter': 0,
+                'tools': [],
+                'artifacts': []
             },
             'system': {
                 'interfaces': [
@@ -189,7 +191,9 @@ levels_config = {
                 ],
                 'coord_enter': (0, 1),  # begin
                 'coord_exit': (0, 0),  # end
-                'orientation_enter': 0
+                'orientation_enter': 0,
+                'tools': [],
+                'artifacts': []
             },
             'system': {
                 'interfaces': [],
@@ -215,7 +219,9 @@ levels_config = {
                 ],
                 'coord_enter': (2, 3),  # begin
                 'coord_exit': (2, 0),  # end
-                'orientation_enter': 0
+                'orientation_enter': 0,
+                'tools': [],
+                'artifacts': []
             },
             'system': {
                 'interfaces': [
@@ -324,7 +330,9 @@ levels_config = {
                 ],
                 'coord_enter': (1, 1),  # begin
                 'coord_exit': (4, 1),  # end
-                'orientation_enter': 1
+                'orientation_enter': 1,
+                'tools': [],
+                'artifacts': []
             },
             'system': {
                 'interfaces': [
@@ -460,15 +468,62 @@ levels_config = {
                     {'coordinates': (6, 2), 'story_text': None},
                     {'coordinates': (7, 2), 'story_text': None}
                 ],
-                'coord_enter': (4, 8),  # begin
+                'coord_enter': (4, 7),  # begin
                 'coord_exit': (4, 0),  # end
-                'orientation_enter': 0
+                'orientation_enter': 0,
+                'tools': [
+                    {
+                        'type': 'wrench',
+                        'name': 'wrench',
+                        'description': 'wrench',
+                        'x': 4,
+                        'y': 6
+                    }
+                ],
+                'artifacts': []
             },
             'system': {
                 'interfaces': [],
-                'devices': [],
+                'devices': [
+                    {
+                        'id': 0,
+                        'name': 'entrance door',
+                        'description': 'door',
+                        'type': 'door',
+                        'enabled': False,
+                        'active': False,
+                        'x': 4,
+                        'y': 8,
+                        'msg_action_true': 'open',
+                        'msg_action_false': 'close',
+                        'msg_active_true': 'The door is open.',
+                        'msg_active_false': 'The door is closed.',
+                        'msg_toggle_active_true': 'The door opened.',
+                        'msg_toggle_active_false': 'The door closed.',
+                        'msg_unmet_dependencies': 'The door is locked.',
+                        'dependencies': []
+                    },
+                    {
+                        'id': 1,
+                        'name': 'exit door',
+                        'description': 'door',
+                        'type': 'door',
+                        'enabled': True,
+                        'active': False,
+                        'x': 4,
+                        'y': 0,
+                        'msg_action_true': 'open',
+                        'msg_action_false': 'close',
+                        'msg_active_true': 'The door is open.',
+                        'msg_active_false': 'The door is closed.',
+                        'msg_toggle_active_true': 'The door opened.',
+                        'msg_toggle_active_false': 'The door closed.',
+                        'msg_unmet_dependencies': 'The door is locked.',
+                        'dependencies': []
+                    }
+                ],
                 'links': []
             }
-        },
+        }
     }
 }

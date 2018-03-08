@@ -1,5 +1,7 @@
 import exception
 from item import Item
+from tool import Tool
+from artifact import Artifact
 
 
 class Inventory(object):
@@ -27,6 +29,16 @@ class Inventory(object):
             raise exception.InventoryError("The item does not exist in the inventory.")
 
         return self.items.pop(self.items.index(item))
+
+    def get_tools(self):
+        """Return all items that are Tool instances."""
+
+        return [item for item in self.items if isinstance(item, Tool)]
+
+    def get_artifacts(self):
+        """Return all items that are Tool instances."""
+
+        return [item for item in self.items if isinstance(item, Artifact)]
 
     def get_items_by_type(self, instance):
         """Return all items that match the type of the provided instance."""

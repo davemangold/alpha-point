@@ -89,13 +89,33 @@ class Character(object):
         self.orientation = 3
         self.move_to(self.x - 1, self.y)
 
-    def get_visible_components(self):
-        """Return d4 components visible to the player."""
+    def get_visible_tools(self):
+        """Return d4 tools visible to the player."""
 
-        visible_interfaces = self.get_visible_interfaces()
-        visible_devices = self.get_visible_devices()
-        visible_components = [items[0] + items[1] for items in zip(visible_interfaces, visible_devices)]
-        return visible_components
+        d4_visible_tools = []
+        d4_tools = self.game.level.map.get_d4_tools(*self.location())
+        for tool_list in d4_tools:
+            visible_tools = [tool for tool in tool_list if tool.visible is True]
+            d4_visible_tools.append(visible_tools)
+        return d4_visible_tools
+
+    def get_visible_artifacts(self):
+        """Return d4 artifacts visible to the player."""
+
+        d4_visible_artifacts = []
+        d4_artifacts = self.game.level.map.get_d4_artifacts(*self.location())
+        for artifact_list in d4_artifacts:
+            visible_artifacts = [artifact for artifact in artifact_list if artifact.visible is True]
+            d4_visible_artifacts.append(visible_artifacts)
+        return d4_visible_artifacts
+
+    def get_visible_items(self):
+        """Return d4 items visible to the player."""
+
+        visible_tools = self.get_visible_tools()
+        visible_artifacts = self.get_visible_artifacts()
+        visible_items = [items[0] + items[1] for items in zip(visible_tools, visible_artifacts)]
+        return visible_items
 
     def get_visible_interfaces(self):
         """Return d4 interfaces visible to the player."""
@@ -125,11 +145,18 @@ class Character(object):
             d4_visible_devices.append(visible_devices)
         return d4_visible_devices
 
-    def report_visible_components(self):
-        """Return string description of visible interfaces and devices."""
+    def get_visible_components(self):
+        """Return d4 components visible to the player."""
 
-        visible_components = self.get_visible_components()
-        return utility.build_component_report_text(self.orientation, visible_components)
+        visible_interfaces = self.get_visible_interfaces()
+        visible_devices = self.get_visible_devices()
+        visible_components = [items[0] + items[1] for items in zip(visible_interfaces, visible_devices)]
+        return visible_components
+
+    def report_visible_tools(self):
+
+        visible_tools = self.get_visible_tools()
+        return utility.build_component_report_text(self.orientation, visible_tools)
 
     def report_visible_interfaces(self):
         """Return string description of visible interfaces."""
@@ -142,6 +169,12 @@ class Character(object):
 
         visible_devices = self.get_visible_devices()
         return utility.build_component_report_text(self.orientation, visible_devices)
+
+    def report_visible_components(self):
+        """Return string description of visible interfaces and devices."""
+
+        visible_components = self.get_visible_components()
+        return utility.build_component_report_text(self.orientation, visible_components)
 
     def get_actions(self):
         """Return dictionary of actions based on d4 interfaces."""

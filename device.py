@@ -59,7 +59,7 @@ class Device(Component):
     def add_dependency(self, device_id, active_state):
         """Add a dependency that must be met before this device can be activated."""
 
-        if not self.system.has_devices(self.system.get_device(device_id)):
+        if not self.system.has_device(self.system.get_device(device_id)):
             raise exception.SystemError("The specified device is not in the system.")
 
         if not isinstance(active_state, bool):

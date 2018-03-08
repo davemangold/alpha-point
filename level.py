@@ -3,6 +3,10 @@ from interface import Interface
 from interface import InterfaceFactory
 from device import Device
 from device import DeviceFactory
+from tool import Tool
+from tool import ToolFactory
+from artifact import Artifact
+from artifact import ArtifactFactory
 from inventory import Inventory
 from config import levels_config
 
@@ -16,12 +20,56 @@ class System(object):
         self.interfaces = []  # [<interface>,...]
         self.links = []  # [{'interface_id': <interface id>, 'device_id': <device id>},...]
 
-    def has_interfaces(self, interface):
+    def build(self, level_number):
+        """Build system from config dictionary."""
+
+        system_config = levels_config['levels'][level_number]['system']
+
+        for config_interface in system_config['interfaces']:
+            interface = InterfaceFactory.make_interface(self, config_interface['type'])
+            interface.config_id = config_interface['id']
+            interface.name = config_interface['name']
+            interface.description = config_interface['description']
+            interface.enabled = config_interface['enabled']
+            interface.x = config_interface['x']
+            interface.y = config_interface['y']
+            interface.orientation = config_interface['orientation']
+            interface.msg_action_verb = config_interface['msg_action_verb']
+
+        for config_device in system_config['devices']:
+            device = DeviceFactory.make_device(self, config_device['type'])
+            device.config_id = config_device['id']
+            device.name = config_device['name']
+            device.description = config_device['description']
+            device.enabled = config_device['enabled']
+            device.active = config_device['active']
+            device.x = config_device['x']
+            device.y = config_device['y']
+            device.msg_action_true = config_device['msg_action_true']
+            device.msg_action_false = config_device['msg_action_false']
+            device.msg_active_true = config_device['msg_active_true']
+            device.msg_active_false = config_device['msg_active_false']
+            device.msg_toggle_active_true = config_device['msg_toggle_active_true']
+            device.msg_toggle_active_false = config_device['msg_toggle_active_false']
+            device.msg_unmet_dependencies = config_device['msg_unmet_dependencies']
+
+        for config_device in system_config['devices']:
+            device = self.get_device(config_id=config_device['id'])
+            for config_dependency in config_device['dependencies']:
+                dependency_device = self.get_device(config_id=config_dependency['device_id'])
+                device.add_dependency(dependency_device.id, config_dependency['active_state'])
+
+        for config_link in system_config['links']:
+            interface = self.get_interface(config_id=config_link['interface_id'])
+            device = self.get_device(config_id=config_link['device_id'])
+            self.link_components(interface, device)
+
+    def has_interface(self, interface):
         """Returns True if the system contains the interface, otherwise False."""
 
         return interface in self.interfaces
 
-    def has_devices(self, device):
+    def has_device(self, device):
         """Returns True if the system contains the device, otherwise False."""
 
         return device in self.devices
@@ -70,7 +118,7 @@ class System(object):
         if not isinstance(interface, Interface):
             raise TypeError("Object not of type 'Interface'.")
 
-        if not self.has_interfaces(interface):
+        if not self.has_interface(interface):
             raise exception.SystemError("The interface is not a component of the system.")
 
         device_ids = []
@@ -87,7 +135,7 @@ class System(object):
         if not isinstance(device, Device):
             raise TypeError("Object not of type 'Device'.")
 
-        if not self.has_devices(device):
+        if not self.has_device(device):
             raise exception.SystemError("The device is not a component of the system.")
 
         interface_ids = []
@@ -191,50 +239,6 @@ class System(object):
             return "The device is already inactive."
         return device.toggle_active_state()
 
-    def build(self, level_number):
-        """Build system from config dictionary."""
-
-        system_config = levels_config['levels'][level_number]['system']
-
-        for config_interface in system_config['interfaces']:
-            interface = InterfaceFactory.make_interface(self, config_interface['type'])
-            interface.config_id = config_interface['id']
-            interface.name = config_interface['name']
-            interface.description = config_interface['description']
-            interface.enabled = config_interface['enabled']
-            interface.x = config_interface['x']
-            interface.y = config_interface['y']
-            interface.orientation = config_interface['orientation']
-            interface.msg_action_verb = config_interface['msg_action_verb']
-
-        for config_device in system_config['devices']:
-            device = DeviceFactory.make_device(self, config_device['type'])
-            device.config_id = config_device['id']
-            device.name = config_device['name']
-            device.description = config_device['description']
-            device.enabled = config_device['enabled']
-            device.active = config_device['active']
-            device.x = config_device['x']
-            device.y = config_device['y']
-            device.msg_action_true = config_device['msg_action_true']
-            device.msg_action_false = config_device['msg_action_false']
-            device.msg_active_true = config_device['msg_active_true']
-            device.msg_active_false = config_device['msg_active_false']
-            device.msg_toggle_active_true = config_device['msg_toggle_active_true']
-            device.msg_toggle_active_false = config_device['msg_toggle_active_false']
-            device.msg_unmet_dependencies = config_device['msg_unmet_dependencies']
-
-        for config_device in system_config['devices']:
-            device = self.get_device(config_id=config_device['id'])
-            for config_dependency in config_device['dependencies']:
-                dependency_device = self.get_device(config_id=config_dependency['device_id'])
-                device.add_dependency(dependency_device.id, config_dependency['active_state'])
-
-        for config_link in system_config['links']:
-            interface = self.get_interface(config_id=config_link['interface_id'])
-            device = self.get_device(config_id=config_link['device_id'])
-            self.link_components(interface, device)
-
 
 class MapCell(object):
     """A single map cell (tile)."""
@@ -245,6 +249,8 @@ class MapCell(object):
         self.y = y
         self.interfaces = []
         self.devices = []
+        self.tools = []
+        self.artifacts = []
         self.story_text = None
         self.story_seen = False
         self.visited = False
@@ -261,11 +267,12 @@ class MapCell(object):
 
         if interface not in self.interfaces:
             raise exception.MapError("The interface is not assigned to the map cell.")
+        return self.interfaces.pop(interface)
 
     def add_device(self, device):
         """Adds an interface to the map cell."""
 
-        if device in self.deviecs:
+        if device in self.devices:
             raise exception.MapError("The device is already assigned to the map cell.")
         self.devices.append(device)
 
@@ -274,11 +281,35 @@ class MapCell(object):
 
         if device not in self.interfaces:
             raise exception.MapError("The device is not assigned to the map cell.")
+        return self.devices.pop(device)
 
-    def has_component(self):
-        """Return True if the map cell has any components, otherwise False."""
+    def add_tool(self, tool):
+        """Adds a tool to the map cell."""
 
-        return self.has_interfaces() or self.has_devices()
+        if tool in self.tools:
+            raise exception.MapError("The tool is already assigned to the map cell.")
+        self.tools.append(tool)
+
+    def remove_tool(self, tool):
+        """Removes the interface from the map cell"""
+
+        if tool not in self.tools:
+            raise exception.MapError("The tool is not assigned to the map cell.")
+        return self.tools.pop(tool)
+
+    def add_artifact(self, artifact):
+        """Adds a tool to the map cell."""
+
+        if artifact in self.artifacts:
+            raise exception.MapError("The artifact is already assigned to the map cell.")
+        self.artifacts.append(artifact)
+
+    def remove_artifact(self, artifact):
+        """Removes the interface from the map cell"""
+
+        if artifact not in self.artifacts:
+            raise exception.MapError("The artifact is not assigned to the map cell.")
+        return self.artifacts.pop(artifact)
 
     def has_interfaces(self):
         """Return True if the map cell has any interfaces, otherwise False."""
@@ -289,6 +320,26 @@ class MapCell(object):
         """Return True if the map cell has any devices, otherwise False."""
 
         return len(self.devices) > 0
+
+    def has_tools(self):
+        """Return True if the map cell has any tools, otherwise False."""
+
+        return len(self.tools) > 0
+
+    def has_artifacts(self):
+        """Return True if the map cell has any tools, otherwise False."""
+
+        return len(self.artifacts) > 0
+
+    def has_components(self):
+        """Return True if the map cell has any components, otherwise False."""
+
+        return self.has_interfaces() or self.has_devices()
+
+    def has_items(self):
+        """Return True if the map cell has any components, otherwise False."""
+
+        return self.has_tools() or self.has_artifacts()
 
     def has_story_text(self):
         """Return True if there is story text associated with the cell, otherwise False."""
@@ -308,7 +359,6 @@ class MapPath(object):
 
         if self.has_cell(cell):
             raise exception.MapError("The cell is already in the path.")
-
         self.cells.append(cell)
 
     def remove_cell(self, cell):
@@ -316,8 +366,7 @@ class MapPath(object):
 
         if not self.has_cell(cell):
             raise exception.MapError("The cell is not in the path.")
-
-        self.cells.remove(cell)
+        return self.cells.pop(cell)
 
     def has_cell(self, cell):
         """True if the cell is part of the path, otherwise False."""
@@ -363,6 +412,22 @@ class Map(object):
         self.enter_cell = self.get_cell(*enter_coord)
         self.exit_cell = self.get_cell(*exit_coord)
 
+        for config_tool in map_config['tools']:
+            tool = ToolFactory.make_tool(self.inventory, config_tool['type'])
+            tool.name = config_tool['name']
+            tool.description = config_tool['description']
+            tool.x = config_tool['x']
+            tool.y = config_tool['y']
+            self.inventory.add_item(tool)
+
+        for config_artifact in map_config['artifacts']:
+            artifact = ArtifactFactory.make_artifact(self.inventory, config_artifact['type'])
+            artifact.name = config_artifact['name']
+            artifact.description = config_artifact['description']
+            tool.x = config_tool['x']
+            tool.y = config_tool['y']
+            self.inventory.add_item(artifact)
+
         for cell in map_config['path_cells']:
             path_cell = self.get_cell(*cell['coordinates'])
             path_cell.story_text = cell['story_text']
@@ -370,11 +435,15 @@ class Map(object):
 
         for interface in self.level.system.interfaces:
             cell = self.get_cell(interface.x, interface.y)
-            cell.interfaces.append(interface)
+            cell.add_interface(interface)
 
         for device in self.level.system.devices:
             cell = self.get_cell(device.x, device.y)
-            cell.devices.append(device)
+            cell.add_device(device)
+
+        for tool in self.inventory.get_tools():
+            cell = self.get_cell(tool.x, tool.y)
+            cell.add_tool(tool)
 
     def get_cell(self, x, y):
         """Return the cell at the coordinates if it exists, otherwise None."""
@@ -397,35 +466,65 @@ class Map(object):
             d4_cells.append(self.get_cell(*coord))
         return d4_cells
 
-    def get_d4_components(self, x, y):
-        """Return the interfaces for the d4 cells."""
-
-        d4_interfaces = self.get_d4_interfaces(x, y)
-        d4_devices = self.get_d4_devices(x, y)
-        d4_components = [items[0] + items[1] for items in zip(d4_interfaces, d4_devices)]
-        return d4_components
-
     def get_d4_interfaces(self, x, y):
         """Return the interfaces for the d4 cells."""
 
         d4_interfaces = []
         for cell in self.get_d4_cells(x, y):
-            if isinstance(cell, MapCell) and cell.has_interfaces():
+            if isinstance(cell, MapCell):
                 d4_interfaces.append(cell.interfaces)
             else:
                 d4_interfaces.append([])
         return d4_interfaces
 
     def get_d4_devices(self, x, y):
-        """Return the interfaces for the d4 cells."""
+        """Return the devices for the d4 cells."""
 
         d4_devices = []
         for cell in self.get_d4_cells(x, y):
-            if isinstance(cell, MapCell) and cell.has_devices():
+            if isinstance(cell, MapCell):
                 d4_devices.append(cell.devices)
             else:
                 d4_devices.append([])
         return d4_devices
+
+    def get_d4_components(self, x, y):
+        """Return the components for the d4 cells."""
+
+        d4_interfaces = self.get_d4_interfaces(x, y)
+        d4_devices = self.get_d4_devices(x, y)
+        d4_components = [items[0] + items[1] for items in zip(d4_interfaces, d4_devices)]
+        return d4_components
+
+    def get_d4_tools(self, x, y):
+        """Return the tools for the d4 cells."""
+
+        d4_tools = []
+        for cell in self.get_d4_cells(x, y):
+            if isinstance(cell, MapCell):
+                d4_tools.append(cell.tools)
+            else:
+                d4_tools.append([])
+        return d4_tools
+
+    def get_d4_artifacts(self, x, y):
+        """Return the artifacts for the d4 cells."""
+
+        d4_artifacts = []
+        for cell in self.get_d4_cells(x, y):
+            if isinstance(cell, MapCell):
+                d4_artifacts.append(cell.artifacts)
+            else:
+                d4_artifacts.append([])
+        return d4_artifacts
+
+    def get_d4_items(self, x, y):
+        """Return the items for the d4 cells."""
+
+        d4_tools = self.get_d4_tools(x, y)
+        d4_artifacts = self.get_d4_artifacts(x, y)
+        d4_items = [items[0] + items[1] for items in zip(d4_tools, d4_artifacts)]
+        return d4_items
 
 
 class Level(object):
