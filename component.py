@@ -17,6 +17,7 @@ class Component(object):
         self.y = 0
         self.orientation = 0
         self.visible = False
+        self.interactive = True
         self.msg_enabled = "Something happened."
         self.msg_disabled = "Nothing happened."
 

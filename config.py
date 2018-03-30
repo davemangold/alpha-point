@@ -221,7 +221,38 @@ levels_config = {
                 'coord_exit': (2, 0),  # end
                 'orientation_enter': 0,
                 'tools': [],
-                'artifacts': []
+                'artifacts': [
+                    {
+                        'type': 'generic',
+                        'name': 'rover',
+                        'description': 'rover',
+                        'visible': True,
+                        'interactive': False,
+                        'blocking': True,
+                        'x': 2,
+                        'y': 4
+                    },
+                    {
+                        'type': 'generic',
+                        'name': 'solararray',
+                        'description': 'solar array',
+                        'visible': True,
+                        'interactive': False,
+                        'blocking': True,
+                        'x': 4,
+                        'y': 3
+                    },
+                    {
+                        'type': 'generic',
+                        'name': 'communicationsarray',
+                        'description': 'communications array',
+                        'visible': True,
+                        'interactive': False,
+                        'blocking': True,
+                        'x': 0,
+                        'y': 1
+                    },
+                ]
             },
             'system': {
                 'interfaces': [
@@ -238,60 +269,6 @@ levels_config = {
                     }
                 ],
                 'devices': [
-                    {
-                        'id': 0,
-                        'name': 'rover',
-                        'description': 'rover',
-                        'type': 'door',
-                        'enabled': False,
-                        'active': False,
-                        'x': 2,
-                        'y': 4,
-                        'msg_action_true': 'open',
-                        'msg_action_false': 'close',
-                        'msg_active_true': 'The door is open.',
-                        'msg_active_false': 'The door is closed.',
-                        'msg_toggle_active_true': 'The door opened.',
-                        'msg_toggle_active_false': 'The door closed.',
-                        'msg_unmet_dependencies': 'The door is locked.',
-                        'dependencies': []
-                    },
-                    {
-                        'id': 1,
-                        'name': 'solar array',
-                        'description': 'solar array',
-                        'type': 'door',
-                        'enabled': False,
-                        'active': False,
-                        'x': 4,
-                        'y': 3,
-                        'msg_action_true': 'open',
-                        'msg_action_false': 'close',
-                        'msg_active_true': 'The door is open.',
-                        'msg_active_false': 'The door is closed.',
-                        'msg_toggle_active_true': 'The door opened.',
-                        'msg_toggle_active_false': 'The door closed.',
-                        'msg_unmet_dependencies': 'The door is locked.',
-                        'dependencies': []
-                    },
-                    {
-                        'id': 2,
-                        'name': 'communications array',
-                        'description': 'communications array',
-                        'type': 'door',
-                        'enabled': False,
-                        'active': False,
-                        'x': 0,
-                        'y': 1,
-                        'msg_action_true': 'open',
-                        'msg_action_false': 'close',
-                        'msg_active_true': 'The door is open.',
-                        'msg_active_false': 'The door is closed.',
-                        'msg_toggle_active_true': 'The door opened.',
-                        'msg_toggle_active_false': 'The door closed.',
-                        'msg_unmet_dependencies': 'The door is locked.',
-                        'dependencies': []
-                    },
                     {
                         'id': 4,
                         'name': 'airlock door',
@@ -447,14 +424,12 @@ levels_config = {
                     {'coordinates': (4, 4), 'story_text': None},
                     {'coordinates': (4, 5), 'story_text': None},
                     {'coordinates': (4, 6), 'story_text': None},
-                    {'coordinates': (4, 7), 'story_text': None},
-                    {'coordinates': (4, 8), 'story_text': 'Equipment storage story text...'},
+                    {'coordinates': (4, 7), 'story_text': 'Equipment storage story text...'},
+                    {'coordinates': (4, 8), 'story_text': None},
                     {'coordinates': (3, 6), 'story_text': None},
-                    {'coordinates': (2, 6), 'story_text': None},
-                    {'coordinates': (1, 6), 'story_text': None},
+                    {'coordinates': (3, 7), 'story_text': None},
                     {'coordinates': (5, 6), 'story_text': None},
-                    {'coordinates': (6, 6), 'story_text': None},
-                    {'coordinates': (7, 6), 'story_text': None},
+                    {'coordinates': (5, 7), 'story_text': None},
                     {'coordinates': (3, 4), 'story_text': None},
                     {'coordinates': (2, 4), 'story_text': None},
                     {'coordinates': (1, 4), 'story_text': None},
@@ -476,14 +451,80 @@ levels_config = {
                         'type': 'wrench',
                         'name': 'wrench',
                         'description': 'wrench',
-                        'x': 4,
-                        'y': 6
+                        'visible': True,
+                        'interactive': True,
+                        'blocking': False,
+                        'x': 1,
+                        'y': 4
                     }
                 ],
-                'artifacts': []
+                'artifacts': [
+                    {
+                        'type': 'generic',
+                        'name': 'suit_1',
+                        'description': 'excursion suit',
+                        'visible': True,
+                        'interactive': False,
+                        'blocking': True,
+                        'x': 3,
+                        'y': 6
+                    },
+                    {
+                        'type': 'generic',
+                        'name': 'suit_2',
+                        'description': 'excursion suit',
+                        'visible': True,
+                        'interactive': False,
+                        'blocking': True,
+                        'x': 3,
+                        'y': 7
+                    },
+                    {
+                        'type': 'generic',
+                        'name': 'suit_3',
+                        'description': 'excursion suit',
+                        'visible': True,
+                        'interactive': False,
+                        'blocking': True,
+                        'x': 5,
+                        'y': 6
+                    },
+                    {
+                        'type': 'generic',
+                        'name': 'circuit_bundle_1',
+                        'description': 'bundle of wires and circuitry',
+                        'visible': True,
+                        'interactive': False,
+                        'blocking': False,
+                        'x': 6,
+                        'y': 1
+                    },
+                    {
+                        'type': 'generic',
+                        'name': 'helmet_1',
+                        'description': 'excursion suit helmet',
+                        'visible': True,
+                        'interactive': False,
+                        'blocking': False,
+                        'x': 7,
+                        'y': 3
+                    }
+                ]
             },
             'system': {
-                'interfaces': [],
+                'interfaces': [
+                    {
+                        'id': 0,
+                        'name': 'exit door button',
+                        'description': 'button',
+                        'type': 'button',
+                        'enabled': True,
+                        'x': 5,
+                        'y': 1,
+                        'orientation': 3,
+                        'msg_action_verb': 'push'
+                    },
+                ],
                 'devices': [
                     {
                         'id': 0,
@@ -522,7 +563,19 @@ levels_config = {
                         'dependencies': []
                     }
                 ],
-                'links': []
+                'links': [
+                    {'interface_id': 0, 'device_id': 1}
+                ]
+            }
+        }
+    },
+    'ui': {
+        'articles': {
+            'default': 'a',
+            'mapped': {
+                # object desc   : article
+                'excursion suit': 'an',
+                'excursion suit helmet': 'an'
             }
         }
     }

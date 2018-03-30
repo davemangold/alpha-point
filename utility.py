@@ -1,6 +1,13 @@
 from config import game_config
+from config import levels_config
 
 
+# constants
+DEFAULT_ARTICLE = levels_config['ui']['articles']['default']
+ARTICLE_MAP = levels_config['ui']['articles']['mapped']
+
+
+# functions
 def is_empty_response(response):
     """Returns True if the response is valid, otherwise False."""
 
@@ -28,29 +35,49 @@ def get_relative_direction_text(orientation, direction):
     return relative_directions[dirkeys[keyindex]]
 
 
-def build_component_list_text(component_list):
+def get_article(object_description):
 
-    article = 'a'
+    try:
+        article = ARTICLE_MAP[object_description]
+    except KeyError:
+        article = DEFAULT_ARTICLE
+
+    return article
+
+
+def build_object_list_text(object_list):
+
     conjunction = 'and'
     delimiter = ','
 
-    component_text = ''
+    object_text = ''
 
-    if len(component_list) == 1:
-        component_text = ' '.join([article, str(component_list[0])])
+    if len(object_list) == 1:
+        obj = object_list[0]
+        object_text = ' '.join(
+            [get_article(obj.description),
+             str(obj)])
 
-    elif len(component_list) == 2:
-        component_text = ' '.join([article, str(component_list[0]), conjunction, article, str(component_list[1])])
+    elif len(object_list) == 2:
+        obj_1 = object_list[0]
+        obj_2 = object_list[1]
+        object_text = ' '.join(
+            [get_article(obj_1.description),
+             str(obj_1),
+             conjunction,
+             get_article(obj_2.description),
+             str(obj_2)])
 
-    elif len(component_list) > 2:
-        working_text = (' ' + conjunction + ' ').join([article + ' ' + str(component) for component in component_list])
+    elif len(object_list) > 2:
+        working_text = (' ' + conjunction + ' ').join(
+            [get_article(obj.description) + ' ' + str(obj) for obj in object_list])
         replace_count = working_text.count(' ' + conjunction) - 1
-        component_text = working_text.replace(' ' + conjunction, delimiter, replace_count)
+        object_text = working_text.replace(' ' + conjunction, delimiter, replace_count)
 
-    return component_text
+    return object_text
 
 
-def build_component_report_body(text_part_list):
+def build_object_report_body(text_part_list):
 
     conjunction = 'and'
     delimiter = ','
@@ -72,7 +99,7 @@ def build_component_report_body(text_part_list):
     return body_text
 
 
-def build_component_report_text(orientation, d4_components):
+def build_object_report_text(orientation, d4_components):
 
     report_open = 'There\'s'
     report_body = ''
@@ -84,18 +111,23 @@ def build_component_report_text(orientation, d4_components):
         component_list = d4_components[direction]
 
         if len(component_list) > 0:
-            this_text_part = build_component_list_text(component_list)
+            this_text_part = build_object_list_text(component_list)
             this_text_part += ' ' + get_relative_direction_text(orientation, direction)
             body_part_list.append(this_text_part)
 
     if len(body_part_list) > 0:
-        report_body += build_component_report_body(body_part_list)
+        report_body += build_object_report_body(body_part_list)
     else:
         report_close = ' nothing around me.'
 
     report = report_open + ' ' + report_body + report_close
 
     return report
+
+
+def merge_dicts(a, b):
+
+    return {**a, **b}
 
 
 def merge_lists(a, b):

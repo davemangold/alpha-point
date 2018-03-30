@@ -272,7 +272,7 @@ class MainUI(BaseUI):
                 self.game.player.move_left()
             # process action input
             elif value.isdigit():
-                self.game.player.do_action(int(value))
+                self.game.player.do_action(int(value), self.game)
             # process restart or quit input
             elif value == 'r':
                 self.restart_level()
@@ -297,24 +297,6 @@ class MainUI(BaseUI):
         map_list[self.game.player.y][self.game.player.x] = char
 
         return utility.nested_list_to_text_map(map_list)
-
-    # def add_map_interfaces(self, text_map):
-    #     """Add system interfaces to the map."""
-    #
-    #     map_list = utility.text_map_to_nested_list(text_map)
-    #     for interface in self.game.level.system.interfaces:
-    #         map_list[interface.y][interface.x] = 'I'
-    #
-    #     return utility.nested_list_to_text_map(map_list)
-    #
-    # def add_map_devices(self, text_map):
-    #     """Add system interfaces to the map."""
-    #
-    #     map_list = utility.text_map_to_nested_list(text_map)
-    #     for device in self.game.level.system.devices:
-    #         map_list[device.y][device.x] = 'D'
-    #
-    #     return utility.nested_list_to_text_map(map_list)
 
     def add_map_path(self, text_map):
         """Add map path to this map."""
@@ -352,8 +334,9 @@ class MainUI(BaseUI):
         """Return the text that represents available actions."""
 
         ui_actions = None
-        ui_actions_list = ['{0}. {1}'.format(key, action.__self__.action_text())
-                           for key, action in sorted(self.game.player.actions.items())]
+        ui_actions_list = []
+        for key, action in sorted(self.game.player.actions.items()):
+            ui_actions_list.append('{0}. {1}'.format(key, action.__self__.action_text()))
         if len(ui_actions_list) > 0:
             ui_actions = '\n'.join(ui_actions_list)
 
@@ -377,7 +360,7 @@ class MainUI(BaseUI):
         ui_commands = self.get_commands()
         ui_map = self.get_map()
         ui_alert = self.get_alert()
-        ui_report = utility.format_ui_text(self.game.player.report_visible_components())
+        ui_report = utility.format_ui_text(self.game.player.report_visible_objects())
         ui_action = self.get_action()
 
         ui_elements.append(ui_commands)
@@ -414,7 +397,7 @@ class TerminalUI(BaseUI):
         try:
             # process action input
             if value.isdigit():
-                self.terminal.do_action(int(value))
+                self.terminal.do_action(int(value), self.game)
             # process quit input
             elif value == 'q':
                 self.leave()

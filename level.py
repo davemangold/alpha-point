@@ -1,4 +1,10 @@
 import exception
+import component
+import interface
+import device
+import item
+import tool
+import artifact
 from interface import Interface
 from interface import InterfaceFactory
 from device import Device
@@ -187,7 +193,7 @@ class System(object):
             if link['interface_id'] == interface.id:
                 self.links.remove(link)
 
-        return self.interfaces.pop(interface)
+        return self.interfaces.pop(self.interfaces.index(interface))
 
     def add_device(self, device):
         """Add a device to the system."""
@@ -207,7 +213,7 @@ class System(object):
             if link['device_id'] == device.id:
                 self.links.remove(link)
 
-        return self.devices.pop(device)
+        return self.devices.pop(self.devices.index(device))
 
     def link_components(self, interface, device):
         """Link an interface to a device."""
@@ -255,6 +261,33 @@ class MapCell(object):
         self.story_seen = False
         self.visited = False
 
+    def is_on_path(self):
+
+        return self.map.path.has_cell(self)
+
+    def is_blocked(self):
+        """Returns True if the cell is blocked, otherwise False."""
+
+        blocked_by_interface = False
+
+        blocked_by_device = any([True for d in self.devices
+                                 if (isinstance(d, device.Door)
+                                     or isinstance(d, device.Valve))
+                                 and d.active is False])
+
+        blocked_by_artifact = any([True for a in self.artifacts
+                                   if a.blocking is True])
+
+        blocked_by_tool = any([True for t in self.tools
+                               if t.blocking is True])
+
+        is_blocked = (blocked_by_interface
+                      or blocked_by_device
+                      or blocked_by_artifact
+                      or blocked_by_tool)
+
+        return is_blocked
+
     def add_interface(self, interface):
         """Adds an interface to the map cell."""
 
@@ -263,11 +296,11 @@ class MapCell(object):
         self.interfaces.append(interface)
 
     def remove_interface(self, interface):
-        """Removes the interface from the map cell"""
+        """Removes the interface from the map cell and return it."""
 
         if interface not in self.interfaces:
             raise exception.MapError("The interface is not assigned to the map cell.")
-        return self.interfaces.pop(interface)
+        return self.interfaces.pop(self.interfaces.index(interface))
 
     def add_device(self, device):
         """Adds an interface to the map cell."""
@@ -277,11 +310,21 @@ class MapCell(object):
         self.devices.append(device)
 
     def remove_device(self, device):
-        """Removes the interface from the map cell"""
+        """Removes the interface from the map cell and returns it."""
 
         if device not in self.interfaces:
             raise exception.MapError("The device is not assigned to the map cell.")
-        return self.devices.pop(device)
+        return self.devices.pop(self.devices.index(device))
+
+    def remove_component(self, component):
+        """Remove the component from the map cell."""
+
+        if isinstance(component, Interface):
+            self.remove_interface(component)
+        elif isinstance(component, Device):
+            self.remove_device(component)
+        else:
+            raise TypeError("The component must be of type interface or device.")
 
     def add_tool(self, tool):
         """Adds a tool to the map cell."""
@@ -295,7 +338,7 @@ class MapCell(object):
 
         if tool not in self.tools:
             raise exception.MapError("The tool is not assigned to the map cell.")
-        return self.tools.pop(tool)
+        return self.tools.pop(self.tools.index(tool))
 
     def add_artifact(self, artifact):
         """Adds a tool to the map cell."""
@@ -309,7 +352,17 @@ class MapCell(object):
 
         if artifact not in self.artifacts:
             raise exception.MapError("The artifact is not assigned to the map cell.")
-        return self.artifacts.pop(artifact)
+        return self.artifacts.pop(self.artifacts.index(artifact))
+
+    def remove_item(self, item):
+        """Remove the item from the map cell."""
+
+        if isinstance(item, Tool):
+            self.remove_tool(item)
+        elif isinstance(item, Artifact):
+            self.remove_artifact(item)
+        else:
+            raise TypeError("The item must be of type tool or artifact.")
 
     def has_interfaces(self):
         """Return True if the map cell has any interfaces, otherwise False."""
@@ -362,11 +415,11 @@ class MapPath(object):
         self.cells.append(cell)
 
     def remove_cell(self, cell):
-        """Remove a map cell from the path."""
+        """Remove a map cell from the path and return it."""
 
         if not self.has_cell(cell):
             raise exception.MapError("The cell is not in the path.")
-        return self.cells.pop(cell)
+        return self.cells.pop(self.cells.index(cell))
 
     def has_cell(self, cell):
         """True if the cell is part of the path, otherwise False."""
@@ -413,37 +466,47 @@ class Map(object):
         self.exit_cell = self.get_cell(*exit_coord)
 
         for config_tool in map_config['tools']:
-            tool = ToolFactory.make_tool(self.inventory, config_tool['type'])
-            tool.name = config_tool['name']
-            tool.description = config_tool['description']
-            tool.x = config_tool['x']
-            tool.y = config_tool['y']
-            self.inventory.add_item(tool)
+            t = ToolFactory.make_tool(self.inventory, config_tool['type'])
+            t.name = config_tool['name']
+            t.description = config_tool['description']
+            t.visible = config_tool['visible']
+            t.interactive = config_tool['interactive']
+            t.blocking = config_tool['blocking']
+            t.x = config_tool['x']
+            t.y = config_tool['y']
+            self.inventory.add_item(t)
 
         for config_artifact in map_config['artifacts']:
-            artifact = ArtifactFactory.make_artifact(self.inventory, config_artifact['type'])
-            artifact.name = config_artifact['name']
-            artifact.description = config_artifact['description']
-            tool.x = config_tool['x']
-            tool.y = config_tool['y']
-            self.inventory.add_item(artifact)
+            a = ArtifactFactory.make_artifact(self.inventory, config_artifact['type'])
+            a.name = config_artifact['name']
+            a.description = config_artifact['description']
+            a.visible = config_artifact['visible']
+            a.interactive = config_artifact['interactive']
+            a.blocking = config_artifact['blocking']
+            a.x = config_artifact['x']
+            a.y = config_artifact['y']
+            self.inventory.add_item(a)
 
-        for cell in map_config['path_cells']:
-            path_cell = self.get_cell(*cell['coordinates'])
-            path_cell.story_text = cell['story_text']
+        for config_path_cell in map_config['path_cells']:
+            path_cell = self.get_cell(*config_path_cell['coordinates'])
+            path_cell.story_text = config_path_cell['story_text']
             self.path.add_cell(path_cell)
 
-        for interface in self.level.system.interfaces:
-            cell = self.get_cell(interface.x, interface.y)
-            cell.add_interface(interface)
+        for i in self.level.system.interfaces:
+            cell = self.get_cell(i.x, i.y)
+            cell.add_interface(i)
 
-        for device in self.level.system.devices:
-            cell = self.get_cell(device.x, device.y)
-            cell.add_device(device)
+        for d in self.level.system.devices:
+            cell = self.get_cell(d.x, d.y)
+            cell.add_device(d)
 
-        for tool in self.inventory.get_tools():
-            cell = self.get_cell(tool.x, tool.y)
-            cell.add_tool(tool)
+        for t in self.inventory.get_tools():
+            cell = self.get_cell(t.x, t.y)
+            cell.add_tool(t)
+
+        for a in self.inventory.get_artifacts():
+            cell = self.get_cell(a.x, a.y)
+            cell.add_artifact(a)
 
     def get_cell(self, x, y):
         """Return the cell at the coordinates if it exists, otherwise None."""

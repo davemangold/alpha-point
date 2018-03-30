@@ -32,7 +32,7 @@ class Interface(Component):
 
         return self.system.get_interface_devices(self)
 
-    def use(self):
+    def use(self, game):
         """Use the interface."""
 
         device_list = self.get_devices()
@@ -41,7 +41,7 @@ class Interface(Component):
         if len(device_list) > 1:
             raise exception.InterfaceError("More than one device linked to interface.")
         device = device_list[0]
-        device.use()
+        device.use(game)
 
 
 # Interface sub-classes with which characters can interact
@@ -57,7 +57,7 @@ class Terminal(Interface):
         self.msg_action_verb = 'use'
         self.actions = {}
 
-    def use(self):
+    def use(self, game):
         """Interface loop that allows player to interact with the interface."""
 
         self.update_actions()
@@ -76,11 +76,11 @@ class Terminal(Interface):
 
         self.actions = self.get_actions()
 
-    def do_action(self, key):
+    def do_action(self, key, game):
         """Call the function associated with the provided key."""
 
         try:
-            self.actions[key]()
+            self.actions[key](game)
         except KeyError:
             raise exception.ActionError("There is no action defined for that key.")
 
@@ -141,15 +141,15 @@ class InterfaceFactory(object):
     """Makes specific Interface type instances."""
 
     @staticmethod
-    def make_interface(system, interface_type):
+    def make_interface(system, interface_type, *args, **kwargs):
         if interface_type.lower() == 'terminal':
-            return Terminal(system)
+            return Terminal(system, *args, **kwargs)
         if interface_type.lower() == 'button':
-            return Button(system)
+            return Button(system, *args, **kwargs)
         if interface_type.lower() == 'toggleswitch':
-            return Toggleswitch(system)
+            return Toggleswitch(system, *args, **kwargs)
         if interface_type.lower() == 'handwheel':
-            return Handwheel(system)
+            return Handwheel(system, *args, **kwargs)
         # if interface_type.lower() == 'viewer':
         #     return Viewer(system)
         # if interface_type.lower() == 'console':

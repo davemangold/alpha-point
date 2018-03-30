@@ -3,6 +3,8 @@ import utility
 from inventory import Inventory
 from device import Door
 from device import Valve
+from interface import Interface
+from item import Item
 
 
 class Character(object):
@@ -27,18 +29,20 @@ class Character(object):
 
         if cell is None:
             raise exception.MoveError("There's no cell there.")
-
-        is_on_path = self.game.level.map.path.has_cell(cell)
-        is_blocked = any([True for device in cell.devices
-                          if (isinstance(device, Door)
-                              or isinstance(device, Valve))
-                          and device.active is False])
-        if not is_on_path:
+        if not cell.is_on_path():
             raise exception.MoveError("Player cannot move to cell. The cell is not on the path.")
-        if is_blocked:
+        if cell.is_blocked():
             raise exception.MoveError("Player cannot move to cell. The cell is blocked.")
 
         return True
+
+    def __on_move_update(self):
+        """Update attributes that are location-dependent."""
+
+        self.update_actions()
+        self.cell = self.get_map_cell()
+        for item in self.inventory.items:
+            item.x, item.y = self.x, self.y
 
     def location(self):
         """Returns character location as (x, y) tuple."""
@@ -50,12 +54,6 @@ class Character(object):
 
         return self.game.level.map.get_cell(*self.location())
 
-    def on_move_update(self):
-        """Update attributes that are location-dependent."""
-
-        self.update_actions()
-        self.cell = self.get_map_cell()
-
     def move_to(self, x, y):
         """Move character to specified x, y if it is a valid cell."""
 
@@ -63,7 +61,7 @@ class Character(object):
         if self.__is_valid_move(to_cell):
             self.x = x
             self.y = y
-            self.on_move_update()
+            self.__on_move_update()
 
     def move_up(self):
         """Move character up one cell if possible"""
@@ -88,6 +86,14 @@ class Character(object):
 
         self.orientation = 3
         self.move_to(self.x - 1, self.y)
+
+    def take_item(self, item):
+
+        self.inventory.add_item(item.inventory.remove_item(item))
+
+    def give_item(self, item):
+
+        return self.inventory.remove_item(item)
 
     def get_visible_tools(self):
         """Return d4 tools visible to the player."""
@@ -153,37 +159,84 @@ class Character(object):
         visible_components = [items[0] + items[1] for items in zip(visible_interfaces, visible_devices)]
         return visible_components
 
+    def get_visible_objects(self):
+
+        visible_components = self.get_visible_components()
+        visible_items = self.get_visible_items()
+        visible_objects = [items[0] + items[1] for items in zip(visible_components, visible_items)]
+        return visible_objects
+
+    def get_interactive_objects(self):
+
+        interactive_objects = []
+        visible_objects = self.get_visible_objects()
+        for obj_list in visible_objects:
+            int_obj_list = [obj for obj in obj_list if obj.interactive is True]
+            interactive_objects.append(int_obj_list)
+        return interactive_objects
+
     def report_visible_tools(self):
+        """Return string description of visible tools."""
 
         visible_tools = self.get_visible_tools()
-        return utility.build_component_report_text(self.orientation, visible_tools)
+        return utility.build_object_report_text(self.orientation, visible_tools)
+
+    def report_visible_artifacts(self):
+        """Return string description of visible artifacts."""
+
+        visible_artifacts = self.get_visible_artifacts()
+        return utility.build_object_report_text(self.orientation, visible_artifacts)
+
+    def report_visible_items(self):
+        """Return string description of visible tools and artifacts."""
+
+        visible_items = self.get_visible_items()
+        return utility.build_object_report_text(self.orientation, visible_items)
 
     def report_visible_interfaces(self):
         """Return string description of visible interfaces."""
 
         visible_interfaces = self.get_visible_interfaces()
-        return utility.build_component_report_text(self.orientation, visible_interfaces)
+        return utility.build_object_report_text(self.orientation, visible_interfaces)
 
     def report_visible_devices(self):
         """Return string description of visible devices."""
 
         visible_devices = self.get_visible_devices()
-        return utility.build_component_report_text(self.orientation, visible_devices)
+        return utility.build_object_report_text(self.orientation, visible_devices)
 
     def report_visible_components(self):
         """Return string description of visible interfaces and devices."""
 
         visible_components = self.get_visible_components()
-        return utility.build_component_report_text(self.orientation, visible_components)
+        return utility.build_object_report_text(self.orientation, visible_components)
+
+    def report_visible_objects(self):
+        """Return string description of visible components and items."""
+
+        visible_objects = self.get_visible_objects()
+        return utility.build_object_report_text(self.orientation, visible_objects)
 
     def get_actions(self):
-        """Return dictionary of actions based on d4 interfaces."""
+        """Return dictionary of actions based on d4 visible objects."""
 
         interface_list = [iface
                           for iface_list in self.get_visible_interfaces()
-                          for iface in iface_list]
-        actions = {interface_list.index(interface) + 1: interface.use
-                   for interface in interface_list}
+                          for iface in iface_list
+                          if iface.interactive is True]
+        item_list = [item
+                     for items_list in self.get_visible_items()
+                     for item in items_list
+                     if item.interactive is True]
+
+        interface_actions = {interface_list.index(interface) + 1: interface.use
+                             for interface in interface_list}
+
+        item_actions = {item_list.index(item) + 1: item.map_to_player
+                        for item in item_list}
+
+        actions = utility.merge_dicts(interface_actions, item_actions)
+
         return actions
 
     def update_actions(self):
@@ -191,10 +244,10 @@ class Character(object):
 
         self.actions = self.get_actions()
 
-    def do_action(self, key):
+    def do_action(self, key, game):
         """Call the function associated with the provided key."""
 
         try:
-            self.actions[key]()
+            self.actions[key](game)
         except KeyError:
             raise exception.ActionError("There is no action defined for that key.")

@@ -73,7 +73,7 @@ class Device(Component):
         self.dependencies.append(dependency)
 
     def remove_dependency(self, device_id):
-        """Remove the dependency from the device."""
+        """Remove the dependencies from the device."""
 
         remove_dependencies = [d for d in self.dependencies if d['device_id'] == device_id]
         for dependency in remove_dependencies:
@@ -88,7 +88,7 @@ class Device(Component):
                 return False
         return True
 
-    def use(self):
+    def use(self, game):
         """Use the device."""
 
         self.toggle_active_state()
@@ -180,21 +180,21 @@ class Sensor(Device):
         self.msg_unmet_dependencies = "The sensor is inoperable."
 
 
-# Device factory
+# Device factory for making devices
 
 class DeviceFactory(object):
     """Makes specific Device type instances."""
 
     @staticmethod
-    def make_device(system, device_type):
+    def make_device(system, device_type, *args, **kwargs):
         if device_type.lower() == 'door':
-            return Door(system)
+            return Door(system, *args, **kwargs)
         if device_type.lower() == 'switch':
-            return Switch(system)
+            return Switch(system, *args, **kwargs)
         if device_type.lower() == 'valve':
-            return Valve(system)
+            return Valve(system, *args, **kwargs)
         if device_type.lower() == 'camera':
-            return Camera(system)
+            return Camera(system, *args, **kwargs)
         if device_type.lower() == 'sensor':
-            return Sensor(system)
+            return Sensor(system, *args, **kwargs)
         raise exception.FactoryError("The specified device type does not exist.")
