@@ -1,6 +1,7 @@
 import exception
 from gameui import TerminalUI
 from component import Component
+from action import Action
 
 
 # Base Interface class
@@ -57,7 +58,7 @@ class Terminal(Interface):
         self.msg_action_verb = 'use'
         self.actions = {}
 
-    def use(self, game):
+    def use(self):
         """Interface loop that allows player to interact with the interface."""
 
         self.update_actions()
@@ -67,8 +68,11 @@ class Terminal(Interface):
         """Return dictionary of actions based on terminal-linked devices."""
 
         device_list = self.get_devices()
-        actions = {device_list.index(device) + 1: device.use
-                   for device in device_list}
+        actions_list = [Action(device.use, device.action_text())
+                        for device in device_list]
+        actions = {actions_list.index(action) + 1: action
+                   for action in actions_list}
+
         return actions
 
     def update_actions(self):
@@ -76,11 +80,13 @@ class Terminal(Interface):
 
         self.actions = self.get_actions()
 
-    def do_action(self, key, game):
+    def do_action(self, key):
         """Call the function associated with the provided key."""
 
         try:
-            self.actions[key](game)
+            action = self.actions[key]
+            action.do()
+            self.update_actions()
         except KeyError:
             raise exception.ActionError("There is no action defined for that key.")
 

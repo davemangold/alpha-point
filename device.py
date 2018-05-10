@@ -15,6 +15,7 @@ class Device(Component):
         self.description = 'generic device'
         self.active = False
         self.dependencies = []
+        self.override_dependencies = False
         self.msg_action_true = "activate"
         self.msg_action_false = "deactivate"
         self.msg_active_true = "The device is active."
@@ -81,6 +82,9 @@ class Device(Component):
 
     def dependencies_met(self):
         """True if all dependencies have been met, otherwise False."""
+
+        if self.override_dependencies is True:
+            return True
 
         for dependency in self.dependencies:
             device = self.system.get_device(dependency['device_id'])

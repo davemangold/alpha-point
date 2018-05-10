@@ -12,31 +12,19 @@ class Tool(Item):
     def can_activate(self, test_device):
         """Returns True if this tool activates the type of device provided, otherwise False."""
 
-        if test_device.active is False and isinstance(test_device, device.Device):
+        if test_device.enabled is True and test_device.active is False and isinstance(test_device, device.Device):
             return True
 
         return False
-
-    def use(self, target_device):
-        """Use the tool on the device."""
-
-        if self.can_activate(target_device):
-            target_device.enabled = True
-            target_device.use()
-            target_device.enabled = False
-        else:
-            raise exception.ToolError("The tool can't be used on this device.")
 
     def get_use(self, target_device):
         """Return an ad-hoc function for activating the device."""
 
         def use_device():
-            if self.can_activate(target_device):
-                target_device.enabled = True
-                target_device.use()
-                target_device.enabled = False
-            else:
-                raise exception.ToolError("The tool can't be used on this device.")
+            override_state = target_device.override_dependencies
+            target_device.override_dependencies = True
+            target_device.use()
+            target_device.override_dependencies = override_state
 
         return use_device
 
@@ -44,6 +32,7 @@ class Tool(Item):
         """Return text description of the currently available action."""
 
         return "Use the {0} on the {1}".format(self, target_device)
+
 
 class Wrench(Tool):
     """A tool that can be used to activate a valve."""
@@ -54,7 +43,7 @@ class Wrench(Tool):
     def can_activate(self, test_device):
         """Returns True if this tool activates the type of device provided, otherwise False."""
 
-        if isinstance(test_device, device.Valve):
+        if test_device.enabled is True and test_device.active is False and isinstance(test_device, device.Valve):
             return True
 
         return False
@@ -69,7 +58,7 @@ class PryBar(Tool):
     def can_activate(self, test_device):
         """Returns True if this tool activates the type of device provided, otherwise False."""
 
-        if isinstance(test_device, device.Door):
+        if test_device.enabled is True and test_device.active is False and isinstance(test_device, device.Door):
             return True
 
         return False

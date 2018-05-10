@@ -263,11 +263,12 @@ class Character(object):
 
         self.actions = self.get_actions()
 
-    def do_action(self, key, game):
+    def do_action(self, key):
         """Call the function associated with the provided key."""
 
         try:
             action = self.actions[key]
             action.do()
+            self.update_actions()
         except KeyError:
             raise exception.ActionError("There is no action defined for that key.")

@@ -32,7 +32,7 @@ player_config = {
 
 levels_config = {
     'levels': {
-        -1: {
+        99: {
             'name': 'Testing',
             'map': {
                 'x_dimension': 5,

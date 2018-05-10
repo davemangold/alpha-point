@@ -272,7 +272,7 @@ class MainUI(BaseUI):
                 self.game.player.move_left()
             # process action input
             elif value.isdigit():
-                self.game.player.do_action(int(value), self.game)
+                self.game.player.do_action(int(value))
             # process restart or quit input
             elif value == 'r':
                 self.restart_level()
@@ -397,7 +397,7 @@ class TerminalUI(BaseUI):
         try:
             # process action input
             if value.isdigit():
-                self.terminal.do_action(int(value), self.game)
+                self.terminal.do_action(int(value))
             # process quit input
             elif value == 'q':
                 self.leave()
@@ -448,13 +448,24 @@ class TerminalUI(BaseUI):
         """Return the text that represents available actions."""
 
         ui_actions = None
-        terminal_actions = self.terminal.get_actions()
-        ui_actions_list = ['{0}. {1}'.format(key, action.__self__.action_text())
-                           for key, action in sorted(terminal_actions.items())]
+        ui_actions_list = []
+        for key, action in sorted(self.terminal.actions.items()):
+            ui_actions_list.append('{0}. {1}'.format(key, action.description))
         if len(ui_actions_list) > 0:
             ui_actions = '\n'.join(ui_actions_list)
 
         return ui_actions
+
+        # ==========
+
+        # ui_actions = None
+        # terminal_actions = self.terminal.get_actions()
+        # ui_actions_list = ['{0}. {1}'.format(key, action.__self__.action_text())
+        #                    for key, action in sorted(terminal_actions.items())]
+        # if len(ui_actions_list) > 0:
+        #     ui_actions = '\n'.join(ui_actions_list)
+        #
+        # return ui_actions
 
     def get_commands(self):
         """Return the universal commands."""
