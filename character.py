@@ -1,10 +1,8 @@
 import exception
 import utility
+from action import Action
 from inventory import Inventory
-from device import Door
-from device import Valve
-from interface import Interface
-from item import Item
+from tool import Tool
 
 
 class Character(object):
@@ -88,10 +86,12 @@ class Character(object):
         self.move_to(self.x - 1, self.y)
 
     def take_item(self, item):
+        """Remove item from its current inventory and add it to the character's inventory."""
 
         self.inventory.add_item(item.inventory.remove_item(item))
 
     def give_item(self, item):
+        """Return item after removing it from the character's inventory."""
 
         return self.inventory.remove_item(item)
 
@@ -220,22 +220,41 @@ class Character(object):
     def get_actions(self):
         """Return dictionary of actions based on d4 visible objects."""
 
-        interface_list = [iface
-                          for iface_list in self.get_visible_interfaces()
-                          for iface in iface_list
-                          if iface.interactive is True]
+        # [(key, Action),...]
+        actions_list = []
+
+        tool_list = self.inventory.get_tools()
+
+        device_list = [device
+                       for d4_device_list in self.get_visible_devices()
+                       for device in d4_device_list
+                       if device.interactive is True]
+
+        interface_list = [interface
+                          for d4_interface_list in self.get_visible_interfaces()
+                          for interface in d4_interface_list
+                          if interface.interactive is True]
+
         item_list = [item
-                     for items_list in self.get_visible_items()
-                     for item in items_list
+                     for d4_items_list in self.get_visible_items()
+                     for item in d4_items_list
                      if item.interactive is True]
 
-        interface_actions = {interface_list.index(interface) + 1: interface.use
-                             for interface in interface_list}
+        tool_actions = [Action(tool.get_use(device), tool.use_action_text(device))
+                        for tool in tool_list
+                        for device in device_list
+                        if tool.can_activate(device)]
 
-        item_actions = {item_list.index(item) + 1: item.map_to_player
-                        for item in item_list}
+        interface_actions = [Action(interface.use, interface.action_text())
+                             for interface in interface_list]
 
-        actions = utility.merge_dicts(interface_actions, item_actions)
+        item_actions = [Action(item.map_to_player, item.take_action_text())
+                        for item in item_list]
+
+        actions_list = tool_actions + interface_actions + item_actions
+
+        actions = {actions_list.index(action) + 1: action
+                   for action in actions_list}
 
         return actions
 
@@ -248,6 +267,7 @@ class Character(object):
         """Call the function associated with the provided key."""
 
         try:
-            self.actions[key](game)
+            action = self.actions[key]
+            action.do()
         except KeyError:
             raise exception.ActionError("There is no action defined for that key.")

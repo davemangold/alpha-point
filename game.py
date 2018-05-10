@@ -37,7 +37,7 @@ class Game(object):
         self.player = player
 
     def setup(self, level_number=0):
-        """Setup game elements before allowing play."""
+        """Setup game elements."""
 
         # set level before setting player
         self.set_level(level_number)

@@ -32,7 +32,7 @@ class Interface(Component):
 
         return self.system.get_interface_devices(self)
 
-    def use(self, game):
+    def use(self):
         """Use the interface."""
 
         device_list = self.get_devices()
@@ -41,7 +41,7 @@ class Interface(Component):
         if len(device_list) > 1:
             raise exception.InterfaceError("More than one device linked to interface.")
         device = device_list[0]
-        device.use(game)
+        device.use()
 
 
 # Interface sub-classes with which characters can interact

@@ -1,10 +1,8 @@
 from config import game_config
-from config import levels_config
-
 
 # constants
-DEFAULT_ARTICLE = levels_config['ui']['articles']['default']
-ARTICLE_MAP = levels_config['ui']['articles']['mapped']
+DEFAULT_ARTICLE = game_config['ui']['articles']['default']
+ARTICLE_MAP = game_config['ui']['articles']['mapped']
 
 
 # functions
@@ -130,6 +128,15 @@ def merge_dicts(a, b):
     return {**a, **b}
 
 
+def merge_dicts_n(iterable):
+    """Merge arbitrary number of dictionaries and return resulting dictionary."""
+
+    this_dict = iterable.pop(0)
+    while len(iterable) > 0:
+        this_dict = merge_dicts(this_dict, iterable.pop(0))
+
+    return this_dict
+
 def merge_lists(a, b):
     """Return items from list b substituted with items from a where b value is None."""
 
@@ -167,7 +174,7 @@ def nested_list_to_text_map(nested_list):
 def format_ui_text(text):
     """Format text to fit within UI."""
 
-    width = game_config['ui_width']
+    width = game_config['ui']['width']
     words = text.split()
     lines = []
     line = ''

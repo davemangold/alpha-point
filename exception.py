@@ -14,6 +14,10 @@ class DeviceError(Exception):
     pass
 
 
+class ToolError(Exception):
+    pass
+
+
 class InterfaceFactoryError(Exception):
     pass
 

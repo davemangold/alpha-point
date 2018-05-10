@@ -15,7 +15,7 @@ class BaseUI(object):
     def __init__(self, game, *args, **kwargs):
         self.game = game
         self.alert = None
-        self.separator = '-' * game_config['ui_width']
+        self.separator = '-' * game_config['ui']['width']
 
     def process_input(self, value):
         """Call the appropriate method based on input value."""
@@ -326,7 +326,7 @@ class MainUI(BaseUI):
         # text_map = self.add_map_interfaces(text_map)
         text_map = self.add_map_player(text_map)
         map_width = len(text_map.split('\n')[0])
-        buffer_width = int((game_config['ui_width'] - map_width) / 2)
+        buffer_width = int((game_config['ui']['width'] - map_width) / 2)
         text_map = '\n'.join([' ' * buffer_width + line for line in text_map.split('\n')])
         return text_map
 
@@ -336,7 +336,7 @@ class MainUI(BaseUI):
         ui_actions = None
         ui_actions_list = []
         for key, action in sorted(self.game.player.actions.items()):
-            ui_actions_list.append('{0}. {1}'.format(key, action.__self__.action_text()))
+            ui_actions_list.append('{0}. {1}'.format(key, action.description))
         if len(ui_actions_list) > 0:
             ui_actions = '\n'.join(ui_actions_list)
 

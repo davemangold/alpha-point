@@ -88,7 +88,7 @@ class Device(Component):
                 return False
         return True
 
-    def use(self, game):
+    def use(self):
         """Use the device."""
 
         self.toggle_active_state()
@@ -148,7 +148,7 @@ class Valve(Device):
 
 
 class Camera(Device):
-    """A visual camera that shows an environment which can be on or off."""
+    """A camera that shows an environment which can be on or off."""
 
     def __init__(self, *args, **kwargs):
         super(Camera, self).__init__(*args, **kwargs)

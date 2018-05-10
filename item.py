@@ -30,13 +30,15 @@ class Item(object):
 
         return self.x, self.y
 
-    def action_text(self):
+    def take_action_text(self):
         """Return text description of the currently available action."""
 
         return " ".join([self.msg_action_verb.capitalize(), "the", str(self)])
 
-    def map_to_player(self, game):
+    def map_to_player(self):
+        """Move an item from the map to the player's inventory."""
 
+        game = self.inventory.owner.level.game
         map_cell = game.level.map.get_cell(*self.location())
         game.player.inventory.add_item(self.inventory.remove_item(self))
         map_cell.remove_item(self)
