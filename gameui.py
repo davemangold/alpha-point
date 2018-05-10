@@ -456,17 +456,6 @@ class TerminalUI(BaseUI):
 
         return ui_actions
 
-        # ==========
-
-        # ui_actions = None
-        # terminal_actions = self.terminal.get_actions()
-        # ui_actions_list = ['{0}. {1}'.format(key, action.__self__.action_text())
-        #                    for key, action in sorted(terminal_actions.items())]
-        # if len(ui_actions_list) > 0:
-        #     ui_actions = '\n'.join(ui_actions_list)
-        #
-        # return ui_actions
-
     def get_commands(self):
         """Return the universal commands."""
 
