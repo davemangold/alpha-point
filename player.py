@@ -1,4 +1,5 @@
 from character import Character
+from config import player_config
 
 
 class Player(Character):
@@ -6,8 +7,4 @@ class Player(Character):
 
     def __init__(self, *args, **kwargs):
         super(Player, self).__init__(*args, **kwargs)
-        self.name = self.__get_name()
-
-    def __get_name(self):
-
-        return 'Marcus'
+        self.name = player_config['name']

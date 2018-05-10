@@ -1,14 +1,9 @@
 import exception
-import component
-import interface
 import device
-import item
-import tool
-import artifact
-from interface import Interface
-from interface import InterfaceFactory
 from device import Device
 from device import DeviceFactory
+from interface import Interface
+from interface import InterfaceFactory
 from tool import Tool
 from tool import ToolFactory
 from artifact import Artifact

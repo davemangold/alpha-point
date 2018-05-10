@@ -48,6 +48,7 @@ class Game(object):
 
         while True:
             if isinstance(self.gameui, MainUI):
+                # TODO: add checker for lethal state and kill player if it exists
                 if self.player.cell.has_story_text() and not self.player.cell.story_seen:
                     self.gameui = StoryUI(self)
                 if self.level.is_complete():

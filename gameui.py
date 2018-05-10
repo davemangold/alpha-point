@@ -336,6 +336,7 @@ class MainUI(BaseUI):
         ui_actions = None
         ui_actions_list = []
         for key, action in sorted(self.game.player.actions.items()):
+            # TODO: handle action text that overruns UI width
             ui_actions_list.append('{0}. {1}'.format(key, action.description))
         if len(ui_actions_list) > 0:
             ui_actions = '\n'.join(ui_actions_list)

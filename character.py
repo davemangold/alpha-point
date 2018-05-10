@@ -2,7 +2,6 @@ import exception
 import utility
 from action import Action
 from inventory import Inventory
-from tool import Tool
 
 
 class Character(object):
@@ -220,39 +219,45 @@ class Character(object):
     def get_actions(self):
         """Return dictionary of actions based on d4 visible objects."""
 
-        # [(key, Action),...]
-        actions_list = []
-
+        # tools in the player inventory
         tool_list = self.inventory.get_tools()
 
+        # visible devices on the map
         device_list = [device
                        for d4_device_list in self.get_visible_devices()
                        for device in d4_device_list
                        if device.interactive is True]
 
+        # visible interfaces on the map
         interface_list = [interface
                           for d4_interface_list in self.get_visible_interfaces()
                           for interface in d4_interface_list
                           if interface.interactive is True]
 
+        # visible items on the map (includes tools)
         item_list = [item
                      for d4_items_list in self.get_visible_items()
                      for item in d4_items_list
                      if item.interactive is True]
 
+        # actions to use tools on devices
         tool_actions = [Action(tool.get_use(device), tool.use_action_text(device))
                         for tool in tool_list
                         for device in device_list
                         if tool.can_activate(device)]
 
+        # actions to use interfaces
         interface_actions = [Action(interface.use, interface.action_text())
                              for interface in interface_list]
 
+        # actions to take items from map
         item_actions = [Action(item.map_to_player, item.take_action_text())
                         for item in item_list]
 
+        # combined list of all actions
         actions_list = tool_actions + interface_actions + item_actions
 
+        # dictionary of action keys associated with Action objects
         actions = {actions_list.index(action) + 1: action
                    for action in actions_list}
 
@@ -266,9 +271,6 @@ class Character(object):
     def do_action(self, key):
         """Call the function associated with the provided key."""
 
-        try:
-            action = self.actions[key]
-            action.do()
-            self.update_actions()
-        except KeyError:
-            raise exception.ActionError("There is no action defined for that key.")
+        action = self.actions[key]
+        action.do()
+        self.update_actions()

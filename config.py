@@ -32,6 +32,7 @@ player_config = {
 
 levels_config = {
     'levels': {
+        # TODO: add lethal states to levels (combination of device states that kills player and descriptive text)
         99: {
             'name': 'Testing',
             'map': {
@@ -503,7 +504,7 @@ levels_config = {
                         'name': 'circuit_bundle_1',
                         'description': 'bundle of wires and circuitry',
                         'visible': True,
-                        'interactive': False,
+                        'interactive': True,
                         'blocking': False,
                         'x': 6,
                         'y': 1
@@ -513,7 +514,7 @@ levels_config = {
                         'name': 'helmet_1',
                         'description': 'excursion suit helmet',
                         'visible': True,
-                        'interactive': False,
+                        'interactive': True,
                         'blocking': False,
                         'x': 7,
                         'y': 3
@@ -532,6 +533,17 @@ levels_config = {
                         'y': 1,
                         'orientation': 3,
                         'msg_action_verb': 'push'
+                    },
+                    {
+                        'id': 1,
+                        'name': 'door circuit toggleswitch',
+                        'description': 'switch',
+                        'type': 'toggleswitch',
+                        'enabled': True,
+                        'x': 0,
+                        'y': 2,
+                        'orientation': 1,
+                        'msg_action_verb': 'flip'
                     },
                 ],
                 'devices': [
@@ -569,8 +581,28 @@ levels_config = {
                         'msg_toggle_active_true': 'The door opened.',
                         'msg_toggle_active_false': 'The door closed.',
                         'msg_unmet_dependencies': 'The door is locked.',
+                        'dependencies': [
+                            {'device_id': 2, 'active_state': True}
+                        ]
+                    },
+                    {
+                        'id': 2,
+                        'name': 'door circuit switch',
+                        'description': 'door circuit',
+                        'type': 'switch',
+                        'enabled': False,
+                        'active': False,
+                        'x': 0,
+                        'y': 2,
+                        'msg_action_true': 'close',
+                        'msg_action_false': 'open',
+                        'msg_active_true': 'The circuit is closed.',
+                        'msg_active_false': 'The circuit is open.',
+                        'msg_toggle_active_true': 'Do you hear that? It sounds like electric current.',
+                        'msg_toggle_active_false': 'That electric hum went away.',
+                        'msg_unmet_dependencies': 'The circuit switch isn\'t responding.',
                         'dependencies': []
-                    }
+                    },
                 ],
                 'links': [
                     {'interface_id': 0, 'device_id': 1}

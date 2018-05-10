@@ -137,6 +137,7 @@ def merge_dicts_n(iterable):
 
     return this_dict
 
+
 def merge_lists(a, b):
     """Return items from list b substituted with items from a where b value is None."""
 
