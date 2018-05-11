@@ -1,5 +1,6 @@
 import exception
 from component import Component
+from gameui import PlayerDeadUI
 
 
 # Base Device class
@@ -96,6 +97,12 @@ class Device(Component):
         """Use the device."""
 
         self.toggle_active_state()
+
+        if self.system.kills_player():
+            death = self.system.get_death()
+            game = self.system.level.game
+            message = death['description']
+            game.gameui = PlayerDeadUI(game=game, message=message)
 
 
 # Device sub-classes that can be controlled by interfaces

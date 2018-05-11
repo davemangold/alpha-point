@@ -5,6 +5,7 @@ from gameui import LevelsUI
 from gameui import StartUI
 from gameui import StoryUI
 from gameui import LevelCompleteUI
+from gameui import PlayerDeadUI
 from config import levels_config
 
 
@@ -12,43 +13,40 @@ class Game(object):
     """Game class that contains all the game mechanics."""
 
     def __init__(self):
-        self.level = Level(self)  # level must be created before player
+        self.level = Level(self)
         self.player = Player(self)
         self.gameui = StartUI(self)
         self.setup()
 
-    def set_level(self, level_number):
-        """Set the game level."""
+    def setup_level(self, level_number):
+        """Setup the game level."""
 
         level = Level(self)
         level.build(level_number)
         self.level = level
 
-    def set_player(self):
-        """Set the player based on the game level"""
+    def setup_player(self):
+        """Setup the player based on the game level"""
 
         map_config = levels_config['levels'][self.level.number]['map']
         enter_coords = map_config['coord_enter']
         enter_orientation = map_config['orientation_enter']
 
-        player = Player(self)
-        player.move_to(*enter_coords)
-        player.orientation = enter_orientation
-        self.player = player
+        self.player.move_to(*enter_coords)
+        self.player.orientation = enter_orientation
 
     def setup(self, level_number=0):
         """Setup game elements."""
 
-        # set level before setting player
-        self.set_level(level_number)
-        self.set_player()
+        # setup level before player
+        self.setup_level(level_number)
+        self.setup_player()
 
     def mainloop(self):
         """The main game loop."""
 
         while True:
             if isinstance(self.gameui, MainUI):
-                # TODO: add checker for lethal state and kill player if it exists
                 if self.player.cell.has_story_text() and not self.player.cell.story_seen:
                     self.gameui = StoryUI(self)
                 if self.level.is_complete():

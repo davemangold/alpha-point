@@ -336,8 +336,9 @@ class MainUI(BaseUI):
         ui_actions = None
         ui_actions_list = []
         for key, action in sorted(self.game.player.actions.items()):
-            # TODO: handle action text that overruns UI width
-            ui_actions_list.append('{0}. {1}'.format(key, action.description))
+            ui_action_text = utility.format_ui_text('{0}. {1}'.format(key, action.description))
+            ui_action_text = ui_action_text.replace('\n', '\n   ')
+            ui_actions_list.append(ui_action_text)
         if len(ui_actions_list) > 0:
             ui_actions = '\n'.join(ui_actions_list)
 
@@ -572,6 +573,84 @@ class LevelCompleteUI(BaseUI):
         """Return UI welcome message text."""
 
         return "Congratulations! You completed the level."
+
+    def leave(self):
+        """Leave the game and return to the start menu."""
+
+        self.game.gameui = LevelsUI(self.game)
+
+
+class PlayerDeadUI(BaseUI):
+    """Game user interface presented to the player when the player dies."""
+
+    def __init__(self, message, *args, **kwargs):
+        super(PlayerDeadUI, self).__init__(*args, **kwargs)
+        self.message = message
+
+    def process_input(self, value):
+        """Call the appropriate method based on input value."""
+
+        if value == '1':
+            self.restart_level()
+        elif value == 'q':
+            self.leave()
+        # the value wasn't handled
+        else:
+            self.alert = "Sorry, that's not an option."
+
+    def prompt(self, valid_responses=[]):
+        """Prompt the player for input."""
+
+        message = "  Choose an option: "
+
+        while True:
+            # update the display
+            self.display()
+            response = input(message)
+            if utility.is_empty_response(response):
+                continue
+            if len(valid_responses) > 0 and response not in valid_responses:
+                continue
+            return response
+
+    def get_ui(self):
+        """Get the full UI text."""
+
+        ui_elements = []
+
+        ui_commands = self.get_commands()
+        ui_welcome = self.get_welcome()
+        ui_alert = self.get_alert()
+        ui_action = self.get_action()
+
+        ui_elements.append(ui_commands)
+        ui_elements.append(self.separator)
+        ui_elements.append(ui_welcome)
+        ui_elements.append(ui_action)
+        if ui_alert is not None:
+            ui_elements.append(ui_alert)
+        ui_elements.append(self.separator)
+
+        return '\n\n'.join(ui_elements) + '\n'
+
+    def get_action(self):
+        """Return the text that represents available actions."""
+
+        ui_actions = '1. Restart level'
+
+        return ui_actions
+
+    def get_commands(self):
+        """Return the universal commands."""
+
+        commands = '\nq - main menu'
+
+        return commands
+
+    def get_welcome(self):
+        """Return UI welcome message text."""
+
+        return utility.format_ui_text(self.message)
 
     def leave(self):
         """Leave the game and return to the start menu."""

@@ -32,7 +32,6 @@ player_config = {
 
 levels_config = {
     'levels': {
-        # TODO: add lethal states to levels (combination of device states that kills player and descriptive text)
         99: {
             'name': 'Testing',
             'map': {
@@ -187,6 +186,13 @@ levels_config = {
                     {'interface_id': 2, 'device_id': 2},
                     {'interface_id': 2, 'device_id': 3},
                     {'interface_id': 3, 'device_id': 2}
+                ],
+                'deaths': [
+                    {'configuration': [
+                        {'device_id': 1, 'active_state': True},
+                        {'device_id': 3, 'active_state': True}],
+                     'description': 'The camera caused a short circuit and you were electrocuted.',
+                     'location': (2, 1)}  # None if all locations are valid
                 ]
             }
         },
@@ -208,7 +214,8 @@ levels_config = {
             'system': {
                 'interfaces': [],
                 'devices': [],
-                'links': []
+                'links': [],
+                'deaths': []
             }
         },
         1: {
@@ -300,7 +307,8 @@ levels_config = {
                 ],
                 'links': [
                     {'interface_id': 0, 'device_id': 4}
-                ]
+                ],
+                'deaths': []
             }
         },
         2: {
@@ -418,6 +426,13 @@ levels_config = {
                 'links': [
                     {'interface_id': 1, 'device_id': 1},
                     {'interface_id': 2, 'device_id': 2}
+                ],
+                'deaths': [
+                    {'configuration': [
+                        {'device_id': 1, 'active_state': False},
+                        {'device_id': 2, 'active_state': True}],
+                     'description': 'You just depressurized the entire habitat and probably killed all your friends.',
+                     'location': None}  # None if all locations are valid
                 ]
             }
         },
@@ -606,7 +621,8 @@ levels_config = {
                 ],
                 'links': [
                     {'interface_id': 0, 'device_id': 1}
-                ]
+                ],
+                'deaths': []
             }
         }
     }

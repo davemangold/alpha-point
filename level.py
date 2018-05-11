@@ -20,6 +20,7 @@ class System(object):
         self.devices = []  # [<device>,...]
         self.interfaces = []  # [<interface>,...]
         self.links = []  # [{'interface_id': <interface id>, 'device_id': <device id>},...]
+        self.deaths = []
 
     def build(self, level_number):
         """Build system from config dictionary."""
@@ -64,6 +65,9 @@ class System(object):
             interface = self.get_interface(config_id=config_link['interface_id'])
             device = self.get_device(config_id=config_link['device_id'])
             self.link_components(interface, device)
+
+        for config_death in system_config['deaths']:
+            self.deaths.append(config_death)
 
     def has_interface(self, interface):
         """Returns True if the system contains the interface, otherwise False."""
@@ -239,6 +243,42 @@ class System(object):
         if device.active is False:
             return "The device is already inactive."
         return device.toggle_active_state()
+
+    def get_death(self):
+        """Return the first death dictionary satisfied, otherwise None."""
+
+        config_satisfied = False
+        location_satisfied = False
+
+        for death in self.deaths:
+
+            config_satisfied = True
+            location_satisfied = True
+
+            for device_state in death['configuration']:
+                this_device = self.get_device(config_id=device_state['device_id'])
+
+                if this_device.active != device_state['active_state']:
+                    config_satisfied = False
+                    break
+
+            if death['location'] is not None and death['location'] != self.level.game.player.location():
+                location_satisfied = False
+
+        if config_satisfied is True and location_satisfied is True:
+            return death
+
+        return None
+
+    def kills_player(self):
+        """Return True if the level is in a state that kills the player, otherwise False."""
+
+        death = self.get_death()
+
+        if death is not None:
+            return True
+
+        return False
 
 
 class MapCell(object):
@@ -609,4 +649,7 @@ class Level(object):
     def is_complete(self):
         """Returns True if the player is at the final cell of the level, otherwise False."""
 
-        return self.map.get_cell(*self.game.player.location()) is self.map.exit_cell
+        if self.map.get_cell(*self.game.player.location()) is self.map.exit_cell:
+            return True
+
+        return False
