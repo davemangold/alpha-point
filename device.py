@@ -122,7 +122,7 @@ class Door(Device):
         self.msg_active_false = "The door is closed."
         self.msg_toggle_active_true = "The door opened."
         self.msg_toggle_active_false = "The door closed."
-        self.msg_unmet_dependencies = "The door is locked."
+        self.msg_unmet_dependencies = "The door is unresponsive."
 
 
 class Switch(Device):

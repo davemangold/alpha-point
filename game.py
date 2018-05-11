@@ -5,8 +5,7 @@ from gameui import LevelsUI
 from gameui import StartUI
 from gameui import StoryUI
 from gameui import LevelCompleteUI
-from gameui import PlayerDeadUI
-from config import levels_config
+from config import level_config
 
 
 class Game(object):
@@ -28,12 +27,13 @@ class Game(object):
     def setup_player(self):
         """Setup the player based on the game level"""
 
-        map_config = levels_config['levels'][self.level.number]['map']
+        map_config = level_config['levels'][self.level.number]['map']
         enter_coords = map_config['coord_enter']
         enter_orientation = map_config['orientation_enter']
 
         self.player.move_to(*enter_coords)
         self.player.orientation = enter_orientation
+        # self.player.inventory.clear_items()
 
     def setup(self, level_number=0):
         """Setup game elements."""

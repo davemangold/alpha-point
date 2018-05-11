@@ -9,7 +9,7 @@ from tool import ToolFactory
 from artifact import Artifact
 from artifact import ArtifactFactory
 from inventory import Inventory
-from config import levels_config
+from config import level_config
 
 
 class System(object):
@@ -25,7 +25,7 @@ class System(object):
     def build(self, level_number):
         """Build system from config dictionary."""
 
-        system_config = levels_config['levels'][level_number]['system']
+        system_config = level_config['levels'][level_number]['system']
 
         for config_interface in system_config['interfaces']:
             interface = InterfaceFactory.make_interface(self, config_interface['type'])
@@ -488,7 +488,7 @@ class Map(object):
     def build(self, level_number):
         """Build the map from a config dictionary."""
 
-        map_config = levels_config['levels'][level_number]['map']
+        map_config = level_config['levels'][level_number]['map']
 
         self.x_dim = map_config['x_dimension']
         self.y_dim = map_config['y_dimension']

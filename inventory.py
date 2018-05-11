@@ -30,6 +30,11 @@ class Inventory(object):
 
         return self.items.pop(self.items.index(item))
 
+    def clear_items(self):
+        """Remove all items from the inventory without returning them."""
+
+        self.items = []
+
     def get_tools(self):
         """Return all items that are Tool instances."""
 

@@ -6,7 +6,7 @@ import exception
 from random import randrange
 from random import random
 from config import game_config
-from config import levels_config
+from config import level_config
 
 
 class BaseUI(object):
@@ -232,7 +232,7 @@ class LevelsUI(BaseUI):
 
         ui_actions = '\n'.join(
             ['{0}. {1}'.format(k, v['name'])
-             for k, v in sorted(levels_config['levels'].items())
+             for k, v in sorted(level_config['levels'].items())
              if k > 0])
 
         return ui_actions

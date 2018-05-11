@@ -30,7 +30,7 @@ player_config = {
     'name': 'Marcus'
 }
 
-levels_config = {
+level_config = {
     'levels': {
         99: {
             'name': 'Testing',
@@ -119,7 +119,7 @@ levels_config = {
                         'msg_active_false': 'The door is closed.',
                         'msg_toggle_active_true': 'The door opened.',
                         'msg_toggle_active_false': 'The door closed.',
-                        'msg_unmet_dependencies': 'The door is locked.',
+                        'msg_unmet_dependencies': 'The door is unresponsive.',
                         'dependencies': []
                     },
                     {
@@ -301,7 +301,7 @@ levels_config = {
                         'msg_active_false': 'The door is closed.',
                         'msg_toggle_active_true': 'The door opened.',
                         'msg_toggle_active_false': 'The door closed.',
-                        'msg_unmet_dependencies': 'The door is locked.',
+                        'msg_unmet_dependencies': 'The door is unresponsive.',
                         'dependencies': []
                     }
                 ],
@@ -381,7 +381,7 @@ levels_config = {
                         'msg_active_false': 'The door is closed.',
                         'msg_toggle_active_true': 'The door opened.',
                         'msg_toggle_active_false': 'The door closed.',
-                        'msg_unmet_dependencies': 'The door is locked.',
+                        'msg_unmet_dependencies': 'The door is unresponsive.',
                         'dependencies': []
                     },
                     {
@@ -417,7 +417,7 @@ levels_config = {
                         'msg_active_false': 'The door is closed.',
                         'msg_toggle_active_true': 'The door opened.',
                         'msg_toggle_active_false': 'The door closed.',
-                        'msg_unmet_dependencies': 'The door is locked.',
+                        'msg_unmet_dependencies': 'The door is unresponsive.',
                         'dependencies': [
                             {'device_id': 1, 'active_state': True}
                         ]
@@ -577,7 +577,7 @@ levels_config = {
                         'msg_active_false': 'The door is closed.',
                         'msg_toggle_active_true': 'The door opened.',
                         'msg_toggle_active_false': 'The door closed.',
-                        'msg_unmet_dependencies': 'The door is locked.',
+                        'msg_unmet_dependencies': 'The door is unresponsive.',
                         'dependencies': []
                     },
                     {
@@ -595,7 +595,7 @@ levels_config = {
                         'msg_active_false': 'The door is closed.',
                         'msg_toggle_active_true': 'The door opened.',
                         'msg_toggle_active_false': 'The door closed.',
-                        'msg_unmet_dependencies': 'The door is locked.',
+                        'msg_unmet_dependencies': 'The door is unresponsive.',
                         'dependencies': [
                             {'device_id': 2, 'active_state': True}
                         ]
