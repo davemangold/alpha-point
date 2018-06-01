@@ -225,7 +225,7 @@ level_config = {
                 'y_dimension': 5,
                 'path_cells': [
                     {'coordinates': (2, 4), 'story_text': None},
-                    {'coordinates': (2, 3), 'story_text': ('{0} stepped off the rover ladder and a faint cloud of dust bloomed out from under his boot as each particle traced a parabolic arc in slow motion. "Something is very wrong", he thought, while surveying the environment for any sign of disaster. Everything was in place. There was no evidence of an explosion or collapse. The light over the external airlock door glowed green indicating its pressure matched that of the external environment. According to his suit\'s computer, he still had active comm and telemetry links with Alpha Point but all he could hear was the sound of his own breathing. "What the hell?", Marcus wondered, as he headed toward the airlock.').format(player_config['name'])},
+                    {'coordinates': (2, 3), 'story_text': ('Faint clouds of dust fell from his boots as {0} climbed down the rover ladder. "Something is very wrong", he thought, while surveying the environment for any sign of disaster. Everything was in place. There was no evidence of an explosion or collapse. The light over the external airlock door glowed green indicating its pressure matched that of the external environment. According to his suit\'s computer, he still had active comm and telemetry links with Alpha Point but all he could hear was the sound of his own breathing. "What the hell?", Marcus wondered, as he headed toward the airlock.').format(player_config['name'])},
                     {'coordinates': (2, 2), 'story_text': None},
                     {'coordinates': (2, 1), 'story_text': None},
                     {'coordinates': (2, 0), 'story_text': None},
@@ -318,7 +318,7 @@ level_config = {
                 'y_dimension': 3,
                 'path_cells': [
                     {'coordinates': (0, 1), 'story_text': None},
-                    {'coordinates': (1, 1), 'story_text': ('{0} checked his mission clock as the door sealed behind him. He was thirty minutes ahead of schedule. "Alright, focus.", he thought, "Follow the ingress procedure."').format(player_config['name'])},
+                    {'coordinates': (1, 1), 'story_text': ('{0} Marcus checked his mission clock as the door sealed behind him. He was about thirty minutes ahead of schedule. "Alright, focus.", he thought, "Follow the ingress procedure."').format(player_config['name'])},
                     {'coordinates': (2, 1), 'story_text': None},
                     {'coordinates': (3, 1), 'story_text': None},
                     {'coordinates': (4, 1), 'story_text': None}
@@ -449,7 +449,7 @@ level_config = {
                     {'coordinates': (4, 4), 'story_text': None},
                     {'coordinates': (4, 5), 'story_text': None},
                     {'coordinates': (4, 6), 'story_text': None},
-                    {'coordinates': (4, 7), 'story_text': 'Equipment storage story text...'},
+                    {'coordinates': (4, 7), 'story_text': 'As he removed his helmet, {0} noted an empty excursion suit alcove and wondered who else was outside the hab. Ad-hoc departures weren\'t that unusual -- just one more variable to keep in mind. The lights flickered briefly and {0} detected the caustic smell of overheated electronics. "That can\'t be good", he told himself. After stowing his suit in an open alcove {0} headed for the door of the crew meeting area.'.format(player_config['name'])},
                     {'coordinates': (4, 8), 'story_text': None},
                     {'coordinates': (3, 6), 'story_text': None},
                     {'coordinates': (3, 7), 'story_text': None},

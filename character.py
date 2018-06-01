@@ -271,6 +271,9 @@ class Character(object):
     def do_action(self, key):
         """Call the function associated with the provided key."""
 
-        action = self.actions[key]
-        action.do()
-        self.update_actions()
+        try:
+            action = self.actions[key]
+            action.do()
+            self.update_actions()
+        except KeyError:
+            raise exception.ActionError("There is no action defined for that key.")

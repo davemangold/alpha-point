@@ -43,7 +43,9 @@ class Wrench(Tool):
     def can_activate(self, test_device):
         """Returns True if this tool activates the type of device provided, otherwise False."""
 
-        if test_device.enabled is True and test_device.active is False and isinstance(test_device, device.Valve):
+        if (test_device.enabled is True
+        and test_device.active is False
+        and isinstance(test_device, device.Valve)):
             return True
 
         return False

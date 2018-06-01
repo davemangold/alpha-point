@@ -1,6 +1,7 @@
 import os
 import sys
 import time
+import msvcrt
 import utility
 import exception
 from random import randrange
@@ -31,6 +32,7 @@ class BaseUI(object):
             # update the display
             self.display()
             response = input(message)
+            # response = msvcrt.getwch()
             if utility.is_empty_response(response):
                 continue
             if len(valid_responses) > 0 and response not in valid_responses:
@@ -83,7 +85,7 @@ class BaseUI(object):
 
 
 class StartUI(BaseUI):
-    """Game user interface for a system terminal object."""
+    """Game level interface for game startup intro."""
 
     def __init__(self, *args, **kwargs):
         super(StartUI, self).__init__(*args, **kwargs)
@@ -172,7 +174,7 @@ class StartUI(BaseUI):
 
 
 class LevelsUI(BaseUI):
-    """Game user interface presented to the player when a level is completed."""
+    """Game user interface for level selection."""
 
     def __init__(self, *args, **kwargs):
         super(LevelsUI, self).__init__(*args, **kwargs)
@@ -252,7 +254,7 @@ class LevelsUI(BaseUI):
 
 
 class MainUI(BaseUI):
-    """Main game user interface class."""
+    """Game user interface for in-level game play."""
 
     def __init__(self, *args, **kwargs):
         super(MainUI, self).__init__(*args, **kwargs)
@@ -262,13 +264,13 @@ class MainUI(BaseUI):
 
         try:
             # process move input
-            if value == 'i':
+            if value == 'w':
                 self.game.player.move_up()
-            elif value == 'l':
+            elif value == 'd':
                 self.game.player.move_right()
-            elif value == 'k':
+            elif value == 's':
                 self.game.player.move_down()
-            elif value == 'j':
+            elif value == 'a':
                 self.game.player.move_left()
             # process action input
             elif value.isdigit():
@@ -287,6 +289,22 @@ class MainUI(BaseUI):
             self.alert = "That's not an option."
         except exception.InterfaceError:
             self.alert = "Dammit! There's something wrong with this thing."
+
+    def prompt(self, valid_responses=[]):
+        """Prompt the player for input."""
+
+        # message = "  What should I do? "
+
+        while True:
+            # update the display
+            self.display()
+            # response = input(message)
+            response = msvcrt.getwch()
+            if utility.is_empty_response(response):
+                continue
+            if len(valid_responses) > 0 and response not in valid_responses:
+                continue
+            return response
 
     def add_map_player(self, text_map):
         """Add the player to the map."""
@@ -347,10 +365,10 @@ class MainUI(BaseUI):
     def get_commands(self):
         """Return the universal commands."""
 
-        commands = ('\ni - move up\t\tr - restart level\tP - Player\n'
-                    'k - move down\t\tq - main menu\t\t. - Path\n'
-                    'j - move left\n'
-                    'l - move right')
+        commands = ('\nw - move up\t\tr - restart level\tP - Player\n'
+                    's - move down\t\tq - main menu\t\t. - Path\n'
+                    'a - move left\n'
+                    'd - move right')
 
         return commands
 
@@ -659,7 +677,7 @@ class PlayerDeadUI(BaseUI):
 
 
 class StoryUI(BaseUI):
-    """Game user interface for a system terminal object."""
+    """Game user interface used to present in-level story narratives."""
 
     def __init__(self, *args, **kwargs):
         super(StoryUI, self).__init__(*args, **kwargs)
