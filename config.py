@@ -318,7 +318,7 @@ level_config = {
                 'y_dimension': 3,
                 'path_cells': [
                     {'coordinates': (0, 1), 'story_text': None},
-                    {'coordinates': (1, 1), 'story_text': ('{0} Marcus checked his mission clock as the door sealed behind him. He was about thirty minutes ahead of schedule. "Alright, focus.", he thought, "Follow the ingress procedure."').format(player_config['name'])},
+                    {'coordinates': (1, 1), 'story_text': ('{0} checked his mission clock as the door sealed behind him. He was about thirty minutes ahead of schedule. "Alright, focus.", he thought, "Follow the ingress procedure."').format(player_config['name'])},
                     {'coordinates': (2, 1), 'story_text': None},
                     {'coordinates': (3, 1), 'story_text': None},
                     {'coordinates': (4, 1), 'story_text': None}
