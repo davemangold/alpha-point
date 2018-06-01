@@ -27,47 +27,47 @@ class System(object):
 
         system_config = level_config['levels'][level_number]['system']
 
-        for config_interface in system_config['interfaces']:
-            interface = InterfaceFactory.make_interface(self, config_interface['type'])
-            interface.config_id = config_interface['id']
-            interface.name = config_interface['name']
-            interface.description = config_interface['description']
-            interface.enabled = config_interface['enabled']
-            interface.x = config_interface['x']
-            interface.y = config_interface['y']
-            interface.orientation = config_interface['orientation']
-            interface.msg_action_verb = config_interface['msg_action_verb']
+        for interface_config in system_config['interfaces']:
+            interface = InterfaceFactory.make_interface(self, interface_config['type'])
+            interface.config_id = interface_config['id']
+            interface.name = interface_config['name']
+            interface.description = interface_config['description']
+            interface.enabled = interface_config['enabled']
+            interface.x = interface_config['x']
+            interface.y = interface_config['y']
+            interface.orientation = interface_config['orientation']
+            interface.msg_action_verb = interface_config['msg_action_verb']
 
-        for config_device in system_config['devices']:
-            device = DeviceFactory.make_device(self, config_device['type'])
-            device.config_id = config_device['id']
-            device.name = config_device['name']
-            device.description = config_device['description']
-            device.enabled = config_device['enabled']
-            device.active = config_device['active']
-            device.x = config_device['x']
-            device.y = config_device['y']
-            device.msg_action_true = config_device['msg_action_true']
-            device.msg_action_false = config_device['msg_action_false']
-            device.msg_active_true = config_device['msg_active_true']
-            device.msg_active_false = config_device['msg_active_false']
-            device.msg_toggle_active_true = config_device['msg_toggle_active_true']
-            device.msg_toggle_active_false = config_device['msg_toggle_active_false']
-            device.msg_unmet_dependencies = config_device['msg_unmet_dependencies']
+        for device_config in system_config['devices']:
+            device = DeviceFactory.make_device(self, device_config['type'])
+            device.config_id = device_config['id']
+            device.name = device_config['name']
+            device.description = device_config['description']
+            device.enabled = device_config['enabled']
+            device.active = device_config['active']
+            device.x = device_config['x']
+            device.y = device_config['y']
+            device.msg_action_true = device_config['msg_action_true']
+            device.msg_action_false = device_config['msg_action_false']
+            device.msg_active_true = device_config['msg_active_true']
+            device.msg_active_false = device_config['msg_active_false']
+            device.msg_toggle_active_true = device_config['msg_toggle_active_true']
+            device.msg_toggle_active_false = device_config['msg_toggle_active_false']
+            device.msg_unmet_dependencies = device_config['msg_unmet_dependencies']
 
-        for config_device in system_config['devices']:
-            device = self.get_device(config_id=config_device['id'])
-            for config_dependency in config_device['dependencies']:
-                dependency_device = self.get_device(config_id=config_dependency['device_id'])
-                device.add_dependency(dependency_device.id, config_dependency['active_state'])
+        for device_config in system_config['devices']:
+            device = self.get_device(config_id=device_config['id'])
+            for dependency_config in device_config['dependencies']:
+                dependency_device = self.get_device(config_id=dependency_config['device_id'])
+                device.add_dependency(dependency_device.id, dependency_config['active_state'])
 
-        for config_link in system_config['links']:
-            interface = self.get_interface(config_id=config_link['interface_id'])
-            device = self.get_device(config_id=config_link['device_id'])
+        for link_config in system_config['links']:
+            interface = self.get_interface(config_id=link_config['interface_id'])
+            device = self.get_device(config_id=link_config['device_id'])
             self.link_components(interface, device)
 
-        for config_death in system_config['deaths']:
-            self.deaths.append(config_death)
+        for death_config in system_config['deaths']:
+            self.deaths.append(death_config)
 
     def has_interface(self, interface):
         """Returns True if the system contains the interface, otherwise False."""

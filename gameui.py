@@ -258,6 +258,7 @@ class MainUI(BaseUI):
 
     def __init__(self, *args, **kwargs):
         super(MainUI, self).__init__(*args, **kwargs)
+        self.player_symbols = {0: '^', 1: '>', 2: 'v', 3: '<'}
 
     def process_input(self, value):
         """Call the appropriate method based on input value."""
@@ -309,10 +310,9 @@ class MainUI(BaseUI):
     def add_map_player(self, text_map):
         """Add the player to the map."""
 
-        chars = {0: '^', 1: '>', 2: 'v', 3: '<'}
-        char = chars[self.game.player.orientation]
+        player_symbol = self.player_symbols[self.game.player.orientation]
         map_list = utility.text_map_to_nested_list(text_map)
-        map_list[self.game.player.y][self.game.player.x] = char
+        map_list[self.game.player.y][self.game.player.x] = player_symbol
 
         return utility.nested_list_to_text_map(map_list)
 
@@ -340,8 +340,6 @@ class MainUI(BaseUI):
 
         text_map = self.get_base_map()
         text_map = self.add_map_path(text_map)
-        # text_map = self.add_map_devices(text_map)
-        # text_map = self.add_map_interfaces(text_map)
         text_map = self.add_map_player(text_map)
         map_width = len(text_map.split('\n')[0])
         buffer_width = int((game_config['ui']['width'] - map_width) / 2)
@@ -365,10 +363,12 @@ class MainUI(BaseUI):
     def get_commands(self):
         """Return the universal commands."""
 
-        commands = ('\nw - move up\t\tr - restart level\tP - Player\n'
+        player_symbol = self.player_symbols[self.game.player.orientation]
+
+        commands = ('\nw - move up\t\tr - restart level\t{0} - Player\n'
                     's - move down\t\tq - main menu\t\t. - Path\n'
                     'a - move left\n'
-                    'd - move right')
+                    'd - move right').format(player_symbol)
 
         return commands
 
