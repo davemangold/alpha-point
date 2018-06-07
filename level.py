@@ -624,22 +624,23 @@ class Map(object):
         d4_items = [items[0] + items[1] for items in zip(d4_tools, d4_artifacts)]
         return d4_items
 
+    def has_item(self, item):
+        """Returns True if the item is in the map inventory, otherwise False."""
+
+        return item in self.inventory
+
 
 class Level(object):
     """Level with which the player interacts."""
 
     def __init__(self, game, *args, **kwargs):
-        """Level initializer...
-
-        param: config: level configuration dictionary
-        """
         self.game = game
         self.map = Map(self)
         self.system = System(self)
         self.number = 0
 
     def build(self, level_number):
-        """Build the level from a config dictionary."""
+        """Build the specified level."""
 
         # system must be built before map
         self.system.build(level_number)

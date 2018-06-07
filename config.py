@@ -449,7 +449,7 @@ level_config = {
                     {'coordinates': (4, 4), 'story_text': None},
                     {'coordinates': (4, 5), 'story_text': None},
                     {'coordinates': (4, 6), 'story_text': None},
-                    {'coordinates': (4, 7), 'story_text': 'As he removed his helmet, {0} noted an empty excursion suit alcove and wondered who else was outside the hab. Ad-hoc departures weren\'t that unusual -- just one more variable to keep in mind. The lights flickered briefly and {0} detected the caustic smell of overheated electronics. "That can\'t be good", he told himself. After stowing his suit in an open alcove {0} headed for the door of the crew meeting area.'.format(player_config['name'])},
+                    {'coordinates': (4, 7), 'story_text': 'As he removed his helmet, {0} noted two empty excursion suit alcoves and wondered who else was outside the hab. Ad-hoc departures weren\'t that unusual -- even Martian research stations have fences that need mending. The lights flickered briefly and {0} detected the caustic smell of overheated electronics. "That can\'t be good", he told himself. After stowing his suit in an open alcove {0} headed for the door of the crew meeting area.'.format(player_config['name'])},
                     {'coordinates': (4, 8), 'story_text': None},
                     {'coordinates': (3, 6), 'story_text': None},
                     {'coordinates': (3, 7), 'story_text': None},
@@ -512,7 +512,7 @@ level_config = {
                         'interactive': False,
                         'blocking': True,
                         'x': 5,
-                        'y': 6
+                        'y': 7
                     },
                     {
                         'type': 'generic',

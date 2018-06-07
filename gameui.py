@@ -289,17 +289,15 @@ class MainUI(BaseUI):
         except exception.ActionError:
             self.alert = "That's not an option."
         except exception.InterfaceError:
-            self.alert = "Dammit! There's something wrong with this thing."
+            self.alert = "This doesn't work."
 
     def prompt(self, valid_responses=[]):
         """Prompt the player for input."""
 
-        # message = "  What should I do? "
-
         while True:
             # update the display
             self.display()
-            # response = input(message)
+            # get the keypress character
             response = msvcrt.getwch()
             if utility.is_empty_response(response):
                 continue

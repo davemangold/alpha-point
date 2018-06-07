@@ -14,6 +14,10 @@ class DeviceError(Exception):
     pass
 
 
+class ItemError(Exception):
+    pass
+
+
 class ToolError(Exception):
     pass
 

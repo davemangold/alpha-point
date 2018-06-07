@@ -26,7 +26,7 @@ class Item(object):
         return self.description
 
     def location(self):
-        """Return the (x, y) location of the component."""
+        """Return the (x, y) location of the item."""
 
         return self.x, self.y
 

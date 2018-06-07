@@ -5,10 +5,10 @@ from artifact import Artifact
 
 
 class Inventory(object):
-    """Inventory class to hold items."""
+    """Inventory class to hold and manage items."""
 
     def __init__(self, owner, *args, **kwargs):
-        self.owner = owner  # character or level
+        self.owner = owner  # character or map
         self.items = []
 
     def add_item(self, item):
