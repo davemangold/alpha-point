@@ -523,12 +523,12 @@ class LevelCompleteUI(BaseUI):
         """Call the appropriate method based on input value."""
 
         if value == '1':
-            self.restart_level()
-        elif value == '2':
             try:
                 self.next_level()
             except KeyError:
                 self.alert = "This is the last level."
+        elif value == '2':
+            self.restart_level()
         elif value == 'q':
             self.leave()
         # the value wasn't handled
@@ -573,8 +573,8 @@ class LevelCompleteUI(BaseUI):
     def get_action(self):
         """Return the text that represents available actions."""
 
-        ui_actions = ('1. Restart level\n'
-                      '2. Play next level')
+        ui_actions = ('1. Play next level\n'
+                      '2. Restart level')
 
         return ui_actions
 

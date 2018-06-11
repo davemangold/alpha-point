@@ -314,18 +314,18 @@ level_config = {
         2: {
             'name': 'Airlock',
             'map': {
-                'x_dimension': 5,
-                'y_dimension': 3,
+                'x_dimension': 3,
+                'y_dimension': 5,
                 'path_cells': [
-                    {'coordinates': (0, 1), 'story_text': None},
-                    {'coordinates': (1, 1), 'story_text': ('{0} checked his mission clock as the door sealed behind him. He was about thirty minutes ahead of schedule. "Alright, focus.", he thought, "Follow the ingress procedure."').format(player_config['name'])},
-                    {'coordinates': (2, 1), 'story_text': None},
-                    {'coordinates': (3, 1), 'story_text': None},
-                    {'coordinates': (4, 1), 'story_text': None}
+                    {'coordinates': (1, 0), 'story_text': None},
+                    {'coordinates': (1, 1), 'story_text': None},
+                    {'coordinates': (1, 2), 'story_text': None},
+                    {'coordinates': (1, 3), 'story_text': ('{0} checked his mission clock as the door sealed behind him. He was about thirty minutes ahead of schedule. "Alright, focus.", he thought, "Follow the ingress procedure."').format(player_config['name'])},
+                    {'coordinates': (1, 4), 'story_text': None}
                 ],
-                'coord_enter': (1, 1),  # begin
-                'coord_exit': (4, 1),  # end
-                'orientation_enter': 1,
+                'coord_enter': (1, 3),  # begin
+                'coord_exit': (1, 0),  # end
+                'orientation_enter': 0,
                 'tools': [],
                 'artifacts': []
             },
@@ -338,8 +338,8 @@ level_config = {
                         'type': 'button',
                         'enabled': True,
                         'x': 2,
-                        'y': 0,
-                        'orientation': 2,
+                        'y': 2,
+                        'orientation': 3,
                         'msg_action_verb': 'push'
                     },
                     {
@@ -348,9 +348,9 @@ level_config = {
                         'description': 'yellow handwheel labeled "Pressure Control - Manual Override"',
                         'type': 'handwheel',
                         'enabled': True,
-                        'x': 2,
+                        'x': 0,
                         'y': 2,
-                        'orientation': 0,
+                        'orientation': 1,
                         'msg_action_verb': 'turn'
                     },
                     {
@@ -359,9 +359,9 @@ level_config = {
                         'description': 'button',
                         'type': 'button',
                         'enabled': True,
-                        'x': 4,
-                        'y': 1,
-                        'orientation': 3,
+                        'x': 1,
+                        'y': 0,
+                        'orientation': 2,
                         'msg_action_verb': 'push'
                     }
                 ],
@@ -373,8 +373,8 @@ level_config = {
                         'type': 'door',
                         'enabled': False,
                         'active': False,
-                        'x': 0,
-                        'y': 1,
+                        'x': 1,
+                        'y': 4,
                         'msg_action_true': 'open',
                         'msg_action_false': 'close',
                         'msg_active_true': 'The door is open.',
@@ -391,7 +391,7 @@ level_config = {
                         'type': 'valve',
                         'enabled': True,
                         'active': False,
-                        'x': 2,
+                        'x': 0,
                         'y': 2,
                         'msg_action_true': 'open',
                         'msg_action_false': 'close',
@@ -409,8 +409,8 @@ level_config = {
                         'type': 'door',
                         'enabled': True,
                         'active': False,
-                        'x': 4,
-                        'y': 1,
+                        'x': 1,
+                        'y': 0,
                         'msg_action_true': 'open',
                         'msg_action_false': 'close',
                         'msg_active_true': 'The door is open.',
@@ -622,6 +622,65 @@ level_config = {
                 'links': [
                     {'interface_id': 0, 'device_id': 1}
                 ],
+                'deaths': []
+            }
+        },
+        4: {
+            'name': 'Crew',
+            'map': {
+                'x_dimension': 9,
+                'y_dimension': 7,
+                'path_cells': [
+                    {'coordinates': (2, 4), 'story_text': None},
+                    {'coordinates': (3, 4), 'story_text': None},
+                    {'coordinates': (4, 4), 'story_text': None},
+                    {'coordinates': (5, 4), 'story_text': None},
+                    {'coordinates': (6, 4), 'story_text': None},
+                    {'coordinates': (2, 3), 'story_text': None},
+                    {'coordinates': (6, 3), 'story_text': None},
+                    {'coordinates': (2, 2), 'story_text': None},
+                    {'coordinates': (3, 2), 'story_text': None},
+                    {'coordinates': (4, 2), 'story_text': None},
+                    {'coordinates': (5, 2), 'story_text': None},
+                    {'coordinates': (6, 2), 'story_text': None},
+                    {'coordinates': (4, 5), 'story_text': None},
+                    {'coordinates': (4, 6), 'story_text': None},
+                    {'coordinates': (4, 0), 'story_text': None},
+                    {'coordinates': (4, 1), 'story_text': None},
+                    {'coordinates': (0, 3), 'story_text': None},
+                    {'coordinates': (1, 3), 'story_text': None},
+                    {'coordinates': (7, 3), 'story_text': None},
+                    {'coordinates': (8, 3), 'story_text': None}
+                ],
+                'coord_enter': (4, 5),  # begin
+                'coord_exit': (8, 3),  # end
+                'orientation_enter': 0,
+                'tools': [],
+                'artifacts': []
+            },
+            'system': {
+                'interfaces': [],
+                'devices': [
+                    {
+                        'id': 0,
+                        'name': 'entrance door',
+                        'description': 'door',
+                        'type': 'door',
+                        'enabled': False,
+                        'active': False,
+                        'x': 4,
+                        'y': 6,
+                        'msg_action_true': 'open',
+                        'msg_action_false': 'close',
+                        'msg_active_true': 'The door is open.',
+                        'msg_active_false': 'The door is closed.',
+                        'msg_toggle_active_true': 'The door opened.',
+                        'msg_toggle_active_false': 'The door closed.',
+                        'msg_unmet_dependencies': 'The door is unresponsive.',
+                        'dependencies': []
+                    }
+                ],
+                'links': [],
                 'deaths': []
             }
         }
