@@ -27,47 +27,47 @@ class System(object):
 
         system_config = level_config['levels'][level_number]['system']
 
-        for interface_config in system_config['interfaces']:
-            interface = InterfaceFactory.make_interface(self, interface_config['type'])
-            interface.config_id = interface_config['id']
-            interface.name = interface_config['name']
-            interface.description = interface_config['description']
-            interface.enabled = interface_config['enabled']
-            interface.x = interface_config['x']
-            interface.y = interface_config['y']
-            interface.orientation = interface_config['orientation']
-            interface.msg_action_verb = interface_config['msg_action_verb']
+        for config_interface in system_config['interfaces']:
+            new_interface = InterfaceFactory.make_interface(self, config_interface['type'])
+            new_interface.config_id = config_interface['id']
+            new_interface.name = config_interface['name']
+            new_interface.description = config_interface['description']
+            new_interface.enabled = config_interface['enabled']
+            new_interface.x = config_interface['x']
+            new_interface.y = config_interface['y']
+            new_interface.orientation = config_interface['orientation']
+            new_interface.msg_action_verb = config_interface['msg_action_verb']
 
-        for device_config in system_config['devices']:
-            device = DeviceFactory.make_device(self, device_config['type'])
-            device.config_id = device_config['id']
-            device.name = device_config['name']
-            device.description = device_config['description']
-            device.enabled = device_config['enabled']
-            device.active = device_config['active']
-            device.x = device_config['x']
-            device.y = device_config['y']
-            device.msg_action_true = device_config['msg_action_true']
-            device.msg_action_false = device_config['msg_action_false']
-            device.msg_active_true = device_config['msg_active_true']
-            device.msg_active_false = device_config['msg_active_false']
-            device.msg_toggle_active_true = device_config['msg_toggle_active_true']
-            device.msg_toggle_active_false = device_config['msg_toggle_active_false']
-            device.msg_unmet_dependencies = device_config['msg_unmet_dependencies']
+        for config_device in system_config['devices']:
+            new_device = DeviceFactory.make_device(self, config_device['type'])
+            new_device.config_id = config_device['id']
+            new_device.name = config_device['name']
+            new_device.description = config_device['description']
+            new_device.enabled = config_device['enabled']
+            new_device.active = config_device['active']
+            new_device.x = config_device['x']
+            new_device.y = config_device['y']
+            new_device.msg_action_true = config_device['msg_action_true']
+            new_device.msg_action_false = config_device['msg_action_false']
+            new_device.msg_active_true = config_device['msg_active_true']
+            new_device.msg_active_false = config_device['msg_active_false']
+            new_device.msg_toggle_active_true = config_device['msg_toggle_active_true']
+            new_device.msg_toggle_active_false = config_device['msg_toggle_active_false']
+            new_device.msg_unmet_dependencies = config_device['msg_unmet_dependencies']
 
-        for device_config in system_config['devices']:
-            device = self.get_device(config_id=device_config['id'])
-            for dependency_config in device_config['dependencies']:
-                dependency_device = self.get_device(config_id=dependency_config['device_id'])
-                device.add_dependency(dependency_device.id, dependency_config['active_state'])
+        for config_device in system_config['devices']:
+            system_device = self.get_device(config_id=config_device['id'])
+            for config_dependency in config_device['dependencies']:
+                dependency_device = self.get_device(config_id=config_dependency['device_id'])
+                system_device.add_dependency(dependency_device.id, config_dependency['active_state'])
 
-        for link_config in system_config['links']:
-            interface = self.get_interface(config_id=link_config['interface_id'])
-            device = self.get_device(config_id=link_config['device_id'])
-            self.link_components(interface, device)
+        for config_link in system_config['links']:
+            link_interface = self.get_interface(config_id=config_link['interface_id'])
+            link_device = self.get_device(config_id=config_link['device_id'])
+            self.link_components(link_interface, link_device)
 
-        for death_config in system_config['deaths']:
-            self.deaths.append(death_config)
+        for config_death in system_config['deaths']:
+            self.deaths.append(config_death)
 
     def has_interface(self, interface):
         """Returns True if the system contains the interface, otherwise False."""
@@ -501,47 +501,47 @@ class Map(object):
         self.exit_cell = self.get_cell(*exit_coord)
 
         for config_tool in map_config['tools']:
-            t = ToolFactory.make_tool(self.inventory, config_tool['type'])
-            t.name = config_tool['name']
-            t.description = config_tool['description']
-            t.visible = config_tool['visible']
-            t.interactive = config_tool['interactive']
-            t.blocking = config_tool['blocking']
-            t.x = config_tool['x']
-            t.y = config_tool['y']
-            self.inventory.add_item(t)
+            new_tool = ToolFactory.make_tool(self.inventory, config_tool['type'])
+            new_tool.name = config_tool['name']
+            new_tool.description = config_tool['description']
+            new_tool.visible = config_tool['visible']
+            new_tool.interactive = config_tool['interactive']
+            new_tool.blocking = config_tool['blocking']
+            new_tool.x = config_tool['x']
+            new_tool.y = config_tool['y']
+            self.inventory.add_item(new_tool)
 
         for config_artifact in map_config['artifacts']:
-            a = ArtifactFactory.make_artifact(self.inventory, config_artifact['type'])
-            a.name = config_artifact['name']
-            a.description = config_artifact['description']
-            a.visible = config_artifact['visible']
-            a.interactive = config_artifact['interactive']
-            a.blocking = config_artifact['blocking']
-            a.x = config_artifact['x']
-            a.y = config_artifact['y']
-            self.inventory.add_item(a)
+            new_artifact = ArtifactFactory.make_artifact(self.inventory, config_artifact['type'])
+            new_artifact.name = config_artifact['name']
+            new_artifact.description = config_artifact['description']
+            new_artifact.visible = config_artifact['visible']
+            new_artifact.interactive = config_artifact['interactive']
+            new_artifact.blocking = config_artifact['blocking']
+            new_artifact.x = config_artifact['x']
+            new_artifact.y = config_artifact['y']
+            self.inventory.add_item(new_artifact)
 
         for config_path_cell in map_config['path_cells']:
             path_cell = self.get_cell(*config_path_cell['coordinates'])
             path_cell.story_text = config_path_cell['story_text']
             self.path.add_cell(path_cell)
 
-        for i in self.level.system.interfaces:
-            cell = self.get_cell(i.x, i.y)
-            cell.add_interface(i)
+        for system_interface in self.level.system.interfaces:
+            interface_cell = self.get_cell(system_interface.x, system_interface.y)
+            interface_cell.add_interface(system_interface)
 
-        for d in self.level.system.devices:
-            cell = self.get_cell(d.x, d.y)
-            cell.add_device(d)
+        for system_device in self.level.system.devices:
+            device_cell = self.get_cell(system_device.x, system_device.y)
+            device_cell.add_device(system_device)
 
-        for t in self.inventory.get_tools():
-            cell = self.get_cell(t.x, t.y)
-            cell.add_tool(t)
+        for map_tool in self.inventory.get_tools():
+            tool_cell = self.get_cell(map_tool.x, map_tool.y)
+            tool_cell.add_tool(map_tool)
 
-        for a in self.inventory.get_artifacts():
-            cell = self.get_cell(a.x, a.y)
-            cell.add_artifact(a)
+        for map_artifact in self.inventory.get_artifacts():
+            artifact_cell = self.get_cell(map_artifact.x, map_artifact.y)
+            artifact_cell.add_artifact(map_artifact)
 
     def get_cell(self, x, y):
         """Return the cell at the coordinates if it exists, otherwise None."""
@@ -650,7 +650,4 @@ class Level(object):
     def is_complete(self):
         """Returns True if the player is at the final cell of the level, otherwise False."""
 
-        if self.map.get_cell(*self.game.player.location()) is self.map.exit_cell:
-            return True
-
-        return False
+        return self.map.get_cell(*self.game.player.location()) is self.map.exit_cell
