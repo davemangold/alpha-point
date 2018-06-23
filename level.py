@@ -152,7 +152,7 @@ class System(object):
         return interface_ids
 
     def get_interface_devices(self, interface):
-        """Return a list of all devices that interact with a specific interface."""
+        """Return a list of all devices linked to an interface."""
 
         device_ids = self.get_device_ids(interface)
         interface_devices = [device for device in self.devices
@@ -161,7 +161,7 @@ class System(object):
         return interface_devices
 
     def get_device_interfaces(self, device):
-        """Return a list of all interfaces that interact with a specific device."""
+        """Return a list of all interfaces linked to a device."""
 
         interface_ids = self.get_interface_ids(device)
         device_interfaces = [interface for interface in self.interfaces

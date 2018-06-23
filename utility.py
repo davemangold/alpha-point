@@ -76,6 +76,7 @@ def build_object_list_text(object_list):
 
 
 def build_object_report_body(text_part_list):
+    """Return string body for object report."""
 
     conjunction = 'and'
     delimiter = ','
@@ -97,7 +98,8 @@ def build_object_report_body(text_part_list):
     return body_text
 
 
-def build_object_report_text(orientation, d4_components):
+def build_object_report_text(orientation, d4_objects):
+    """Return string description of d4 objects relative to orientation."""
 
     report_open = 'There\'s'
     report_body = ''
@@ -105,8 +107,8 @@ def build_object_report_text(orientation, d4_components):
 
     body_part_list = []
 
-    for direction in range(len(d4_components)):
-        component_list = d4_components[direction]
+    for direction in range(len(d4_objects)):
+        component_list = d4_objects[direction]
 
         if len(component_list) > 0:
             this_text_part = build_object_list_text(component_list)
@@ -124,6 +126,7 @@ def build_object_report_text(orientation, d4_components):
 
 
 def merge_dicts(a, b):
+    """Merge two dictionaries."""
 
     return {**a, **b}
 

@@ -23,6 +23,7 @@ class Character(object):
         return self.name
 
     def __is_valid_move(self, cell):
+        """Returns True if moving to cell is valid in current map, otherwise False."""
 
         if cell is None:
             raise exception.MoveError("There's no cell there.")
@@ -52,7 +53,7 @@ class Character(object):
         return self.game.level.map.get_cell(*self.location())
 
     def move_to(self, x, y):
-        """Move character to specified x, y if it is a valid cell."""
+        """Move character to cell at x, y if it's a valid move."""
 
         to_cell = self.game.level.map.get_cell(x, y)
         if self.__is_valid_move(to_cell):
@@ -159,6 +160,7 @@ class Character(object):
         return visible_components
 
     def get_visible_objects(self):
+        """Return all objects visible to the player."""
 
         visible_components = self.get_visible_components()
         visible_items = self.get_visible_items()
@@ -166,6 +168,7 @@ class Character(object):
         return visible_objects
 
     def get_interactive_objects(self):
+        """Return all visible objects with which the player can interact."""
 
         interactive_objects = []
         visible_objects = self.get_visible_objects()
