@@ -26,7 +26,7 @@ class BaseUI(object):
     def prompt(self, valid_responses=[]):
         """Prompt the player for input."""
 
-        message = "  What should I do? "
+        message = self.decorate_ui("What should I do? ")
 
         while True:
             # update the display
@@ -103,7 +103,7 @@ class StartUI(BaseUI):
         """Prompt the player for input."""
 
         self.display()
-        message = "  Press Enter to continue..."
+        message = self.decorate_ui("Press Enter to continue...")
         response = input(message)
         return response
 
@@ -199,7 +199,7 @@ class LevelsUI(BaseUI):
     def prompt(self, valid_responses=[]):
         """Prompt the player for input."""
 
-        message = "  Choose a level: "
+        message = self.decorate_ui("Choose a level: ")
 
         while True:
             # update the display
@@ -263,6 +263,8 @@ class MainUI(BaseUI):
     def process_input(self, value):
         """Call the appropriate method based on input value."""
 
+        print(value)
+
         try:
             # process move input
             if value == 'w':
@@ -278,9 +280,13 @@ class MainUI(BaseUI):
                 self.game.player.do_action(int(value))
             # process restart or quit input
             elif value == 'r':
-                self.restart_level()
+                self.display()
+                if input(self.decorate_ui('Are you sure you want to restart (y/n)? ')) == 'y':
+                    self.restart_level()
             elif value == 'q':
-                self.leave()
+                self.display()
+                if input(self.decorate_ui('Are you sure you want to quit (y/n)? ')) == 'y':
+                    self.leave()
             # the value wasn't handled
             else:
                 self.alert = "I don't know what you mean."

@@ -132,7 +132,7 @@ def merge_dicts(a, b):
 
 
 def merge_dicts_n(iterable):
-    """Merge arbitrary number of dictionaries and return resulting dictionary."""
+    """Merge multiple dictionaries."""
 
     this_dict = iterable.pop(0)
     while len(iterable) > 0:

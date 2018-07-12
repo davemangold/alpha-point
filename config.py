@@ -643,7 +643,7 @@ level_config = {
                     {'coordinates': (4, 2), 'story_text': None},
                     {'coordinates': (5, 2), 'story_text': None},
                     {'coordinates': (6, 2), 'story_text': None},
-                    {'coordinates': (4, 5), 'story_text': None},
+                    {'coordinates': (4, 5), 'story_text': 'Marcus tried again to establish radio contact as he stepped through the broken door..."Tonia, this is Marcus. Do you read me? Over."...nothing.'},
                     {'coordinates': (4, 6), 'story_text': None},
                     {'coordinates': (4, 0), 'story_text': None},
                     {'coordinates': (4, 1), 'story_text': None},
