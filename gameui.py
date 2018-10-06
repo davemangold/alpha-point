@@ -1,13 +1,16 @@
 import os
 import sys
-import time
-import msvcrt
 import utility
 import exception
+from gameio import DIRECTIONS
+from gameio import COMMANDS
+from gameio import ACTIONS
 from random import randrange
 from random import random
 from config import game_config
 from config import level_config
+
+import time
 
 
 class BaseUI(object):
@@ -23,7 +26,7 @@ class BaseUI(object):
 
         pass
 
-    def prompt(self, valid_responses=[]):
+    def prompt(self):
         """Prompt the player for input."""
 
         message = self.decorate_ui("What should I do? ")
@@ -34,8 +37,6 @@ class BaseUI(object):
             response = input(message)
             # response = msvcrt.getwch()
             if utility.is_empty_response(response):
-                continue
-            if len(valid_responses) > 0 and response not in valid_responses:
                 continue
             return response
 
@@ -99,7 +100,7 @@ class StartUI(BaseUI):
         if self.story_seen_2 is True:
             self.leave()
 
-    def prompt(self, valid_responses=[]):
+    def prompt(self):
         """Prompt the player for input."""
 
         self.display()
@@ -196,7 +197,7 @@ class LevelsUI(BaseUI):
         else:
             self.alert = "Sorry, that's not an option."
 
-    def prompt(self, valid_responses=[]):
+    def prompt(self):
         """Prompt the player for input."""
 
         message = self.decorate_ui("Choose a level: ")
@@ -206,8 +207,6 @@ class LevelsUI(BaseUI):
             self.display()
             response = input(message)
             if utility.is_empty_response(response):
-                continue
-            if len(valid_responses) > 0 and response not in valid_responses:
                 continue
             return response
 
@@ -263,27 +262,25 @@ class MainUI(BaseUI):
     def process_input(self, value):
         """Call the appropriate method based on input value."""
 
-        print(value)
-
         try:
             # process move input
-            if value == 'w':
+            if value == DIRECTIONS.UP:
                 self.game.player.move_up()
-            elif value == 'd':
+            elif value == DIRECTIONS.RIGHT:
                 self.game.player.move_right()
-            elif value == 's':
+            elif value == DIRECTIONS.DOWN:
                 self.game.player.move_down()
-            elif value == 'a':
+            elif value == DIRECTIONS.LEFT:
                 self.game.player.move_left()
             # process action input
-            elif value.isdigit():
-                self.game.player.do_action(int(value))
+            elif value in ACTIONS:
+                self.game.player.do_action(value)
             # process restart or quit input
-            elif value == 'r':
+            elif value == COMMANDS.RESTART:
                 self.display()
                 if input(self.decorate_ui('Are you sure you want to restart (y/n)? ')) == 'y':
                     self.restart_level()
-            elif value == 'q':
+            elif value == COMMANDS.QUIT:
                 self.display()
                 if input(self.decorate_ui('Are you sure you want to quit (y/n)? ')) == 'y':
                     self.leave()
@@ -297,17 +294,14 @@ class MainUI(BaseUI):
         except exception.InterfaceError:
             self.alert = "This doesn't work."
 
-    def prompt(self, valid_responses=[]):
+    def prompt(self):
         """Prompt the player for input."""
 
         while True:
-            # update the display
+
             self.display()
-            # get the keypress character
-            response = msvcrt.getwch()
-            if utility.is_empty_response(response):
-                continue
-            if len(valid_responses) > 0 and response not in valid_responses:
+            response = self.game.control.get_input()
+            if response is None:
                 continue
             return response
 
@@ -431,7 +425,7 @@ class TerminalUI(BaseUI):
         except exception.ActionError:
             self.alert = "Unrecognized command."
 
-    def prompt(self, valid_responses=[]):
+    def prompt(self):
         """Prompt the player for input."""
 
         message = "  {0}@apex-{1}:~$ ".format(self.game.player.name,
@@ -442,8 +436,6 @@ class TerminalUI(BaseUI):
             self.display()
             response = input(message)
             if utility.is_empty_response(response):
-                continue
-            if len(valid_responses) > 0 and response not in valid_responses:
                 continue
             return response
 
@@ -541,7 +533,7 @@ class LevelCompleteUI(BaseUI):
         else:
             self.alert = "Sorry, that's not an option."
 
-    def prompt(self, valid_responses=[]):
+    def prompt(self):
         """Prompt the player for input."""
 
         message = "  Choose an option: "
@@ -551,8 +543,6 @@ class LevelCompleteUI(BaseUI):
             self.display()
             response = input(message)
             if utility.is_empty_response(response):
-                continue
-            if len(valid_responses) > 0 and response not in valid_responses:
                 continue
             return response
 
@@ -620,7 +610,7 @@ class PlayerDeadUI(BaseUI):
         else:
             self.alert = "Sorry, that's not an option."
 
-    def prompt(self, valid_responses=[]):
+    def prompt(self):
         """Prompt the player for input."""
 
         message = "  Choose an option: "
@@ -630,8 +620,6 @@ class PlayerDeadUI(BaseUI):
             self.display()
             response = input(message)
             if utility.is_empty_response(response):
-                continue
-            if len(valid_responses) > 0 and response not in valid_responses:
                 continue
             return response
 
@@ -692,7 +680,7 @@ class StoryUI(BaseUI):
 
         self.leave()
 
-    def prompt(self, valid_responses=[]):
+    def prompt(self):
         """Prompt the player for input."""
 
         self.display()
@@ -763,7 +751,7 @@ class GameCompleteUI(BaseUI):
         else:
             self.alert = "Sorry, that's not an option."
 
-    def prompt(self, valid_responses=[]):
+    def prompt(self):
         """Prompt the player for input."""
 
         message = "  Choose an option: "
@@ -773,8 +761,6 @@ class GameCompleteUI(BaseUI):
             self.display()
             response = input(message)
             if utility.is_empty_response(response):
-                continue
-            if len(valid_responses) > 0 and response not in valid_responses:
                 continue
             return response
 

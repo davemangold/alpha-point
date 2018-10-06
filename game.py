@@ -1,5 +1,6 @@
 from player import Player
 from level import Level
+from gameio import Control
 from gameui import MainUI
 from gameui import LevelsUI
 from gameui import StartUI
@@ -12,6 +13,7 @@ class Game(object):
     """Game class that contains all the game mechanics."""
 
     def __init__(self):
+        self.control = Control(self)
         self.level = Level(self)
         self.player = Player(self)
         self.gameui = StartUI(self)
