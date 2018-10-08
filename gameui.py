@@ -32,11 +32,10 @@ class BaseUI(object):
         message = self.decorate_ui("What should I do? ")
 
         while True:
-            # update the display
+
             self.display()
-            response = input(message)
-            # response = msvcrt.getwch()
-            if utility.is_empty_response(response):
+            response = self.game.control.get_input(message=message)
+            if response is None:
                 continue
             return response
 
@@ -104,8 +103,9 @@ class StartUI(BaseUI):
         """Prompt the player for input."""
 
         self.display()
-        message = self.decorate_ui("Press Enter to continue...")
-        response = input(message)
+        message = self.decorate_ui("Press any key to continue...")
+        print(message)
+        response = self.game.control.get_input()
         return response
 
     def get_ui(self):
@@ -202,10 +202,11 @@ class LevelsUI(BaseUI):
 
         message = self.decorate_ui("Choose a level: ")
 
+        # TODO: Need to use get_input() but multi-char and wait for Enter pressed
         while True:
             # update the display
             self.display()
-            response = input(message)
+            response = self.game.control.get_input_string(message)
             if utility.is_empty_response(response):
                 continue
             return response
@@ -434,7 +435,7 @@ class TerminalUI(BaseUI):
         while True:
             # update the display
             self.display()
-            response = input(message)
+            response = self.game.control.get_input_string(message=message)
             if utility.is_empty_response(response):
                 continue
             return response
@@ -541,7 +542,7 @@ class LevelCompleteUI(BaseUI):
         while True:
             # update the display
             self.display()
-            response = input(message)
+            response = self.game.control.get_input_string(message=message)
             if utility.is_empty_response(response):
                 continue
             return response
@@ -618,7 +619,7 @@ class PlayerDeadUI(BaseUI):
         while True:
             # update the display
             self.display()
-            response = input(message)
+            response = self.game.control.get_input_string(message=message)
             if utility.is_empty_response(response):
                 continue
             return response
@@ -684,8 +685,8 @@ class StoryUI(BaseUI):
         """Prompt the player for input."""
 
         self.display()
-        message = "  Press Enter to continue..."
-        response = input(message)
+        message = "  Press any key to continue..."
+        response = self.game.control.get_input(message=message)
         return response
 
     def get_ui(self):
@@ -759,7 +760,7 @@ class GameCompleteUI(BaseUI):
         while True:
             # update the display
             self.display()
-            response = input(message)
+            response = self.game.control.get_input_string(message=message)
             if utility.is_empty_response(response):
                 continue
             return response

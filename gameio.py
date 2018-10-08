@@ -15,14 +15,19 @@ UNKNOWN = 0
 
 class Control(object):
 
-    def __init__(self, game, *args, **kwargs):
+    def __init__(self, game=None, *args, **kwargs):
         self.game = game
 
     @staticmethod
-    def get_input():
-        """Return the ASCII integer code for the key pressed."""
+    def get_input(message=None):
+        """Return the ASCII integer code for the key pressed.
+
+        Return: int, None"""
 
         result = None
+
+        if message is not None:
+            print(message, end="", flush=True)
 
         try:
             ch = str(msvcrt.getch(), 'utf-8')
@@ -48,3 +53,8 @@ class Control(object):
                 result = DIRECTIONS.LEFT
 
         return result
+
+    @staticmethod
+    def get_input_string(message=None):
+
+        return input(message)
