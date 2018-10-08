@@ -90,13 +90,13 @@ class StartUI(BaseUI):
     def __init__(self, *args, **kwargs):
         super(StartUI, self).__init__(*args, **kwargs)
         self.splash_seen = False
-        self.story_seen_1 = False
-        self.story_seen_2 = False
+        self.intro_seen_1 = False
+        self.intro_seen_2 = False
 
     def process_input(self, value):
         """Call the appropriate method based on input value."""
 
-        if self.story_seen_2 is True:
+        if self.intro_seen_2 is True:
             self.leave()
 
     def prompt(self):
@@ -114,15 +114,15 @@ class StartUI(BaseUI):
         ui_elements = []
 
         ui_splash_text = self.get_splash_text()
-        ui_story_text_1 = self.get_story_text_1()
-        ui_story_text_2 = self.get_story_text_2()
+        ui_intro_text_1 = self.get_intro_text_1()
+        ui_intro_text_2 = self.get_intro_text_2()
 
         if self.splash_seen is False:
             ui_body_text = ui_splash_text
-        elif self.splash_seen is True and self.story_seen_1 is False:
-            ui_body_text = ui_story_text_1
+        elif self.splash_seen is True and self.intro_seen_1 is False:
+            ui_body_text = ui_intro_text_1
         else:
-            ui_body_text = ui_story_text_2
+            ui_body_text = ui_intro_text_2
 
         ui_elements.append(self.separator)
         ui_elements.append(ui_body_text)
@@ -143,10 +143,10 @@ class StartUI(BaseUI):
             self.clear_screen()
             print(show_text)
 
-        if self.story_seen_1 is True:
-            self.story_seen_2 = True
+        if self.intro_seen_1 is True:
+            self.intro_seen_2 = True
         if self.splash_seen is True:
-            self.story_seen_1 = True
+            self.intro_seen_1 = True
 
         self.splash_seen = True
 
@@ -155,18 +155,18 @@ class StartUI(BaseUI):
 
         return game_config['splash_text']
 
-    def get_story_text_1(self):
+    def get_intro_text_1(self):
         """Return the story intro text."""
 
-        story_text = game_config['story_text_1']
-        formatted_text = utility.format_ui_text(story_text)
+        intro_text = game_config['intro_text_1']
+        formatted_text = utility.format_ui_text(intro_text)
         return formatted_text
 
-    def get_story_text_2(self):
+    def get_intro_text_2(self):
         """Return the story intro text."""
 
-        story_text = game_config['story_text_2']
-        formatted_text = utility.format_ui_text(story_text)
+        intro_text = game_config['intro_text_2']
+        formatted_text = utility.format_ui_text(intro_text)
         return formatted_text
 
     def leave(self):
