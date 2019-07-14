@@ -9,7 +9,12 @@ ARTICLE_MAP = game_config['ui']['articles']['mapped']
 def is_empty_response(response):
     """Returns True if the response is valid, otherwise False."""
 
-    return response is None or response.strip() == ''
+    if isinstance(response, str):
+        return response is None or response.strip() == ''
+    elif isinstance(response, int):
+        return response == -1
+    else:
+        return False
 
 
 def d4_inverse(d4_direction):

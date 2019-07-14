@@ -1,60 +1,43 @@
-import msvcrt
-from string import ascii_letters
-from collections import namedtuple
-
-ascii_digits = ''.join([str(i) for i in range(10)])
-
-__direction__ = namedtuple('Directions', ['UP', 'RIGHT', 'DOWN', 'LEFT'])
-__command__ = namedtuple('Commands', ['QUIT', 'RESTART'])
-
-DIRECTIONS = __direction__(*[10, 11, 12, 13])
-COMMANDS = __command__(*[14, 15])
-ACTIONS = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-UNKNOWN = 0
+from msvcrt import getch
 
 
 class Control(object):
 
-    def __init__(self, game=None, *args, **kwargs):
-        self.game = game
+    def __init__(self, *args, **kwargs):
+        self._digits = {48: 0, 49: 1, 50: 2, 51: 3, 52: 4,
+                        53: 5, 54: 6, 55: 7, 56: 8, 57: 9}
+        self.ENTER = 13
+        self.QUIT = 113
+        self.RESTART = 114
+        self.UP = 72
+        self.LEFT = 75
+        self.RIGHT = 77
+        self.DOWN = 80
+        self.NULL = -1
 
-    @staticmethod
-    def get_input(message=None):
-        """Return the ASCII integer code for the key pressed.
-
-        Return: int, None"""
-
-        result = None
-
-        if message is not None:
-            print(message, end="", flush=True)
-
-        try:
-            ch = str(msvcrt.getch(), 'utf-8')
-            if ch in ascii_letters:
-                if ch == 'q':
-                    result = COMMANDS.QUIT
-                elif ch == 'r':
-                    result = COMMANDS.RESTART
-                else:
-                    result = 0
-            elif ch in ascii_digits:
-                result = int(ch)
-            msvcrt.getch()
-        except UnicodeDecodeError:
-            ch = str(msvcrt.getch(), 'utf-8')
-            if ch == 'H':
-                result = DIRECTIONS.UP
-            if ch == 'M':
-                result = DIRECTIONS.RIGHT
-            if ch == 'P':
-                result = DIRECTIONS.DOWN
-            if ch == 'K':
-                result = DIRECTIONS.LEFT
-
-        return result
-
-    @staticmethod
-    def get_input_string(message=None):
-
+    def get_input(self, message):
         return input(message)
+
+    def get_keypress(self):
+
+        while True:
+
+            keycode = ord(getch())
+
+            # enter
+            if keycode == 13:
+                return keycode
+            # q, r
+            if keycode in (113, 114):
+                return keycode
+            # digits (0-9)
+            if 48 <= keycode <= 57:
+                return self._digits[keycode]
+
+            elif keycode == 224:  # special keys (arrows, f-keys, etc...)
+
+                keycode = ord(getch())
+
+                # arrow-up, arrow-left, arrow-right, arrow-down
+                if keycode in (72, 75, 77, 80):
+                    return keycode

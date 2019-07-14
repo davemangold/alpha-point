@@ -36,6 +36,9 @@ cmake-build-release/
 # IntelliJ
 out/
 
+# Python virtual env
+venv/
+
 # mpeltonen/sbt-idea plugin
 .idea_modules/
 

@@ -2,14 +2,10 @@ import os
 import sys
 import utility
 import exception
-from gameio import DIRECTIONS
-from gameio import COMMANDS
-from gameio import ACTIONS
 from random import randrange
 from random import random
 from config import game_config
 from config import level_config
-
 import time
 
 
@@ -34,7 +30,7 @@ class BaseUI(object):
         while True:
 
             self.display()
-            response = self.game.control.get_input(message=message)
+            response = self.game.control.get_keypress()
             if response is None:
                 continue
             return response
@@ -102,11 +98,15 @@ class StartUI(BaseUI):
     def prompt(self):
         """Prompt the player for input."""
 
-        self.display()
-        message = self.decorate_ui("Press any key to continue...")
-        print(message)
-        response = self.game.control.get_input()
-        return response
+        while True:
+            # update the display
+            self.display()
+            message = self.decorate_ui("Press Enter to continue...")
+            print(message)
+            response = self.game.control.get_keypress()
+            if utility.is_empty_response(response):
+                continue
+            return response
 
     def get_ui(self):
         """Get the full UI text."""
@@ -206,7 +206,7 @@ class LevelsUI(BaseUI):
         while True:
             # update the display
             self.display()
-            response = self.game.control.get_input_string(message)
+            response = self.game.control.get_input(message)
             if utility.is_empty_response(response):
                 continue
             return response
@@ -265,23 +265,23 @@ class MainUI(BaseUI):
 
         try:
             # process move input
-            if value == DIRECTIONS.UP:
+            if value == self.game.control.UP:
                 self.game.player.move_up()
-            elif value == DIRECTIONS.RIGHT:
+            elif value == self.game.control.RIGHT:
                 self.game.player.move_right()
-            elif value == DIRECTIONS.DOWN:
+            elif value == self.game.control.DOWN:
                 self.game.player.move_down()
-            elif value == DIRECTIONS.LEFT:
+            elif value == self.game.control.LEFT:
                 self.game.player.move_left()
             # process action input
-            elif value in ACTIONS:
-                self.game.player.do_action(value)
+            elif value in self.game.control._digits.values():
+                self.game.player.do_action(int(value))
             # process restart or quit input
-            elif value == COMMANDS.RESTART:
+            elif value == self.game.control.RESTART:
                 self.display()
                 if input(self.decorate_ui('Are you sure you want to restart (y/n)? ')) == 'y':
                     self.restart_level()
-            elif value == COMMANDS.QUIT:
+            elif value == self.game.control.QUIT:
                 self.display()
                 if input(self.decorate_ui('Are you sure you want to quit (y/n)? ')) == 'y':
                     self.leave()
@@ -301,7 +301,7 @@ class MainUI(BaseUI):
         while True:
 
             self.display()
-            response = self.game.control.get_input()
+            response = self.game.control.get_keypress()
             if response is None:
                 continue
             return response
@@ -435,7 +435,7 @@ class TerminalUI(BaseUI):
         while True:
             # update the display
             self.display()
-            response = self.game.control.get_input_string(message=message)
+            response = self.game.control.get_input(message=message)
             if utility.is_empty_response(response):
                 continue
             return response
@@ -542,7 +542,7 @@ class LevelCompleteUI(BaseUI):
         while True:
             # update the display
             self.display()
-            response = self.game.control.get_input_string(message=message)
+            response = self.game.control.get_input(message=message)
             if utility.is_empty_response(response):
                 continue
             return response
@@ -619,7 +619,7 @@ class PlayerDeadUI(BaseUI):
         while True:
             # update the display
             self.display()
-            response = self.game.control.get_input_string(message=message)
+            response = self.game.control.get_input(message=message)
             if utility.is_empty_response(response):
                 continue
             return response
@@ -685,8 +685,8 @@ class StoryUI(BaseUI):
         """Prompt the player for input."""
 
         self.display()
-        message = "  Press any key to continue..."
-        response = self.game.control.get_input(message=message)
+        message = "  Press Enter to continue..."
+        response = self.game.control.get_keypress()
         return response
 
     def get_ui(self):
@@ -760,7 +760,7 @@ class GameCompleteUI(BaseUI):
         while True:
             # update the display
             self.display()
-            response = self.game.control.get_input_string(message=message)
+            response = self.game.control.get_input(message=message)
             if utility.is_empty_response(response):
                 continue
             return response
