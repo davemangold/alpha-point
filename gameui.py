@@ -67,16 +67,16 @@ class BaseUI(object):
         self.clear_screen()
         print(self.decorate_ui(self.get_ui()))
 
-    def restart_level(self):
-        """Restart the current level."""
-
-        self.game.setup(self.game.level.number)
-        self.game.gameui = MainUI(self.game)
-
     def next_level(self):
         """Go to the next level."""
 
         self.game.setup(self.game.level.number + 1)
+        self.game.gameui = MainUI(self.game)
+
+    def restart_level(self):
+        """Restart the current level."""
+
+        self.game.setup(self.game.level.number)
         self.game.gameui = MainUI(self.game)
 
 
@@ -364,10 +364,10 @@ class MainUI(BaseUI):
 
         player_symbol = self.player_symbols[self.game.player.orientation]
 
-        commands = ('\nw - move up\t\tr - restart level\t{0} - Player\n'
-                    's - move down\t\tq - main menu\t\t. - Path\n'
-                    'a - move left\n'
-                    'd - move right').format(player_symbol)
+        commands = ('\nup    - move up\tr - restart level\t{0} - Player\n'
+                    'down  - move down\tq - main menu\t\t. - Path\n'
+                    'left  - move left\n'
+                    'right - move right').format(player_symbol)
 
         return commands
 

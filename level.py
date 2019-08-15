@@ -486,7 +486,7 @@ class Map(object):
                     self.cells[x][y] = MapCell(self, x, y)
 
     def build(self, level_number):
-        """Build the map from a config dictionary."""
+        """Build the map from the config for the provided level number."""
 
         map_config = level_config['levels'][level_number]['map']
 
@@ -544,7 +544,7 @@ class Map(object):
             artifact_cell.add_artifact(map_artifact)
 
     def get_cell(self, x, y):
-        """Return the cell at the coordinates if it exists, otherwise None."""
+        """Return the cell at the provided coordinates if it exists, otherwise None."""
 
         try:
             return self.cells[x][y]
@@ -552,7 +552,7 @@ class Map(object):
             return None
 
     def get_d4_cells(self, x, y):
-        """Return the cells above, right, below, and left of the provided cell."""
+        """Return the cells above, right, below, and left of the provided coordinates."""
 
         d4_cells = []
         d4_coords = [(x, y - 1),
@@ -565,7 +565,7 @@ class Map(object):
         return d4_cells
 
     def get_d4_interfaces(self, x, y):
-        """Return the interfaces for the d4 cells."""
+        """Return the interfaces for the d4 cells around the provided coordinates."""
 
         d4_interfaces = []
         for cell in self.get_d4_cells(x, y):
@@ -576,7 +576,7 @@ class Map(object):
         return d4_interfaces
 
     def get_d4_devices(self, x, y):
-        """Return the devices for the d4 cells."""
+        """Return the devices for the d4 cells around the provided coordinates."""
 
         d4_devices = []
         for cell in self.get_d4_cells(x, y):
@@ -587,7 +587,7 @@ class Map(object):
         return d4_devices
 
     def get_d4_components(self, x, y):
-        """Return the components for the d4 cells."""
+        """Return the components for the d4 cells around the provided coordinates."""
 
         d4_interfaces = self.get_d4_interfaces(x, y)
         d4_devices = self.get_d4_devices(x, y)
@@ -595,7 +595,7 @@ class Map(object):
         return d4_components
 
     def get_d4_tools(self, x, y):
-        """Return the tools for the d4 cells."""
+        """Return the tools for the d4 cells around the provided coordinates."""
 
         d4_tools = []
         for cell in self.get_d4_cells(x, y):
@@ -606,7 +606,7 @@ class Map(object):
         return d4_tools
 
     def get_d4_artifacts(self, x, y):
-        """Return the artifacts for the d4 cells."""
+        """Return the artifacts for the d4 cells around the provided coordinates."""
 
         d4_artifacts = []
         for cell in self.get_d4_cells(x, y):
@@ -617,7 +617,7 @@ class Map(object):
         return d4_artifacts
 
     def get_d4_items(self, x, y):
-        """Return the items for the d4 cells."""
+        """Return the items for the d4 cells around the provided coordinates."""
 
         d4_tools = self.get_d4_tools(x, y)
         d4_artifacts = self.get_d4_artifacts(x, y)
