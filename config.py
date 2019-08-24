@@ -643,24 +643,24 @@ level_config = {
                     {'coordinates': (4, 2), 'story_text': None},
                     {'coordinates': (5, 2), 'story_text': None},
                     {'coordinates': (6, 2), 'story_text': None},
-                    {'coordinates': (4, 5), 'story_text': 'Marcus tried again to establish radio contact as he stepped through the broken door, it\'s safety mechanism drawing it closed behind him,..."Tonia, this is Marcus. Do you read me? Over."...nothing.'},
+                    {'coordinates': (4, 5), 'story_text': 'Marcus tried again to establish radio contact as he stepped through the broken door, it\'s safety mechanism drawing it closed behind him, "Tonia, this is Marcus. Do you read me? Over."...nothing.'},
                     {'coordinates': (4, 6), 'story_text': None},
                     {'coordinates': (4, 0), 'story_text': None},
                     {'coordinates': (4, 1), 'story_text': None},
-                    {'coordinates': (1, 3), 'story_text': 'Marcus looked out the habitat window. He could see the opposing crater rim about a kilometers away. They were lucky, he thought, that The Agency had selected this site. The lake that once filled the crater had escaped eons ago when a portion of the crater wall collapsed, leaving behind a convenient access route. The last remnant of the lake still existed as tons of water ice along the perpetually shaded southern wall while slightly closer to the center of the crater the solar array received plenty of sunlight to generate power for the habitat. The hab itself, nestled along the northeastern wall, adjacent to the subterranean portion of the base, was well protected from the prevailing, dusty winds above.'},
+                    {'coordinates': (1, 3), 'story_text': 'Marcus looked out the habitat window. He could see the opposing crater rim about a kilometers away. They were lucky, he thought, that The Agency had selected this site. The lake that once filled the crater had escaped eons ago when a portion of the crater wall collapsed, leaving behind a convenient access route. A last remnant of the lake still existed as tons of water ice along the perpetually shaded southern wall while slightly closer to the center of the crater the solar array received plenty of sunlight to generate power for the habitat. The hab itself, nestled along the northeastern wall, adjacent to the subterranean portion of the base, was well protected from the prevailing, dusty winds above.'},
                     {'coordinates': (7, 3), 'story_text': None},
                     {'coordinates': (8, 3), 'story_text': None}
                 ],
-                'coord_enter': (4, 5),  # begin
-                'coord_exit': (8, 3),  # end
+                'coord_enter': (4, 5),
+                'coord_exit': (8, 3),
                 'orientation_enter': 0,
                 'tools': [],
                 'artifacts': [
                     {
-                        'type': 'generic',
+                        'type': 'generic',  # use non-visible to make debris pile blocking
                         'name': 'debris',
                         'description': 'pile of debris',
-                        'visible': True,
+                        'visible': False,
                         'interactive': False,
                         'blocking': True,
                         'x': 4,
@@ -699,7 +699,19 @@ level_config = {
                 ]
             },
             'system': {
-                'interfaces': [],
+                'interfaces': [
+                    {
+                        'id': 0,  # use interface to make debris pile interactive
+                        'name': 'debris',
+                        'description': 'pile of debris',
+                        'type': 'toggleswitch',
+                        'enabled': True,
+                        'x': 4,
+                        'y': 0,
+                        'orientation': 2,
+                        'msg_action_verb': 'clear'
+                    }
+                ],
                 'devices': [
                     {
                         'id': 0,
@@ -718,10 +730,35 @@ level_config = {
                         'msg_toggle_active_false': 'The door closed.',
                         'msg_unmet_dependencies': 'The door is unresponsive.',
                         'dependencies': []
+                    },
+                    {
+                        'id': 1,
+                        'name': 'ceiling',
+                        'description': 'ceiling',
+                        'type': 'switch',
+                        'enabled': True,
+                        'active': False,
+                        'x': 0,
+                        'y': 0,
+                        'msg_action_true': 'close',
+                        'msg_action_false': 'open',
+                        'msg_active_true': 'The switch is closed.',
+                        'msg_active_false': 'The switch is open.',
+                        'msg_toggle_active_true': 'The switch closed.',
+                        'msg_toggle_active_false': 'The switch opened.',
+                        'msg_unmet_dependencies': 'The switch is unresponsive.',
+                        'dependencies': []
                     }
                 ],
-                'links': [],
-                'deaths': []
+                'links': [
+                    {'interface_id': 0, 'device_id': 1}
+                ],
+                'deaths': [
+                    {'configuration': [
+                        {'device_id': 1, 'active_state': True}],
+                     'description': 'The habitat wall failed catastrophically and you were blown into the frigid near-vacuum of the Martian landscape.',
+                     'location': None}  # None if all locations are valid
+                ]
             }
         }
     }
