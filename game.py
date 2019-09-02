@@ -6,6 +6,7 @@ from gameui import LevelsUI
 from gameui import StartUI
 from gameui import StoryUI
 from gameui import LevelCompleteUI
+from gameui import GameCompleteUI
 from config import level_config
 
 
@@ -52,8 +53,9 @@ class Game(object):
                 if self.player.cell.has_story_text() and not self.player.cell.story_seen:
                     self.gameui = StoryUI(self)
                 if self.level.is_complete():
-                    if self.level.number == 0:
-                        self.gameui = LevelsUI(self)
+                    if not self.level.has_next_level():
+                        self.gameui = GameCompleteUI(self)
                     else:
-                        self.gameui = LevelCompleteUI(self)
+                        self.gameui.next_level()
+                        continue
             self.gameui.process_input(self.gameui.prompt())
