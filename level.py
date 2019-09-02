@@ -651,3 +651,7 @@ class Level(object):
         """Returns True if the player is at the final cell of the level, otherwise False."""
 
         return self.map.get_cell(*self.game.player.location()) is self.map.exit_cell
+
+    def has_next_level(self):
+
+        return bool(level_config['levels'].get(self.number + 1))
