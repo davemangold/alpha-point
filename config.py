@@ -12,6 +12,7 @@ game_config = {
 |_|     |_____|  |_|  |_| \__|    |_|   
 
 ''',
+    'gameover_text': 'Congratulations! You completed the game',
     'intro_text_1': 'Marcus could sense the stillness of his environment -- vacuous and oppressive. Intense sunlight cut sharp-edged lines across the dusty, red rocks at his feet. Above, a high, streaky haze blurred the tawny blue and grey of the sky. In every direction there was more of the same: rocks, dust, and light; repeating, shrinking, and finally vanishing at the horizon.  In this place time itself was like a distant memory and the imperceptibly slow turn of shadows across the landscape was the only reminder that it still existed. There was no movement; no gentle breeze, no flowing water, no bounding life; only a vast, empty exapanse -- in a word, desolation.',
     'intro_text_2': 'The chirp of Marcus\' integrated comm system was followed by the voice of his mission commander: "Marc, we neeed you back at base ASAP! There\'s been an incident in the lab." He shifted his gaze to the top-left corner of his suit\'s heads-up-display and keyed his mic with a blink. "Roger that, Tonia, what kind of incident?". Even as he finished speaking, Marcus began gathering and packing his instruments. "We don\'t know yet, but it doesn\'t look good.", Tonia replied, her Russian accent a little thicker than ususal, "One of the techs made a system-wide call warning everyone to stay away. The airlock is sealed and external control is disabled. We\'re still trying to re-establish contact." As chief science officer, Marcus knew laboratory emergency protocols better than anyone. They hadn\'t been followed. "Alright, I\'m heading back now. ETA twelve minutes. Who was scheduled for the lab today?", Marcus asked. Eleven and a half minutes later, as Marcus brought the rover to a stop in front of the Horizon-1 Mars Base, informally known as Alpha Point, there was still no response...',
     'ui': {
@@ -256,8 +257,8 @@ level_config = {
                         'visible': True,
                         'interactive': False,
                         'blocking': True,
-                        'x': 4,
-                        'y': 3
+                        'x': 0,
+                        'y': 1
                     },
                     {
                         'type': 'generic',
@@ -266,8 +267,8 @@ level_config = {
                         'visible': True,
                         'interactive': False,
                         'blocking': True,
-                        'x': 0,
-                        'y': 1
+                        'x': 4,
+                        'y': 3
                     },
                 ]
             },
@@ -657,7 +658,7 @@ level_config = {
                 'tools': [],
                 'artifacts': [
                     {
-                        'type': 'generic',  # use non-visible to make debris pile blocking
+                        'type': 'generic',  # use non-visible to make blocking debris pile
                         'name': 'debris',
                         'description': 'pile of debris',
                         'visible': False,
