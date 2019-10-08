@@ -160,4 +160,4 @@ class InterfaceFactory(object):
         #     return Viewer(system)
         # if interface_type.lower() == 'console':
         #     return Console(system)
-        raise exception.InterfaceFactoryError("The specified interface type does not exist.")
+        raise exception.FactoryError("The specified interface type does not exist.")
