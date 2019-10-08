@@ -22,11 +22,7 @@ class ToolError(Exception):
     pass
 
 
-class InterfaceFactoryError(Exception):
-    pass
-
-
-class DeviceFactoryError(Exception):
+class FactoryError(Exception):
     pass
 
 
