@@ -105,6 +105,16 @@ class Character(object):
             d4_visible_tools.append(visible_tools)
         return d4_visible_tools
 
+    def get_visible_parts(self):
+        """Return d4 tools visible to the player."""
+
+        d4_visible_parts = []
+        d4_parts = self.game.level.map.get_d4_parts(*self.location())
+        for part_list in d4_parts:
+            visible_parts = [part for part in part_list if part.visible is True]
+            d4_visible_parts.append(visible_parts)
+        return d4_visible_parts
+
     def get_visible_artifacts(self):
         """Return d4 artifacts visible to the player."""
 
@@ -119,8 +129,9 @@ class Character(object):
         """Return d4 items visible to the player."""
 
         visible_tools = self.get_visible_tools()
+        visible_parts = self.get_visible_parts()
         visible_artifacts = self.get_visible_artifacts()
-        visible_items = [items[0] + items[1] for items in zip(visible_tools, visible_artifacts)]
+        visible_items = [items[0] + items[1] for items in zip(visible_tools, visible_parts, visible_artifacts)]
         return visible_items
 
     def get_visible_interfaces(self):
@@ -183,6 +194,12 @@ class Character(object):
         visible_tools = self.get_visible_tools()
         return utility.build_object_report_text(self.orientation, visible_tools)
 
+    def report_visible_parts(self):
+        """Return string description of visible tools."""
+
+        visible_parts = self.get_visible_parts()
+        return utility.build_object_report_text(self.orientation, visible_parts)
+
     def report_visible_artifacts(self):
         """Return string description of visible artifacts."""
 
@@ -225,6 +242,9 @@ class Character(object):
         # tools in the player inventory
         tool_list = self.inventory.get_tools()
 
+        # parts in the player inventory
+        part_list = self.inventory.get_parts()
+
         # visible devices on the map
         device_list = [device
                        for d4_device_list in self.get_visible_devices()
@@ -244,10 +264,16 @@ class Character(object):
                      if item.interactive is True]
 
         # actions to use tools on devices
-        tool_actions = [Action(tool.get_use(device), tool.use_action_text(device))
+        tool_actions = [Action(tool.get_use_action(device), tool.use_action_text(device))
                         for tool in tool_list
                         for device in device_list
                         if tool.can_activate(device)]
+
+        # actions to use parts on devices
+        part_actions = [Action(part.get_use_action(device), part.use_action_text(device))
+                        for part in part_list
+                        for device in device_list
+                        if part.can_enable(device)]
 
         # actions to use interfaces
         interface_actions = [Action(interface.use, interface.action_text())
@@ -258,7 +284,7 @@ class Character(object):
                         for item in item_list]
 
         # combined list of all actions
-        actions_list = tool_actions + interface_actions + item_actions
+        actions_list = tool_actions + part_actions + interface_actions + item_actions
 
         # dictionary of action keys associated with Action objects
         actions = {actions_list.index(action) + 1: action

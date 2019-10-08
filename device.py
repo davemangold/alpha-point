@@ -23,6 +23,8 @@ class Device(Component):
         self.msg_active_false = "The device is not active."
         self.msg_toggle_active_true = "The device was activated."
         self.msg_toggle_active_false = "The device was deactivated."
+        self.msg_toggle_enabled_true = "The device was enabled."
+        self.msg_toggle_enabled_false = "The device was disabled."
         self.msg_unmet_dependencies = "The device has unmet dependencies."
 
     def __add_to_system(self):
@@ -57,6 +59,16 @@ class Device(Component):
             self.system.level.game.gameui.alert = self.msg_toggle_active_true
         else:
             self.system.level.game.gameui.alert = self.msg_toggle_active_false
+
+    def toggle_enabled_state(self):
+        """Toggle this device's enabled state."""
+
+        self.enabled = not self.enabled
+
+        if self.enabled is True:
+            self.system.level.game.gameui.alert = self.msg_toggle_enabled_true
+        else:
+            self.system.level.game.gameui.alert = self.msg_toggle_enabled_false
 
     def add_dependency(self, device_id, active_state):
         """Add a dependency that must be met before this device can be activated."""

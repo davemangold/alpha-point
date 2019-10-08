@@ -1,6 +1,7 @@
 import exception
 from item import Item
 from tool import Tool
+from part import Part
 from artifact import Artifact
 
 
@@ -39,6 +40,11 @@ class Inventory(object):
         """Return all items that are Tool instances."""
 
         return [item for item in self.items if isinstance(item, Tool)]
+
+    def get_parts(self):
+        """Return all items that are Part instances."""
+
+        return [item for item in self.items if isinstance(item, Part)]
 
     def get_artifacts(self):
         """Return all items that are Tool instances."""

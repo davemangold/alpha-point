@@ -6,6 +6,8 @@ from interface import Interface
 from interface import InterfaceFactory
 from tool import Tool
 from tool import ToolFactory
+from part import Part
+from part import PartFactory
 from artifact import Artifact
 from artifact import ArtifactFactory
 from inventory import Inventory
@@ -291,6 +293,7 @@ class MapCell(object):
         self.interfaces = []
         self.devices = []
         self.tools = []
+        self.parts = []
         self.artifacts = []
         self.story_text = None
         self.story_seen = False
@@ -375,6 +378,20 @@ class MapCell(object):
             raise exception.MapError("The tool is not assigned to the map cell.")
         return self.tools.pop(self.tools.index(tool))
 
+    def add_part(self, part):
+        """Adds a tool to the map cell."""
+
+        if part in self.parts:
+            raise exception.MapError("The part is already assigned to the map cell.")
+        self.parts.append(part)
+
+    def remove_part(self, part):
+        """Removes the interface from the map cell"""
+
+        if part not in self.parts:
+            raise exception.MapError("The part is not assigned to the map cell.")
+        return self.parts.pop(self.parts.index(part))
+
     def add_artifact(self, artifact):
         """Adds a tool to the map cell."""
 
@@ -394,10 +411,12 @@ class MapCell(object):
 
         if isinstance(item, Tool):
             self.remove_tool(item)
+        elif isinstance(item, Part):
+            self.remove_part(item)
         elif isinstance(item, Artifact):
             self.remove_artifact(item)
         else:
-            raise TypeError("The item must be of type tool or artifact.")
+            raise TypeError("The item must be of type tool, part or artifact.")
 
     def has_interfaces(self):
         """Return True if the map cell has any interfaces, otherwise False."""
@@ -511,6 +530,17 @@ class Map(object):
             new_tool.y = config_tool['y']
             self.inventory.add_item(new_tool)
 
+        for config_part in map_config['parts']:
+            new_part = PartFactory.make_part(self.inventory, config_part['type'])
+            new_part.name = config_part['name']
+            new_part.description = config_part['description']
+            new_part.visible = config_part['visible']
+            new_part.interactive = config_part['interactive']
+            new_part.blocking = config_part['blocking']
+            new_part.x = config_part['x']
+            new_part.y = config_part['y']
+            self.inventory.add_item(new_part)
+
         for config_artifact in map_config['artifacts']:
             new_artifact = ArtifactFactory.make_artifact(self.inventory, config_artifact['type'])
             new_artifact.name = config_artifact['name']
@@ -538,6 +568,10 @@ class Map(object):
         for map_tool in self.inventory.get_tools():
             tool_cell = self.get_cell(map_tool.x, map_tool.y)
             tool_cell.add_tool(map_tool)
+
+        for map_part in self.inventory.get_parts():
+            part_cell = self.get_cell(map_part.x, map_part.y)
+            part_cell.add_part(map_part)
 
         for map_artifact in self.inventory.get_artifacts():
             artifact_cell = self.get_cell(map_artifact.x, map_artifact.y)
@@ -604,6 +638,17 @@ class Map(object):
             else:
                 d4_tools.append([])
         return d4_tools
+
+    def get_d4_parts(self, x, y):
+        """Return the tools for the d4 cells around the provided coordinates."""
+
+        d4_parts = []
+        for cell in self.get_d4_cells(x, y):
+            if isinstance(cell, MapCell):
+                d4_parts.append(cell.parts)
+            else:
+                d4_parts.append([])
+        return d4_parts
 
     def get_d4_artifacts(self, x, y):
         """Return the artifacts for the d4 cells around the provided coordinates."""

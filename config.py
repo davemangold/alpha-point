@@ -55,6 +55,18 @@ level_config = {
                 'coord_exit': (4, 0),  # end
                 'orientation_enter': 0,
                 'tools': [],
+                'parts': [
+                    {
+                        'type': 'wires',
+                        'name': 'wires',
+                        'description': 'wire bundle',
+                        'visible': True,
+                        'interactive': True,
+                        'blocking': False,
+                        'x': 3,
+                        'y': 2
+                    }
+                ],
                 'artifacts': []
             },
             'system': {
@@ -210,6 +222,7 @@ level_config = {
                 'coord_exit': (0, 0),  # end
                 'orientation_enter': 0,
                 'tools': [],
+                'parts': [],
                 'artifacts': []
             },
             'system': {
@@ -239,6 +252,7 @@ level_config = {
                 'coord_exit': (2, 0),  # end
                 'orientation_enter': 0,
                 'tools': [],
+                'parts': [],
                 'artifacts': [
                     {
                         'type': 'generic',
@@ -328,6 +342,7 @@ level_config = {
                 'coord_exit': (1, 0),  # end
                 'orientation_enter': 0,
                 'tools': [],
+                'parts': [],
                 'artifacts': []
             },
             'system': {
@@ -484,6 +499,7 @@ level_config = {
                         'y': 4
                     }
                 ],
+                'parts': [],
                 'artifacts': [
                     {
                         'type': 'generic',
@@ -656,6 +672,7 @@ level_config = {
                 'coord_exit': (8, 3),
                 'orientation_enter': 0,
                 'tools': [],
+                'parts': [],
                 'artifacts': [
                     {
                         'type': 'generic',  # use non-visible to make blocking debris pile
