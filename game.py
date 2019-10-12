@@ -2,11 +2,10 @@ from player import Player
 from level import Level
 from gameio import Control
 from gameui import MainUI
-from gameui import LevelsUI
 from gameui import StartUI
 from gameui import StoryUI
-from gameui import LevelCompleteUI
 from gameui import GameCompleteUI
+from gameui import PlayerDeadUI
 from config import level_config
 
 
@@ -52,10 +51,14 @@ class Game(object):
             if isinstance(self.gameui, MainUI):
                 if self.player.cell.has_story_text() and not self.player.cell.story_seen:
                     self.gameui = StoryUI(self)
+                if self.level.system.kills_player():
+                    death = self.level.system.get_death()
+                    self.gameui = PlayerDeadUI(game=self, message=death['description'])
                 if self.level.is_complete():
                     if not self.level.has_next_level():
                         self.gameui = GameCompleteUI(self)
                     else:
                         self.gameui.next_level()
                         continue
+
             self.gameui.process_input(self.gameui.prompt())
