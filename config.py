@@ -642,7 +642,7 @@ level_config = {
                 'deaths': []
             }
         },
-        4: {
+        4: {  # TODO: add part to fix electrical switch and open door
             'name': 'Crew',
             'map': {
                 'x_dimension': 9,

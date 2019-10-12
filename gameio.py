@@ -9,6 +9,7 @@ class Control(object):
         self.ENTER = 13
         self.QUIT = 113
         self.RESTART = 114
+        self.INVENTORY = 105
         self.UP = 72
         self.LEFT = 75
         self.RIGHT = 77
@@ -27,8 +28,8 @@ class Control(object):
             # enter
             if keycode == 13:
                 return keycode
-            # q, r
-            if keycode in (113, 114):
+            # q, r, i
+            if keycode in (113, 114, 105):
                 return keycode
             # digits (0-9)
             if 48 <= keycode <= 57:

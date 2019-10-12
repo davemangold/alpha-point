@@ -4,6 +4,7 @@ import utility
 import exception
 from random import randrange
 from random import random
+from collections import Counter
 from config import game_config
 from config import level_config
 import time
@@ -25,7 +26,7 @@ class BaseUI(object):
     def prompt(self):
         """Prompt the player for input."""
 
-        message = self.decorate_ui("What should I do? ")
+        self.decorate_ui("What should I do? ")
 
         while True:
 
@@ -104,8 +105,6 @@ class StartUI(BaseUI):
             message = self.decorate_ui("Press Enter to continue...")
             print(message)
             response = self.game.control.get_keypress()
-            if utility.is_empty_response(response):
-                continue
             return response
 
     def get_ui(self):
@@ -202,7 +201,6 @@ class LevelsUI(BaseUI):
 
         message = self.decorate_ui("Choose a level: ")
 
-        # TODO: Need to use get_input() but multi-char and wait for Enter pressed
         while True:
             # update the display
             self.display()
@@ -285,6 +283,8 @@ class MainUI(BaseUI):
                 self.display()
                 if input(self.decorate_ui('Are you sure you want to quit (y/n)? ')) == 'y':
                     self.leave()
+            elif value == self.game.control.INVENTORY:
+                self.game.gameui = InventoryUI(self.game.player.inventory)
             # the value wasn't handled
             else:
                 self.alert = "I don't know what you mean."
@@ -366,7 +366,7 @@ class MainUI(BaseUI):
 
         commands = ('\nup    - move up\tr - restart level\t{0} - Player\n'
                     'down  - move down\tq - main menu\t\t. - Path\n'
-                    'left  - move left\n'
+                    'left  - move left\ti - inventory\n'
                     'right - move right').format(player_symbol)
 
         return commands
@@ -399,6 +399,77 @@ class MainUI(BaseUI):
         """Leave the game and return to the start menu."""
 
         self.game.gameui = LevelsUI(self.game)
+
+
+class InventoryUI(BaseUI):
+    """Game user interface for player inventory."""
+
+    def __init__(self, inventory, *args, **kwargs):
+
+        super(InventoryUI, self).__init__(inventory.owner.game, *args, **kwargs)
+        self.inventory = inventory
+        self.precedent = self.game.gameui
+
+    def process_input(self, value):
+        """Call the appropriate method based on input value."""
+
+        self.leave()
+
+    def prompt(self):
+        """Prompt the player for input."""
+
+        self.display()
+        response = self.game.control.get_keypress()
+        return response
+
+    def get_ui(self):
+        """Get the full UI text."""
+
+        # TODO: finish this UI class
+        ui_elements = []
+
+        ui_welcome = self.get_welcome()
+        ui_items = self.get_items()
+
+        ui_elements.append(self.separator)
+        ui_elements.append(ui_welcome)
+        if ui_items is not None:
+            ui_elements.append(ui_items)
+        ui_elements.append(self.separator)
+
+        return '\n\n'.join(ui_elements) + '\n'
+
+    def get_items(self):
+        """Return the text that represents available actions."""
+
+        ui_items = None
+        ui_items_list = []
+        item_counts = Counter(self.inventory.items)
+
+        for item, count in sorted(item_counts.items()):
+            ui_items_list.append('{0} ({1})'.format(item, count))
+
+        if len(ui_items_list) == 0:
+            ui_items_list.append('-- empty --')
+
+        ui_items = '\n'.join(ui_items_list)
+
+        return ui_items
+
+    def get_welcome(self):
+        """Return terminal welcome message text."""
+
+        return "Inventory"
+
+    def display(self):
+        """Display the UI."""
+
+        self.clear_screen()
+        print(self.decorate_ui(self.get_ui()))
+
+    def leave(self):
+        # reset gameui to the ui that was active at the time this was created
+        self.game.gameui = self.precedent
 
 
 class TerminalUI(BaseUI):
