@@ -120,7 +120,6 @@ class Door(Device):
         super(Door, self).__init__(*args, **kwargs)
         self.name = 'door'
         self.description = 'door'
-        self.visible = True  # only on map.path
         self.msg_action_true = "open"
         self.msg_action_false = "close"
         self.msg_active_true = "The door is open."
@@ -153,7 +152,6 @@ class Valve(Device):
         super(Valve, self).__init__(*args, **kwargs)
         self.name = 'valve'
         self.description = 'valve'
-        self.visible = True  # only on map.path
         self.msg_action_true = "open"
         self.msg_action_false = "close"
         self.msg_active_true = "The valve is open."
@@ -170,7 +168,6 @@ class Camera(Device):
         super(Camera, self).__init__(*args, **kwargs)
         self.name = 'camera'
         self.description = 'camera'
-        self.visible = True  # only on map.path
         self.msg_action_true = "turn on"
         self.msg_action_false = "turn off"
         self.msg_active_true = "The camera is on."
@@ -203,6 +200,7 @@ class DeviceFactory(object):
 
     @staticmethod
     def make_device(system, device_type, *args, **kwargs):
+
         if device_type.lower() == 'door':
             return Door(system, *args, **kwargs)
         if device_type.lower() == 'switch':
@@ -213,4 +211,5 @@ class DeviceFactory(object):
             return Camera(system, *args, **kwargs)
         if device_type.lower() == 'sensor':
             return Sensor(system, *args, **kwargs)
+
         raise exception.FactoryError("The specified device type does not exist.")

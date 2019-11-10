@@ -13,8 +13,8 @@ game_config = {
 
 ''',
     'gameover_text': 'Congratulations! You completed the game',
-    'intro_text_1': 'Marcus could sense the stillness of his environment -- vacuous and oppressive. Intense sunlight cut sharp-edged lines across the dusty, red rocks at his feet. Above, a high, streaky haze blurred the tawny blue and grey of the sky. In every direction there was more of the same: rocks, dust, and light; repeating, shrinking, and finally vanishing at the horizon.  In this place time itself was like a distant memory and the imperceptibly slow turn of shadows across the landscape was the only reminder that it still existed. There was no movement; no gentle breeze, no flowing water, no bounding life; only a vast, empty exapanse -- in a word, desolation.',
-    'intro_text_2': 'The chirp of Marcus\' integrated comm system was followed by the voice of his mission commander: "Marc, we neeed you back at base ASAP! There\'s been an incident in the lab." He shifted his gaze to the top-left corner of his suit\'s heads-up-display and keyed his mic with a blink. "Roger that, Tonia, what kind of incident?". Even as he finished speaking, Marcus began gathering and packing his instruments. "We don\'t know yet, but it doesn\'t look good.", Tonia replied, her Russian accent a little thicker than ususal, "One of the techs made a system-wide call warning everyone to stay away. The airlock is sealed and external control is disabled. We\'re still trying to re-establish contact." As chief science officer, Marcus knew laboratory emergency protocols better than anyone. They hadn\'t been followed. "Alright, I\'m heading back now. ETA twelve minutes. Who was scheduled for the lab today?", Marcus asked. Eleven and a half minutes later, as Marcus brought the rover to a stop in front of the Horizon-1 Mars Base, informally known as Alpha Point, there was still no response...',
+    'intro_text_1': 'Marcus could sense the stillness of his environment -- vacuous and oppressive. Intense sunlight cut sharp-edged lines across the dusty, red rocks at his feet. Above, a high, streaky haze blurred the tawny blue and grey of the sky. In every direction there was more of the same: rocks, dust, and light; repeating, shrinking, and finally vanishing at the horizon.  In this place time itself was like a distant memory and the slow turn of shadows across the landscape was the only reminder that it still existed. There was no movement; no gentle breeze, no flowing water, no bounding life; only a vast, empty expanse -- in a word, desolation.',
+    'intro_text_2': 'Marcus\' integrated comm system chirped. "Marc, we need you back at base ASAP! There\'s been an incident in the lab", said his mission commander. He shifted his gaze to the top-left corner of his suit\'s heads-up-display and keyed his mic with a blink. "Roger that, Tonia, what kind of incident?" Even as he finished speaking, Marcus began gathering and packing his instruments. "We don\'t know yet, but it doesn\'t look good", Tonia replied, her Russian accent a little thicker than usual. "One of the techs made a system-wide call warning everyone to stay away. They\'ve sealed the airlock and disabled external control. We\'re still trying to re-establish contact." As chief science officer, Marcus knew laboratory emergency protocols better than anyone. Things were not happening by the book. "Alright, I\'m heading back now. ETA twelve minutes. Who\'s scheduled for the lab today?", Marcus asked. Eleven and a half minutes later, Marcus brought the rover to a stop in front of the Horizon-1 Mars Base, informally known as Alpha Point. There was still no response...',
     'ui': {
         'width': 60,
         'articles': {
@@ -95,7 +95,7 @@ level_config = {
                     },
                     {
                         'id': 2,
-                        'name': 'system terminal',
+                        'name': 'system',
                         'description': 'system terminal',
                         'type': 'terminal',
                         'enabled': True,
@@ -124,6 +124,7 @@ level_config = {
                         'type': 'door',
                         'enabled': False,
                         'active': False,
+                        'visible': True,
                         'x': 0,
                         'y': 4,
                         'msg_action_true': 'open',
@@ -140,10 +141,11 @@ level_config = {
                         'name': 'door circuit switch',
                         'description': 'door circuit',
                         'type': 'switch',
-                        'enabled': True,
+                        'enabled': False,
                         'active': False,
-                        'x': 2,
-                        'y': 0,
+                        'visible': False,
+                        'x': 3,
+                        'y': 1,
                         'msg_action_true': 'close',
                         'msg_action_false': 'open',
                         'msg_active_true': 'The circuit is closed.',
@@ -160,6 +162,7 @@ level_config = {
                         'type': 'door',
                         'enabled': True,
                         'active': False,
+                        'visible': True,
                         'x': 4,
                         'y': 0,
                         'msg_action_true': 'open',
@@ -180,6 +183,7 @@ level_config = {
                         'type': 'camera',
                         'enabled': True,
                         'active': True,
+                        'visible': True,
                         'x': 4,
                         'y': 0,
                         'msg_action_true': 'turn on',
@@ -210,7 +214,7 @@ level_config = {
             }
         },
         0: {
-            'name': 'The Void',
+            'name': 'Void',
             'map': {
                 'x_dimension': 1,
                 'y_dimension': 2,
@@ -302,12 +306,13 @@ level_config = {
                 ],
                 'devices': [
                     {
-                        'id': 4,
+                        'id': 1,
                         'name': 'airlock door',
                         'description': 'door',
                         'type': 'door',
                         'enabled': True,
                         'active': False,
+                        'visible': True,
                         'x': 2,
                         'y': 0,
                         'msg_action_true': 'open',
@@ -321,7 +326,7 @@ level_config = {
                     }
                 ],
                 'links': [
-                    {'interface_id': 0, 'device_id': 4}
+                    {'interface_id': 0, 'device_id': 1}
                 ],
                 'deaths': []
             }
@@ -389,6 +394,7 @@ level_config = {
                         'type': 'door',
                         'enabled': False,
                         'active': False,
+                        'visible': True,
                         'x': 1,
                         'y': 4,
                         'msg_action_true': 'open',
@@ -407,6 +413,7 @@ level_config = {
                         'type': 'valve',
                         'enabled': True,
                         'active': False,
+                        'visible': False,
                         'x': 0,
                         'y': 1,
                         'msg_action_true': 'open',
@@ -425,6 +432,7 @@ level_config = {
                         'type': 'door',
                         'enabled': True,
                         'active': False,
+                        'visible': True,
                         'x': 1,
                         'y': 0,
                         'msg_action_true': 'open',
@@ -465,7 +473,7 @@ level_config = {
                     {'coordinates': (4, 4), 'story_text': None},
                     {'coordinates': (4, 5), 'story_text': None},
                     {'coordinates': (4, 6), 'story_text': None},
-                    {'coordinates': (4, 7), 'story_text': 'As he removed his helmet, {0} noticed two empty excursion suit alcoves and wondered who else was outside the hab. Ad-hoc departures weren\'t that unusual. Even Martian research stations have fences that need mending. The lights flickered briefly and {0} detected the caustic smell of overheated electronics. "That can\'t be good", he told himself. After stowing his suit in an open alcove {0} headed for the door of the crew meeting area.'.format(player_config['name'])},
+                    {'coordinates': (4, 7), 'story_text': 'As he removed his helmet, {0} noticed two empty excursion suit alcoves and wondered who else was outside the hab. Ad-hoc departures weren\'t that unusual. Even Martian research stations have fences that need mending. The lights flickered briefly and {0} detected the caustic smell of overheated electronics. "That can\'t be good", he told himself. After stowing his suit in an open alcove {0} headed for the door of the crew meeting area at the far end of the equipment bay.'.format(player_config['name'])},
                     {'coordinates': (4, 8), 'story_text': None},
                     {'coordinates': (3, 6), 'story_text': None},
                     {'coordinates': (3, 7), 'story_text': None},
@@ -586,6 +594,7 @@ level_config = {
                         'type': 'door',
                         'enabled': False,
                         'active': False,
+                        'visible': True,
                         'x': 4,
                         'y': 8,
                         'msg_action_true': 'open',
@@ -604,6 +613,7 @@ level_config = {
                         'type': 'door',
                         'enabled': True,
                         'active': False,
+                        'visible': True,
                         'x': 4,
                         'y': 0,
                         'msg_action_true': 'open',
@@ -624,6 +634,7 @@ level_config = {
                         'type': 'switch',
                         'enabled': False,
                         'active': False,
+                        'visible': False,
                         'x': 0,
                         'y': 2,
                         'msg_action_true': 'close',
@@ -672,7 +683,18 @@ level_config = {
                 'coord_exit': (8, 3),
                 'orientation_enter': 0,
                 'tools': [],
-                'parts': [],
+                'parts': [
+                    {
+                        'type': 'wires',
+                        'name': 'wires',
+                        'description': 'wire bundle',
+                        'visible': True,
+                        'interactive': True,
+                        'blocking': False,
+                        'x': 3,
+                        'y': 3
+                    }
+                ],
                 'artifacts': [
                     {
                         'type': 'generic',  # use non-visible to make blocking debris pile
@@ -728,6 +750,17 @@ level_config = {
                         'y': 0,
                         'orientation': 2,
                         'msg_action_verb': 'clear'
+                    },
+                    {
+                        'id': 1,
+                        'name': 'exit door button',
+                        'description': 'button',
+                        'type': 'button',
+                        'enabled': True,
+                        'x': 7,
+                        'y': 2,
+                        'orientation': 2,
+                        'msg_action_verb': 'push'
                     }
                 ],
                 'devices': [
@@ -738,6 +771,7 @@ level_config = {
                         'type': 'door',
                         'enabled': False,
                         'active': False,
+                        'visible': True,
                         'x': 4,
                         'y': 6,
                         'msg_action_true': 'open',
@@ -751,11 +785,31 @@ level_config = {
                     },
                     {
                         'id': 1,
-                        'name': 'ceiling',
-                        'description': 'ceiling',
+                        'name': 'entrance door',
+                        'description': 'door',
+                        'type': 'door',
+                        'enabled': True,
+                        'active': False,
+                        'visible': True,
+                        'x': 8,
+                        'y': 3,
+                        'msg_action_true': 'open',
+                        'msg_action_false': 'close',
+                        'msg_active_true': 'The door is open.',
+                        'msg_active_false': 'The door is closed.',
+                        'msg_toggle_active_true': 'The door opened.',
+                        'msg_toggle_active_false': 'The door closed.',
+                        'msg_unmet_dependencies': 'The door is unresponsive.',
+                        'dependencies': []
+                    },
+                    {
+                        'id': 2,
+                        'name': 'wall',
+                        'description': 'wall',
                         'type': 'switch',
                         'enabled': True,
                         'active': False,
+                        'visible': False,
                         'x': 0,
                         'y': 0,
                         'msg_action_true': 'close',
@@ -766,16 +820,38 @@ level_config = {
                         'msg_toggle_active_false': 'The switch opened.',
                         'msg_unmet_dependencies': 'The switch is unresponsive.',
                         'dependencies': []
+                    },
+                    {
+                        'id': 3,
+                        'name': 'switchbox',
+                        'description': 'damaged switchbox',
+                        'type': 'switch',
+                        'enabled': False,
+                        'active': False,
+                        'visible': True,
+                        'x': 6,
+                        'y': 1,
+                        'msg_action_true': 'open',
+                        'msg_action_false': 'close',
+                        'msg_active_true': 'The switch is open.',
+                        'msg_active_false': 'The switch is closed.',
+                        'msg_toggle_active_true': 'The switch opened.',
+                        'msg_toggle_active_false': 'The switch closed.',
+                        'msg_unmet_dependencies': 'The switch is unresponsive.',
+                        'dependencies': []
                     }
                 ],
                 'links': [
-                    {'interface_id': 0, 'device_id': 1}
+                    {'interface_id': 0, 'device_id': 2}
                 ],
                 'deaths': [
-                    {'configuration': [
-                        {'device_id': 1, 'active_state': True}],
-                     'description': 'The habitat wall failed catastrophically and you were blown into the frigid near-vacuum of the Martian landscape.',
-                     'location': None}  # None if all locations are valid
+                    {
+                        'configuration': [
+                            {'device_id': 2, 'active_state': True}
+                        ],
+                        'description': 'The habitat wall failed catastrophically and you were blown into the frigid near-vacuum of the Martian landscape.',
+                        'location': None  # None if all locations are valid
+                    }
                 ]
             }
         }

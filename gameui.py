@@ -272,7 +272,7 @@ class MainUI(BaseUI):
             elif value == self.game.control.LEFT:
                 self.game.player.move_left()
             # process action input
-            elif value in self.game.control._digits.values():
+            elif value in self.game.control.DIGITS.values():
                 self.game.player.do_action(int(value))
             # process restart or quit input
             elif value == self.game.control.RESTART:
@@ -287,7 +287,9 @@ class MainUI(BaseUI):
                 self.game.gameui = InventoryUI(self.game.player.inventory)
             # the value wasn't handled
             else:
-                self.alert = "I don't know what you mean."
+                # self.alert = "I don't know what you mean."
+                pass
+
         except exception.MoveError:
             self.alert = "I can't move there."
         except exception.ActionError:
@@ -301,9 +303,11 @@ class MainUI(BaseUI):
         while True:
 
             self.display()
+
             response = self.game.control.get_keypress()
             if response is None:
                 continue
+
             return response
 
     def add_map_player(self, text_map):
@@ -376,6 +380,23 @@ class MainUI(BaseUI):
 
         ui_elements = []
 
+        if self.game.debug is True:
+            debug_text = (
+                'Player X: {0}'.format(self.game.player.x) + '\n' +
+                'Player Y: {0}'.format(self.game.player.y) + '\n' +
+                'Visible items: {0}'.format(self.game.player.get_visible_items()) + '\n' +
+                'Visible devices: {0}'.format(self.game.player.get_visible_devices()) + '\n' +
+                'Visible interfaces: {0}'.format(self.game.player.get_visible_interfaces()) + '\n' +
+                'Map items: {0}'.format(['{0} {1}'.format(item, item.location())
+                                         for item in self.game.level.map.inventory.items]) + '\n' +
+                'Map devices: {0}'.format(['{0} {1}'.format(device, device.location())
+                                           for device in self.game.level.map.devices]) + '\n' +
+                'Map interfaces: {0}'.format(['{0} {1}'.format(interface, interface.location())
+                                              for interface in self.game.level.map.interfaces]))
+            ui_elements.append(debug_text)
+        else:
+            debug_text = ''
+
         ui_commands = self.get_commands()
         ui_map = self.get_map()
         ui_alert = self.get_alert()
@@ -425,9 +446,7 @@ class InventoryUI(BaseUI):
     def get_ui(self):
         """Get the full UI text."""
 
-        # TODO: finish this UI class
         ui_elements = []
-
         ui_welcome = self.get_welcome()
         ui_items = self.get_items()
 
@@ -444,7 +463,7 @@ class InventoryUI(BaseUI):
 
         ui_items = None
         ui_items_list = []
-        item_counts = Counter(self.inventory.items)
+        item_counts = Counter([item.description for item in self.inventory.items])
 
         for item, count in sorted(item_counts.items()):
             ui_items_list.append('{0} ({1})'.format(item, count))
@@ -500,8 +519,7 @@ class TerminalUI(BaseUI):
     def prompt(self):
         """Prompt the player for input."""
 
-        message = "  {0}@apex-{1}:~$ ".format(self.game.player.name,
-                                            '-'.join(self.terminal.name.split()))
+        message = "  {0}@apex-{1}:~$ ".format(self.game.player.name, '-'.join(self.terminal.name.split()))
 
         while True:
             # update the display
@@ -554,7 +572,7 @@ class TerminalUI(BaseUI):
     def get_welcome(self):
         """Return terminal welcome message text."""
 
-        return "Terminal: {0}".format(self.terminal.address)
+        return "Terminal {0}".format(self.terminal.address)
 
     def display(self):
         """Display the UI."""

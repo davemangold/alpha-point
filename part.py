@@ -4,7 +4,7 @@ from item import Item
 
 
 class Part(Item):
-    """A device part that can be used to enable a device."""
+    """A part that can be used to enable a device."""
 
     def __init__(self, *args, **kwargs):
         super(Part, self).__init__(*args, **kwargs)
@@ -12,7 +12,8 @@ class Part(Item):
     def can_enable(self, test_device):
         """Returns True if this tool activates the type of device provided, otherwise False."""
 
-        if test_device.enabled is False and isinstance(test_device, device.Device):
+        if (test_device.enabled is False
+        and isinstance(test_device, device.Device)):
             return True
 
     def get_use_action(self, target_device):
@@ -38,7 +39,8 @@ class Wires(Part):
     def can_enable(self, test_device):
         """Returns True if this part enables the type of device provided, otherwise False."""
 
-        if test_device.enabled is False and isinstance(test_device, device.Switch):
+        if (test_device.enabled is False
+        and isinstance(test_device, device.Switch)):
             return True
 
         return
