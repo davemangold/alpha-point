@@ -1,34 +1,21 @@
-from uuid import uuid4
+from gameobject import GameObject
 
 
-class Item(object):
+class Item(GameObject):
     """Base class for items found throughout the game."""
 
     def __init__(self, inventory, *args, **kwargs):
+        super(Item, self).__init__(*args, **kwargs)
         self.inventory = inventory
-        self.id = str(uuid4())
-        self.name = ''
         self.description = 'generic item'
         self.visible = True
         self.interactive = True
         self.blocking = False
-        self.x = 0
-        self.y = 0
         self.msg_action_verb = 'take'
         self.msg_take = 'I took the item.'
         self.msg_give = 'I gave the item.'
         self.msg_equip = 'I equipped the item.'
         self.msg_unequip = 'I unequipped the item.'
-
-    def __str__(self):
-        """A brief description."""
-
-        return self.description
-
-    def location(self):
-        """Return the (x, y) location of the item."""
-
-        return self.x, self.y
 
     def take_action_text(self):
         """Return text description of the currently available action."""
