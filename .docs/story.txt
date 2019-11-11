@@ -1,0 +1,17 @@
+Intro 1
+Marcus could sense the stillness of his environment -- vacuous and oppressive. Intense sunlight cut sharp-edged lines across the dusty, red rocks at his feet. Above, a high, streaky haze blurred the tawny blue and grey of the sky. In every direction there was more of the same: rocks, dust, and light; repeating, shrinking, and finally vanishing at the horizon.  In this place time itself was like a distant memory and the imperceptibly slow turn of shadows across the landscape was the only reminder that it still existed. There was no movement; no gentle breeze, no flowing water, no bounding life; only a vast, empty exapanse -- in a word, desolation.
+
+Intro 2
+The chirp of Marcus\' integrated comm system was followed by the voice of his mission commander: "Marc, we neeed you back at base ASAP! There\'s been an incident in the lab." He shifted his gaze to the top-left corner of his suit\'s heads-up-display and keyed his mic with a blink. "Roger that, Tonia, what kind of incident?". Even as he finished speaking, Marcus began gathering and packing his instruments. "We don\'t know yet, but it doesn\'t look good.", Tonia replied, her Russian accent a little thicker than ususal, "One of the techs made a system-wide call warning everyone to stay away. The airlock is sealed and external control is disabled. We\'re still trying to establish contact." As chief science officer, Marcus knew laboratory emergency protocols better than anyone. They hadn\'t been followed. "Alright, I\'m heading back now. ETA twelve minutes. Who was scheduled for the lab today?", Marcus asked. Eleven and a half minutes later, as Marcus brought the rover to a stop in front of the Horizon-1 Mars Base, informally known as Alpha Point, there was still no response...
+
+Level 1 - Entrance
+Faint clouds of dust fell from his boots as Marcus climbed down the rover ladder. "Something is very wrong", he thought, while surveying the environment for any sign of disaster. Everything was in place. There was no evidence of an explosion or collapse. The light over the external airlock door glowed green indicating its pressure matched that of the external environment. According to his suit\'s computer, he still had active comm and telemetry links with Alpha Point but all he could hear was the sound of his own breathing. "What the hell?", Marcus wondered, as he headed toward the airlock.'
+
+Level 2 - Airlock
+Marcus checked his mission clock as the door sealed behind him. He was about thirty minutes ahead of schedule. "Alright, focus.", he thought, "Follow the ingress procedure."
+
+Level 3 - Equipment Storage
+As he removed his helmet, Marcus noted an empty excursion suit alcove and wondered who else was outside the hab. Ad-hoc departures weren't that unusual -- just one more variable to keep in mind. The lights flickered briefly and Marcus detected the caustic smell of overheated electronics. "That can't be good", he told himself. After stowing his suit in an open alcove Marcus headed for the door of the crew meeting area.
+
+Level 4 - Crew Area
+Marcus tried again to establish radio contact as he stepped through the broken door, it\'s safety mechanism drawing it closed behind him, "Tonia, this is Marcus. Do you read me? Over."...nothing.

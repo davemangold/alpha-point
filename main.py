@@ -1,5 +1,5 @@
 import sys
-from game import Game
+from game.game import Game
 
 
 DEBUG = (sys.argv[1] == '--debug') if len(sys.argv) > 1 else False

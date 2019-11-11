@@ -32,7 +32,7 @@ player_config = {
 }
 
 level_config = {
-    'levels': {
+    'level': {
         99: {
             'name': 'Testing',
             'map': {
