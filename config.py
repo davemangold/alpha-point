@@ -14,7 +14,7 @@ game_config = {
 ''',
     'gameover_text': 'Congratulations! You completed the game',
     'intro_text_1': 'Marcus could sense the stillness of his environment -- vacuous and oppressive. Intense sunlight cut sharp-edged lines across the dusty, red rocks at his feet. Above, a high, streaky haze blurred the tawny blue and grey of the sky. In every direction there was more of the same: rocks, dust, and light; repeating, shrinking, and finally vanishing at the horizon.  In this place time itself was like a distant memory and the slow turn of shadows across the landscape was the only reminder that it still existed. There was no movement; no gentle breeze, no flowing water, no bounding life; only a vast, empty expanse -- in a word, desolation.',
-    'intro_text_2': 'Marcus\' integrated comm system chirped. "Marc, we need you back at base ASAP! There\'s been an incident in the lab", said his mission commander. He shifted his gaze to the top-left corner of his suit\'s heads-up-display and keyed his mic with a blink. "Roger that, Tonia, what kind of incident?" Even as he finished speaking, Marcus began gathering and packing his instruments. "We don\'t know yet, but it doesn\'t look good", Tonia replied, her Russian accent a little thicker than usual. "One of the techs made a system-wide call warning everyone to stay away. They\'ve sealed the airlock and disabled external control. We\'re still trying to re-establish contact." As chief science officer, Marcus knew laboratory emergency protocols better than anyone. Things were not happening by the book. "Alright, I\'m heading back now. ETA twelve minutes. Who\'s scheduled for the lab today?", Marcus asked. Eleven and a half minutes later, Marcus brought the rover to a stop in front of the Horizon-1 Mars Base, informally known as Alpha Point. There was still no response...',
+    'intro_text_2': 'Marcus\' integrated comm system chirped. "Marc, we need you back at base ASAP! There\'s been an incident in the lab", said his mission commander. He shifted his gaze to the top-left corner of his suit\'s heads-up-display and keyed his mic with a blink. "Roger that, Tonia, what kind of incident?" Even as he finished speaking, Marcus began gathering and packing his instruments. "We don\'t know yet, but it doesn\'t look good", Tonia replied, her Russian accent a little thicker than usual. "One of the techs made a system-wide call warning everyone to stay away. They\'ve sealed the airlock and disabled external control. We\'re still trying to re-establish contact." As chief science officer, Marcus knew laboratory emergency protocols better than anyone. Things were not happening by the book. "Alright, I\'m heading back now. ETA twelve minutes. Who\'s scheduled for the lab today?", Marcus asked. Eleven and a half minutes later, Marcus brought his rover to a stop in front of the Horizon-1 Mars Base, informally known as Alpha Point. There was still no response...',
     'ui': {
         'width': 60,
         'articles': {
@@ -173,7 +173,7 @@ level_config = {
                         'msg_toggle_active_false': 'The door closed.',
                         'msg_unmet_dependencies': 'An indicator shows the door is locked.',
                         'dependencies': [
-                            {'device_id': 1, 'active_state': True}
+                            {'device_id': 1, 'enabled_state': True, 'active_state': True}
                         ]
                     },
                     {
@@ -443,7 +443,7 @@ level_config = {
                         'msg_toggle_active_false': 'The door closed.',
                         'msg_unmet_dependencies': 'The door is unresponsive.',
                         'dependencies': [
-                            {'device_id': 1, 'active_state': True}
+                            {'device_id': 1, 'enabled_state': True, 'active_state': True}
                         ]
                     }
                 ],
@@ -624,7 +624,7 @@ level_config = {
                         'msg_toggle_active_false': 'The door closed.',
                         'msg_unmet_dependencies': 'The door is unresponsive.',
                         'dependencies': [
-                            {'device_id': 2, 'active_state': True}
+                            {'device_id': 2, 'enabled_state': True, 'active_state': True}
                         ]
                     },
                     {
@@ -785,7 +785,7 @@ level_config = {
                     },
                     {
                         'id': 1,
-                        'name': 'entrance door',
+                        'name': 'exit door',
                         'description': 'door',
                         'type': 'door',
                         'enabled': True,
@@ -800,7 +800,9 @@ level_config = {
                         'msg_toggle_active_true': 'The door opened.',
                         'msg_toggle_active_false': 'The door closed.',
                         'msg_unmet_dependencies': 'The door is unresponsive.',
-                        'dependencies': []
+                        'dependencies': [
+                            {'device_id': 3, 'enabled_state': True, 'active_state': True}
+                        ]
                     },
                     {
                         'id': 2,
@@ -827,7 +829,7 @@ level_config = {
                         'description': 'damaged switchbox',
                         'type': 'switch',
                         'enabled': False,
-                        'active': False,
+                        'active': True,
                         'visible': True,
                         'x': 6,
                         'y': 1,
@@ -842,7 +844,8 @@ level_config = {
                     }
                 ],
                 'links': [
-                    {'interface_id': 0, 'device_id': 2}
+                    {'interface_id': 0, 'device_id': 2},
+                    {'interface_id': 1, 'device_id': 1}
                 ],
                 'deaths': [
                     {
