@@ -1,8 +1,8 @@
 import error
-from level.item import Item
-from level.tool import Tool
-from level.part import Part
-from level.artifact import Artifact
+from level.gameobject.item import Item
+from level.gameobject.item.tool import Tool
+from level.gameobject.item.part import Part
+from level.gameobject.item.artifact import Artifact
 
 
 class Inventory(object):
@@ -30,6 +30,13 @@ class Inventory(object):
             raise error.InventoryError("The item does not exist in the inventory.")
 
         return self.items.pop(self.items.index(item))
+
+    def remove_item_by_id(self, item_id):
+        """Remove the item with the provided id from the inventory and return it."""
+
+        for item in self.items:
+            if item.id == item_id:
+                return self.items.pop(self.items.index(item))
 
     def clear_items(self):
         """Remove all items from the inventory without returning them."""
