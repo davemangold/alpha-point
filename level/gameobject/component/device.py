@@ -69,16 +69,22 @@ class Device(Component):
         else:
             self.system.level.game.ui.alert = self.msg_toggle_enabled_false
 
-    def add_dependency(self, device_id, active_state):
+    def add_dependency(self, device_id, enabled_state, active_state):
         """Add a dependency that must be met before this device can be activated."""
 
         if not self.system.has_device(self.system.get_device(device_id)):
             raise error.SystemError("The specified device is not in the system.")
 
+        if not isinstance(enabled_state, bool):
+            raise TypeError("The enabled state must be a boolean value.")
+
         if not isinstance(active_state, bool):
             raise TypeError("The active state must be a boolean value.")
 
-        dependency = {'device_id': device_id, 'active_state': active_state}
+        dependency = {
+            'device_id': device_id,
+            'enabled_state': enabled_state,
+            'active_state': active_state}
 
         if dependency in self.dependencies:
             raise error.DeviceError("The dependency already exists for the device.")
@@ -100,6 +106,8 @@ class Device(Component):
 
         for dependency in self.dependencies:
             device = self.system.get_device(dependency['device_id'])
+            if device.enabled != dependency['enabled_state']:
+                return False
             if device.active != dependency['active_state']:
                 return False
         return True

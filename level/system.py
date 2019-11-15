@@ -54,7 +54,10 @@ class System(object):
             system_device = self.get_device(config_id=config_device['id'])
             for config_dependency in config_device['dependencies']:
                 dependency_device = self.get_device(config_id=config_dependency['device_id'])
-                system_device.add_dependency(dependency_device.id, config_dependency['active_state'])
+                system_device.add_dependency(
+                    dependency_device.id,
+                    config_dependency['enabled_state'],
+                    config_dependency['active_state'])
 
         for config_link in system_config['links']:
             link_interface = self.get_interface(config_id=config_link['interface_id'])
