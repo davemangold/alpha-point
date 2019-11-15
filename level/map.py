@@ -1,14 +1,13 @@
 import error
-from level import device
-from level.device import Device
-from level.interface import Interface
-from level.tool import Tool
-from level.tool import ToolFactory
-from level.part import Part
-from level.part import PartFactory
-from level.artifact import Artifact
-from level.artifact import ArtifactFactory
-from extension.inventory import Inventory
+from level.gameobject.component import device
+from level.gameobject.component import interface
+from level.gameobject.item.tool import Tool
+from level.gameobject.item.tool import ToolFactory
+from level.gameobject.item.part import Part
+from level.gameobject.item.part import PartFactory
+from level.gameobject.item.artifact import Artifact
+from level.gameobject.item.artifact import ArtifactFactory
+from inventory.inventory import Inventory
 from config import level_config
 
 
@@ -150,9 +149,9 @@ class MapCell(object):
     def remove_component(self, component):
         """Remove the component from the map cell."""
 
-        if isinstance(component, Interface):
+        if isinstance(component, interface.Interface):
             self.remove_interface(component)
-        elif isinstance(component, Device):
+        elif isinstance(component, device.Device):
             self.remove_device(component)
         else:
             raise TypeError("The component must be of type interface or device.")

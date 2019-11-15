@@ -1,7 +1,8 @@
 import sys
-from game.game import Game
+from game import Game
 
 
+# dirty hack...
 DEBUG = (sys.argv[1] == '--debug') if len(sys.argv) > 1 else False
 
 

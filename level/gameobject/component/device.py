@@ -1,5 +1,5 @@
 import error
-from level.component import Component
+from level.gameobject.component.component import Component
 
 
 # Base Device class
@@ -45,19 +45,19 @@ class Device(Component):
         """Toggle this device's active state."""
 
         if self.enabled is False:
-            self.system.level.game.gameui.alert = self.msg_disabled
+            self.system.level.game.ui.alert = self.msg_disabled
             return
 
         if not self.dependencies_met():
-            self.system.level.game.gameui.alert = self.msg_unmet_dependencies
+            self.system.level.game.ui.alert = self.msg_unmet_dependencies
             return
 
         self.active = not self.active
 
         if self.active is True:
-            self.system.level.game.gameui.alert = self.msg_toggle_active_true
+            self.system.level.game.ui.alert = self.msg_toggle_active_true
         else:
-            self.system.level.game.gameui.alert = self.msg_toggle_active_false
+            self.system.level.game.ui.alert = self.msg_toggle_active_false
 
     def toggle_enabled_state(self):
         """Toggle this device's enabled state."""
@@ -65,9 +65,9 @@ class Device(Component):
         self.enabled = not self.enabled
 
         if self.enabled is True:
-            self.system.level.game.gameui.alert = self.msg_toggle_enabled_true
+            self.system.level.game.ui.alert = self.msg_toggle_enabled_true
         else:
-            self.system.level.game.gameui.alert = self.msg_toggle_enabled_false
+            self.system.level.game.ui.alert = self.msg_toggle_enabled_false
 
     def add_dependency(self, device_id, active_state):
         """Add a dependency that must be met before this device can be activated."""

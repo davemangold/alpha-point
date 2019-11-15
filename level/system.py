@@ -1,8 +1,8 @@
 import error
-from level.device import Device
-from level.device import DeviceFactory
-from level.interface import Interface
-from level.interface import InterfaceFactory
+from level.gameobject.component.device import Device
+from level.gameobject.component.device import DeviceFactory
+from level.gameobject.component.interface import Interface
+from level.gameobject.component.interface import InterfaceFactory
 from config import level_config
 
 

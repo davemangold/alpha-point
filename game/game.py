@@ -18,7 +18,7 @@ class Game(object):
         self.control = Control(self)
         self.level = Level(self)
         self.player = Player(self)
-        self.gameui = StartUI(self)
+        self.ui = StartUI(self)
         self.setup()
 
     def setup_level(self, level_number):
@@ -51,21 +51,21 @@ class Game(object):
 
         while True:
 
-            if isinstance(self.gameui, StartUI):
+            if isinstance(self.ui, StartUI):
                 if self.debug is True:
-                    self.gameui = LevelsUI(game=self)
+                    self.ui = LevelsUI(game=self)
 
-            if isinstance(self.gameui, MainUI):
+            if isinstance(self.ui, MainUI):
                 if self.player.cell.has_story_text() and not self.player.cell.story_seen:
-                    self.gameui = StoryUI(game=self)
+                    self.ui = StoryUI(game=self)
                 if self.level.system.kills_player():
                     death = self.level.system.get_death()
-                    self.gameui = PlayerDeadUI(game=self, message=death['description'])
+                    self.ui = PlayerDeadUI(game=self, message=death['description'])
                 if self.level.is_complete():
                     if not self.level.has_next_level():
-                        self.gameui = GameCompleteUI(game=self)
+                        self.ui = GameCompleteUI(game=self)
                     else:
-                        self.gameui.next_level()
+                        self.ui.next_level()
                         continue
 
-            self.gameui.process_input(self.gameui.prompt())
+            self.ui.process_input(self.ui.prompt())

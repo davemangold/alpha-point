@@ -18,6 +18,18 @@ class BaseUI(object):
         self.alert = None
         self.separator = '-' * game_config['ui']['width']
 
+    @staticmethod
+    def clear_screen():
+        """Clear the screen."""
+
+        os.system('cls')
+
+    @staticmethod
+    def decorate_ui(ui_text):
+
+        ui_text_decorated = '\n'.join(["  " + line for line in ui_text.split('\n')])
+        return ui_text_decorated
+
     def process_input(self, value):
         """Call the appropriate method based on input value."""
 
@@ -36,12 +48,6 @@ class BaseUI(object):
                 continue
             return response
 
-    @staticmethod
-    def clear_screen():
-        """Clear the screen."""
-
-        os.system('cls')
-
     def get_alert(self):
         """Get the alert message, then set to None."""
 
@@ -56,12 +62,6 @@ class BaseUI(object):
 
         return 'Base UI'
 
-    @staticmethod
-    def decorate_ui(ui_text):
-
-        ui_text_decorated = '\n'.join(["  " + line for line in ui_text.split('\n')])
-        return ui_text_decorated
-
     def display(self):
         """Display the UI."""
 
@@ -72,13 +72,13 @@ class BaseUI(object):
         """Go to the next level."""
 
         self.game.setup(self.game.level.number + 1)
-        self.game.gameui = MainUI(self.game)
+        self.game.ui = MainUI(self.game)
 
     def restart_level(self):
         """Restart the current level."""
 
         self.game.setup(self.game.level.number)
-        self.game.gameui = MainUI(self.game)
+        self.game.ui = MainUI(self.game)
 
 
 class StartUI(BaseUI):
@@ -170,7 +170,7 @@ class StartUI(BaseUI):
 
     def leave(self):
 
-        self.game.gameui = LevelsUI(self.game)
+        self.game.ui = LevelsUI(self.game)
 
 
 class LevelsUI(BaseUI):
@@ -248,7 +248,7 @@ class LevelsUI(BaseUI):
         """Start the game with the specified level number."""
 
         self.game.setup(level_number)
-        self.game.gameui = MainUI(self.game)
+        self.game.ui = MainUI(self.game)
 
 
 class MainUI(BaseUI):
@@ -284,7 +284,7 @@ class MainUI(BaseUI):
                 if input(self.decorate_ui('Are you sure you want to quit (y/n)? ')) == 'y':
                     self.leave()
             elif value == self.game.control.INVENTORY:
-                self.game.gameui = InventoryUI(self.game.player.inventory)
+                self.game.ui = InventoryUI(self.game.player.inventory)
             # the value wasn't handled
             else:
                 # self.alert = "I don't know what you mean."
@@ -419,7 +419,7 @@ class MainUI(BaseUI):
     def leave(self):
         """Leave the game and return to the start menu."""
 
-        self.game.gameui = LevelsUI(self.game)
+        self.game.ui = LevelsUI(self.game)
 
 
 class InventoryUI(BaseUI):
@@ -429,7 +429,7 @@ class InventoryUI(BaseUI):
 
         super(InventoryUI, self).__init__(inventory.owner.game, *args, **kwargs)
         self.inventory = inventory
-        self.precedent = self.game.gameui
+        self.precedent = self.game.ui
 
     def process_input(self, value):
         """Call the appropriate method based on input value."""
@@ -488,7 +488,7 @@ class InventoryUI(BaseUI):
 
     def leave(self):
         # reset gameui to the ui that was active at the time this was created
-        self.game.gameui = self.precedent
+        self.game.ui = self.precedent
 
 
 class TerminalUI(BaseUI):
@@ -497,7 +497,7 @@ class TerminalUI(BaseUI):
     def __init__(self, terminal, *args, **kwargs):
         super(TerminalUI, self).__init__(terminal.system.level.game, *args, **kwargs)
         self.terminal = terminal
-        self.precedent = self.game.gameui
+        self.precedent = self.game.ui
         self.initial_flicker = True
 
     def process_input(self, value):
@@ -598,7 +598,7 @@ class TerminalUI(BaseUI):
 
     def leave(self):
         # reset gameui to the ui that was active at the time this was created
-        self.game.gameui = self.precedent
+        self.game.ui = self.precedent
 
 
 class LevelCompleteUI(BaseUI):
@@ -679,7 +679,7 @@ class LevelCompleteUI(BaseUI):
     def leave(self):
         """Leave the game and return to the start menu."""
 
-        self.game.gameui = LevelsUI(self.game)
+        self.game.ui = LevelsUI(self.game)
 
 
 class PlayerDeadUI(BaseUI):
@@ -746,7 +746,7 @@ class PlayerDeadUI(BaseUI):
     def leave(self):
         """Leave the game and return to the start menu."""
 
-        self.game.gameui = LevelsUI(self.game)
+        self.game.ui = LevelsUI(self.game)
 
 
 class StoryUI(BaseUI):
@@ -754,7 +754,7 @@ class StoryUI(BaseUI):
 
     def __init__(self, *args, **kwargs):
         super(StoryUI, self).__init__(*args, **kwargs)
-        self.precedent = self.game.gameui
+        self.precedent = self.game.ui
 
     def process_input(self, value):
         """Call the appropriate method based on input value."""
@@ -804,7 +804,7 @@ class StoryUI(BaseUI):
     def leave(self):
         # reset gameui to the ui that was active at the time this was created
         self.game.player.cell.story_seen = True
-        self.game.gameui = self.precedent
+        self.game.ui = self.precedent
 
 
 # in progress
@@ -813,7 +813,7 @@ class GameCompleteUI(BaseUI):
 
     def __init__(self, *args, **kwargs):
         super(GameCompleteUI, self).__init__(*args, **kwargs)
-        self.precedent = self.game.gameui
+        self.precedent = self.game.ui
 
     def process_input(self, value):
         """Call the appropriate method based on input value."""
@@ -851,4 +851,4 @@ class GameCompleteUI(BaseUI):
 
     def leave(self):
         # return to the main Levels UI
-        self.game.gameui = LevelsUI(self.game)
+        self.game.ui = LevelsUI(self.game)

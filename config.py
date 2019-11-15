@@ -691,8 +691,8 @@ level_config = {
                         'visible': True,
                         'interactive': True,
                         'blocking': False,
-                        'x': 3,
-                        'y': 3
+                        'x': 4,
+                        'y': 1
                     }
                 ],
                 'artifacts': [

@@ -1,7 +1,7 @@
 import error
 import utility
-from extension.action import Action
-from extension.inventory import Inventory
+from action import Action
+from inventory import Inventory
 
 
 class Character(object):

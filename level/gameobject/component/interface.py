@@ -1,7 +1,7 @@
 import error
 from game.gameui import TerminalUI
-from level.component import Component
-from extension.action import Action
+from level.gameobject.component.component import Component
+from action.action import Action
 
 
 # Base Interface class
@@ -62,7 +62,7 @@ class Terminal(Interface):
         """Interface loop that allows player to interact with the interface."""
 
         self.update_actions()
-        self.system.level.game.gameui = TerminalUI(self)
+        self.system.level.game.ui = TerminalUI(self)
 
     def get_actions(self):
         """Return dictionary of action based on terminal-linked devices."""

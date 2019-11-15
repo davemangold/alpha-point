@@ -1,6 +1,6 @@
 import error
-from level import device
-from level.item import Item
+from level.gameobject.component import device
+from level.gameobject.item.item import Item
 
 
 class Tool(Item):

@@ -1,6 +1,6 @@
 import error
-from level import device
-from level.item import Item
+from level.gameobject.component import device
+from level.gameobject.item.item import Item
 
 
 class Part(Item):
@@ -16,18 +16,23 @@ class Part(Item):
         and isinstance(test_device, device.Device)):
             return True
 
+    # TODO: fix to reference correct "self"
     def get_use_action(self, target_device):
         """Return an ad-hoc function for enabling the device."""
 
+        part_inventory = self.inventory
+        part_id = self.id
+
         def enable_device():
             target_device.enabled = True
+            part_inventory.remove_item_by_id(part_id)
 
         return enable_device
 
     def use_action_text(self, target_device):
         """Return text description of the currently available action."""
 
-        return "Repair the {0} with the {1}".format(self, target_device)
+        return "Repair the {0} with the {1}".format(target_device, self)
 
 
 class Wires(Part):
