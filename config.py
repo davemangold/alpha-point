@@ -21,7 +21,8 @@ game_config = {
             'default': 'a',
             'mapped': {
                 'excursion suit': 'an',
-                'excursion suit helmet': 'an'
+                'excursion suit helmet': 'an',
+                'airlock door': 'an'
             }
         }
     }
@@ -308,7 +309,7 @@ level_config = {
                     {
                         'id': 1,
                         'name': 'airlock door',
-                        'description': 'door',
+                        'description': 'airlock door',
                         'type': 'door',
                         'enabled': True,
                         'active': False,
@@ -390,7 +391,7 @@ level_config = {
                     {
                         'id': 0,
                         'name': 'entrance door',
-                        'description': 'door',
+                        'description': 'airlock door',
                         'type': 'door',
                         'enabled': False,
                         'active': False,
@@ -428,7 +429,7 @@ level_config = {
                     {
                         'id': 2,
                         'name': 'exit door',
-                        'description': 'door',
+                        'description': 'airlock door',
                         'type': 'door',
                         'enabled': True,
                         'active': False,

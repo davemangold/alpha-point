@@ -27,7 +27,13 @@ class BaseUI(object):
     @staticmethod
     def decorate_ui(ui_text):
 
-        ui_text_decorated = '\n'.join(["  " + line for line in ui_text.split('\n')])
+        ui_width = game_config['ui']['width']
+        terminal_width = os.get_terminal_size().columns
+
+        h_offset = int((terminal_width - ui_width) / 2)
+        v_offset = 0
+
+        ui_text_decorated = '\n'.join([" " * h_offset + line for line in ui_text.split('\n')])
         return ui_text_decorated
 
     def process_input(self, value):
@@ -230,10 +236,15 @@ class LevelsUI(BaseUI):
     def get_action(self):
         """Return the text that represents available action."""
 
+        highest_level = self.game.save['highest_level']
+
+        if self.game.debug is True:
+            highest_level = 99
+
         ui_actions = '\n'.join(
             ['{0}. {1}'.format(k, v['name'])
              for k, v in sorted(level_config['level'].items())
-             if k > 0])
+             if 0 < k <= highest_level + 1])
 
         return ui_actions
 
@@ -246,6 +257,14 @@ class LevelsUI(BaseUI):
 
     def start_level(self, level_number):
         """Start the game with the specified level number."""
+
+        highest_level = self.game.save['highest_level']
+
+        if self.game.debug is True:
+            highest_level = 99
+
+        if level_number > highest_level + 1:
+            raise KeyError('Invalid level number.')
 
         self.game.setup(level_number)
         self.game.ui = MainUI(self.game)
@@ -287,7 +306,6 @@ class MainUI(BaseUI):
                 self.game.ui = InventoryUI(self.game.player.inventory)
             # the value wasn't handled
             else:
-                # self.alert = "I don't know what you mean."
                 pass
 
         except error.MoveError:
@@ -387,12 +405,9 @@ class MainUI(BaseUI):
                 'Visible items: {0}'.format(self.game.player.get_visible_items()) + '\n' +
                 'Visible devices: {0}'.format(self.game.player.get_visible_devices()) + '\n' +
                 'Visible interfaces: {0}'.format(self.game.player.get_visible_interfaces()) + '\n' +
-                'Map items: {0}'.format(['{0} {1}'.format(item, item.location())
-                                         for item in self.game.level.map.inventory.items]) + '\n' +
-                'Map devices: {0}'.format(['{0} {1}'.format(device, device.location())
-                                           for device in self.game.level.map.devices]) + '\n' +
-                'Map interfaces: {0}'.format(['{0} {1}'.format(interface, interface.location())
-                                              for interface in self.game.level.map.interfaces]))
+                'Map items: {0}'.format('\n\t'.join(str(i) for i in self.game.level.map.items)) + '\n' +
+                'Map devices: {0}'.format('\n\t'.join(str(i) for i in self.game.level.map.devices)) + '\n' +
+                'Map interfaces: {0}'.format('\n\t'.join(str(i) for i in self.game.level.map.interfaces)))
             ui_elements.append(debug_text)
         else:
             debug_text = ''
@@ -440,6 +455,8 @@ class InventoryUI(BaseUI):
         """Prompt the player for input."""
 
         self.display()
+        message = self.decorate_ui("Press Enter to return...")
+        print(message)
         response = self.game.control.get_keypress()
         return response
 
@@ -519,7 +536,8 @@ class TerminalUI(BaseUI):
     def prompt(self):
         """Prompt the player for input."""
 
-        message = "  {0}@apex-{1}:~$ ".format(self.game.player.name, '-'.join(self.terminal.name.split()))
+        message = self.decorate_ui(
+            "{0}@apex-{1}:~$ ".format(self.game.player.name, '-'.join(self.terminal.name.split())))
 
         while True:
             # update the display
@@ -601,85 +619,85 @@ class TerminalUI(BaseUI):
         self.game.ui = self.precedent
 
 
-class LevelCompleteUI(BaseUI):
-    """Game user interface presented to the player when a level is completed."""
-
-    def __init__(self, *args, **kwargs):
-        super(LevelCompleteUI, self).__init__(*args, **kwargs)
-
-    def process_input(self, value):
-        """Call the appropriate method based on input value."""
-
-        if value == '1':
-            try:
-                self.next_level()
-            except KeyError:
-                self.alert = "This is the last level."
-        elif value == '2':
-            self.restart_level()
-        elif value == 'q':
-            self.leave()
-        # the value wasn't handled
-        else:
-            self.alert = "Sorry, that's not an option."
-
-    def prompt(self):
-        """Prompt the player for input."""
-
-        message = "  Choose an option: "
-
-        while True:
-            # update the display
-            self.display()
-            response = self.game.control.get_input(message=message)
-            if utility.is_empty_response(response):
-                continue
-            return response
-
-    def get_ui(self):
-        """Get the full UI text."""
-
-        ui_elements = []
-
-        ui_commands = self.get_commands()
-        ui_welcome = self.get_welcome()
-        ui_alert = self.get_alert()
-        ui_action = self.get_action()
-
-        ui_elements.append(ui_commands)
-        ui_elements.append(self.separator)
-        ui_elements.append(ui_welcome)
-        ui_elements.append(ui_action)
-        if ui_alert is not None:
-            ui_elements.append(ui_alert)
-        ui_elements.append(self.separator)
-
-        return '\n\n'.join(ui_elements) + '\n'
-
-    def get_action(self):
-        """Return the text that represents available action."""
-
-        ui_actions = ('1. Play next level\n'
-                      '2. Restart level')
-
-        return ui_actions
-
-    def get_commands(self):
-        """Return the universal commands."""
-
-        commands = '\nq - main menu'
-
-        return commands
-
-    def get_welcome(self):
-        """Return UI welcome message text."""
-
-        return "Congratulations! You completed the level."
-
-    def leave(self):
-        """Leave the game and return to the start menu."""
-
-        self.game.ui = LevelsUI(self.game)
+# class LevelCompleteUI(BaseUI):
+#     """Game user interface presented to the player when a level is completed."""
+#
+#     def __init__(self, *args, **kwargs):
+#         super(LevelCompleteUI, self).__init__(*args, **kwargs)
+#
+#     def process_input(self, value):
+#         """Call the appropriate method based on input value."""
+#
+#         if value == '1':
+#             try:
+#                 self.next_level()
+#             except KeyError:
+#                 self.alert = "This is the last level."
+#         elif value == '2':
+#             self.restart_level()
+#         elif value == 'q':
+#             self.leave()
+#         # the value wasn't handled
+#         else:
+#             self.alert = "Sorry, that's not an option."
+#
+#     def prompt(self):
+#         """Prompt the player for input."""
+#
+#         message = "  Choose an option: "
+#
+#         while True:
+#             # update the display
+#             self.display()
+#             response = self.game.control.get_input(message=message)
+#             if utility.is_empty_response(response):
+#                 continue
+#             return response
+#
+#     def get_ui(self):
+#         """Get the full UI text."""
+#
+#         ui_elements = []
+#
+#         ui_commands = self.get_commands()
+#         ui_welcome = self.get_welcome()
+#         ui_alert = self.get_alert()
+#         ui_action = self.get_action()
+#
+#         ui_elements.append(ui_commands)
+#         ui_elements.append(self.separator)
+#         ui_elements.append(ui_welcome)
+#         ui_elements.append(ui_action)
+#         if ui_alert is not None:
+#             ui_elements.append(ui_alert)
+#         ui_elements.append(self.separator)
+#
+#         return '\n\n'.join(ui_elements) + '\n'
+#
+#     def get_action(self):
+#         """Return the text that represents available action."""
+#
+#         ui_actions = ('1. Play next level\n'
+#                       '2. Restart level')
+#
+#         return ui_actions
+#
+#     def get_commands(self):
+#         """Return the universal commands."""
+#
+#         commands = '\nq - main menu'
+#
+#         return commands
+#
+#     def get_welcome(self):
+#         """Return UI welcome message text."""
+#
+#         return "Congratulations! You completed the level."
+#
+#     def leave(self):
+#         """Leave the game and return to the start menu."""
+#
+#         self.game.ui = LevelsUI(self.game)
 
 
 class PlayerDeadUI(BaseUI):
@@ -703,7 +721,7 @@ class PlayerDeadUI(BaseUI):
     def prompt(self):
         """Prompt the player for input."""
 
-        message = "  What would you like to do? "
+        message = self.decorate_ui("What would you like to do? ")
 
         while True:
             # update the display
@@ -765,6 +783,8 @@ class StoryUI(BaseUI):
         """Prompt the player for input."""
 
         self.display()
+        message = self.decorate_ui("Press Enter to return...")
+        print(message)
         response = self.game.control.get_keypress()
         return response
 
@@ -807,9 +827,8 @@ class StoryUI(BaseUI):
         self.game.ui = self.precedent
 
 
-# in progress
 class GameCompleteUI(BaseUI):
-    """Game user interface presented to the player when a level is completed."""
+    """Game user interface presented to the player when the game is completed."""
 
     def __init__(self, *args, **kwargs):
         super(GameCompleteUI, self).__init__(*args, **kwargs)
@@ -824,7 +843,7 @@ class GameCompleteUI(BaseUI):
         """Prompt the player for input."""
 
         self.display()
-        message = "  Press Enter to return to main menu..."
+        message = self.decorate_ui("Press Enter to return to main menu...")
         print(message)
         response = self.game.control.get_keypress()
         return response

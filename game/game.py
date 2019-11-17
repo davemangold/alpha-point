@@ -1,3 +1,5 @@
+
+import shelve
 from level import Level
 from game.gameio import Control
 from game.gameui import MainUI
@@ -15,11 +17,19 @@ class Game(object):
 
     def __init__(self, debug=False):
         self.debug = debug
+        self.save = None
         self.control = Control(self)
         self.level = Level(self)
         self.player = Player(self)
         self.ui = StartUI(self)
         self.setup()
+
+    def __enter__(self):
+        self.save = shelve.open('.save/save', writeback=True)
+        return self
+
+    def __exit__(self, exc_type, exc_value, exc_traceback):
+        self.save.close()
 
     def setup_level(self, level_number):
         """Setup the game level."""
@@ -49,8 +59,13 @@ class Game(object):
     def mainloop(self):
         """The main game loop."""
 
+        # initialize to zero if not previously set
+        if self.save.get('highest_level') is None:
+            self.save['highest_level'] = 0
+
         while True:
 
+            # skip intro in debug mode
             if isinstance(self.ui, StartUI):
                 if self.debug is True:
                     self.ui = LevelsUI(game=self)
@@ -62,10 +77,14 @@ class Game(object):
                     death = self.level.system.get_death()
                     self.ui = PlayerDeadUI(game=self, message=death['description'])
                 if self.level.is_complete():
-                    if not self.level.has_next_level():
-                        self.ui = GameCompleteUI(game=self)
-                    else:
+                    if self.level.number > self.save['highest_level']:
+                        self.save['highest_level'] = self.level.number
+                    if self.level.number == 0:
+                        self.ui = LevelsUI(game=self)
+                    elif self.level.has_next_level():
                         self.ui.next_level()
-                        continue
+                    else:
+                        self.ui = GameCompleteUI(game=self)
+                    continue
 
             self.ui.process_input(self.ui.prompt())
