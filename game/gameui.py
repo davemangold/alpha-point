@@ -386,10 +386,13 @@ class MainUI(BaseUI):
 
         player_symbol = self.player_symbols[self.game.player.orientation]
 
-        commands = ('\nup    - move up\tr - restart level\t{0} - Player\n'
-                    'down  - move down\tq - main menu\t\t. - Path\n'
-                    'left  - move left\ti - inventory\n'
-                    'right - move right').format(player_symbol)
+        commands = (
+            '\n'
+            'up    - move up          r - restart level      {0} - Player\n'
+            'down  - move down        q - main menu          . - Path\n'
+            'left  - move left        i - inventory\n'
+            'right - move right'
+        ).format(player_symbol)
 
         return commands
 
@@ -843,7 +846,7 @@ class GameCompleteUI(BaseUI):
         """Prompt the player for input."""
 
         self.display()
-        message = self.decorate_ui("Press Enter to return to main menu...")
+        message = self.decorate_ui("Press Enter to return to the main menu...")
         print(message)
         response = self.game.control.get_keypress()
         return response

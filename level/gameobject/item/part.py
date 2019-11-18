@@ -16,7 +16,6 @@ class Part(Item):
         and isinstance(test_device, device.Device)):
             return True
 
-    # TODO: fix to reference correct "self"
     def get_use_action(self, target_device):
         """Return an ad-hoc function for enabling the device."""
 

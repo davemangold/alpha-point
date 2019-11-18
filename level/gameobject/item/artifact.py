@@ -10,7 +10,7 @@ class Artifact(Item):
 
 
 class Generic(Artifact):
-    """A class for arbitrary gameobject that are non-interactive."""
+    """A class for arbitrary objects that are non-interactive."""
 
     def __init__(self, *args, **kwargs):
         super(Generic, self).__init__(*args, **kwargs)

@@ -184,7 +184,7 @@ class Character(object):
         return visible_components
 
     def get_visible_objects(self):
-        """Return all gameobject visible to the player."""
+        """Return all objects visible to the player."""
 
         visible_components = self.get_visible_components()
         visible_items = self.get_visible_items()
@@ -193,7 +193,7 @@ class Character(object):
         return visible_objects
 
     def get_interactive_objects(self):
-        """Return all visible gameobject with which the player can interact."""
+        """Return all visible objects with which the player can interact."""
 
         interactive_objects = []
         visible_objects = self.get_visible_objects()
@@ -212,7 +212,7 @@ class Character(object):
         return utility.build_object_report_text(self.orientation, visible_tools)
 
     def report_visible_parts(self):
-        """Return string description of visible tools."""
+        """Return string description of visible parts."""
 
         visible_parts = self.get_visible_parts()
 
@@ -226,7 +226,7 @@ class Character(object):
         return utility.build_object_report_text(self.orientation, visible_artifacts)
 
     def report_visible_items(self):
-        """Return string description of visible tools and artifacts."""
+        """Return string description of visible items (tools, parts, and artifacts)."""
 
         visible_items = self.get_visible_items()
 
@@ -247,21 +247,21 @@ class Character(object):
         return utility.build_object_report_text(self.orientation, visible_devices)
 
     def report_visible_components(self):
-        """Return string description of visible interfaces and devices."""
+        """Return string description of visible components (interfaces and devices)."""
 
         visible_components = self.get_visible_components()
 
         return utility.build_object_report_text(self.orientation, visible_components)
 
     def report_visible_objects(self):
-        """Return string description of visible components and items."""
+        """Return string description of visible objects (components and items)."""
 
         visible_objects = self.get_visible_objects()
 
         return utility.build_object_report_text(self.orientation, visible_objects)
 
     def get_actions(self):
-        """Return dictionary of action based on d4 visible gameobject."""
+        """Return dictionary of action based on d4 visible objects."""
 
         # tools in the player inventory
         tool_list = self.inventory.get_tools()
@@ -310,7 +310,7 @@ class Character(object):
         # combined list of all action
         actions_list = tool_actions + part_actions + interface_actions + item_actions
 
-        # dictionary of action keys associated with Action gameobject
+        # dictionary of action keys associated with Action object
         actions = {actions_list.index(action) + 1: action
             for action in actions_list}
 

@@ -2,7 +2,7 @@ from uuid import uuid4
 
 
 class GameObject(object):
-    """Base class for all game gameobject."""
+    """Base class for all game objects."""
 
     def __init__(self, *args, **kwargs):
         self.id = str(uuid4())

@@ -32,6 +32,7 @@ def get_relative_direction_text(orientation, direction):
         1: 'to my right',
         2: 'behind me',
         3: 'to my left'}
+
     dirkeys = sorted(relative_directions.keys())
     keyindex = direction - orientation
 
@@ -104,15 +105,22 @@ def build_object_report_body(text_part_list):
 
 
 def build_object_report_text(orientation, d4_objects):
-    """Return string description of d4 gameobject relative to orientation."""
+    """Return string description of d4 objects relative to orientation."""
 
-    report_open = 'There\'s'
+    # get natural order of d4 objects
+    d4_order = list(range(len(d4_objects)))
+    # rotate order to match player orientation
+    player_order = d4_order[orientation:] + d4_order[:orientation]
+    # swap last two items to make order: front, right, left, behind
+    report_order = player_order[:2] + [player_order[3]] + [player_order[2]]
+
+    report_open = 'There\'s '
     report_body = ''
     report_close = '.'
 
     body_part_list = []
 
-    for direction in range(len(d4_objects)):
+    for direction in report_order:
         component_list = d4_objects[direction]
 
         if len(component_list) > 0:
@@ -123,9 +131,9 @@ def build_object_report_text(orientation, d4_objects):
     if len(body_part_list) > 0:
         report_body += build_object_report_body(body_part_list)
     else:
-        report_close = ' nothing around me.'
+        report_close = 'nothing around me.'
 
-    report = report_open + ' ' + report_body + report_close
+    report = report_open + report_body + report_close
 
     return report
 

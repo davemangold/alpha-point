@@ -16,7 +16,7 @@ class Inventory(object):
         """Add the item to the inventory."""
 
         if not isinstance(item, Item):
-            raise error.InventoryError("Inventory can only store gameobject of type 'Item'.")
+            raise error.InventoryError("Inventory can only store object of type 'Item'.")
 
         if item in self.items:
             raise error.InventoryError("The item already exists in the inventory.")
