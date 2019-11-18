@@ -17,13 +17,6 @@ class Generic(Artifact):
         self.interactive = False
 
 
-class Cup(Artifact):
-    """It's just a cup."""
-
-    def __init__(self, *args, **kwargs):
-        super(Cup, self).__init__(*args, **kwargs)
-
-
 class ArtifactFactory(object):
     """Makes specific Device type instances."""
 
@@ -31,6 +24,4 @@ class ArtifactFactory(object):
     def make_artifact(inventory, artifact_type, *args, **kwargs):
         if artifact_type.lower() == 'generic':
             return Generic(inventory, *args, **kwargs)
-        if artifact_type.lower() == 'cup':
-            return Cup(inventory, *args, **kwargs)
         raise error.FactoryError("The specified artifact type does not exist.")

@@ -311,8 +311,7 @@ class Character(object):
         actions_list = tool_actions + part_actions + interface_actions + item_actions
 
         # dictionary of action keys associated with Action object
-        actions = {actions_list.index(action) + 1: action
-            for action in actions_list}
+        actions = {actions_list.index(action) + 1: action for action in actions_list}
 
         return actions
 

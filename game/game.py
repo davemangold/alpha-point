@@ -87,7 +87,6 @@ class Game(object):
                 # skip StartUI in debug mode
                 if self.debug is True:
                     self.ui = LevelsUI(game=self)
-                # TODO: skip intro when returning to game
                 # skip intro text if returning to game
                 if self.save.get('intro_seen') is True:
                     self.ui.skip_intro = True

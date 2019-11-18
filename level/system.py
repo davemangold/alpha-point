@@ -9,7 +9,7 @@ from config import level_config
 class System(object):
     """A collection of interfaces and devices the player can control."""
 
-    def __init__(self, level, *args, **kwargs):
+    def __init__(self, level):
         self.level = level
         self.devices = []  # [<device>,...]
         self.interfaces = []  # [<interface>,...]

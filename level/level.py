@@ -6,7 +6,7 @@ from config import level_config
 class Level(object):
     """Level with which the player interacts."""
 
-    def __init__(self, game, *args, **kwargs):
+    def __init__(self, game):
         self.game = game
         self.map = Map(self)
         self.system = System(self)

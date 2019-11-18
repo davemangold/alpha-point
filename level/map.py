@@ -14,7 +14,7 @@ from config import level_config
 class MapCell(object):
     """A single map cell (tile)."""
 
-    def __init__(self, map, x, y, *args, **kwargs):
+    def __init__(self, map, x, y):
         self.map = map
         self.x = x
         self.y = y
@@ -220,7 +220,7 @@ class MapCell(object):
 class MapPath(object):
     """Path that the player can access."""
 
-    def __init__(self, map, *args, **kwargs):
+    def __init__(self, map):
         self.map = map
         self.cells = []
 
@@ -249,7 +249,7 @@ class MapPath(object):
 class Map(object):
     """The map that a player will navigate."""
 
-    def __init__(self, level, *args, **kwargs):
+    def __init__(self, level):
         self.level = level
         self.inventory = Inventory(self)
         self.x_dim = 0

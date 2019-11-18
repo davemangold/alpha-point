@@ -8,7 +8,7 @@ from level.gameobject.item.artifact import Artifact
 class Inventory(object):
     """Inventory class to hold and manage items."""
 
-    def __init__(self, owner, *args, **kwargs):
+    def __init__(self, owner):
         self.owner = owner  # character or map
         self.items = []
 
