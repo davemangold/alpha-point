@@ -65,10 +65,14 @@ class Game(object):
 
         while True:
 
-            # skip intro in debug mode
             if isinstance(self.ui, StartUI):
+                # skip StartUI in debug mode
                 if self.debug is True:
                     self.ui = LevelsUI(game=self)
+                # TODO: skip intro when returning to game
+                # skip intro text if returning to game
+                if self.save.get('intro_seen') is True:
+                    self.ui.skip_intro = True
 
             if isinstance(self.ui, MainUI):
                 if self.player.cell.has_story_text() and not self.player.cell.story_seen:

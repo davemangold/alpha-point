@@ -92,6 +92,7 @@ class StartUI(BaseUI):
 
     def __init__(self, *args, **kwargs):
         super(StartUI, self).__init__(*args, **kwargs)
+        self.skip_intro = False
         self.splash_seen = False
         self.intro_seen_1 = False
         self.intro_seen_2 = False
@@ -111,6 +112,10 @@ class StartUI(BaseUI):
             message = self.decorate_ui("Press Enter to continue...")
             print(message)
             response = self.game.control.get_keypress()
+
+            if self.skip_intro is True:
+                self.leave()
+
             return response
 
     def get_ui(self):
@@ -176,6 +181,7 @@ class StartUI(BaseUI):
 
     def leave(self):
 
+        self.game.save['intro_seen'] = True
         self.game.ui = LevelsUI(self.game)
 
 
