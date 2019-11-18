@@ -1,25 +1,14 @@
-import os
-import sys
+import argparse
 from game import Game
 
-
-# dirty hack...
-DEBUG = (sys.argv[1] == '--debug') if len(sys.argv) > 1 else False
-
-
-def reset():
-
-    for f in os.listdir('.save'):
-        path = os.join('.save', f)
-        if os.path.isfile(path):
-            os.remove(path)
-
-    main()
+parser = argparse.ArgumentParser()
+parser.add_argument('-d', '--debug', help='run game in debug mode', action='store_true')
+args = parser.parse_args()
 
 
-def main(debug=DEBUG):
+def main():
 
-    with Game(debug=debug) as game:
+    with Game(debug=args.debug) as game:
         game.mainloop()
 
 
