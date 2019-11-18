@@ -262,7 +262,7 @@ class LevelsUI(BaseUI):
     def get_commands(self):
         """Return the universal commands."""
 
-        commands = '\nq - leave the game\nr - reset the game'
+        commands = '\nq - leave the game      r - reset the game'
 
         return commands
 
