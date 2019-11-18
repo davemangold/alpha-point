@@ -1,4 +1,4 @@
-
+import os
 import shelve
 from level import Level
 from game.gameio import Control
@@ -55,6 +55,24 @@ class Game(object):
         # setup level before player
         self.setup_level(level_number)
         self.setup_player()
+
+    def reset(self):
+        """Reset the game."""
+
+        # close save files
+        self.save.close()
+
+        # delete save files
+        save_dir = '.save'
+
+        for file_name in os.listdir(save_dir):
+            file_path = os.path.join(save_dir, file_name)
+            if os.path.isfile(file_path):
+                os.remove(file_path)
+
+        # launch a new game instance
+        with Game(debug=self.debug) as game:
+            game.mainloop()
 
     def mainloop(self):
         """The main game loop."""
