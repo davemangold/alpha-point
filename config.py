@@ -341,7 +341,7 @@ level_config = {
                     {'coordinates': (1, 0), 'story_text': None},
                     {'coordinates': (1, 1), 'story_text': None},
                     {'coordinates': (1, 2), 'story_text': None},
-                    {'coordinates': (1, 3), 'story_text': ('{0} checked his mission clock as the door sealed behind him. He was about thirty minutes ahead of schedule. "Alright, focus.", he thought, "Follow the ingress procedure."').format(player_config['name'])},
+                    {'coordinates': (1, 3), 'story_text': ('{0} checked his mission clock as the door sealed behind him. He was about thirty minutes ahead of his scheduled return time. "Alright, focus.", he thought, "Follow the ingress procedure."').format(player_config['name'])},
                     {'coordinates': (1, 4), 'story_text': None}
                 ],
                 'coord_enter': (1, 3),  # begin
