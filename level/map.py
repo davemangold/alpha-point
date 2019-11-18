@@ -289,7 +289,7 @@ class Map(object):
 
         for config_path_cell in map_config['path_cells']:
             path_cell = self.get_cell(*config_path_cell['coordinates'])
-            path_cell.story_text = config_path_cell['story_text']
+            path_cell.story_text = config_path_cell['story']['text']
             self.path.add_cell(path_cell)
 
         for system_interface in self.level.system.interfaces:
