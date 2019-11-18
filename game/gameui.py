@@ -705,7 +705,7 @@ class StoryUI(BaseUI):
 
     def __init__(self, *args, **kwargs):
         super(StoryUI, self).__init__(*args, **kwargs)
-        self.precedent = self.game.ui
+        self.previous_ui = self.game.ui
 
     def process_input(self, value):
         """Call the appropriate method based on input value."""
@@ -757,7 +757,7 @@ class StoryUI(BaseUI):
     def leave(self):
         # reset gameui to the ui that was active at the time this was created
         self.game.player.cell.story_seen = True
-        self.game.ui = self.precedent
+        self.game.ui = self.previous_ui
 
 
 class GameCompleteUI(BaseUI):

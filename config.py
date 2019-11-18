@@ -271,8 +271,8 @@ level_config = {
                     },
                     {
                         'type': 'generic',
-                        'name': 'solararray',
-                        'description': 'solar array',
+                        'name': 'generator',
+                        'description': 'generator array in the distance',
                         'visible': True,
                         'interactive': False,
                         'blocking': True,
@@ -282,7 +282,7 @@ level_config = {
                     {
                         'type': 'generic',
                         'name': 'communicationsarray',
-                        'description': 'communications array',
+                        'description': 'communications array on the cliff',
                         'visible': True,
                         'interactive': False,
                         'blocking': True,
@@ -508,7 +508,18 @@ level_config = {
                         'y': 4
                     }
                 ],
-                'parts': [],
+                'parts': [
+                    {
+                        'type': 'wires',
+                        'name': 'wire_bundle',
+                        'description': 'bundle of wires and circuitry',
+                        'visible': True,
+                        'interactive': True,
+                        'blocking': False,
+                        'x': 6,
+                        'y': 1
+                    }
+                ],
                 'artifacts': [
                     {
                         'type': 'generic',
@@ -539,16 +550,6 @@ level_config = {
                         'blocking': True,
                         'x': 5,
                         'y': 7
-                    },
-                    {
-                        'type': 'generic',
-                        'name': 'circuit_bundle_1',
-                        'description': 'bundle of wires and circuitry',
-                        'visible': True,
-                        'interactive': True,
-                        'blocking': False,
-                        'x': 6,
-                        'y': 1
                     },
                     {
                         'type': 'generic',
@@ -676,7 +677,7 @@ level_config = {
                     {'coordinates': (4, 6), 'story_text': None},
                     {'coordinates': (4, 0), 'story_text': None},
                     {'coordinates': (4, 1), 'story_text': None},
-                    {'coordinates': (1, 3), 'story_text': 'Marcus looked out the habitat window. He could see the opposing crater rim about a kilometer away. They were lucky, he thought, that The Agency had selected this site. The lake that once filled the crater had escaped eons ago when a portion of the crater wall collapsed, leaving behind a convenient access route. A last remnant of the lake still existed as tons of water ice along the perpetually shaded southern wall while slightly closer to the center of the crater the solar array received plenty of sunlight to generate power for the habitat. The hab itself, nestled along the northeastern wall, adjacent to the subterranean portion of the base, was well protected from the prevailing, dusty winds above.'},
+                    {'coordinates': (1, 3), 'story_text': 'Marcus looked out the habitat window. He could see the opposing crater rim about a kilometer away. They were lucky, he thought, that The Agency had selected this site. The lake that once filled the crater had escaped eons ago when a portion of the crater wall collapsed, leaving behind a passable access route. A last remnant of the lake still existed as tons of water ice along the perpetually shaded southern wall while slightly closer to the center of crater the stirling reactors generated power for the habitat at a safe distance. The hab itself, nestled along the northeastern wall, adjacent to the subterranean portion of the base, was well protected from the prevailing, dusty winds above.'},
                     {'coordinates': (7, 3), 'story_text': None},
                     {'coordinates': (8, 3), 'story_text': None}
                 ],
@@ -688,7 +689,7 @@ level_config = {
                     {
                         'type': 'wires',
                         'name': 'wires',
-                        'description': 'wire bundle',
+                        'description': 'bundle of wires',
                         'visible': True,
                         'interactive': True,
                         'blocking': False,
