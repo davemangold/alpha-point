@@ -238,13 +238,13 @@ level_config = {
             }
         },
         1: {
-            'name': 'Entrance',
+            'name': 'Approach',
             'map': {
                 'x_dimension': 5,
                 'y_dimension': 5,
                 'path_cells': [
                     {'coordinates': (2, 4), 'story_text': None},
-                    {'coordinates': (2, 3), 'story_text': ('Faint clouds of dust fell from his boots as {0} climbed down the rover ladder. "Something is very wrong", he thought, while surveying the environment for any sign of disaster. Everything was in place. There was no evidence of an explosion or collapse. The light over the external airlock door glowed green indicating its pressure matched that of the external environment. According to his suit\'s computer, he still had active comm and telemetry links with Alpha Point but all he could hear was the sound of his own breathing. "What the hell?", Marcus wondered, as he headed toward the airlock.').format(player_config['name'])},
+                    {'coordinates': (2, 3), 'story_text': ('Faint clouds of dust fell from his boots as {0} climbed down the rover ladder. "Something is very wrong", he thought, while surveying his surroundings for any sign of disaster. Everything was in place. There was no evidence of an explosion or collapse. The light over the external airlock door glowed green indicating its pressure matched that of the external environment. According to his suit\'s computer, he still had active comm and telemetry links with Alpha Point but all he could hear was the sound of his own breathing. "What the hell?", Marcus wondered, as he headed toward the airlock.').format(player_config['name'])},
                     {'coordinates': (2, 2), 'story_text': None},
                     {'coordinates': (2, 1), 'story_text': None},
                     {'coordinates': (2, 0), 'story_text': None},
