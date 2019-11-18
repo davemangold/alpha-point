@@ -1,1 +1,1 @@
-.\.venv\scripts\activate && python main.py && deactivate
+.\.venv\scripts\activate.bat && python main.py && deactivate
