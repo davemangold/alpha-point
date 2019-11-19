@@ -92,7 +92,7 @@ class Game(object):
                     self.ui.skip_intro = True
 
             if isinstance(self.ui, MainUI):
-                if self.player.cell.has_story_text() and not self.player.cell.story_seen:
+                if self.player.cell.has_story() and not self.player.cell.story_seen:
                     self.ui = StoryUI(game=self)
                 if self.level.system.kills_player():
                     death = self.level.system.get_death()

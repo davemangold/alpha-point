@@ -580,7 +580,7 @@ class TerminalUI(BaseUI):
             ui_elements.append(ui_alert)
         ui_elements.append(self.separator)
 
-        return '\n\n'.join(ui_elements) + '\n'
+        return '\n' + '\n\n'.join(ui_elements) + '\n'
 
     def get_action(self):
         """Return the text that represents available action."""
@@ -597,7 +597,7 @@ class TerminalUI(BaseUI):
     def get_commands(self):
         """Return the universal commands."""
 
-        commands = ('\nq - leave the {0}'.format(self.terminal))
+        commands = ('q - leave the {0}'.format(self.terminal))
 
         return commands
 
@@ -726,8 +726,11 @@ class StoryUI(BaseUI):
 
         ui_elements = []
 
+        ui_story_title = self.get_story_title()
         ui_story_text = self.get_story_text()
 
+        if len(ui_story_title) > 0:
+            ui_elements.append(ui_story_title)
         ui_elements.append(self.separator)
         ui_elements.append(ui_story_text)
         ui_elements.append(self.separator)
@@ -747,10 +750,27 @@ class StoryUI(BaseUI):
             self.clear_screen()
             print(show_text)
 
+    def get_story_title(self):
+        """Get the story text associated with the current cell."""
+
+        player_cell = self.game.player.cell
+        story_title = ''
+
+        if player_cell.has_story() and player_cell.story['title'] is not None:
+            story_title = player_cell.story['title']
+
+        formatted_title = utility.format_ui_text(story_title)
+        return formatted_title
+
     def get_story_text(self):
         """Get the story text associated with the current cell."""
 
-        story_text = self.game.player.cell.story_text
+        player_cell = self.game.player.cell
+        story_text = ''
+
+        if player_cell.has_story() and player_cell.story['text'] is not None:
+            story_text = player_cell.story['text']
+
         formatted_text = utility.format_ui_text(story_text)
         return formatted_text
 

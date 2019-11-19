@@ -23,7 +23,7 @@ class MapCell(object):
         self.tools = []
         self.parts = []
         self.artifacts = []
-        self.story_text = None
+        self.story = None
         self.story_seen = False
         self.visited = False
 
@@ -109,10 +109,10 @@ class MapCell(object):
 
         return len(self.items) > 0
 
-    def has_story_text(self):
+    def has_story(self):
         """Return True if there is story text associated with the cell, otherwise False."""
 
-        return self.story_text is not None
+        return self.story is not None
 
     def add_interface(self, interface):
         """Adds an interface to the map cell."""
@@ -289,7 +289,7 @@ class Map(object):
 
         for config_path_cell in map_config['path_cells']:
             path_cell = self.get_cell(*config_path_cell['coordinates'])
-            path_cell.story_text = config_path_cell['story']['text']
+            path_cell.story = config_path_cell['story']
             self.path.add_cell(path_cell)
 
         for system_interface in self.level.system.interfaces:
