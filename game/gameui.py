@@ -5,6 +5,9 @@ import error
 import utility
 from random import random
 from random import randrange
+from random import choices
+from random import sample
+from math import floor
 from collections import Counter
 from config import game_config
 from config import level_config
@@ -16,7 +19,8 @@ class BaseUI(object):
     def __init__(self, game, *args, **kwargs):
         self.game = game
         self.alert = None
-        self.separator = '-' * game_config['ui']['width']
+        self.width = game_config['ui']['width']
+        self.separator = '-' * self.width
 
     @staticmethod
     def clear_screen():
@@ -24,13 +28,11 @@ class BaseUI(object):
 
         os.system('cls')
 
-    @staticmethod
-    def decorate_ui(ui_text):
+    def decorate_ui(self, ui_text):
 
-        ui_width = game_config['ui']['width']
         terminal_width = os.get_terminal_size().columns
 
-        h_offset = int((terminal_width - ui_width) / 2)
+        h_offset = int((terminal_width - self.width) / 2)
         v_offset = 0
 
         ui_text_decorated = '\n'.join([" " * h_offset + line for line in ui_text.split('\n')])
@@ -262,7 +264,7 @@ class LevelsUI(BaseUI):
     def get_commands(self):
         """Return the universal commands."""
 
-        commands = '\nq - leave the game      r - reset the game'
+        commands = '\nr - reset the game\nq - leave the game'
 
         return commands
 
@@ -374,7 +376,7 @@ class MainUI(BaseUI):
         text_map = self.add_map_path(text_map)
         text_map = self.add_map_player(text_map)
         map_width = len(text_map.split('\n')[0])
-        buffer_width = int((game_config['ui']['width'] - map_width) / 2)
+        buffer_width = int((self.width - map_width) / 2)
         text_map = '\n'.join([' ' * buffer_width + line for line in text_map.split('\n')])
         return text_map
 
@@ -614,6 +616,7 @@ class TerminalUI(BaseUI):
 
         if self.initial_flicker is True:
             self.display_flicker()
+            # self.display_flicker_corrupt()
             self.initial_flicker = False
 
     def display_flicker(self):
@@ -627,6 +630,42 @@ class TerminalUI(BaseUI):
             self.clear_screen()
             time.sleep(i)
             print(self.decorate_ui(self.get_ui()))
+
+    def display_flicker_corrupt(self):
+        """Flicker the terminal display with corrupted data."""
+
+        hex_digits = ['0', '1', '2', '3', '4', '5', '6', '7',
+                      '8', '9', 'A', 'B', 'C', 'D', 'E', 'F']
+
+        hextet_size = 4
+        hextet_gaps = 4
+        data_cols = floor(self.width / (hextet_size + 1))  # + 1 to account for spaces
+        data_rows = len(self.get_ui().split('\n')) + 2  # + 2 to account for prompt
+
+        duration = 0.3
+        number = randrange(3, 5, 1)
+        intervals = [duration for i in range(number)]
+
+        # TODO: progressively insert ui elements into corrupted data text
+        for i in intervals:
+
+            data = [[
+                ''.join(choices(hex_digits, k=hextet_size))
+                for m in range(data_cols)]
+                for n in range(data_rows)]
+
+            for row in data:
+                for j in sample(range(data_cols), hextet_gaps):
+                    row[j] = ' ' * hextet_size
+
+            corrupted_text = '\n'.join([' '.join(row) for row in data])
+
+            self.clear_screen()
+            print(self.decorate_ui(corrupted_text))
+            time.sleep(i)
+
+        self.clear_screen()
+        print(self.decorate_ui(self.get_ui()))
 
     def leave(self):
         # reset gameui to the ui that was active at the time this was created
