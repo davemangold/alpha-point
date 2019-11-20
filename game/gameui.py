@@ -615,8 +615,8 @@ class TerminalUI(BaseUI):
         print(self.decorate_ui(self.get_ui()))
 
         if self.initial_flicker is True:
-            self.display_flicker()
-            # self.display_flicker_corrupt()
+            # self.display_flicker()
+            self.display_flicker_corrupt()
             self.initial_flicker = False
 
     def display_flicker(self):
@@ -634,6 +634,7 @@ class TerminalUI(BaseUI):
     def display_flicker_corrupt(self):
         """Flicker the terminal display with corrupted data."""
 
+        ui_text = self.get_ui()
         hex_digits = ['0', '1', '2', '3', '4', '5', '6', '7',
                       '8', '9', 'A', 'B', 'C', 'D', 'E', 'F']
 
@@ -661,8 +662,10 @@ class TerminalUI(BaseUI):
             corrupted_text = '\n'.join([' '.join(row) for row in data])
 
             self.clear_screen()
-            print(self.decorate_ui(corrupted_text))
+            print(self.decorate_ui(utility.merge_text(ui_text, corrupted_text)))
             time.sleep(i)
+
+            hextet_gaps += floor((data_cols - hextet_gaps) / number)
 
         self.clear_screen()
         print(self.decorate_ui(self.get_ui()))

@@ -165,6 +165,40 @@ def merge_lists(a, b):
     return c
 
 
+def merge_text(a, b):
+    """Merge the two text blocks aligned to the top-left corner.
+
+    Characters in a will be retained where they overlap with whitespace in b."""
+
+    a_list = a.split('\n')
+    b_list = b.split('\n')
+    a_rows = len(a_list)
+    b_rows = len(b_list)
+    a_cols = max([len(row) for row in a_list])
+    b_cols = max([len(row) for row in b_list])
+    out_rows = max(a_rows, b_rows)
+    out_cols = max(a_cols, b_cols)
+    out_list = []
+
+    for text_lines in (a_list, b_list):
+        if len(text_lines) < out_rows:
+            text_lines.extend([''] * (out_rows - len(text_lines)))
+        for i in range(len(text_lines)):
+            if len(text_lines[i]) < out_cols:
+                text_lines[i] += ' ' * (out_cols - len(text_lines[i]))
+
+    for i in range(out_rows):
+        out_list.append('')
+        for j in range(out_cols):
+            a_char = a_list[i][j]
+            b_char = b_list[i][j]
+            out_list[i] += b_char if not b_char.isspace() else a_char
+
+    out_text = '\n'.join(out_list)
+
+    return out_text
+
+
 def merge_nested_lists(a, b):
     """Return items from list b substituted with items from a where b value is None."""
 
