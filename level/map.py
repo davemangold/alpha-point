@@ -26,6 +26,7 @@ class MapCell(object):
         self.story = None
         self.story_seen = False
         self.visited = False
+        self.seen = False
 
     @property
     def components(self):

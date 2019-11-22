@@ -41,6 +41,9 @@ class Character(object):
         self.cell = self.get_map_cell()
         for item in self.inventory.items:
             item.x, item.y = self.x, self.y
+        for cell in self.game.level.map.get_d4_cells(*self.location()):
+            if cell is not None:
+                cell.seen = True
 
     def location(self):
         """Returns character location as (x, y) tuple."""

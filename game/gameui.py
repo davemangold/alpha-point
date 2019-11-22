@@ -355,17 +355,20 @@ class MainUI(BaseUI):
 
         map_list = utility.text_map_to_nested_list(text_map)
         for cell in self.game.level.map.path.cells:
-            map_list[cell.y][cell.x] = '.'
+            if self.game.level.number > self.game.save['highest_level']:
+                if cell.seen is True:
+                    map_list[cell.y][cell.x] = '.'
+            else:
+                map_list[cell.y][cell.x] = '.'
 
         return utility.nested_list_to_text_map(map_list)
 
     def get_base_map(self):
         """Get the base map."""
 
-        game_map = self.game.level.map
         text_map = '\n'.join(
-            [' '.join(game_map.x_dim * ' ')
-             for y in range(game_map.y_dim)])
+            [' '.join(self.game.level.map.x_dim * ' ')
+             for y in range(self.game.level.map.y_dim)])
 
         return text_map
 
@@ -615,8 +618,9 @@ class TerminalUI(BaseUI):
         print(self.decorate_ui(self.get_ui()))
 
         if self.initial_flicker is True:
-            # self.display_flicker()
-            self.display_flicker_corrupt()
+            # TODO: decide when to show corrupted ui
+            # self.display_flicker_corrupt()
+            self.display_flicker()
             self.initial_flicker = False
 
     def display_flicker(self):
@@ -647,7 +651,6 @@ class TerminalUI(BaseUI):
         number = randrange(3, 5, 1)
         intervals = [duration for i in range(number)]
 
-        # TODO: progressively insert ui elements into corrupted data text
         for i in intervals:
 
             data = [[

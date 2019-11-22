@@ -71,6 +71,7 @@ level_config = {
                 'artifacts': []
             },
             'system': {
+                'corrupt': True,
                 'interfaces': [
                     {
                         'id': 0,
@@ -231,6 +232,7 @@ level_config = {
                 'artifacts': []
             },
             'system': {
+                'corrupt': False,
                 'interfaces': [],
                 'devices': [],
                 'links': [],
@@ -282,7 +284,7 @@ level_config = {
                     {
                         'type': 'generic',
                         'name': 'communicationsarray',
-                        'description': 'communications array on the cliff',
+                        'description': 'communications array on top of the cliff',
                         'visible': True,
                         'interactive': False,
                         'blocking': True,
@@ -292,6 +294,7 @@ level_config = {
                 ]
             },
             'system': {
+                'corrupt': False,
                 'interfaces': [
                     {
                         'id': 0,
@@ -352,6 +355,7 @@ level_config = {
                 'artifacts': []
             },
             'system': {
+                'corrupt': False,
                 'interfaces': [
                     {
                         'id': 0,
@@ -564,6 +568,7 @@ level_config = {
                 ]
             },
             'system': {
+                'corrupt': False,
                 'interfaces': [
                     {
                         'id': 0,
@@ -677,7 +682,7 @@ level_config = {
                     {'coordinates': (4, 6), 'story': None},
                     {'coordinates': (4, 0), 'story': None},
                     {'coordinates': (4, 1), 'story': None},
-                    {'coordinates': (1, 3), 'story': {'title': None, 'text': 'Marcus looked out the habitat window. He could see the opposing crater rim about a kilometer away. They were lucky, he thought, that The Agency had selected this site. The lake that once filled the crater had escaped eons ago when a portion of the crater wall collapsed, leaving behind a passable access route. A last remnant of the lake still existed as tons of water ice along the perpetually shaded southern wall while slightly closer to the center of crater the stirling reactors generated power for the habitat at a safe distance. The hab itself, nestled along the northeastern wall, adjacent to the subterranean portion of the base, was well protected from the prevailing, dusty winds above.'}},
+                    {'coordinates': (1, 3), 'story': {'title': None, 'text': 'Marcus looked out the habitat window. He could see the opposing crater rim about a kilometer away. They were lucky, he thought, that The Agency had selected this site. The lake that once filled the crater had escaped eons ago when a portion of the crater wall collapsed, leaving behind a passable access route. A last remnant of the lake still existed as tons of water ice along the perpetually shaded southern wall while slightly closer to the center of crater the stirling reactors produced power for the habitat at a safe distance. The hab itself, nestled along the northeastern wall, adjacent to the subterranean portion of the base, was well protected from the prevailing, dusty winds above.'}},
                     {'coordinates': (7, 3), 'story': None},
                     {'coordinates': (8, 3), 'story': None}
                 ],
@@ -741,6 +746,7 @@ level_config = {
                 ]
             },
             'system': {
+                'corrupt': False,
                 'interfaces': [
                     {   # use interface to make debris pile interactive
                         'id': 0,
