@@ -64,7 +64,6 @@ class Game(object):
 
         # delete save files
         save_dir = '.save'
-
         for file_name in os.listdir(save_dir):
             file_path = os.path.join(save_dir, file_name)
             if os.path.isfile(file_path):

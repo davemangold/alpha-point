@@ -66,7 +66,7 @@ level_config = {
                         'blocking': False,
                         'x': 3,
                         'y': 2
-                    }
+                    }  # wire bundle
                 ],
                 'artifacts': []
             },
@@ -83,7 +83,7 @@ level_config = {
                         'y': 4,
                         'orientation': 0,
                         'msg_action_verb': 'push'
-                    },
+                    },  # entrance door button
                     {
                         'id': 1,
                         'name': 'door circuit toggleswitch',
@@ -94,7 +94,7 @@ level_config = {
                         'y': 0,
                         'orientation': 2,
                         'msg_action_verb': 'flip'
-                    },
+                    },  # door circuit toggleswitch
                     {
                         'id': 2,
                         'name': 'system',
@@ -105,7 +105,7 @@ level_config = {
                         'y': 4,
                         'orientation': 0,
                         'msg_action_verb': 'use'
-                    },
+                    },  # system terminal
                     {
                         'id': 3,
                         'name': 'exit door button',
@@ -116,7 +116,7 @@ level_config = {
                         'y': 0,
                         'orientation': 2,
                         'msg_action_verb': 'push'
-                    }
+                    }   # exit door button
                 ],
                 'devices': [
                     {
@@ -137,7 +137,7 @@ level_config = {
                         'msg_toggle_active_false': 'The door closed.',
                         'msg_unmet_dependencies': 'The door is unresponsive.',
                         'dependencies': []
-                    },
+                    },  # entrance door
                     {
                         'id': 1,
                         'name': 'door circuit switch',
@@ -156,7 +156,7 @@ level_config = {
                         'msg_toggle_active_false': 'That electric hum went away.',
                         'msg_unmet_dependencies': 'The circuit switch isn\'t responding.',
                         'dependencies': []
-                    },
+                    },  # door circuit switch
                     {
                         'id': 2,
                         'name': 'exit door',
@@ -177,7 +177,7 @@ level_config = {
                         'dependencies': [
                             {'device_id': 1, 'enabled_state': True, 'active_state': True}
                         ]
-                    },
+                    },  # exit door
                     {
                         'id': 3,
                         'name': 'exit door camera',
@@ -196,7 +196,7 @@ level_config = {
                         'msg_toggle_active_false': 'The camera viewer went dark.',
                         'msg_unmet_dependencies': 'The camera isn\'t responding.',
                         'dependencies': []
-                    }
+                    }   # security camera
                 ],
                 'links': [
                     {'interface_id': 0, 'device_id': 0},
@@ -238,7 +238,7 @@ level_config = {
                 'links': [],
                 'deaths': []
             }
-        },
+        },  # void
         1: {
             'name': 'Approach',
             'map': {
@@ -270,17 +270,17 @@ level_config = {
                         'blocking': True,
                         'x': 2,
                         'y': 4
-                    },
+                    },  # rover
                     {
                         'type': 'generic',
                         'name': 'generator',
-                        'description': 'generator array in the distance',
+                        'description': 'generator cluster in the distance',
                         'visible': True,
                         'interactive': False,
                         'blocking': True,
                         'x': 0,
                         'y': 1
-                    },
+                    },  # generator array
                     {
                         'type': 'generic',
                         'name': 'communicationsarray',
@@ -290,7 +290,7 @@ level_config = {
                         'blocking': True,
                         'x': 4,
                         'y': 3
-                    },
+                    },  # communications array
                 ]
             },
             'system': {
@@ -306,7 +306,7 @@ level_config = {
                         'y': 0,
                         'orientation': 2,
                         'msg_action_verb': 'push'
-                    }
+                    }  # airlock door button
                 ],
                 'devices': [
                     {
@@ -327,14 +327,14 @@ level_config = {
                         'msg_toggle_active_false': 'The door closed.',
                         'msg_unmet_dependencies': 'The door is unresponsive.',
                         'dependencies': []
-                    }
+                    }  # airlock door
                 ],
                 'links': [
                     {'interface_id': 0, 'device_id': 1}
                 ],
                 'deaths': []
             }
-        },
+        },  # approach
         2: {
             'name': 'Airlock',
             'map': {
@@ -367,7 +367,7 @@ level_config = {
                         'y': 2,
                         'orientation': 3,
                         'msg_action_verb': 'push'
-                    },
+                    },  # 0 - airlock pressurization button
                     {
                         'id': 1,
                         'name': 'airlock pressurization handwheel',
@@ -378,7 +378,7 @@ level_config = {
                         'y': 1,
                         'orientation': 1,
                         'msg_action_verb': 'turn'
-                    },
+                    },  # 1 - airlock pressurization handwheel
                     {
                         'id': 2,
                         'name': 'exit door button',
@@ -389,7 +389,7 @@ level_config = {
                         'y': 0,
                         'orientation': 2,
                         'msg_action_verb': 'push'
-                    }
+                    }   # 2 - exit door button
                 ],
                 'devices': [
                     {
@@ -410,7 +410,7 @@ level_config = {
                         'msg_toggle_active_false': 'The door closed.',
                         'msg_unmet_dependencies': 'The door is unresponsive.',
                         'dependencies': []
-                    },
+                    },  # 0 - entrance door
                     {
                         'id': 1,
                         'name': 'airlock pressurization valve',
@@ -429,7 +429,7 @@ level_config = {
                         'msg_toggle_active_false': 'My suit expanded and the red internal door indicator reads "Airlock Purged".',
                         'msg_unmet_dependencies': 'The valve isn\'t responding.',
                         'dependencies': []
-                    },
+                    },  # 1 - airlock pressurization valve
                     {
                         'id': 2,
                         'name': 'exit door',
@@ -450,7 +450,7 @@ level_config = {
                         'dependencies': [
                             {'device_id': 1, 'enabled_state': True, 'active_state': True}
                         ]
-                    }
+                    }   # 2 - exit door
                 ],
                 'links': [
                     {'interface_id': 1, 'device_id': 1},
@@ -464,7 +464,7 @@ level_config = {
                      'location': None}  # None if all locations are valid
                 ]
             }
-        },
+        },  # airlock
         3: {
             'name': 'Equipment',
             'map': {
@@ -510,7 +510,7 @@ level_config = {
                         'blocking': False,
                         'x': 1,
                         'y': 4
-                    }
+                    }  # prybar
                 ],
                 'parts': [
                     {
@@ -522,7 +522,7 @@ level_config = {
                         'blocking': False,
                         'x': 6,
                         'y': 1
-                    }
+                    }  # bundle of wires and circuitry
                 ],
                 'artifacts': [
                     {
@@ -534,7 +534,7 @@ level_config = {
                         'blocking': True,
                         'x': 3,
                         'y': 6
-                    },
+                    },  # excursion suit
                     {
                         'type': 'generic',
                         'name': 'suit_2',
@@ -544,7 +544,7 @@ level_config = {
                         'blocking': True,
                         'x': 3,
                         'y': 7
-                    },
+                    },  # excursion suit
                     {
                         'type': 'generic',
                         'name': 'suit_3',
@@ -554,7 +554,7 @@ level_config = {
                         'blocking': True,
                         'x': 5,
                         'y': 7
-                    },
+                    },  # excursion suit
                     {
                         'type': 'generic',
                         'name': 'helmet_1',
@@ -564,7 +564,7 @@ level_config = {
                         'blocking': False,
                         'x': 7,
                         'y': 3
-                    }
+                    }   # excursion suit helmet
                 ]
             },
             'system': {
@@ -580,7 +580,7 @@ level_config = {
                         'y': 1,
                         'orientation': 3,
                         'msg_action_verb': 'push'
-                    },
+                    },  # 0 - exit door button
                     {
                         'id': 1,
                         'name': 'door circuit toggleswitch',
@@ -591,7 +591,7 @@ level_config = {
                         'y': 2,
                         'orientation': 1,
                         'msg_action_verb': 'flip'
-                    },
+                    },  # 1 - door circuit toggleswitch
                 ],
                 'devices': [
                     {
@@ -612,7 +612,7 @@ level_config = {
                         'msg_toggle_active_false': 'The door closed.',
                         'msg_unmet_dependencies': 'The door is unresponsive.',
                         'dependencies': []
-                    },
+                    },  # 0 - entrance door
                     {
                         'id': 1,
                         'name': 'exit door',
@@ -633,7 +633,7 @@ level_config = {
                         'dependencies': [
                             {'device_id': 2, 'enabled_state': True, 'active_state': True}
                         ]
-                    },
+                    },  # 1 - exit door
                     {
                         'id': 2,
                         'name': 'door circuit switch',
@@ -652,14 +652,14 @@ level_config = {
                         'msg_toggle_active_false': 'That electric hum went away.',
                         'msg_unmet_dependencies': 'The circuit switch isn\'t responding.',
                         'dependencies': []
-                    },
+                    },  # 2 - door circuit
                 ],
                 'links': [
                     {'interface_id': 0, 'device_id': 1}
                 ],
                 'deaths': []
             }
-        },
+        },  # equipment
         4: {
             'name': 'Crew',
             'map': {
@@ -700,7 +700,7 @@ level_config = {
                         'blocking': False,
                         'x': 4,
                         'y': 1
-                    }
+                    }  # bundle of wires
                 ],
                 'artifacts': [
                     {   # use artifact to make debris pile blocking
@@ -712,7 +712,7 @@ level_config = {
                         'blocking': True,
                         'x': 4,
                         'y': 0
-                    },
+                    },  # pile of debris
                     {
                         'type': 'generic',
                         'name': 'table',
@@ -722,7 +722,7 @@ level_config = {
                         'blocking': True,
                         'x': 3,
                         'y': 3
-                    },
+                    },  # table
                     {
                         'type': 'generic',
                         'name': 'table',
@@ -732,7 +732,7 @@ level_config = {
                         'blocking': True,
                         'x': 4,
                         'y': 3
-                    },
+                    },  # table
                     {
                         'type': 'generic',
                         'name': 'table',
@@ -742,7 +742,7 @@ level_config = {
                         'blocking': True,
                         'x': 5,
                         'y': 3
-                    }
+                    }   # table
                 ]
             },
             'system': {
@@ -758,7 +758,7 @@ level_config = {
                         'y': 0,
                         'orientation': 2,
                         'msg_action_verb': 'clear'
-                    },
+                    },  # 0 - pile of debris
                     {
                         'id': 1,
                         'name': 'exit door button',
@@ -769,7 +769,7 @@ level_config = {
                         'y': 2,
                         'orientation': 2,
                         'msg_action_verb': 'push'
-                    }
+                    }   # 1 - exit door button
                 ],
                 'devices': [
                     {
@@ -790,7 +790,7 @@ level_config = {
                         'msg_toggle_active_false': 'The door closed.',
                         'msg_unmet_dependencies': 'The door is unresponsive.',
                         'dependencies': []
-                    },
+                    },  # 0 - entrance door
                     {
                         'id': 1,
                         'name': 'exit door',
@@ -811,7 +811,7 @@ level_config = {
                         'dependencies': [
                             {'device_id': 3, 'enabled_state': True, 'active_state': True}
                         ]
-                    },
+                    },  # 1 - exit door
                     {   # use device to model wall that fails when debris pile is used
                         'id': 2,
                         'name': 'wall',
@@ -830,7 +830,7 @@ level_config = {
                         'msg_toggle_active_false': 'The switch opened.',
                         'msg_unmet_dependencies': 'The switch is unresponsive.',
                         'dependencies': []
-                    },
+                    },  # 2 - wall
                     {
                         'id': 3,
                         'name': 'switchbox',
@@ -849,7 +849,7 @@ level_config = {
                         'msg_toggle_active_false': 'The switch closed.',
                         'msg_unmet_dependencies': 'The switch is unresponsive.',
                         'dependencies': []
-                    }
+                    }   # 3 - damaged switchbox
                 ],
                 'links': [
                     {'interface_id': 0, 'device_id': 2},
@@ -865,6 +865,396 @@ level_config = {
                     }
                 ]
             }
-        }
+        },  # crew
+        5: {
+            'name': 'Galley',
+            'map': {
+                'x_dimension': 9,
+                'y_dimension': 9,
+                'path_cells': [
+                    {'coordinates': (0, 4), 'story': None},
+                    {'coordinates': (1, 4), 'story': {'title': None, 'text': 'Galley story...'}},
+                    {'coordinates': (2, 4), 'story': None},
+                ],
+                'coord_enter': (1, 4),
+                'coord_exit': (2, 4),
+                'orientation_enter': 1,
+                'tools': [],
+                'parts': [],
+                'artifacts': []
+            },
+            'system': {
+                'corrupt': False,
+                'interfaces': [
+                    {
+                        'id': 0,
+                        'name': 'exit door button',
+                        'description': 'button',
+                        'type': 'button',
+                        'enabled': True,
+                        'x': 1,
+                        'y': 3,
+                        'orientation': 2,
+                        'msg_action_verb': 'push'
+                    }  # 0 - exit door button
+                ],
+                'devices': [
+                    {
+                        'id': 0,
+                        'name': 'entrance door',
+                        'description': 'door',
+                        'type': 'door',
+                        'enabled': False,
+                        'active': False,
+                        'visible': True,
+                        'x': 0,
+                        'y': 4,
+                        'msg_action_true': 'open',
+                        'msg_action_false': 'close',
+                        'msg_active_true': 'The door is open.',
+                        'msg_active_false': 'The door is closed.',
+                        'msg_toggle_active_true': 'The door opened.',
+                        'msg_toggle_active_false': 'The door closed.',
+                        'msg_unmet_dependencies': 'The door is unresponsive.',
+                        'dependencies': []
+                    },  # 0 - entrance door
+                    {
+                        'id': 1,
+                        'name': 'exit door',
+                        'description': 'door',
+                        'type': 'door',
+                        'enabled': True,
+                        'active': False,
+                        'visible': True,
+                        'x': 2,
+                        'y': 4,
+                        'msg_action_true': 'open',
+                        'msg_action_false': 'close',
+                        'msg_active_true': 'The door is open.',
+                        'msg_active_false': 'The door is closed.',
+                        'msg_toggle_active_true': 'The door opened.',
+                        'msg_toggle_active_false': 'The door closed.',
+                        'msg_unmet_dependencies': 'The door is unresponsive.',
+                        'dependencies': []
+                    }   # 1 - exit door
+                ],
+                'links': [
+                    {'interface_id': 0, 'device_id': 1}
+                ],
+                'deaths': []
+            }
+        },  # galley
+        6: {
+            'name': 'Quarters',
+            'map': {
+                'x_dimension': 9,
+                'y_dimension': 9,
+                'path_cells': [
+                    {'coordinates': (0, 4), 'story': None},
+                    {'coordinates': (1, 4), 'story': {'title': None, 'text': 'Quarters story...'}},
+                    {'coordinates': (2, 4), 'story': None},
+                ],
+                'coord_enter': (1, 4),
+                'coord_exit': (2, 4),
+                'orientation_enter': 1,
+                'tools': [],
+                'parts': [],
+                'artifacts': []
+            },
+            'system': {
+                'corrupt': False,
+                'interfaces': [
+                    {
+                        'id': 0,
+                        'name': 'exit door button',
+                        'description': 'button',
+                        'type': 'button',
+                        'enabled': True,
+                        'x': 1,
+                        'y': 3,
+                        'orientation': 2,
+                        'msg_action_verb': 'push'
+                    }  # 0 - exit door button
+                ],
+                'devices': [
+                    {
+                        'id': 0,
+                        'name': 'entrance door',
+                        'description': 'door',
+                        'type': 'door',
+                        'enabled': False,
+                        'active': False,
+                        'visible': True,
+                        'x': 0,
+                        'y': 4,
+                        'msg_action_true': 'open',
+                        'msg_action_false': 'close',
+                        'msg_active_true': 'The door is open.',
+                        'msg_active_false': 'The door is closed.',
+                        'msg_toggle_active_true': 'The door opened.',
+                        'msg_toggle_active_false': 'The door closed.',
+                        'msg_unmet_dependencies': 'The door is unresponsive.',
+                        'dependencies': []
+                    },  # 0 - entrance door
+                    {
+                        'id': 1,
+                        'name': 'exit door',
+                        'description': 'door',
+                        'type': 'door',
+                        'enabled': True,
+                        'active': False,
+                        'visible': True,
+                        'x': 2,
+                        'y': 4,
+                        'msg_action_true': 'open',
+                        'msg_action_false': 'close',
+                        'msg_active_true': 'The door is open.',
+                        'msg_active_false': 'The door is closed.',
+                        'msg_toggle_active_true': 'The door opened.',
+                        'msg_toggle_active_false': 'The door closed.',
+                        'msg_unmet_dependencies': 'The door is unresponsive.',
+                        'dependencies': []
+                    }   # 1 - exit door
+                ],
+                'links': [
+                    {'interface_id': 0, 'device_id': 1}
+                ],
+                'deaths': []
+            }
+        },  # quarters
+        7: {
+            'name': 'Wet Lab',
+            'map': {
+                'x_dimension': 9,
+                'y_dimension': 9,
+                'path_cells': [
+                    {'coordinates': (0, 4), 'story': None},
+                    {'coordinates': (1, 4), 'story': {'title': None, 'text': 'Wet lab story...'}},
+                    {'coordinates': (2, 4), 'story': None},
+                ],
+                'coord_enter': (1, 4),
+                'coord_exit': (2, 4),
+                'orientation_enter': 1,
+                'tools': [],
+                'parts': [],
+                'artifacts': []
+            },
+            'system': {
+                'corrupt': False,
+                'interfaces': [
+                    {
+                        'id': 0,
+                        'name': 'exit door button',
+                        'description': 'button',
+                        'type': 'button',
+                        'enabled': True,
+                        'x': 1,
+                        'y': 3,
+                        'orientation': 2,
+                        'msg_action_verb': 'push'
+                    }  # 0 - exit door button
+                ],
+                'devices': [
+                    {
+                        'id': 0,
+                        'name': 'entrance door',
+                        'description': 'door',
+                        'type': 'door',
+                        'enabled': False,
+                        'active': False,
+                        'visible': True,
+                        'x': 0,
+                        'y': 4,
+                        'msg_action_true': 'open',
+                        'msg_action_false': 'close',
+                        'msg_active_true': 'The door is open.',
+                        'msg_active_false': 'The door is closed.',
+                        'msg_toggle_active_true': 'The door opened.',
+                        'msg_toggle_active_false': 'The door closed.',
+                        'msg_unmet_dependencies': 'The door is unresponsive.',
+                        'dependencies': []
+                    },  # 0 - entrance door
+                    {
+                        'id': 1,
+                        'name': 'exit door',
+                        'description': 'door',
+                        'type': 'door',
+                        'enabled': True,
+                        'active': False,
+                        'visible': True,
+                        'x': 2,
+                        'y': 4,
+                        'msg_action_true': 'open',
+                        'msg_action_false': 'close',
+                        'msg_active_true': 'The door is open.',
+                        'msg_active_false': 'The door is closed.',
+                        'msg_toggle_active_true': 'The door opened.',
+                        'msg_toggle_active_false': 'The door closed.',
+                        'msg_unmet_dependencies': 'The door is unresponsive.',
+                        'dependencies': []
+                    }   # 1 - exit door
+                ],
+                'links': [
+                    {'interface_id': 0, 'device_id': 1}
+                ],
+                'deaths': []
+            }
+        },  # wet lab
+        8: {
+            'name': 'Dry Lab',
+            'map': {
+                'x_dimension': 9,
+                'y_dimension': 9,
+                'path_cells': [
+                    {'coordinates': (0, 4), 'story': None},
+                    {'coordinates': (1, 4), 'story': {'title': None, 'text': 'Dry lab story...'}},
+                    {'coordinates': (2, 4), 'story': None},
+                ],
+                'coord_enter': (1, 4),
+                'coord_exit': (2, 4),
+                'orientation_enter': 1,
+                'tools': [],
+                'parts': [],
+                'artifacts': []
+            },
+            'system': {
+                'corrupt': False,
+                'interfaces': [
+                    {
+                        'id': 0,
+                        'name': 'exit door button',
+                        'description': 'button',
+                        'type': 'button',
+                        'enabled': True,
+                        'x': 1,
+                        'y': 3,
+                        'orientation': 2,
+                        'msg_action_verb': 'push'
+                    }  # 0 - exit door button
+                ],
+                'devices': [
+                    {
+                        'id': 0,
+                        'name': 'entrance door',
+                        'description': 'door',
+                        'type': 'door',
+                        'enabled': False,
+                        'active': False,
+                        'visible': True,
+                        'x': 0,
+                        'y': 4,
+                        'msg_action_true': 'open',
+                        'msg_action_false': 'close',
+                        'msg_active_true': 'The door is open.',
+                        'msg_active_false': 'The door is closed.',
+                        'msg_toggle_active_true': 'The door opened.',
+                        'msg_toggle_active_false': 'The door closed.',
+                        'msg_unmet_dependencies': 'The door is unresponsive.',
+                        'dependencies': []
+                    },  # 0 - entrance door
+                    {
+                        'id': 1,
+                        'name': 'exit door',
+                        'description': 'door',
+                        'type': 'door',
+                        'enabled': True,
+                        'active': False,
+                        'visible': True,
+                        'x': 2,
+                        'y': 4,
+                        'msg_action_true': 'open',
+                        'msg_action_false': 'close',
+                        'msg_active_true': 'The door is open.',
+                        'msg_active_false': 'The door is closed.',
+                        'msg_toggle_active_true': 'The door opened.',
+                        'msg_toggle_active_false': 'The door closed.',
+                        'msg_unmet_dependencies': 'The door is unresponsive.',
+                        'dependencies': []
+                    }   # 1 - exit door
+                ],
+                'links': [
+                    {'interface_id': 0, 'device_id': 1}
+                ],
+                'deaths': []
+            }
+        },  # dry lab
+        9: {
+            'name': 'Excavation',
+            'map': {
+                'x_dimension': 9,
+                'y_dimension': 9,
+                'path_cells': [
+                    {'coordinates': (0, 4), 'story': None},
+                    {'coordinates': (1, 4), 'story': {'title': None, 'text': 'Excavation story...'}},
+                    {'coordinates': (2, 4), 'story': None},
+                ],
+                'coord_enter': (1, 4),
+                'coord_exit': (2, 4),
+                'orientation_enter': 1,
+                'tools': [],
+                'parts': [],
+                'artifacts': []
+            },
+            'system': {
+                'corrupt': False,
+                'interfaces': [
+                    {
+                        'id': 0,
+                        'name': 'exit door button',
+                        'description': 'button',
+                        'type': 'button',
+                        'enabled': True,
+                        'x': 1,
+                        'y': 3,
+                        'orientation': 2,
+                        'msg_action_verb': 'push'
+                    }  # 0 - exit door button
+                ],
+                'devices': [
+                    {
+                        'id': 0,
+                        'name': 'entrance door',
+                        'description': 'door',
+                        'type': 'door',
+                        'enabled': False,
+                        'active': False,
+                        'visible': True,
+                        'x': 0,
+                        'y': 4,
+                        'msg_action_true': 'open',
+                        'msg_action_false': 'close',
+                        'msg_active_true': 'The door is open.',
+                        'msg_active_false': 'The door is closed.',
+                        'msg_toggle_active_true': 'The door opened.',
+                        'msg_toggle_active_false': 'The door closed.',
+                        'msg_unmet_dependencies': 'The door is unresponsive.',
+                        'dependencies': []
+                    },  # 0 - entrance door
+                    {
+                        'id': 1,
+                        'name': 'exit door',
+                        'description': 'door',
+                        'type': 'door',
+                        'enabled': True,
+                        'active': False,
+                        'visible': True,
+                        'x': 2,
+                        'y': 4,
+                        'msg_action_true': 'open',
+                        'msg_action_false': 'close',
+                        'msg_active_true': 'The door is open.',
+                        'msg_active_false': 'The door is closed.',
+                        'msg_toggle_active_true': 'The door opened.',
+                        'msg_toggle_active_false': 'The door closed.',
+                        'msg_unmet_dependencies': 'The door is unresponsive.',
+                        'dependencies': []
+                    }   # 1 - exit door
+                ],
+                'links': [
+                    {'interface_id': 0, 'device_id': 1}
+                ],
+                'deaths': []
+            }
+        }  # excavation
     }
 }
