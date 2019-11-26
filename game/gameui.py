@@ -7,7 +7,6 @@ from random import random
 from random import randrange
 from random import choices
 from random import sample
-from math import floor
 from collections import Counter
 from config import game_config
 from config import level_config
@@ -428,8 +427,6 @@ class MainUI(BaseUI):
                 'Map devices: {0}'.format('\n\t'.join(str(i) for i in self.game.level.map.devices)) + '\n' +
                 'Map interfaces: {0}'.format('\n\t'.join(str(i) for i in self.game.level.map.interfaces)))
             ui_elements.append(debug_text)
-        else:
-            debug_text = ''
 
         ui_commands = self.get_commands()
         ui_map = self.get_map()
@@ -451,7 +448,7 @@ class MainUI(BaseUI):
         return '\n\n'.join(ui_elements) + '\n'
 
     def leave(self):
-        """Leave the game and return to the start menu."""
+        """Leave the game and return to the levels menu."""
 
         self.game.ui = LevelsUI(self.game)
 
@@ -644,14 +641,16 @@ class TerminalUI(BaseUI):
 
         hextet_size = 4
         hextet_gaps = 4
-        data_cols = floor(self.width / (hextet_size + 1))  # + 1 to account for spaces
+
+        data_cols = int(self.width / (hextet_size + 1))  # + 1 to account for spaces
         data_rows = len(self.get_ui().split('\n')) + 2  # + 2 to account for prompt
 
         duration = 0.3
-        number = randrange(3, 5, 1)
-        intervals = [duration for i in range(number)]
+        number = 6
 
-        for i in intervals:
+        add_gaps = int((data_cols - hextet_gaps) / number)
+
+        for n in range(number):
 
             data = [[
                 ''.join(choices(hex_digits, k=hextet_size))
@@ -659,16 +658,16 @@ class TerminalUI(BaseUI):
                 for n in range(data_rows)]
 
             for row in data:
-                for j in sample(range(data_cols), hextet_gaps):
-                    row[j] = ' ' * hextet_size
+                for i in sample(range(data_cols), hextet_gaps):
+                    row[i] = ' ' * hextet_size
 
             corrupted_text = '\n'.join([' '.join(row) for row in data])
 
             self.clear_screen()
             print(self.decorate_ui(utility.merge_text(ui_text, corrupted_text)))
-            time.sleep(i)
+            time.sleep(duration)
 
-            hextet_gaps += floor((data_cols - hextet_gaps) / number)
+            hextet_gaps += add_gaps
 
         self.clear_screen()
         print(self.decorate_ui(self.get_ui()))

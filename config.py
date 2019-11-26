@@ -1255,6 +1255,6 @@ level_config = {
                 ],
                 'deaths': []
             }
-        }  # excavation
+        }   # excavation
     }
 }
