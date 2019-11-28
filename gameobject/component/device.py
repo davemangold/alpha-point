@@ -188,10 +188,12 @@ class Camera(Device):
 class Sensor(Device):
     """A measurement device that can be on or off."""
 
+    # TODO: complete sensor class (or deprecate)
     def __init__(self, *args, **kwargs):
         super(Sensor, self).__init__(*args, **kwargs)
         self.name = 'sensor'
         self.description = 'sensor'
+        self.value = None
         self.msg_action_true = "turn on"
         self.msg_action_false = "turn off"
         self.msg_active_true = "The sensor is on."
@@ -199,6 +201,11 @@ class Sensor(Device):
         self.msg_toggle_active_true = "The sensor turned on."
         self.msg_toggle_active_false = "The sensor turned off."
         self.msg_unmet_dependencies = "The sensor is inoperable."
+
+    def use(self):
+        """Use the sensor."""
+
+        pass
 
 
 # Device factory for making devices

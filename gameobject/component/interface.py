@@ -1,7 +1,7 @@
 import error
 from game.gameui import TerminalUI
 from gameobject.component import Component
-from action.action import Action
+from action import Action
 
 
 # Base Interface class

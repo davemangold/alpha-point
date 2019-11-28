@@ -25,7 +25,12 @@ class Game(object):
         self.setup()
 
     def __enter__(self):
+
+        if not os.path.isdir('.save'):
+            os.mkdir('.save')
+
         self.save = shelve.open('.save/save', writeback=True)
+
         return self
 
     def __exit__(self, exc_type, exc_value, exc_traceback):
