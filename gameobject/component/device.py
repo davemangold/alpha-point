@@ -1,5 +1,5 @@
 import error
-from level.gameobject.component.component import Component
+from gameobject.component import Component
 
 
 # Base Device class

@@ -1,4 +1,4 @@
-from level.gameobject import GameObject
+from gameobject import GameObject
 
 
 class Item(GameObject):

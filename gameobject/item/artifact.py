@@ -1,5 +1,5 @@
 import error
-from level.gameobject.item.item import Item
+from gameobject.item import Item
 
 
 class Artifact(Item):

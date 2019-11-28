@@ -1,8 +1,8 @@
 import error
-from level.gameobject.item import Item
-from level.gameobject.item.tool import Tool
-from level.gameobject.item.part import Part
-from level.gameobject.item.artifact import Artifact
+from gameobject.item import Item
+from gameobject.item.tool import Tool
+from gameobject.item.part import Part
+from gameobject.item.artifact import Artifact
 
 
 class Inventory(object):

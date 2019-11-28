@@ -1,5 +1,5 @@
 from random import randint
-from level.gameobject import GameObject
+from gameobject import GameObject
 
 
 class Component(GameObject):

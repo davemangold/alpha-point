@@ -1,6 +1,6 @@
 import error
-from level.gameobject.component import device
-from level.gameobject.item.item import Item
+from gameobject.component import device
+from gameobject.item import Item
 
 
 class Part(Item):

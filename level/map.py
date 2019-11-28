@@ -1,12 +1,12 @@
 import error
-from level.gameobject.component import device
-from level.gameobject.component import interface
-from level.gameobject.item.tool import Tool
-from level.gameobject.item.tool import ToolFactory
-from level.gameobject.item.part import Part
-from level.gameobject.item.part import PartFactory
-from level.gameobject.item.artifact import Artifact
-from level.gameobject.item.artifact import ArtifactFactory
+from gameobject.component import device
+from gameobject.component import interface
+from gameobject.item.tool import Tool
+from gameobject.item.tool import ToolFactory
+from gameobject.item.part import Part
+from gameobject.item.part import PartFactory
+from gameobject.item.artifact import Artifact
+from gameobject.item.artifact import ArtifactFactory
 from inventory.inventory import Inventory
 from config import level_config
 

@@ -1,6 +1,6 @@
 import error
 from game.gameui import TerminalUI
-from level.gameobject.component.component import Component
+from gameobject.component import Component
 from action.action import Action
 
 
