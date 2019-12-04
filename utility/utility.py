@@ -168,7 +168,7 @@ def merge_lists(a, b):
 def merge_text(a, b):
     """Merge the two text blocks aligned to the top-left corner.
 
-    Characters in a will be retained where they overlap with whitespace in b."""
+    Characters in a will be retained only where they intersect whitespace in b."""
 
     a_list = a.split('\n')
     b_list = b.split('\n')

@@ -1,3 +1,7 @@
+player_config = {
+    'name': 'Marcus'
+}
+
 game_config = {
     'splash_text': ''' 
  _____   _       ____    _    _   _____ 
@@ -13,8 +17,8 @@ game_config = {
 
 ''',
     'gameover_text': 'Congratulations! You completed the game',
-    'intro_text_1': 'Marcus could sense the stillness of his environment -- vacuous and oppressive. Intense sunlight cut sharp-edged lines across the dusty, red rocks at his feet. Above, a high, streaky haze blurred the tawny blue and grey of the sky. In every direction there was more of the same: rocks, dust, and light; repeating, shrinking, and finally vanishing at the horizon.  In this place time itself was like a distant memory and the slow turn of shadows across the landscape was the only reminder that it still existed. There was no movement; no gentle breeze, no flowing water, no bounding life; only a vast, empty expanse -- in a word, desolation.',
-    'intro_text_2': 'Marcus\' integrated comm system chirped. "Marc, we need you back at base ASAP! There\'s been an incident in the lab", said his mission commander. He shifted his gaze to the top-left corner of his suit\'s heads-up-display and keyed his mic with a blink. "Roger that, Tonia, what kind of incident?" Even as he finished speaking, Marcus began gathering and packing his instruments. "We don\'t know yet, but it doesn\'t look good", Tonia replied, her Russian accent a little thicker than usual. "One of the techs made a system-wide call warning everyone to stay away. They\'ve sealed the airlock and disabled external control. We\'re still trying to re-establish contact." As chief science officer, Marcus knew laboratory emergency protocols better than anyone. Things were not happening by the book. "Alright, I\'m heading back now. ETA twelve minutes. Who\'s scheduled for the lab today?", Marcus asked. Eleven and a half minutes later, Marcus brought his rover to a stop in front of the Horizon-1 Mars Base, informally known as Alpha Point. There was still no response...',
+    'intro_text_1': '{0} could sense the stillness of his environment -- vacuous and oppressive. Intense sunlight cut sharp-edged lines across the dusty, red rocks at his feet. Above, a high, streaky haze blurred the tawny blue and grey of the sky. In every direction there was more of the same: rocks, dust, and light; repeating, shrinking, and finally vanishing at the horizon.  In this place time itself was like a distant memory and the slow turn of shadows across the landscape was the only reminder that it still existed. There was no movement; no gentle breeze, no flowing water, no bounding life; only a vast, empty expanse -- in a word, desolation.'.format(player_config['name']),
+    'intro_text_2': '{0}\' integrated comm system chirped. "Marc, we need you back at base ASAP! There\'s been an incident in the lab", said his mission commander. He shifted his gaze to the top-left corner of his suit\'s heads-up-display and keyed his mic with a blink. "Roger that, Tonia, what kind of incident?" Even as he finished speaking, {0} began gathering and packing his instruments. "We don\'t know yet, but it doesn\'t look good", Tonia replied, her Russian accent a little thicker than usual. "One of the techs made a system-wide call warning everyone to stay away. They\'ve sealed the airlock and disabled external control. We\'re still trying to re-establish contact." As chief science officer, {0} knew laboratory emergency protocols better than anyone. Things were not happening by the book. "Alright, I\'m heading back now. ETA twelve minutes. Who\'s scheduled for the lab today?", {0} asked. Eleven and a half minutes later, {0} brought his rover to a stop in front of the Horizon-1 Mars Base, informally known as Alpha Point. There was still no response...'.format(player_config['name']),
     'ui': {
         'width': 60,
         'articles': {
@@ -22,14 +26,11 @@ game_config = {
             'mapped': {
                 'excursion suit': 'an',
                 'excursion suit helmet': 'an',
-                'airlock door': 'an'
+                'airlock door': 'an',
+                'open door': 'an'
             }
         }
     }
-}
-
-player_config = {
-    'name': 'Marcus'
 }
 
 level_config = {
@@ -214,7 +215,7 @@ level_config = {
                      'location': (2, 1)}  # None if all locations are valid
                 ]
             }
-        },
+        },  # testing
         0: {
             'name': 'Void',
             'map': {
@@ -246,7 +247,7 @@ level_config = {
                 'y_dimension': 5,
                 'path_cells': [
                     {'coordinates': (2, 4), 'story': None},
-                    {'coordinates': (2, 3), 'story': {'title': None, 'text': 'Faint clouds of dust fell from his boots as {0} climbed down the rover ladder. "Something is very wrong", he thought, while surveying his surroundings for any sign of disaster. Everything was in place. There was no evidence of an explosion or collapse. The light over the external airlock door glowed green indicating its pressure matched that of the external environment. According to his suit\'s computer, he still had active comm and telemetry links with Alpha Point but all he could hear was the sound of his own breathing. "What the hell?", Marcus wondered, as he headed toward the airlock.'.format(player_config['name'])}},
+                    {'coordinates': (2, 3), 'story': {'title': None, 'text': 'Faint clouds of dust fell from his boots as {0} climbed down the rover ladder. "Something is very wrong", he thought, while surveying his surroundings for any sign of disaster. Everything was in place. There was no evidence of an explosion or collapse. The light over the external airlock door glowed green indicating its pressure matched that of the external environment. According to his suit\'s computer, he still had active comm and telemetry links with Alpha Point but all he could hear was the sound of his own breathing. "What the hell?", {0} wondered, as he headed toward the airlock.'.format(player_config['name'])}},
                     {'coordinates': (2, 2), 'story': None},
                     {'coordinates': (2, 1), 'story': None},
                     {'coordinates': (2, 0), 'story': None},
@@ -678,11 +679,11 @@ level_config = {
                     {'coordinates': (4, 2), 'story': None},
                     {'coordinates': (5, 2), 'story': None},
                     {'coordinates': (6, 2), 'story': None},
-                    {'coordinates': (4, 5), 'story': {'title': None, 'text': 'Marcus tried again to establish radio contact as he stepped through the broken door, it\'s safety mechanism drawing it closed behind him, "Tonia, this is Marcus. Do you read me? Over."...nothing.'}},
+                    {'coordinates': (4, 5), 'story': {'title': None, 'text': '{0} tried again to establish radio contact as he stepped through the broken door, it\'s safety mechanism drawing it closed behind him, "Tonia, this is {0}. Do you read me? Over."...nothing. There was grey-blue smoke lingering in the air and the lights were out on the opposite side of the crew room. {0} considered getting his suit but realized there was no way back. The door couldn\'t be forced from this side. "Looks like there\'s no way out but through", he thougt as he cautiously stepped toward the meeting table.'.format(player_config['name'])}},
                     {'coordinates': (4, 6), 'story': None},
                     {'coordinates': (4, 0), 'story': None},
                     {'coordinates': (4, 1), 'story': None},
-                    {'coordinates': (1, 3), 'story': {'title': None, 'text': 'Marcus looked out the habitat window. He could see the opposing crater rim about a kilometer away. They were lucky, he thought, that The Agency had selected this site. The lake that once filled the crater had escaped eons ago when a portion of the crater wall collapsed, leaving behind a passable access route. A last remnant of the lake still existed as tons of water ice along the perpetually shaded southern wall while near to the center of crater the stirling reactors produced power for the habitat at a safe distance. The hab itself, nestled along the northeastern wall, adjacent to the subterranean portion of the base, was well protected from the prevailing, dusty winds above.'}},
+                    {'coordinates': (1, 3), 'story': {'title': None, 'text': '{0} looked out the habitat window. He could see the opposing crater rim about a kilometer away. They were lucky, he thought, that The Agency had selected this site. The lake that once filled the crater had escaped eons ago when a portion of the crater wall collapsed, leaving behind a passable access route. A last remnant of the lake still existed as tons of water ice along the perpetually shaded southern wall while near to the center of crater the stirling reactors produced power for the habitat at a safe distance. The hab itself, nestled along the northeastern wall, adjacent to the subterranean portion of the base, was well protected from the prevailing, dusty winds above.'.format(player_config['name'])}},
                     {'coordinates': (7, 3), 'story': None},
                     {'coordinates': (8, 3), 'story': None}
                 ],
@@ -694,7 +695,7 @@ level_config = {
                     {
                         'type': 'wires',
                         'name': 'wires',
-                        'description': 'bundle of wires',
+                        'description': 'bundle of wires on the floor',
                         'visible': True,
                         'interactive': True,
                         'blocking': False,
@@ -703,6 +704,16 @@ level_config = {
                     }  # bundle of wires
                 ],
                 'artifacts': [
+                    {
+                        'type': 'generic',
+                        'name': 'window',
+                        'description': 'window',
+                        'visible': True,
+                        'interactive': False,
+                        'blocking': False,
+                        'x': 0,
+                        'y': 3
+                    },  # window
                     {   # use artifact to make debris pile blocking
                         'type': 'generic',
                         'name': 'debris',
@@ -715,14 +726,14 @@ level_config = {
                     },  # pile of debris
                     {
                         'type': 'generic',
-                        'name': 'table',
-                        'description': 'table',
+                        'name': 'blood',
+                        'description': 'red stain on the wall',
                         'visible': True,
                         'interactive': False,
-                        'blocking': True,
-                        'x': 3,
-                        'y': 3
-                    },  # table
+                        'blocking': False,
+                        'x': 5,
+                        'y': 1
+                    },  # blood stain
                     {
                         'type': 'generic',
                         'name': 'table',
@@ -742,7 +753,17 @@ level_config = {
                         'blocking': True,
                         'x': 5,
                         'y': 3
-                    }   # table
+                    },  # table
+                    {
+                        'type': 'generic',
+                        'name': 'coffee',
+                        'description': 'cup of coffee spilled on the table',
+                        'visible': True,
+                        'interactive': False,
+                        'blocking': False,
+                        'x': 3,
+                        'y': 3
+                    }   # coffee
                 ]
             },
             'system': {
@@ -1037,7 +1058,18 @@ level_config = {
                         'y': 4,
                         'orientation': 3,
                         'msg_action_verb': 'push'
-                    }  # 0 - exit door button
+                    },  # 0 - exit door button
+                    {
+                        'id': 1,
+                        'name': 'system',
+                        'description': 'system terminal',
+                        'type': 'terminal',
+                        'enabled': True,
+                        'x': 4,
+                        'y': 8,
+                        'orientation': 0,
+                        'msg_action_verb': 'use'
+                    }  # system terminal
                 ],
                 'devices': [
                     {
@@ -1080,7 +1112,8 @@ level_config = {
                     }   # 1 - exit door
                 ],
                 'links': [
-                    {'interface_id': 0, 'device_id': 1}
+                    {'interface_id': 0, 'device_id': 1},
+                    {'interface_id': 1, 'device_id': 1}
                 ],
                 'deaths': []
             }
