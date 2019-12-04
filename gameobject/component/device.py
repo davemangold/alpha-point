@@ -126,8 +126,8 @@ class Door(Device):
 
     def __init__(self, *args, **kwargs):
         super(Door, self).__init__(*args, **kwargs)
+        self._description = 'door'
         self.name = 'door'
-        self.description = 'door'
         self.msg_action_true = "open"
         self.msg_action_false = "close"
         self.msg_active_true = "The door is open."
@@ -135,6 +135,14 @@ class Door(Device):
         self.msg_toggle_active_true = "The door opened."
         self.msg_toggle_active_false = "The door closed."
         self.msg_unmet_dependencies = "The door is unresponsive."
+
+    @property
+    def description(self):
+        return '{0} {1}'.format('open' if self.active else 'closed', self._description)
+
+    @description.setter
+    def description(self, value):
+        self._description = value
 
 
 class Switch(Device):
@@ -189,6 +197,7 @@ class Sensor(Device):
     """A measurement device that can be on or off."""
 
     # TODO: complete sensor class (or deprecate)
+    # can show numbers of activated devices of different types
     def __init__(self, *args, **kwargs):
         super(Sensor, self).__init__(*args, **kwargs)
         self.name = 'sensor'
