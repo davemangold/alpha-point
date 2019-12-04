@@ -284,7 +284,7 @@ level_config = {
                     {
                         'type': 'generic',
                         'name': 'communicationsarray',
-                        'description': 'communications array on top of the cliff',
+                        'description': 'communications array on top of the crater wall',
                         'visible': True,
                         'interactive': False,
                         'blocking': True,
@@ -682,7 +682,7 @@ level_config = {
                     {'coordinates': (4, 6), 'story': None},
                     {'coordinates': (4, 0), 'story': None},
                     {'coordinates': (4, 1), 'story': None},
-                    {'coordinates': (1, 3), 'story': {'title': None, 'text': 'Marcus looked out the habitat window. He could see the opposing crater rim about a kilometer away. They were lucky, he thought, that The Agency had selected this site. The lake that once filled the crater had escaped eons ago when a portion of the crater wall collapsed, leaving behind a passable access route. A last remnant of the lake still existed as tons of water ice along the perpetually shaded southern wall while slightly closer to the center of crater the stirling reactors produced power for the habitat at a safe distance. The hab itself, nestled along the northeastern wall, adjacent to the subterranean portion of the base, was well protected from the prevailing, dusty winds above.'}},
+                    {'coordinates': (1, 3), 'story': {'title': None, 'text': 'Marcus looked out the habitat window. He could see the opposing crater rim about a kilometer away. They were lucky, he thought, that The Agency had selected this site. The lake that once filled the crater had escaped eons ago when a portion of the crater wall collapsed, leaving behind a passable access route. A last remnant of the lake still existed as tons of water ice along the perpetually shaded southern wall while near to the center of crater the stirling reactors produced power for the habitat at a safe distance. The hab itself, nestled along the northeastern wall, adjacent to the subterranean portion of the base, was well protected from the prevailing, dusty winds above.'}},
                     {'coordinates': (7, 3), 'story': None},
                     {'coordinates': (8, 3), 'story': None}
                 ],
@@ -873,15 +873,156 @@ level_config = {
                 'y_dimension': 9,
                 'path_cells': [
                     {'coordinates': (0, 4), 'story': None},
+                    {'coordinates': (1, 1), 'story': None},
+                    {'coordinates': (1, 2), 'story': None},
+                    {'coordinates': (1, 3), 'story': None},
                     {'coordinates': (1, 4), 'story': {'title': None, 'text': 'Galley story...'}},
+                    {'coordinates': (1, 5), 'story': None},
+                    {'coordinates': (1, 6), 'story': None},
+                    {'coordinates': (1, 7), 'story': None},
+                    {'coordinates': (2, 1), 'story': None},
+                    {'coordinates': (2, 3), 'story': None},
                     {'coordinates': (2, 4), 'story': None},
+                    {'coordinates': (2, 5), 'story': None},
+                    {'coordinates': (2, 7), 'story': None},
+                    {'coordinates': (3, 1), 'story': None},
+                    {'coordinates': (3, 3), 'story': None},
+                    {'coordinates': (3, 4), 'story': None},
+                    {'coordinates': (3, 5), 'story': None},
+                    {'coordinates': (3, 7), 'story': None},
+                    {'coordinates': (4, 1), 'story': None},
+                    {'coordinates': (4, 2), 'story': None},
+                    {'coordinates': (4, 3), 'story': None},
+                    {'coordinates': (4, 4), 'story': None},
+                    {'coordinates': (4, 5), 'story': None},
+                    {'coordinates': (4, 6), 'story': None},
+                    {'coordinates': (4, 7), 'story': None},
+                    {'coordinates': (5, 1), 'story': None},
+                    {'coordinates': (5, 3), 'story': None},
+                    {'coordinates': (5, 4), 'story': None},
+                    {'coordinates': (5, 5), 'story': None},
+                    {'coordinates': (5, 7), 'story': None},
+                    {'coordinates': (6, 1), 'story': None},
+                    {'coordinates': (6, 3), 'story': None},
+                    {'coordinates': (6, 4), 'story': None},
+                    {'coordinates': (6, 5), 'story': None},
+                    {'coordinates': (6, 7), 'story': None},
+                    {'coordinates': (7, 1), 'story': None},
+                    {'coordinates': (7, 2), 'story': None},
+                    {'coordinates': (7, 3), 'story': None},
+                    {'coordinates': (7, 4), 'story': None},
+                    {'coordinates': (7, 5), 'story': None},
+                    {'coordinates': (7, 6), 'story': None},
+                    {'coordinates': (7, 7), 'story': None},
+                    {'coordinates': (8, 4), 'story': None}
                 ],
                 'coord_enter': (1, 4),
-                'coord_exit': (2, 4),
+                'coord_exit': (8, 4),
                 'orientation_enter': 1,
                 'tools': [],
                 'parts': [],
-                'artifacts': []
+                'artifacts': [
+                    {
+                        'type': 'generic',
+                        'name': 'table',
+                        'description': 'table',
+                        'visible': True,
+                        'interactive': False,
+                        'blocking': True,
+                        'x': 2,
+                        'y': 6
+                    },  # table
+                    {
+                        'type': 'generic',
+                        'name': 'table',
+                        'description': 'table',
+                        'visible': True,
+                        'interactive': False,
+                        'blocking': True,
+                        'x': 3,
+                        'y': 6
+                    },  # table
+                    {
+                        'type': 'generic',
+                        'name': 'table',
+                        'description': 'table',
+                        'visible': True,
+                        'interactive': False,
+                        'blocking': True,
+                        'x': 5,
+                        'y': 6
+                    },  # table
+                    {
+                        'type': 'generic',
+                        'name': 'table',
+                        'description': 'table',
+                        'visible': True,
+                        'interactive': False,
+                        'blocking': True,
+                        'x': 6,
+                        'y': 6
+                    },  # table
+                    {
+                        'type': 'generic',
+                        'name': 'counter',
+                        'description': 'steel counter',
+                        'visible': True,
+                        'interactive': False,
+                        'blocking': True,
+                        'x': 2,
+                        'y': 2
+                    },  # counter
+                    {
+                        'type': 'generic',
+                        'name': 'counter',
+                        'description': 'steel counter',
+                        'visible': True,
+                        'interactive': False,
+                        'blocking': True,
+                        'x': 3,
+                        'y': 2
+                    },  # counter
+                    {
+                        'type': 'generic',
+                        'name': 'counter',
+                        'description': 'steel counter',
+                        'visible': True,
+                        'interactive': False,
+                        'blocking': True,
+                        'x': 5,
+                        'y': 2
+                    },  # counter
+                    {
+                        'type': 'generic',
+                        'name': 'counter',
+                        'description': 'steel counter',
+                        'visible': True,
+                        'interactive': False,
+                        'blocking': True,
+                        'x': 6,
+                        'y': 2
+                    },  # counter
+                    {
+                        'type': 'generic',
+                        'name': 'counter',
+                        'description': 'steel counter',
+                        'visible': True,
+                        'interactive': False,
+                        'blocking': True,
+                        'x': 0,
+                        'y': 1
+                    },  # counter
+                    {
+                        'type': 'generic',
+                        'name': 'counter',
+                        'description': 'steel counter',
+                        'visible': True,
+                        'interactive': False,
+                        'blocking': True,
+                        'x': 0,
+                        'y': 2
+                    }  # counter
+                ]
             },
             'system': {
                 'corrupt': False,
@@ -892,9 +1033,9 @@ level_config = {
                         'description': 'button',
                         'type': 'button',
                         'enabled': True,
-                        'x': 1,
-                        'y': 3,
-                        'orientation': 2,
+                        'x': 8,
+                        'y': 4,
+                        'orientation': 3,
                         'msg_action_verb': 'push'
                     }  # 0 - exit door button
                 ],
@@ -926,7 +1067,7 @@ level_config = {
                         'enabled': True,
                         'active': False,
                         'visible': True,
-                        'x': 2,
+                        'x': 8,
                         'y': 4,
                         'msg_action_true': 'open',
                         'msg_action_false': 'close',
