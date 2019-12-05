@@ -54,7 +54,7 @@ class PartFactory(object):
     """Makes specific Part type instances."""
 
     @staticmethod
-    def make_part(inventory, part_type, *args, **kwargs):
+    def make_part(map, part_type, *args, **kwargs):
         if part_type.lower() == 'wires':
-            return Wires(inventory, *args, **kwargs)
+            return Wires(map, *args, **kwargs)
         raise error.FactoryError("The specified part type does not exist.")

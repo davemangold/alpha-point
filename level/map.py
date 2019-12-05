@@ -302,7 +302,7 @@ class Map(object):
             device_cell.add_device(system_device)
 
         for config_tool in map_config['tools']:
-            new_tool = ToolFactory.make_tool(self.inventory, config_tool['type'])
+            new_tool = ToolFactory.make_tool(self, config_tool['type'])
             new_tool.name = config_tool['name']
             new_tool.description = config_tool['description']
             new_tool.visible = config_tool['visible']
@@ -313,7 +313,7 @@ class Map(object):
             self.inventory.add_item(new_tool)
 
         for config_part in map_config['parts']:
-            new_part = PartFactory.make_part(self.inventory, config_part['type'])
+            new_part = PartFactory.make_part(self, config_part['type'])
             new_part.name = config_part['name']
             new_part.description = config_part['description']
             new_part.visible = config_part['visible']
@@ -324,9 +324,11 @@ class Map(object):
             self.inventory.add_item(new_part)
 
         for config_artifact in map_config['artifacts']:
-            new_artifact = ArtifactFactory.make_artifact(self.inventory, config_artifact['type'])
+            new_artifact = ArtifactFactory.make_artifact(self, config_artifact['type'])
             new_artifact.name = config_artifact['name']
             new_artifact.description = config_artifact['description']
+            new_artifact.report = config_artifact['report']
+            new_artifact.inspectable = config_artifact['inspectable']
             new_artifact.visible = config_artifact['visible']
             new_artifact.interactive = config_artifact['interactive']
             new_artifact.blocking = config_artifact['blocking']

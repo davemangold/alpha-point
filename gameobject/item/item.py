@@ -4,9 +4,10 @@ from gameobject import GameObject
 class Item(GameObject):
     """Base class for items found throughout the game."""
 
-    def __init__(self, inventory, *args, **kwargs):
+    def __init__(self, map, *args, **kwargs):
         super(Item, self).__init__(*args, **kwargs)
-        self.inventory = inventory
+        self.map = map
+        self.inventory = None
         self.description = 'generic item'
         self.visible = True
         self.interactive = True

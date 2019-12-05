@@ -21,6 +21,7 @@ class Inventory(object):
         if item in self.items:
             raise error.InventoryError("The item already exists in the inventory.")
 
+        item.inventory = self
         self.items.append(item)
 
     def remove_item(self, item):
@@ -29,6 +30,7 @@ class Inventory(object):
         if item not in self.items:
             raise error.InventoryError("The item does not exist in the inventory.")
 
+        item.inventory = None
         return self.items.pop(self.items.index(item))
 
     def remove_item_by_id(self, item_id):
@@ -36,7 +38,7 @@ class Inventory(object):
 
         for item in self.items:
             if item.id == item_id:
-                return self.items.pop(self.items.index(item))
+                return self.remove_item(item)
 
     def clear_items(self):
         """Remove all items from the inventory without returning them."""

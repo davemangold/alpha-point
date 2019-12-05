@@ -74,9 +74,9 @@ class ToolFactory(object):
     """Makes specific Device type instances."""
 
     @staticmethod
-    def make_tool(inventory, tool_type, *args, **kwargs):
+    def make_tool(map, tool_type, *args, **kwargs):
         if tool_type.lower() == 'wrench':
-            return Wrench(inventory, *args, **kwargs)
+            return Wrench(map, *args, **kwargs)
         if tool_type.lower() == 'prybar':
-            return PryBar(inventory, *args, **kwargs)
+            return PryBar(map, *args, **kwargs)
         raise error.FactoryError("The specified tool type does not exist.")

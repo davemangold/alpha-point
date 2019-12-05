@@ -8,6 +8,8 @@ class Artifact(Item):
 
     def __init__(self, *args, **kwargs):
         super(Artifact, self).__init__(*args, **kwargs)
+        self.inspectable = False
+        self.report = ''
 
 
 class Generic(Artifact):
@@ -22,7 +24,7 @@ class ArtifactFactory(object):
     """Makes specific Device type instances."""
 
     @staticmethod
-    def make_artifact(inventory, artifact_type, *args, **kwargs):
+    def make_artifact(map, artifact_type, *args, **kwargs):
         if artifact_type.lower() == 'generic':
-            return Generic(inventory, *args, **kwargs)
+            return Generic(map, *args, **kwargs)
         raise error.FactoryError("The specified artifact type does not exist.")

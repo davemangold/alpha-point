@@ -194,7 +194,9 @@ class Sensor(Device):
     """A measurement device that can be on or off."""
 
     # TODO: complete sensor class (or deprecate)
-    # can show numbers of activated devices of different types
+    # can show numbers of activated sensors of different types
+    # add sensor panel interface type, which will aggregate counts of activated sensor devices by description
+    # link sensors to sensor panel
     def __init__(self, *args, **kwargs):
         super(Sensor, self).__init__(*args, **kwargs)
         self.name = 'sensor'
