@@ -8,7 +8,7 @@ class GameObject(object):
         self.id = str(uuid4())
         self.config_id = None
         self.name = ''
-        self.description = 'generic object'
+        self.description = 'game object'
         self.visible = True
         self.interactive = True
         self.blocking = False

@@ -2,6 +2,7 @@ import error
 from gameobject.item import Item
 
 
+# TODO: add action to inspect artifact (launch InspectionUI)
 class Artifact(Item):
     """An item that has no specific in-game function but which may be valuable in some way."""
 

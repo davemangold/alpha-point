@@ -12,7 +12,7 @@ class Device(Component):
         super(Device, self).__init__(*args, **kwargs)
         self.__add_to_system()
         self.name = 'device'
-        self.description = 'generic device'
+        self.description = 'device'
         self.active = False
         self.dependencies = []
         self.override_dependencies = False
@@ -39,7 +39,7 @@ class Device(Component):
         if self.active is True:
             action = self.msg_action_false
 
-        return " ".join([action.capitalize(), "the", str(self)])
+        return " ".join([action.capitalize(), "the", self.description])
 
     def toggle_active_state(self):
         """Toggle this device's active state."""
@@ -126,7 +126,7 @@ class Door(Device):
 
     def __init__(self, *args, **kwargs):
         super(Door, self).__init__(*args, **kwargs)
-        self._description = 'door'
+        self.description = 'door'
         self.name = 'door'
         self.msg_action_true = "open"
         self.msg_action_false = "close"
@@ -136,13 +136,10 @@ class Door(Device):
         self.msg_toggle_active_false = "The door closed."
         self.msg_unmet_dependencies = "The door is unresponsive."
 
-    @property
-    def description(self):
-        return '{0} {1}'.format('open' if self.active else 'closed', self._description)
+    def __str__(self):
+        """Overload the default string conversion for doors."""
 
-    @description.setter
-    def description(self, value):
-        self._description = value
+        return '{0} {1}'.format('open' if self.active else 'closed', self.description)
 
 
 class Switch(Device):

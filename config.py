@@ -27,7 +27,8 @@ game_config = {
                 'excursion suit': 'an',
                 'excursion suit helmet': 'an',
                 'airlock door': 'an',
-                'open door': 'an'
+                'open door': 'an',
+                'open airlock door': 'an'
             }
         }
     }

@@ -58,23 +58,22 @@ def build_object_list_text(object_list):
 
     if len(object_list) == 1:
         obj = object_list[0]
-        object_text = ' '.join(
-            [get_article(obj.description),
-             str(obj)])
+        obj_repr = str(obj)
+        object_text = ' '.join([get_article(obj_repr), obj_repr])
 
     elif len(object_list) == 2:
         obj_1 = object_list[0]
         obj_2 = object_list[1]
+        obj_1_repr = str(obj_1)
+        obj_2_repr = str(obj_2)
         object_text = ' '.join(
-            [get_article(obj_1.description),
-             str(obj_1),
+            [get_article(obj_1_repr), obj_1_repr,
              conjunction,
-             get_article(obj_2.description),
-             str(obj_2)])
+             get_article(obj_2_repr), obj_2_repr])
 
     elif len(object_list) > 2:
         working_text = (' ' + conjunction + ' ').join(
-            [get_article(obj.description) + ' ' + str(obj) for obj in object_list])
+            [get_article(str(obj)) + ' ' + str(obj) for obj in object_list])
         replace_count = working_text.count(' ' + conjunction) - 1
         object_text = working_text.replace(' ' + conjunction, delimiter, replace_count)
 

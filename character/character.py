@@ -18,7 +18,7 @@ class Character(object):
         self.cell = self.get_map_cell()
 
     def __str__(self):
-        """A brief description."""
+        """String conversion for character."""
 
         return self.name
 

@@ -453,6 +453,9 @@ class MainUI(BaseUI):
         self.game.ui = LevelsUI(self.game)
 
 
+# TODO: add inspection UI for items (pass in item to inspect)
+
+
 class InventoryUI(BaseUI):
     """Game user interface for player inventory."""
 

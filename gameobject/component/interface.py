@@ -14,7 +14,7 @@ class Interface(Component):
         super(Interface, self).__init__(*args, **kwargs)
         self.__add_to_system()
         self.name = 'interface'
-        self.description = 'generic interface'
+        self.description = 'interface'
         self.visible = True
         self.msg_action_verb = 'use'
 
