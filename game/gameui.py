@@ -423,9 +423,10 @@ class MainUI(BaseUI):
                 'Visible items: {0}'.format(self.game.player.get_visible_items()) + '\n' +
                 'Visible devices: {0}'.format(self.game.player.get_visible_devices()) + '\n' +
                 'Visible interfaces: {0}'.format(self.game.player.get_visible_interfaces()) + '\n' +
-                'Map items: {0}'.format('\n\t'.join(str(i) for i in self.game.level.map.items)) + '\n' +
-                'Map devices: {0}'.format('\n\t'.join(str(i) for i in self.game.level.map.devices)) + '\n' +
-                'Map interfaces: {0}'.format('\n\t'.join(str(i) for i in self.game.level.map.interfaces)))
+                'Map items: {0}'.format(', '.join(str(i) for i in self.game.level.map.items)) + '\n' +
+                'Map devices: {0}'.format(', '.join(str(i) for i in self.game.level.map.devices)) + '\n' +
+                'Map interfaces: {0}'.format(', '.join(str(i) for i in self.game.level.map.interfaces)) + '\n' +
+                'System properties: {0}'.format(', '.join(str(i) for i in self.game.level.system.properties)))
             ui_elements.append(debug_text)
 
         ui_commands = self.get_commands()

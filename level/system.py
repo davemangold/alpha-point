@@ -1,4 +1,6 @@
 import error
+from gameobject.component.property import Property
+from gameobject.component.property import PropertyFactory
 from gameobject.component.device import Device
 from gameobject.component.device import DeviceFactory
 from gameobject.component.interface import Interface
@@ -11,9 +13,11 @@ class System(object):
 
     def __init__(self, level):
         self.level = level
-        self.devices = []  # [<device>,...]
         self.interfaces = []  # [<interface>,...]
-        self.links = []  # [{'interface_id': <interface id>, 'device_id': <device id>},...]
+        self.devices = []  # [<device>,...]
+        self.properties = []  # [<property>,...]
+        self.links = []  # [{'interface_id': <device id>},...]
+        self.relates = []  # [{'device_id': <property_id>},...]
         self.deaths = []
 
     def build(self, level_number):
@@ -50,6 +54,16 @@ class System(object):
             new_device.msg_toggle_active_false = config_device['msg_toggle_active_false']
             new_device.msg_unmet_dependencies = config_device['msg_unmet_dependencies']
 
+        for config_property in system_config['properties']:
+            new_property = PropertyFactory.make_property(self, config_property['type'])
+            new_property.config_id = config_property['id']
+            new_property.name = config_property['name']
+            new_property.description = config_property['description']
+            new_property.min_value = config_property['min_value']
+            new_property.max_value = config_property['max_value']
+            new_property.increment = config_property['increment']
+            new_property.value = config_property['value']
+
         for config_device in system_config['devices']:
             system_device = self.get_device(config_id=config_device['id'])
             for config_dependency in config_device['dependencies']:
@@ -62,7 +76,12 @@ class System(object):
         for config_link in system_config['links']:
             link_interface = self.get_interface(config_id=config_link['interface_id'])
             link_device = self.get_device(config_id=config_link['device_id'])
-            self.link_components(link_interface, link_device)
+            self.link_device(link_interface, link_device)
+
+        for config_relate in system_config['relates']:
+            relate_device = self.get_device(config_id=config_relate['device_id'])
+            relate_property = self.get_property(config_id=config_relate['property_id'])
+            self.relate_property(relate_device, relate_property)
 
         for config_death in system_config['deaths']:
             self.deaths.append(config_death)
@@ -76,6 +95,11 @@ class System(object):
         """Returns True if the system contains the device, otherwise False."""
 
         return device in self.devices
+
+    def has_property(self, property):
+        """Returns True if the system contains the property, otherwise False."""
+
+        return property in self.properties
 
     def get_interface(self, interface_id=None, config_id=None):
         """Return the interface if it exists."""
@@ -97,7 +121,7 @@ class System(object):
         return interface
 
     def get_device(self, device_id=None, config_id=None):
-        """Return the interface if it exists."""
+        """Return the device if it exists."""
 
         device = None
 
@@ -115,22 +139,24 @@ class System(object):
 
         return device
 
-    def get_device_ids(self, interface):
-        """Return list of device ids related to interface."""
+    def get_property(self, property_id=None, config_id=None):
+        """Return the property if it exists."""
 
-        if not isinstance(interface, Interface):
-            raise TypeError("Object not of type 'Interface'.")
+        property = None
 
-        if not self.has_interface(interface):
-            raise error.SystemError("The interface is not a component of the system.")
+        if property_id is not None:
+            for check_property in self.properties:
+                if check_property.id == property_id:
+                    property = check_property
+                    break
 
-        device_ids = []
+        if config_id is not None:
+            for check_property in self.properties:
+                if check_property.config_id == config_id:
+                    property = check_property
+                    break
 
-        for link in self.links:
-            if link['interface_id'] == interface.id:
-                device_ids.append(link['device_id'])
-
-        return device_ids
+        return property
 
     def get_interface_ids(self, device):
         """Return list of interface ids related to device."""
@@ -148,6 +174,40 @@ class System(object):
                 interface_ids.append(link['interface_id'])
 
         return interface_ids
+
+    def get_device_ids(self, interface):
+        """Return list of device ids linked to interface."""
+
+        if not isinstance(interface, Interface):
+            raise TypeError("Object not of type 'Interface'.")
+
+        if not self.has_interface(interface):
+            raise error.SystemError("The interface is not a component of the system.")
+
+        device_ids = []
+
+        for link in self.links:
+            if link['interface_id'] == interface.id:
+                device_ids.append(link['device_id'])
+
+        return device_ids
+
+    def get_property_ids(self, device):
+        """Return list of property ids related to device."""
+
+        if not isinstance(device, Device):
+            raise TypeError("Object not of type 'Device'.")
+
+        if not self.has_device(device):
+            raise error.SystemError("The device is not a component of the system.")
+
+        property_ids = []
+
+        for relate in self.relates:
+            if relate['device_id'] == device.id:
+                property_ids.append(relate['device_id'])
+
+        return property_ids
 
     def get_interface_devices(self, interface):
         """Return a list of all devices linked to an interface."""
@@ -167,6 +227,24 @@ class System(object):
 
         return device_interfaces
 
+    def get_device_properties(self, device):
+        """Return a list of all properties related to a device."""
+
+        property_ids = self.get_property_ids(device)
+        device_properties = [property for property in self.properties
+                             if property.id in property_ids]
+
+        return device_properties
+
+    def get_property_devices(self, property):
+        """Return a list of all devices related to a property."""
+
+        device_ids = self.get_device_ids(property)
+        property_devices = [device for device in self.devices
+                            if device.id in device_ids]
+
+        return property_devices
+
     def get_components(self):
         """Return all components."""
 
@@ -176,7 +254,7 @@ class System(object):
         """Add an interface to the system."""
 
         if interface in self.interfaces:
-            raise error.SystemError("The interface is already a component of the system.")
+            raise error.SystemError("The interface is already in the system.")
 
         self.interfaces.append(interface)
 
@@ -184,7 +262,7 @@ class System(object):
         """Remove an interface from the system and return it."""
 
         if interface not in self.interfaces:
-            raise error.SystemError("The interface is not a component of the system.")
+            raise error.SystemError("The interface is not in the system.")
 
         for link in self.links:
             if link['interface_id'] == interface.id:
@@ -196,7 +274,7 @@ class System(object):
         """Add a device to the system."""
 
         if device in self.devices:
-            raise error.SystemError("The device is already a component of the system.")
+            raise error.SystemError("The device is already in the system.")
 
         self.devices.append(device)
 
@@ -204,7 +282,7 @@ class System(object):
         """Remove a device from the system and return it."""
 
         if device not in self.devices:
-            raise error.SystemError("The device is not a component of the system.")
+            raise error.SystemError("The device is not in the system.")
 
         for link in self.links:
             if link['device_id'] == device.id:
@@ -212,14 +290,34 @@ class System(object):
 
         return self.devices.pop(self.devices.index(device))
 
-    def link_components(self, interface, device):
+    def add_property(self, property):
+        """Add a property to the system."""
+
+        if property in self.properties:
+            raise error.SystemError("The property is already in the system.")
+
+        self.properties.append(property)
+
+    def remove_property(self, property):
+        """Remove a property from the system and return it."""
+
+        if property not in self.properties:
+            raise error.SystemError("The property is not in the system.")
+
+        for relate in self.relates:
+            if relate['property_id'] == property.id:
+                self.relates.remove(property)
+
+        return self.properties.pop(self.properties.index(property))
+
+    def link_device(self, interface, device):
         """Link an interface to a device."""
 
         if interface not in self.interfaces:
-            raise error.SystemError("The interface is not a component of the system.")
+            raise error.SystemError("The interface is not in the system.")
 
         if device not in self.devices:
-            raise error.SystemError("The device is not a component of the system.")
+            raise error.SystemError("The device is not in the system.")
 
         link = {'interface_id': interface.id, 'device_id': device.id}
 
@@ -227,6 +325,22 @@ class System(object):
             raise error.SystemError("The link already exists in the system.")
 
         self.links.append(link)
+
+    def relate_property(self, device, property):
+        """Relate a device to a property."""
+
+        if device not in self.devices:
+            raise error.SystemError("The device is not in the system.")
+
+        if property not in self.properties:
+            raise error.SystemError("The property is not in the system.")
+
+        relate = {'device_id': device.id, 'property_id': property.id}
+
+        if relate in self.relates:
+            raise error.SystemError("The relate already exists in the system.")
+
+        self.relates.append(relate)
 
     def activate_device(self, device):
         """Activate an inactive device."""

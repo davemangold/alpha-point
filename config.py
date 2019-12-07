@@ -200,6 +200,18 @@ level_config = {
                         'dependencies': []
                     }   # security camera
                 ],
+                'properties': [
+                    {
+                        'id': 0,
+                        'name': 'pressure',
+                        'description': 'air pressure (atm)',
+                        'type': 'pressure',
+                        'value': 5,
+                        'min_value': 0,
+                        'max_value': 10,
+                        'increment': 1
+                    }
+                ],
                 'links': [
                     {'interface_id': 0, 'device_id': 0},
                     {'interface_id': 1, 'device_id': 1},
@@ -208,6 +220,7 @@ level_config = {
                     {'interface_id': 2, 'device_id': 3},
                     {'interface_id': 3, 'device_id': 2}
                 ],
+                'relates': [],
                 'deaths': [
                     {'configuration': [
                         {'device_id': 1, 'active_state': True},
@@ -237,7 +250,9 @@ level_config = {
                 'corrupt': False,
                 'interfaces': [],
                 'devices': [],
+                'properties': [],
                 'links': [],
+                'relates': [],
                 'deaths': []
             }
         },  # void
@@ -337,9 +352,11 @@ level_config = {
                         'dependencies': []
                     }  # airlock door
                 ],
+                'properties': [],
                 'links': [
                     {'interface_id': 0, 'device_id': 1}
                 ],
+                'relates': [],
                 'deaths': []
             }
         },  # approach
@@ -460,10 +477,12 @@ level_config = {
                         ]
                     }   # 2 - exit door
                 ],
+                'properties': [],
                 'links': [
                     {'interface_id': 1, 'device_id': 1},
                     {'interface_id': 2, 'device_id': 2}
                 ],
+                'relates': [],
                 'deaths': [
                     {'configuration': [
                         {'device_id': 1, 'active_state': False},
@@ -670,9 +689,11 @@ level_config = {
                         'dependencies': []
                     },  # 2 - door circuit
                 ],
+                'properties': [],
                 'links': [
                     {'interface_id': 0, 'device_id': 1}
                 ],
+                'relates': [],
                 'deaths': []
             }
         },  # equipment
@@ -899,10 +920,12 @@ level_config = {
                         'dependencies': []
                     }   # 3 - damaged switchbox
                 ],
+                'properties': [],
                 'links': [
                     {'interface_id': 0, 'device_id': 2},
                     {'interface_id': 1, 'device_id': 1}
                 ],
+                'relates': [],
                 'deaths': [
                     {
                         'configuration': [
@@ -1158,10 +1181,12 @@ level_config = {
                         'dependencies': []
                     }   # 1 - exit door
                 ],
+                'properties': [],
                 'links': [
                     {'interface_id': 0, 'device_id': 1},
                     {'interface_id': 1, 'device_id': 1}
                 ],
+                'relates': [],
                 'deaths': []
             }
         },  # galley
@@ -1237,9 +1262,11 @@ level_config = {
                         'dependencies': []
                     }   # 1 - exit door
                 ],
+                'properties': [],
                 'links': [
                     {'interface_id': 0, 'device_id': 1}
                 ],
+                'relates': [],
                 'deaths': []
             }
         },  # quarters
@@ -1315,9 +1342,11 @@ level_config = {
                         'dependencies': []
                     }   # 1 - exit door
                 ],
+                'properties': [],
                 'links': [
                     {'interface_id': 0, 'device_id': 1}
                 ],
+                'relates': [],
                 'deaths': []
             }
         },  # wet lab
@@ -1393,9 +1422,11 @@ level_config = {
                         'dependencies': []
                     }   # 1 - exit door
                 ],
+                'properties': [],
                 'links': [
                     {'interface_id': 0, 'device_id': 1}
                 ],
+                'relates': [],
                 'deaths': []
             }
         },  # dry lab
@@ -1471,9 +1502,11 @@ level_config = {
                         'dependencies': []
                     }   # 1 - exit door
                 ],
+                'properties': [],
                 'links': [
                     {'interface_id': 0, 'device_id': 1}
                 ],
+                'relates': [],
                 'deaths': []
             }
         }   # excavation
