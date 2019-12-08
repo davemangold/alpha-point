@@ -454,157 +454,52 @@ class MainUI(BaseUI):
         self.game.ui = LevelsUI(self.game)
 
 
-# TODO: implement examination UI for artifacts (pass in artifact to examine)
 class ExaminationUI(BaseUI):
-    """Game user interface for inspecting an artifact."""
+    """Game user interface used to present detailed artifact examination report."""
 
     def __init__(self, artifact, *args, **kwargs):
-        super(ExaminationUI, self).__init__(artifact.inventory.owner.level.game, *args, **kwargs)
+        super(ExaminationUI, self).__init__(artifact.map.level.game, *args, **kwargs)
         self.artifact = artifact
-        self.precedent = self.game.ui
+        self.previous_ui = self.game.ui
 
     def process_input(self, value):
         """Call the appropriate method based on input value."""
 
-        try:
-            # process action input
-            if value.isdigit():
-                self.terminal.do_action(int(value))
-            # process quit input
-            elif value == 'q':
-                self.leave()
-            # the value wasn't handled
-            else:
-                self.alert = "Unrecognized command."
-        except error.ActionError:
-            self.alert = "Unrecognized command."
+        self.leave()
 
     def prompt(self):
         """Prompt the player for input."""
 
-        message = self.decorate_ui(
-            "{0}@apex-{1}:~$ ".format(self.game.player.name, '-'.join(self.terminal.name.split())))
-
-        while True:
-            # update the display
-            self.display()
-            response = self.game.control.get_input(message=message)
-            if utility.is_empty_response(response):
-                continue
-            return response
+        self.display()
+        message = self.decorate_ui("Press Enter to return...")
+        print(message)
+        response = self.game.control.get_keypress()
+        return response
 
     def get_ui(self):
         """Get the full UI text."""
 
         ui_elements = []
 
-        ui_commands = self.get_commands()
-        ui_welcome = self.get_welcome()
-        ui_alert = self.get_alert()
-        ui_action = self.get_action()
+        ui_report_text = self.get_examination_report()
 
-        ui_elements.append(ui_commands)
         ui_elements.append(self.separator)
-        ui_elements.append(ui_welcome)
-        if ui_action is not None:
-            ui_elements.append(ui_action)
-        if ui_alert is not None:
-            ui_elements.append(ui_alert)
+        ui_elements.append(ui_report_text)
         ui_elements.append(self.separator)
 
         return '\n' + '\n\n'.join(ui_elements) + '\n'
 
-    def get_action(self):
-        """Return the text that represents available action."""
+    def get_examination_report(self):
+        """Get the report associated with the examined artifact."""
 
-        ui_actions = None
-        ui_actions_list = []
-        for key, action in sorted(self.terminal.actions.items()):
-            ui_actions_list.append('{0}. {1}'.format(key, action.description))
-        if len(ui_actions_list) > 0:
-            ui_actions = '\n'.join(ui_actions_list)
-
-        return ui_actions
-
-    def get_commands(self):
-        """Return the universal commands."""
-
-        commands = ('q - leave the {0}'.format(self.terminal))
-
-        return commands
-
-    def get_welcome(self):
-        """Return terminal welcome message text."""
-
-        return "Terminal {0}".format(self.terminal.address)
-
-    def display(self):
-        """Display the UI."""
-
-        self.clear_screen()
-        print(self.decorate_ui(self.get_ui()))
-
-        if self.initial_flicker is True:
-            # TODO: decide when to show corrupted ui
-            # self.display_flicker_corrupt()
-            self.display_flicker()
-            self.initial_flicker = False
-
-    def display_flicker(self):
-        """Flicker the terminal display."""
-
-        duration = 0.05
-        number = randrange(2, 3, 1)
-        intervals = [random() * duration for i in range(number)]
-
-        for i in intervals:
-            self.clear_screen()
-            time.sleep(i)
-            print(self.decorate_ui(self.get_ui()))
-
-    def display_flicker_corrupt(self):
-        """Flicker the terminal display with corrupted data."""
-
-        ui_text = self.get_ui()
-        hex_digits = ['0', '1', '2', '3', '4', '5', '6', '7',
-                      '8', '9', 'A', 'B', 'C', 'D', 'E', 'F']
-
-        hextet_size = 4
-        hextet_gaps = 4
-
-        data_cols = int(self.width / (hextet_size + 1))  # + 1 to account for spaces
-        data_rows = len(self.get_ui().split('\n')) + 2  # + 2 to account for prompt
-
-        duration = 0.3
-        number = 6
-
-        add_gaps = int((data_cols - hextet_gaps) / number)
-
-        for n in range(number):
-
-            data = [[
-                ''.join(choices(hex_digits, k=hextet_size))
-                for m in range(data_cols)]
-                for n in range(data_rows)]
-
-            for row in data:
-                for i in sample(range(data_cols), hextet_gaps):
-                    row[i] = ' ' * hextet_size
-
-            corrupted_text = '\n'.join([' '.join(row) for row in data])
-
-            self.clear_screen()
-            print(self.decorate_ui(utility.merge_text(ui_text, corrupted_text)))
-            time.sleep(duration)
-
-            hextet_gaps += add_gaps
-
-        self.clear_screen()
-        print(self.decorate_ui(self.get_ui()))
+        report_text = self.artifact.report
+        formatted_text = utility.format_ui_text(report_text)
+        return formatted_text
 
     def leave(self):
-        # reset gameui to the ui that was active at the time this was created
-        self.game.ui = self.precedent
+        """Return to the previous UI."""
+
+        self.game.ui = self.previous_ui
 
 
 class InventoryUI(BaseUI):
@@ -614,7 +509,7 @@ class InventoryUI(BaseUI):
 
         super(InventoryUI, self).__init__(inventory.owner.game, *args, **kwargs)
         self.inventory = inventory
-        self.precedent = self.game.ui
+        self.previous_ui = self.game.ui
 
     def process_input(self, value):
         """Call the appropriate method based on input value."""
@@ -675,7 +570,7 @@ class InventoryUI(BaseUI):
 
     def leave(self):
         # reset gameui to the ui that was active at the time this was created
-        self.game.ui = self.precedent
+        self.game.ui = self.previous_ui
 
 
 class TerminalUI(BaseUI):
@@ -684,7 +579,7 @@ class TerminalUI(BaseUI):
     def __init__(self, terminal, *args, **kwargs):
         super(TerminalUI, self).__init__(terminal.system.level.game, *args, **kwargs)
         self.terminal = terminal
-        self.precedent = self.game.ui
+        self.previous_ui = self.game.ui
         self.initial_flicker = True
 
     def process_input(self, value):
@@ -828,7 +723,7 @@ class TerminalUI(BaseUI):
 
     def leave(self):
         # reset gameui to the ui that was active at the time this was created
-        self.game.ui = self.precedent
+        self.game.ui = self.previous_ui
 
 
 # TODO: implement sensor console UI (pass in console linked to sensors related to properties)
@@ -838,7 +733,7 @@ class ConsoleUI(BaseUI):
     def __init__(self, console, *args, **kwargs):
         super(ConsoleUI, self).__init__(console.system.level.game, *args, **kwargs)
         self.console = console
-        self.precedent = self.game.ui
+        self.previous_ui = self.game.ui
 
     def process_input(self, value):
         """Call the appropriate method based on input value."""
@@ -981,7 +876,7 @@ class ConsoleUI(BaseUI):
 
     def leave(self):
         # reset gameui to the ui that was active at the time this was created
-        self.game.ui = self.precedent
+        self.game.ui = self.previous_ui
 
 
 class PlayerDeadUI(BaseUI):
@@ -1136,7 +1031,7 @@ class GameCompleteUI(BaseUI):
 
     def __init__(self, *args, **kwargs):
         super(GameCompleteUI, self).__init__(*args, **kwargs)
-        self.precedent = self.game.ui
+        self.previous_ui = self.game.ui
 
     def process_input(self, value):
         """Call the appropriate method based on input value."""

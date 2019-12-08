@@ -2,7 +2,6 @@ import error
 from uuid import uuid4
 
 
-
 # Base Property class
 
 class Property(object):
@@ -17,6 +16,7 @@ class Property(object):
         self.min_value = 0
         self.max_value = 0
         self.increment = 1
+        self.msg_action_verb = 'examine'
         self._value = 0
         self.__add_to_system()
 

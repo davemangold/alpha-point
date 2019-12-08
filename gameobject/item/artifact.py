@@ -1,8 +1,8 @@
 import error
 from gameobject.item import Item
+from game.gameui import ExaminationUI
 
 
-# TODO: add action to examine artifact (launch ExaminationUI)
 class Artifact(Item):
     """An item that has no specific in-game function but which may be valuable in some way."""
 
@@ -10,6 +10,17 @@ class Artifact(Item):
         super(Artifact, self).__init__(*args, **kwargs)
         self.inspectable = False
         self.report = 'There\'s nothing interesting about this.'
+        self.msg_examine_verb = 'look at'
+
+    def examine_action_text(self):
+        """Return text description of the currently available action."""
+
+        return " ".join([self.msg_examine_verb.capitalize(), "the", str(self)])
+
+    def examine(self):
+        """Examine the artifact to reveal additional information."""
+
+        self.map.level.game.ui = ExaminationUI(self)
 
 
 class Generic(Artifact):

@@ -70,7 +70,20 @@ level_config = {
                         'y': 2
                     }  # wire bundle
                 ],
-                'artifacts': []
+                'artifacts': [
+                    {
+                        'type': 'generic',
+                        'name': 'helmet_1',
+                        'description': 'excursion suit helmet',
+                        'report': 'It\'s a standard-issue excursion suit helmet with the name \'Tonia Cherneyev\' labeled on the side.',
+                        'inspectable': True,
+                        'visible': True,
+                        'interactive': True,
+                        'blocking': False,
+                        'x': 0,
+                        'y': 2
+                    }   # excursion suit helmet
+                ]
             },
             'system': {
                 'corrupt': True,
@@ -228,7 +241,7 @@ level_config = {
                         'value': 5,
                         'min_value': 0,
                         'max_value': 10,
-                        'increment': 2
+                        'increment': 2,
                     }
                 ],
                 'links': [

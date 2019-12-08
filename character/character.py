@@ -284,6 +284,12 @@ class Character(object):
             for interface in d4_interface_list
             if interface.interactive is True]
 
+        # visible artifacts on the map
+        artifact_list = [artifact
+                         for d4_artifacts_list in self.get_visible_artifacts()
+                         for artifact in d4_artifacts_list
+                         if artifact.inspectable is True]
+
         # visible items on the map (includes tools)
         item_list = [item
             for d4_items_list in self.get_visible_items()
@@ -306,12 +312,19 @@ class Character(object):
         interface_actions = [Action(interface.use, interface.action_text())
             for interface in interface_list]
 
+        # TODO: artifact being captured in artifact_actions and item_actions
+        # need to deconflict take_action_msg
+
+        # action to examine artifacts
+        artifact_actions = [Action(artifact.examine, artifact.examine_action_text())
+            for artifact in artifact_list]
+
         # action to take items from map
         item_actions = [Action(item.map_to_player, item.take_action_text())
             for item in item_list]
 
         # combined list of all action
-        actions_list = tool_actions + part_actions + interface_actions + item_actions
+        actions_list = tool_actions + part_actions + interface_actions + artifact_actions + item_actions
 
         # dictionary of action keys associated with Action object
         actions = {actions_list.index(action) + 1: action for action in actions_list}
