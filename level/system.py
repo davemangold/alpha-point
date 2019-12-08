@@ -1,6 +1,6 @@
 import error
-from gameobject.component.property import Property
-from gameobject.component.property import PropertyFactory
+from level.property import Property
+from level.property import PropertyFactory
 from gameobject.component.device import Device
 from gameobject.component.device import DeviceFactory
 from gameobject.component.interface import Interface
@@ -112,7 +112,7 @@ class System(object):
                     interface = check_interface
                     break
 
-        if config_id is not None:
+        elif config_id is not None:
             for check_interface in self.interfaces:
                 if check_interface.config_id == config_id:
                     interface = check_interface
@@ -131,7 +131,7 @@ class System(object):
                     device = check_device
                     break
 
-        if config_id is not None:
+        elif config_id is not None:
             for check_device in self.devices:
                 if check_device.config_id == config_id:
                     device = check_device
@@ -150,7 +150,7 @@ class System(object):
                     property = check_property
                     break
 
-        if config_id is not None:
+        elif config_id is not None:
             for check_property in self.properties:
                 if check_property.config_id == config_id:
                     property = check_property
@@ -175,20 +175,34 @@ class System(object):
 
         return interface_ids
 
-    def get_device_ids(self, interface):
-        """Return list of device ids linked to interface."""
-
-        if not isinstance(interface, Interface):
-            raise TypeError("Object not of type 'Interface'.")
-
-        if not self.has_interface(interface):
-            raise error.SystemError("The interface is not a component of the system.")
+    def get_device_ids(self, interface=None, property=None):
+        """Return list of device ids linked to interface or related to property."""
 
         device_ids = []
 
-        for link in self.links:
-            if link['interface_id'] == interface.id:
-                device_ids.append(link['device_id'])
+        if interface is not None:
+
+            if not isinstance(interface, Interface):
+                raise TypeError("Object not of type 'Interface'.")
+
+            if not self.has_interface(interface):
+                raise error.SystemError("The interface is not in the system.")
+
+            for link in self.links:
+                if link['interface_id'] == interface.id:
+                    device_ids.append(link['device_id'])
+
+        elif property is not None:
+
+            if not isinstance(property, Property):
+                raise TypeError("Object not of type 'Property'.")
+
+            if not self.has_property(property):
+                raise error.SystemError("The property is not in the system.")
+
+            for relate in self.relates:
+                if relate['property_id'] == property.id:
+                    device_ids.append(relate['device_id'])
 
         return device_ids
 
@@ -199,20 +213,20 @@ class System(object):
             raise TypeError("Object not of type 'Device'.")
 
         if not self.has_device(device):
-            raise error.SystemError("The device is not a component of the system.")
+            raise error.SystemError("The device is not in the system.")
 
         property_ids = []
 
         for relate in self.relates:
             if relate['device_id'] == device.id:
-                property_ids.append(relate['device_id'])
+                property_ids.append(relate['property_id'])
 
         return property_ids
 
     def get_interface_devices(self, interface):
         """Return a list of all devices linked to an interface."""
 
-        device_ids = self.get_device_ids(interface)
+        device_ids = self.get_device_ids(interface=interface)
         interface_devices = [device for device in self.devices
                              if device.id in device_ids]
 
@@ -239,7 +253,7 @@ class System(object):
     def get_property_devices(self, property):
         """Return a list of all devices related to a property."""
 
-        device_ids = self.get_device_ids(property)
+        device_ids = self.get_device_ids(property=property)
         property_devices = [device for device in self.devices
                             if device.id in device_ids]
 

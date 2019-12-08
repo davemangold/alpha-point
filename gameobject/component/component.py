@@ -9,8 +9,7 @@ class Component(GameObject):
         super(Component, self).__init__(*args, **kwargs)
         self.system = system
         self.address = ":".join((("%x" % randint(0, 16 ** 4)).zfill(4) for i in range(6)))
-        self.name = 'component'
-        self.description = 'component'
+        self.description = 'generic component'
         self.enabled = True
         self.visible = False
         self.interactive = True

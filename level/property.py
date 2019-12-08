@@ -1,4 +1,6 @@
 import error
+from uuid import uuid4
+
 
 
 # Base Property class
@@ -7,8 +9,9 @@ class Property(object):
     """Level property that is used by other game objects."""
 
     def __init__(self, system, *args, **kwargs):
-        self.system = system
+        self.id = str(uuid4())
         self.config_id = None
+        self.system = system
         self.name = 'property'
         self.description = 'property'
         self.min_value = 0
@@ -16,11 +19,6 @@ class Property(object):
         self.increment = 1
         self._value = 0
         self.__add_to_system()
-
-    def __str__(self):
-        """A brief description."""
-
-        return self.description
 
     def __add_to_system(self):
         """Add the property to the parent system."""
@@ -48,12 +46,21 @@ class Property(object):
 # Property sub-classes that can be affected by devices
 
 class Pressure(Property):
-    """Gas pressure."""
+    """Fluid pressure."""
 
     def __init__(self, *args, **kwargs):
         super(Pressure, self).__init__(*args, **kwargs)
         self.name = 'pressure'
         self.description = 'pressure'
+
+
+class Voltage(Property):
+    """Electrical voltage."""
+
+    def __init__(self, *args, **kwargs):
+        super(Voltage, self).__init__(*args, **kwargs)
+        self.name = 'voltage'
+        self.description = 'voltage'
 
 
 # Property factory for making properties
@@ -66,5 +73,7 @@ class PropertyFactory(object):
 
         if property_type.lower() == 'pressure':
             return Pressure(system, *args, **kwargs)
+        if property_type.lower() == 'voltage':
+            return Voltage(system, *args, **kwargs)
 
         raise error.FactoryError("The specified property type does not exist.")

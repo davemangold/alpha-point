@@ -44,6 +44,8 @@ class Device(Component):
     def toggle_active_state(self):
         """Toggle this device's active state."""
 
+        toggled = False
+
         if self.enabled is False:
             self.system.level.game.ui.alert = self.msg_disabled
             return
@@ -53,21 +55,27 @@ class Device(Component):
             return
 
         self.active = not self.active
+        toggled = True
 
         if self.active is True:
             self.system.level.game.ui.alert = self.msg_toggle_active_true
         else:
             self.system.level.game.ui.alert = self.msg_toggle_active_false
 
+        return toggled
+
     def toggle_enabled_state(self):
         """Toggle this device's enabled state."""
 
         self.enabled = not self.enabled
+        toggled = True
 
         if self.enabled is True:
             self.system.level.game.ui.alert = self.msg_toggle_enabled_true
         else:
             self.system.level.game.ui.alert = self.msg_toggle_enabled_false
+
+        return toggled
 
     def add_dependency(self, device_id, enabled_state, active_state):
         """Add a dependency that must be met before this device can be activated."""
@@ -112,10 +120,24 @@ class Device(Component):
                 return False
         return True
 
+    def get_properties(self):
+        """Return the properties related to this device."""
+
+        return self.system.get_device_properties(self)
+
     def use(self):
         """Use the device."""
 
-        self.toggle_active_state()
+        property_list = self.get_properties()
+        toggled = self.toggle_active_state()
+
+        # sensors do not affect related property values (no quantum strangeness here)
+        if not isinstance(self, Sensor):
+            for property in property_list:
+                if toggled and self.active is True:
+                    property.increase()
+                elif toggled and self.active is False:
+                    property.decrease()
 
 
 # Device sub-classes that can be controlled by interfaces
@@ -193,10 +215,6 @@ class Camera(Device):
 class Sensor(Device):
     """A measurement device that can be on or off."""
 
-    # TODO: complete sensor class (or deprecate)
-    # can show numbers of activated sensors of different types
-    # add sensor panel interface type, which will aggregate counts of activated sensor devices by description
-    # link sensors to sensor panel
     def __init__(self, *args, **kwargs):
         super(Sensor, self).__init__(*args, **kwargs)
         self.name = 'sensor'
@@ -209,11 +227,6 @@ class Sensor(Device):
         self.msg_toggle_active_true = "The sensor turned on."
         self.msg_toggle_active_false = "The sensor turned off."
         self.msg_unmet_dependencies = "The sensor is inoperable."
-
-    def use(self):
-        """Use the sensor."""
-
-        pass
 
 
 # Device factory for making devices

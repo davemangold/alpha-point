@@ -1,5 +1,6 @@
 import error
 from game.gameui import TerminalUI
+from game.gameui import ConsoleUI
 from gameobject.component import Component
 from action import Action
 
@@ -29,7 +30,7 @@ class Interface(Component):
         return " ".join([self.msg_action_verb.capitalize(), "the", str(self)])
 
     def get_devices(self):
-        """Return the devices linked to the interface."""
+        """Return the devices linked to this interface."""
 
         return self.system.get_interface_devices(self)
 
@@ -39,10 +40,8 @@ class Interface(Component):
         device_list = self.get_devices()
         if len(device_list) == 0:
             raise error.InterfaceError("No devices linked to interface.")
-        if len(device_list) > 1:
-            raise error.InterfaceError("More than one device linked to interface.")
-        device = device_list[0]
-        device.use()
+        for device in device_list:
+            device.use()
 
 
 # Interface sub-classes with which character can interact
@@ -129,17 +128,21 @@ class Handwheel(Interface):
 #         self.name = 'viewer'
 #         self.description = 'viewer'
 #         self.msg_action_verb = 'use'
-#
-#
-# class Console(Interface):
-#     """A console that provides a sensor readout but accepts no commands."""
-#
-#     def __init__(self, *args, **kwargs):
-#         super(Console, self).__init__(*args, **kwargs)
-#         self.name = 'monitor'
-#         self.description = 'monitor'
-#         self.msg_action_verb = 'use'
 
+
+class Console(Interface):
+    """A console that provides a sensor readout but accepts no commands."""
+
+    def __init__(self, *args, **kwargs):
+        super(Console, self).__init__(*args, **kwargs)
+        self.name = 'monitor'
+        self.description = 'monitor'
+        self.msg_action_verb = 'use'
+
+    def use(self):
+        """Interface loop that allows player to interact with the interface."""
+
+        self.system.level.game.ui = ConsoleUI(self)
 
 # Interface factory
 

@@ -145,7 +145,7 @@ level_config = {
                         'name': 'door circuit switch',
                         'description': 'door circuit',
                         'type': 'switch',
-                        'enabled': False,
+                        'enabled': True,
                         'active': False,
                         'visible': False,
                         'x': 3,
@@ -198,36 +198,53 @@ level_config = {
                         'msg_toggle_active_false': 'The camera viewer went dark.',
                         'msg_unmet_dependencies': 'The camera isn\'t responding.',
                         'dependencies': []
-                    }   # security camera
+                    },  # security camera
+                    {
+                        'id': 4,
+                        'name': 'door circuit switch',
+                        'description': 'door circuit',
+                        'type': 'switch',
+                        'enabled': True,
+                        'active': False,
+                        'visible': False,
+                        'x': 3,
+                        'y': 1,
+                        'msg_action_true': 'close',
+                        'msg_action_false': 'open',
+                        'msg_active_true': 'The circuit is closed.',
+                        'msg_active_false': 'The circuit is open.',
+                        'msg_toggle_active_true': 'Do you hear that? It sounds like electric current.',
+                        'msg_toggle_active_false': 'That electric hum went away.',
+                        'msg_unmet_dependencies': 'The circuit switch isn\'t responding.',
+                        'dependencies': []
+                    }  # door circuit switch
                 ],
                 'properties': [
                     {
                         'id': 0,
-                        'name': 'pressure',
-                        'description': 'air pressure (atm)',
-                        'type': 'pressure',
+                        'name': 'voltage',
+                        'description': 'door circuit voltage',
+                        'type': 'voltage',
                         'value': 5,
                         'min_value': 0,
                         'max_value': 10,
-                        'increment': 1
+                        'increment': 2
                     }
                 ],
                 'links': [
                     {'interface_id': 0, 'device_id': 0},
                     {'interface_id': 1, 'device_id': 1},
+                    {'interface_id': 1, 'device_id': 4},
                     {'interface_id': 2, 'device_id': 1},
                     {'interface_id': 2, 'device_id': 2},
                     {'interface_id': 2, 'device_id': 3},
                     {'interface_id': 3, 'device_id': 2}
                 ],
-                'relates': [],
-                'deaths': [
-                    {'configuration': [
-                        {'device_id': 1, 'active_state': True},
-                        {'device_id': 3, 'active_state': True}],
-                     'description': 'The camera caused a short circuit and you were electrocuted.',
-                     'location': (2, 1)}  # None if all locations are valid
-                ]
+                'relates': [
+                    {'device_id': 1, 'property_id': 0},
+                    {'device_id': 4, 'property_id': 0}
+                ],
+                'deaths': []
             }
         },  # testing
         0: {
