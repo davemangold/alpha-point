@@ -45,6 +45,11 @@ class Inventory(object):
 
         self.items = []
 
+    def has_item(self, item):
+        """Return True if the item is in the inventory."""
+
+        return item in self.items
+
     def get_tools(self):
         """Return all items that are Tool instances."""
 

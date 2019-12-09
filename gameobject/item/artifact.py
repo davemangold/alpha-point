@@ -1,4 +1,5 @@
 import error
+import utility
 from gameobject.item import Item
 from game.gameui import ExaminationUI
 
@@ -15,7 +16,15 @@ class Artifact(Item):
     def examine_action_text(self):
         """Return text description of the currently available action."""
 
-        return " ".join([self.msg_examine_verb.capitalize(), "the", str(self)])
+        player = self.map.level.game.player
+        action_text = " ".join([self.msg_examine_verb.capitalize(), "the", str(self)])
+
+        # TODO: fix direction text
+        if self.map.inventory.has_item(self) and utility.d4_descriptions_match(player.get_visible_artifacts()):
+            direction = utility.get_direction(*player.location(), *self.location())
+            action_text += " " + utility.get_relative_direction_text(player.orientation, direction)
+
+        return action_text
 
     def examine(self):
         """Examine the artifact to reveal additional information."""

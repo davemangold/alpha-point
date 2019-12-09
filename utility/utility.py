@@ -24,6 +24,58 @@ def d4_inverse(d4_direction):
     return directions[(d4_direction + 2) % 4]
 
 
+def d4_to_player_order(player_orientation):
+    """Return the d4 index order relative to player orientation."""
+
+    # order of d4 objects
+    d4_order = [0, 1, 2, 3]
+    # rotate order to match player orientation
+    player_order = d4_order[player_orientation:] + d4_order[:player_orientation]
+    # swap last two items to make order: front, right, left, behind
+    report_order = player_order[:2] + [player_order[3]] + [player_order[2]]
+
+    return report_order
+
+
+def d4_to_player_list(player_orientation, d4_objects_list):
+    """Return the objects list reordered to match player orientation."""
+
+    player_object_list = [d4_objects_list[i]
+                          for i in d4_to_player_order(player_orientation)]
+
+    return player_object_list
+
+
+def d4_descriptions_match(d4_objects_list):
+    """Returns True if there are any matching descriptions in the list of d4_objects, otherwise False."""
+
+    d4_objects = []
+
+    for obj_list in d4_objects_list:
+        d4_objects += obj_list
+        d4_object_descriptions = [obj.description for obj in d4_objects]
+
+    if len(d4_object_descriptions) > len(set(d4_object_descriptions)):
+        return True
+
+    return False
+
+
+def get_direction(x1, y1, x2, y2):
+    """Return the d4 direction from location 1 (x1, y1) to location 2 (x2, y2) for adjacent locations."""
+
+    dx = x2 - x1
+    dy = y2 - y1
+
+    if dx == dy or abs(dx) > 1 or abs(dy) > 1:
+        raise ValueError("The locations must be adjacent and orthogonal to each other.")
+
+    if dx == 0:
+        return 0 if dy == 1 else 2
+    else:
+        return 1 if dx == 1 else 3
+
+
 def get_relative_direction_text(orientation, direction):
     """Returns the text description of the direction based on orientation."""
 
@@ -106,13 +158,7 @@ def build_object_report_body(text_part_list):
 def build_object_report_text(orientation, d4_objects):
     """Return string description of d4 objects relative to orientation."""
 
-    # get natural order of d4 objects
-    d4_order = list(range(len(d4_objects)))
-    # rotate order to match player orientation
-    player_order = d4_order[orientation:] + d4_order[:orientation]
-    # swap last two items to make order: front, right, left, behind
-    report_order = player_order[:2] + [player_order[3]] + [player_order[2]]
-
+    report_order = d4_to_player_order(orientation)
     report_open = 'There\'s '
     report_body = ''
     report_close = '.'

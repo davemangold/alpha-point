@@ -383,7 +383,7 @@ class MainUI(BaseUI):
         return text_map
 
     def get_action(self):
-        """Return the text that represents available action."""
+        """Return the text that represents available actions."""
 
         ui_actions = None
         ui_actions_list = []

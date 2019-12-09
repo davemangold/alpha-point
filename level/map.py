@@ -505,8 +505,3 @@ class Map(object):
         d4_artifacts = self.get_d4_artifacts(x, y)
         d4_items = [items[0] + items[1] for items in zip(d4_tools, d4_parts, d4_artifacts)]
         return d4_items
-
-    def has_item(self, item):
-        """Returns True if the item is in the map inventory, otherwise False."""
-
-        return item in self.inventory

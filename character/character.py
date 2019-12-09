@@ -25,14 +25,12 @@ class Character(object):
     def __is_valid_move(self, cell):
         """Returns True if moving to cell is valid in current map, otherwise False."""
 
-        if cell is None:
-            raise error.MoveError("There's no cell there.")
-        if not cell.is_on_path():
-            raise error.MoveError("Player cannot move to cell. The cell is not on the path.")
-        if cell.is_blocked():
-            raise error.MoveError("Player cannot move to cell. The cell is blocked.")
+        valid_move = True
 
-        return True
+        if cell is None or cell.is_blocked() or not cell.is_on_path():
+            valid_move = False
+
+        return valid_move
 
     def __on_move_update(self):
         """Update attributes that are location-dependent."""
@@ -59,10 +57,15 @@ class Character(object):
         """Move character to cell at x, y if it's a valid move."""
 
         to_cell = self.game.level.map.get_cell(x, y)
-        if self.__is_valid_move(to_cell):
+        valid_move = self.__is_valid_move(to_cell)
+
+        if valid_move:
             self.x = x
             self.y = y
             self.__on_move_update()
+        else:
+            self.__on_move_update()
+            raise error.MoveError("The requested move is invalid.")
 
     def move_up(self):
         """Move character up one cell if possible"""
@@ -285,10 +288,11 @@ class Character(object):
             if interface.interactive is True]
 
         # visible artifacts on the map
+        d4_artifacts = utility.d4_to_player_list(self.orientation, self.get_visible_artifacts())
         artifact_list = [artifact
-                         for d4_artifacts_list in self.get_visible_artifacts()
-                         for artifact in d4_artifacts_list
-                         if artifact.inspectable is True]
+            for d4_artifacts_list in d4_artifacts
+            for artifact in d4_artifacts_list
+            if artifact.inspectable is True]
 
         # visible items on the map (includes tools)
         item_list = [item
@@ -311,9 +315,6 @@ class Character(object):
         # action to use interfaces
         interface_actions = [Action(interface.use, interface.action_text())
             for interface in interface_list]
-
-        # TODO: artifact being captured in artifact_actions and item_actions
-        # need to deconflict take_action_msg
 
         # action to examine artifacts
         artifact_actions = [Action(artifact.examine, artifact.examine_action_text())

@@ -5,12 +5,12 @@ from uuid import uuid4
 # Base Property class
 
 class Property(object):
-    """Level property that is used by other game objects."""
+    """System property that is used by other game objects."""
 
     def __init__(self, system, *args, **kwargs):
+        self.system = system
         self.id = str(uuid4())
         self.config_id = None
-        self.system = system
         self.name = 'property'
         self.description = 'property'
         self.min_value = 0
