@@ -269,63 +269,67 @@ class Character(object):
     def get_actions(self):
         """Return dictionary of action based on d4 visible objects."""
 
+        # TODO: refactor so all actions are presented in player order
+
         # tools in the player inventory
-        tool_list = self.inventory.get_tools()
+        player_tool_list = self.inventory.get_tools()
 
         # parts in the player inventory
-        part_list = self.inventory.get_parts()
+        player_part_list = self.inventory.get_parts()
+
+        # artifacts in the player inventory
+        player_artifact_list = self.inventory.get_artifacts()
 
         # visible devices on the map
-        device_list = [device
-            for d4_device_list in self.get_visible_devices()
-            for device in d4_device_list
+        map_device_list = [device
+            for device_list in utility.d4_to_player_list(self.orientation, self.get_visible_devices())
+            for device in device_list
             if device.interactive is True]
 
         # visible interfaces on the map
-        interface_list = [interface
-            for d4_interface_list in self.get_visible_interfaces()
-            for interface in d4_interface_list
+        map_interface_list = [interface
+            for interface_list in utility.d4_to_player_list(self.orientation, self.get_visible_interfaces())
+            for interface in interface_list
             if interface.interactive is True]
 
         # visible artifacts on the map
-        d4_artifacts = utility.d4_to_player_list(self.orientation, self.get_visible_artifacts())
-        artifact_list = [artifact
-            for d4_artifacts_list in d4_artifacts
-            for artifact in d4_artifacts_list
+        map_artifact_list = [artifact
+            for artifact_list in utility.d4_to_player_list(self.orientation, self.get_visible_artifacts())
+            for artifact in artifact_list
             if artifact.inspectable is True]
 
         # visible items on the map (includes tools)
-        item_list = [item
-            for d4_items_list in self.get_visible_items()
-            for item in d4_items_list
+        map_item_list = [item
+            for item_list in utility.d4_to_player_list(self.orientation, self.get_visible_items())
+            for item in item_list
             if item.interactive is True]
 
         # action to use tools on devices
         tool_actions = [Action(tool.get_use_action(device), tool.use_action_text(device))
-            for tool in tool_list
-            for device in device_list
+            for tool in player_tool_list
+            for device in map_device_list
             if tool.can_activate(device)]
 
         # action to use parts on devices
         part_actions = [Action(part.get_use_action(device), part.use_action_text(device))
-            for part in part_list
-            for device in device_list
+            for part in player_part_list
+            for device in map_device_list
             if part.can_enable(device)]
 
         # action to use interfaces
         interface_actions = [Action(interface.use, interface.action_text())
-            for interface in interface_list]
+            for interface in map_interface_list]
 
         # action to examine artifacts
         artifact_actions = [Action(artifact.examine, artifact.examine_action_text())
-            for artifact in artifact_list]
+            for artifact in map_artifact_list]
 
         # action to take items from map
         item_actions = [Action(item.map_to_player, item.take_action_text())
-            for item in item_list]
+            for item in map_item_list]
 
         # combined list of all action
-        actions_list = tool_actions + part_actions + interface_actions + artifact_actions + item_actions
+        actions_list = interface_actions + tool_actions + part_actions + artifact_actions + item_actions
 
         # dictionary of action keys associated with Action object
         actions = {actions_list.index(action) + 1: action for action in actions_list}
