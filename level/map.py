@@ -273,10 +273,10 @@ class Map(object):
                     self.cells_dict[x][y] = cell
                     self.cells.append(cell)
 
-    def build(self, level_number):
+    def build(self):
         """Build the map from the config for the provided level number."""
 
-        map_config = level_config['level'][level_number]['map']
+        map_config = level_config[self.level.number]['map']
 
         self.x_dim = map_config['x_dimension']
         self.y_dim = map_config['y_dimension']

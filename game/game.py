@@ -39,14 +39,14 @@ class Game(object):
     def setup_level(self, level_number):
         """Setup the game level."""
 
-        level = Level(self)
-        level.build(level_number)
+        level = Level(self, level_number)
+        level.build()
         self.level = level
 
     def setup_player(self):
         """Setup the player based on the game level"""
 
-        map_config = level_config['level'][self.level.number]['map']
+        map_config = level_config[self.level.number]['map']
         enter_coords = map_config['coord_enter']
         enter_orientation = map_config['orientation_enter']
 

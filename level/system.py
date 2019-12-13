@@ -20,10 +20,10 @@ class System(object):
         self.relates = []  # [{'device_id': <property_id>},...]
         self.deaths = []
 
-    def build(self, level_number):
+    def build(self):
         """Build system from config dictionary."""
 
-        system_config = level_config['level'][level_number]['system']
+        system_config = level_config[self.level.number]['system']
 
         for config_interface in system_config['interfaces']:
             new_interface = InterfaceFactory.make_interface(self, config_interface['type'])
@@ -31,6 +31,7 @@ class System(object):
             new_interface.name = config_interface['name']
             new_interface.description = config_interface['description']
             new_interface.enabled = config_interface['enabled']
+            new_interface.corrupt = config_interface['corrupt']
             new_interface.x = config_interface['x']
             new_interface.y = config_interface['y']
             new_interface.orientation = config_interface['orientation']

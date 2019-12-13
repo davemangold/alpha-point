@@ -269,14 +269,13 @@ class Character(object):
     def get_actions(self):
         """Return dictionary of action based on d4 visible objects."""
 
-        # TODO: refactor so all actions are presented in player order
-
         # tools in the player inventory
         player_tool_list = self.inventory.get_tools()
 
         # parts in the player inventory
         player_part_list = self.inventory.get_parts()
 
+        # TODO: add examination of inventory artifacts (requires UI refactor)
         # artifacts in the player inventory
         player_artifact_list = self.inventory.get_artifacts()
 

@@ -17,6 +17,7 @@ class Interface(Component):
         self.name = 'interface'
         self.description = 'interface'
         self.visible = True
+        self.corrupt = False
         self.msg_action_verb = 'use'
 
     def __add_to_system(self):

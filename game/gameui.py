@@ -255,7 +255,7 @@ class LevelsUI(BaseUI):
 
         ui_actions = '\n'.join(
             ['{0}. {1}'.format(k, v['name'])
-             for k, v in sorted(level_config['level'].items())
+             for k, v in sorted(level_config.items())
              if 0 < k <= highest_level + 1])
 
         return ui_actions
@@ -502,6 +502,7 @@ class ExaminationUI(BaseUI):
         self.game.ui = self.previous_ui
 
 
+# TODO: refactor to support inventory artifact examination
 class InventoryUI(BaseUI):
     """Game user interface for player inventory."""
 
@@ -580,7 +581,40 @@ class TerminalUI(BaseUI):
         super(TerminalUI, self).__init__(terminal.system.level.game, *args, **kwargs)
         self.terminal = terminal
         self.previous_ui = self.game.ui
-        self.initial_flicker = True
+        self.flicker = True
+        self.corrupt = self.terminal.corrupt
+
+    @property
+    def flicker(self):
+
+        return self._flicker
+
+    @flicker.setter
+    def flicker(self, value):
+
+        if not isinstance(value, bool):
+            raise ValueError("Property flicker must be a boolean value.")
+
+        if value is True:
+            self._corrupt = not value
+
+        self._flicker = value
+
+    @property
+    def corrupt(self):
+
+        return self._corrupt
+
+    @corrupt.setter
+    def corrupt(self, value):
+
+        if not isinstance(value, bool):
+            raise ValueError("Property corrupt must be a boolean value.")
+
+        if value is True:
+            self._flicker = not value
+
+        self._corrupt = value
 
     def process_input(self, value):
         """Call the appropriate method based on input value."""
@@ -663,11 +697,13 @@ class TerminalUI(BaseUI):
         self.clear_screen()
         print(self.decorate_ui(self.get_ui()))
 
-        if self.initial_flicker is True:
-            # TODO: decide when to show corrupted ui
-            # self.display_flicker_corrupt()
+        if self.flicker is True:
             self.display_flicker()
-            self.initial_flicker = False
+            self.flicker = False
+
+        elif self.corrupt is True:
+            self.display_corrupt()
+            # self.corrupt = False
 
     def display_flicker(self):
         """Flicker the terminal display."""
@@ -681,8 +717,8 @@ class TerminalUI(BaseUI):
             time.sleep(i)
             print(self.decorate_ui(self.get_ui()))
 
-    def display_flicker_corrupt(self):
-        """Flicker the terminal display with corrupted data."""
+    def display_corrupt(self):
+        """Build the terminal display with corrupted data."""
 
         ui_text = self.get_ui()
         hex_digits = ['0', '1', '2', '3', '4', '5', '6', '7',
@@ -734,6 +770,40 @@ class ConsoleUI(BaseUI):
         super(ConsoleUI, self).__init__(console.system.level.game, *args, **kwargs)
         self.console = console
         self.previous_ui = self.game.ui
+        self.flicker = True
+        self.corrupt = self.terminal.corrupt
+
+    @property
+    def flicker(self):
+
+        return self._flicker
+
+    @flicker.setter
+    def flicker(self, value):
+
+        if not isinstance(value, bool):
+            raise ValueError("Property flicker must be a boolean value.")
+
+        if value is True:
+            self._corrupt = not value
+
+        self._flicker = value
+
+    @property
+    def corrupt(self):
+
+        return self._corrupt
+
+    @corrupt.setter
+    def corrupt(self, value):
+
+        if not isinstance(value, bool):
+            raise ValueError("Property corrupt must be a boolean value.")
+
+        if value is True:
+            self._flicker = not value
+
+        self._corrupt = value
 
     def process_input(self, value):
         """Call the appropriate method based on input value."""
@@ -816,11 +886,13 @@ class ConsoleUI(BaseUI):
         self.clear_screen()
         print(self.decorate_ui(self.get_ui()))
 
-        if self.initial_flicker is True:
-            # TODO: decide when to show corrupted ui
-            # self.display_flicker_corrupt()
+        if self.flicker is True:
             self.display_flicker()
-            self.initial_flicker = False
+            self.flicker = False
+
+        elif self.corrupt is True:
+            self.display_corrupt()
+            self.corrupt = False
 
     def display_flicker(self):
         """Flicker the terminal display."""
@@ -834,8 +906,8 @@ class ConsoleUI(BaseUI):
             time.sleep(i)
             print(self.decorate_ui(self.get_ui()))
 
-    def display_flicker_corrupt(self):
-        """Flicker the terminal display with corrupted data."""
+    def display_corrupt(self):
+        """Build the terminal display with corrupted data."""
 
         ui_text = self.get_ui()
         hex_digits = ['0', '1', '2', '3', '4', '5', '6', '7',
