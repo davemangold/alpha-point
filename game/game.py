@@ -16,24 +16,24 @@ class Game(object):
     """Game class that contains all the game mechanics."""
 
     def __init__(self, debug=False):
-        self.debug = debug
-        self.save = None
-        self.control = Control(self)
-        self.level = Level(self)
-        self.player = Player(self)
-        self.ui = StartUI(self)
-        self.setup()
-
-    def __enter__(self):
 
         if not os.path.isdir('.save'):
             os.mkdir('.save')
 
+        self.debug = debug
         self.save = shelve.open('.save/save', writeback=True)
+        self.control = Control(self)
+        self.level = Level(self)
+        self.player = Player(self)
+        self.ui = StartUI(self)
+        self.setup(level_number=0)
+
+    def __enter__(self):
 
         return self
 
     def __exit__(self, exc_type, exc_value, exc_traceback):
+
         self.save.close()
 
     def setup_level(self, level_number):
@@ -54,7 +54,7 @@ class Game(object):
         self.player.orientation = enter_orientation
         self.player.inventory.clear_items()
 
-    def setup(self, level_number=0):
+    def setup(self, level_number):
         """Setup game elements."""
 
         # setup level before player

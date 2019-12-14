@@ -1,4 +1,5 @@
 from config import game_config
+from config import level_config
 
 # constants
 DEFAULT_ARTICLE = game_config['ui']['articles']['default']
@@ -285,3 +286,9 @@ def format_ui_text(text):
     keep_lines = [line for line in lines if len(line) > 0]
     formatted_text = '\n'.join(keep_lines)
     return formatted_text
+
+
+def level_exists(number):
+    """Return True if the level exists in config, otherwise False."""
+
+    return bool(level_config.get(number))

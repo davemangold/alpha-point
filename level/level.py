@@ -1,3 +1,4 @@
+import utility
 from level.map import Map
 from level.system import System
 from config import level_config
@@ -26,5 +27,6 @@ class Level(object):
         return self.map.get_cell(*self.game.player.location()) is self.map.exit_cell
 
     def has_next_level(self):
+        """Returns True if a next level exists in the config, otherwise False."""
 
-        return bool(level_config.get(self.number + 1))
+        return utility.level_exists(self.number + 1)
