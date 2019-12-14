@@ -183,7 +183,12 @@ class StartUI(BaseUI):
     def leave(self):
 
         self.game.save['intro_seen'] = True
-        self.game.ui = LevelsUI(self.game)
+        # self.game.ui = LevelsUI(self.game)
+
+        if self.game.save.get('game_complete') is True:
+            self.game.ui = LevelsUI(self.game)
+        else:
+            self.game.ui = MainUI(self.game)
 
 
 class LevelsUI(BaseUI):

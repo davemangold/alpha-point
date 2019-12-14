@@ -1,5 +1,6 @@
 import os
 import shelve
+import utility
 from level import Level
 from game.gameio import Control
 from game.gameui import MainUI
@@ -17,14 +18,14 @@ class Game(object):
 
     def __init__(self, debug=False):
 
-        self.setup_save()
-        self.save = shelve.open('.save/save', writeback=True)
+        self.save = None
+        self.__init_save__()
         self.debug = debug
         self.control = Control(self)
         self.level = Level(self)
         self.player = Player(self)
         self.ui = StartUI(self)
-        self.setup(level_number=0)
+        self.setup(level_number=utility.start_level(self.save))
 
     def __enter__(self):
 
@@ -34,11 +35,13 @@ class Game(object):
 
         self.save.close()
 
-    def setup_save(self):
+    def __init_save__(self):
         """Setup save environment, if necessary."""
 
         if not os.path.isdir('.save'):
             os.mkdir('.save')
+
+        self.save = shelve.open('.save/save', writeback=True)
 
     def setup_level(self, level_number):
         """Setup the game level."""
@@ -113,6 +116,7 @@ class Game(object):
                     elif self.level.has_next_level():
                         self.ui.next_level()
                     else:
+                        self.save['game_complete'] = True
                         self.ui = GameCompleteUI(game=self)
                     continue
 
