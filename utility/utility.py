@@ -292,3 +292,15 @@ def level_exists(number):
     """Return True if the level exists in config, otherwise False."""
 
     return bool(level_config.get(number))
+
+
+def start_level(save_obj):
+    """Returns the number of the next uncompleted level if it exists, otherwise zero."""
+
+    highest_level = save_obj.get('highest_level')
+    if highest_level is not None:
+        next_level = save_obj.get('highest_level') + 1
+        if level_exists(next_level):
+            return next_level
+
+    return 1
