@@ -17,11 +17,9 @@ class Game(object):
 
     def __init__(self, debug=False):
 
-        if not os.path.isdir('.save'):
-            os.mkdir('.save')
-
-        self.debug = debug
+        self.setup_save()
         self.save = shelve.open('.save/save', writeback=True)
+        self.debug = debug
         self.control = Control(self)
         self.level = Level(self)
         self.player = Player(self)
@@ -35,6 +33,12 @@ class Game(object):
     def __exit__(self, exc_type, exc_value, exc_traceback):
 
         self.save.close()
+
+    def setup_save(self):
+        """Setup save environment, if necessary."""
+
+        if not os.path.isdir('.save'):
+            os.mkdir('.save')
 
     def setup_level(self, level_number):
         """Setup the game level."""
