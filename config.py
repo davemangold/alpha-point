@@ -549,7 +549,7 @@ level_config = {
                 {
                     'type': 'wires',
                     'name': 'wires',
-                    'description': 'bundle of wires on the floor',
+                    'description': 'bundle of wires',
                     'visible': True,
                     'interactive': True,
                     'blocking': False,
@@ -586,8 +586,8 @@ level_config = {
                     'type': 'generic',
                     'name': 'blood',
                     'description': 'red stain on the wall',
-                    'report': '',
-                    'inspectable': False,
+                    'report': 'There are several dark red streaks running around the corner and fading as they run along the wall.',
+                    'inspectable': True,
                     'visible': True,
                     'interactive': False,
                     'blocking': False,
@@ -722,7 +722,7 @@ level_config = {
                 {
                     'id': 3,
                     'name': 'switchbox',
-                    'description': 'damaged switchbox',
+                    'description': 'exposed switchbox',
                     'type': 'switch',
                     'enabled': False,
                     'active': True,
@@ -737,7 +737,7 @@ level_config = {
                     'msg_toggle_active_false': 'The switch closed.',
                     'msg_unmet_dependencies': 'The switch is unresponsive.',
                     'dependencies': []
-                }  # 3 - damaged switchbox
+                }  # 3 - exposed switchbox
             ],
             'properties': [],
             'links': [
