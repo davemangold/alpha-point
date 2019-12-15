@@ -740,12 +740,12 @@ class TerminalUI(BaseUI):
 
         add_gaps = int((data_cols - hextet_gaps) / number)
 
-        for n in range(number):
+        data = [[
+            ''.join(choices(hex_digits, k=hextet_size))
+            for m in range(data_cols)]
+            for n in range(data_rows)]
 
-            data = [[
-                ''.join(choices(hex_digits, k=hextet_size))
-                for m in range(data_cols)]
-                for n in range(data_rows)]
+        for n in range(number):
 
             for row in data:
                 for i in sample(range(data_cols), hextet_gaps):
@@ -1039,7 +1039,7 @@ class StoryUI(BaseUI):
         """Prompt the player for input."""
 
         self.display()
-        message = self.decorate_ui("Press Enter to return...")
+        message = self.decorate_ui("Press Enter to continue...")
         print(message)
         response = self.game.control.get_keypress()
         return response
