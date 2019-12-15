@@ -18,8 +18,7 @@ class Game(object):
 
     def __init__(self, debug=False):
 
-        self.save = None
-        self.__init_save__()
+        self.save = self.init_save()
         self.debug = debug
         self.control = Control(self)
         self.level = Level(self)
@@ -35,13 +34,14 @@ class Game(object):
 
         self.save.close()
 
-    def __init_save__(self):
+    def init_save(self):
         """Setup save environment, if necessary."""
 
         if not os.path.isdir('.save'):
             os.mkdir('.save')
 
-        self.save = shelve.open('.save/save', writeback=True)
+        save = shelve.open('.save/save', writeback=True)
+        return save
 
     def setup_level(self, level_number):
         """Setup the game level."""
