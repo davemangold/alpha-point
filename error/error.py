@@ -40,3 +40,7 @@ class MoveError(Exception):
 
 class ActionError(Exception):
     pass
+
+
+class CommandError(Exception):
+    pass

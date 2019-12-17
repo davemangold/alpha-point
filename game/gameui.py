@@ -579,12 +579,14 @@ class InventoryUI(BaseUI):
         self.game.ui = self.previous_ui
 
 
+# TODO: enable terminal to process system commands (hackable, sudo keyword)
 class TerminalUI(BaseUI):
     """Game user interface for a system terminal object."""
 
     def __init__(self, terminal, *args, **kwargs):
         super(TerminalUI, self).__init__(terminal.system.level.game, *args, **kwargs)
         self.terminal = terminal
+        self.output = None
         self.previous_ui = self.game.ui
         self.flicker = True
         self.corrupt = self.terminal.corrupt
@@ -621,21 +623,70 @@ class TerminalUI(BaseUI):
 
         self._corrupt = value
 
+    def get_output(self):
+        """Get terminal command output."""
+
+        output = self.output
+        self.output = None
+        return output
+
+    def process_command(self, command):
+        """Process a system terminal command."""
+
+        def list_devices():
+
+            return '\n'.join('{0} ({1})'.format(d, d.id) for d in self.game.level.system.devices)
+
+        def activate_device(device_id):
+            pass
+
+        def deactivate_device(device_id):
+            pass
+
+        valid_commands = {
+            'list -device': list_devices,
+            'activate -device': activate_device,
+            'deactivate -device': deactivate_device
+        }
+
+        parts = command.strip().lower().split()
+        clean = ' '.join(parts[1:])
+
+        if parts[0] != 'sudo':
+            raise error.CommandError('Unauthorized command: {0}'.format(command))
+
+        if len(parts) == 3:
+
+            if clean == 'list -device':
+                self.output = valid_commands[clean]()
+            else:
+                raise error.CommandError('Invalid command: {0}'.format(command))
+
+        elif len(parts) == 4:
+
+            raise error.CommandError('Invalid command: {0}'.format(command))
+
+        else:
+
+            raise error.CommandError('Invalid command: {0}'.format(command))
+
     def process_input(self, value):
         """Call the appropriate method based on input value."""
 
         try:
-            # process action input
-            if value.isdigit():
-                self.terminal.do_action(int(value))
             # process quit input
-            elif value == 'q':
+            if value == 'q':
                 self.leave()
-            # the value wasn't handled
+            # process action input
+            elif value.isdigit():
+                self.terminal.do_action(int(value))
+            # process as system command
             else:
-                self.alert = "Unrecognized command."
+                self.process_command(value)
         except error.ActionError:
-            self.alert = "Unrecognized command."
+            self.alert = "Invalid option."
+        except error.CommandError as e:
+            self.output = str(e)
 
     def prompt(self):
         """Prompt the player for input."""
@@ -660,6 +711,7 @@ class TerminalUI(BaseUI):
         ui_welcome = self.get_welcome()
         ui_alert = self.get_alert()
         ui_action = self.get_action()
+        ui_output = self.get_output()
 
         ui_elements.append(ui_commands)
         ui_elements.append(self.separator)
@@ -669,6 +721,8 @@ class TerminalUI(BaseUI):
         if ui_alert is not None:
             ui_elements.append(ui_alert)
         ui_elements.append(self.separator)
+        if ui_output is not None:
+            ui_elements.append(ui_output)
 
         return '\n' + '\n\n'.join(ui_elements) + '\n'
 
@@ -1147,3 +1201,15 @@ class GameCompleteUI(BaseUI):
     def leave(self):
         # return to the main Levels UI
         self.game.ui = LevelsUI(self.game)
+
+
+# TODO: Complete command parser if needed
+class CommandParser(object):
+    """Parse system terminal commands."""
+
+    def __init__(self):
+        pass
+
+    def parse(self, command):
+        """Parse a command."""
+        pass
