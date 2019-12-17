@@ -28,7 +28,8 @@ game_config = {
                 'excursion suit helmet': 'an',
                 'airlock door': 'an',
                 'open door': 'an',
-                'open airlock door': 'an'
+                'open airlock door': 'an',
+                'exposed switchbox': 'an'
             }
         }
     }
@@ -317,7 +318,7 @@ level_config = {
                 {'coordinates': (4, 5), 'story': None},
                 {'coordinates': (4, 6), 'story': None},
                 {'coordinates': (4, 7), 'story': {'title': None,
-                                                  'text': 'As he removed his helmet, {0} noticed two empty excursion suit alcoves and wondered who else was outside the hab. Ad-hoc departures weren\'t that unusual. Even Martian research stations have fences that need mending. The lights flickered briefly and {0} detected the caustic smell of overheated electronics. "That can\'t be good", he told himself. After stowing his suit in an open alcove {0} headed for the door of the crew meeting area at the far end of the equipment bay.'.format(
+                                                  'text': 'As he removed his helmet, {0} noticed three empty excursion suit alcoves and wondered who else was outside the hab. Ad-hoc departures weren\'t that unusual. Even Martian research stations have fences that need mending. The lights flickered briefly and {0} detected the caustic smell of overheated electronics. "That can\'t be good", he told himself. After stowing his suit in an open alcove {0} headed for the door of the crew meeting area at the far end of the equipment bay.'.format(
                                                       player_config['name'])}},
                 {'coordinates': (4, 8), 'story': None},
                 {'coordinates': (3, 6), 'story': None},
@@ -369,7 +370,7 @@ level_config = {
                     'type': 'generic',
                     'name': 'suit_1',
                     'description': 'excursion suit',
-                    'report': 'It\'s a standard excursion suit with the name Tonia Cherneyev on it.',
+                    'report': 'It\'s a standard excursion suit with a name plate that reads "Tonia Cherneyev - Mission Commander".',
                     'inspectable': True,
                     'visible': True,
                     'interactive': False,
@@ -381,7 +382,7 @@ level_config = {
                     'type': 'generic',
                     'name': 'suit_2',
                     'description': 'excursion suit',
-                    'report': 'It\'s a standard excursion suit with the name John Doe on it.',
+                    'report': 'It\'s a standard excursion suit with a name plate that reads "James O\'Reilly - Systems Engineer".',
                     'inspectable': True,
                     'visible': True,
                     'interactive': False,
@@ -393,7 +394,7 @@ level_config = {
                     'type': 'generic',
                     'name': 'suit_3',
                     'description': 'excursion suit',
-                    'report': 'It\'s a standard excursion suit with a name plate that reads "Marcus LeMaire - Chief Science Officer".',
+                    'report': 'It\'s a standard excursion suit with a name plate that reads "Marcus LeMaire - Science Officer".',
                     'inspectable': True,
                     'visible': True,
                     'interactive': False,
@@ -529,15 +530,29 @@ level_config = {
                 {'coordinates': (4, 2), 'story': None},
                 {'coordinates': (5, 2), 'story': None},
                 {'coordinates': (6, 2), 'story': None},
-                {'coordinates': (4, 5), 'story': {'title': None,
-                                                  'text': '{0} tried again to establish radio contact as he stepped through the broken door, it\'s safety mechanism drawing it closed behind him, "Tonia, this is {0}. Do you read me? Over."...nothing. There was grey-blue smoke lingering in the air and the lights were out on the opposite side of the crew room. {0} considered getting his suit but realized there was no way back. The door couldn\'t be forced from this side. "Looks like there\'s no way out but through", he thougt as he cautiously stepped toward the meeting table.'.format(
-                                                      player_config['name'])}},
+                {'coordinates': (4, 5), 'story': {
+                    'title': None,
+                    'text': ('{0} called out as he stepped through the broken door, it\'s safety mechanism drawing it '
+                             'closed behind him, "Hello? Tonia, Jim, is there anybody here?" Nothing. There was '
+                             'grey-blue smoke lingering in the air and the lights were out on the opposite side of the '
+                             'crew room. {0} considered getting his suit but realized there was no way back. The door '
+                             'couldn\'t be forced from this side. He stepped toward the meeting table cautiously, '
+                             'scanning for any clue that might explain what was happening.').format(
+                        player_config['name'])}},  # level entrance
                 {'coordinates': (4, 6), 'story': None},
                 {'coordinates': (4, 0), 'story': None},
                 {'coordinates': (4, 1), 'story': None},
-                {'coordinates': (1, 3), 'story': {'title': None,
-                                                  'text': '{0} looked out the habitat window. He could see the opposing crater rim about a kilometer away. They were lucky, he thought, that The Agency had selected this site. The lake that once filled the crater had escaped eons ago when a portion of the crater wall collapsed, leaving behind a passable access route. A last remnant of the lake still existed as tons of water ice along the perpetually shaded southern wall while near to the center of crater the stirling reactors produced power for the habitat at a safe distance. The hab itself, nestled along the northeastern wall, adjacent to the subterranean portion of the base, was well protected from the prevailing, dusty winds above.'.format(
-                                                      player_config['name'])}},
+                {'coordinates': (1, 3), 'story': {
+                    'title': None,
+                    'text': '{0} looked out the habitat window. He could see the opposing crater rim about a kilometer '
+                            'away. He often thought they were lucky that The Agency selected this site. The lake that '
+                            'once filled the crater had escaped eons ago when a portion of the crater wall collapsed, '
+                            'leaving behind a passable access route. A last remnant of the lake still existed as tons '
+                            'of water ice along the perpetually shaded southern wall while near the center of the '
+                            'crater the stirling reactors produced power for the habitat at a safe distance. The hab '
+                            'itself, nestled along the northeastern wall, adjacent to the subterranean portion of the '
+                            'base, was well protected from the prevailing, dusty winds above.'.format(
+                        player_config['name'])}},  # window view
                 {'coordinates': (7, 3), 'story': None},
                 {'coordinates': (8, 3), 'story': None}
             ],
@@ -554,7 +569,7 @@ level_config = {
                     'interactive': True,
                     'blocking': False,
                     'x': 4,
-                    'y': 1
+                    'y': 0
                 }  # bundle of wires
             ],
             'artifacts': [
@@ -958,7 +973,7 @@ level_config = {
                     'x': 4,
                     'y': 8,
                     'orientation': 0,
-                    'msg_action_verb': 'use'
+                    'msg_action_verb': 'login to'
                 }  # system terminal
             ],
             'devices': [
