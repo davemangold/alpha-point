@@ -1426,18 +1426,30 @@ level_config = {
                 },  # door circuit toggleswitch
                 {
                     'id': 2,
+                    'name': 'console',
+                    'description': 'sensor console',
+                    'type': 'console',
+                    'enabled': True,
+                    'corrupt': False,
+                    'x': 0,
+                    'y': 1,
+                    'orientation': 2,
+                    'msg_action_verb': 'use'
+                },  # sensor console
+                {
+                    'id': 3,
                     'name': 'system',
                     'description': 'system terminal',
                     'type': 'terminal',
                     'enabled': True,
-                    'corrupt': True,
+                    'corrupt': False,
                     'x': 4,
                     'y': 4,
                     'orientation': 0,
                     'msg_action_verb': 'use'
                 },  # system terminal
                 {
-                    'id': 3,
+                    'id': 4,
                     'name': 'exit door button',
                     'description': 'button',
                     'type': 'button',
@@ -1558,7 +1570,17 @@ level_config = {
                     'min_value': 0,
                     'max_value': 10,
                     'increment': 2,
-                }
+                },  # voltage
+                {
+                    'id': 1,
+                    'name': 'pressure',
+                    'description': 'outside pressure',
+                    'type': 'pressure',
+                    'value': 40,
+                    'min_value': 0,
+                    'max_value': 50,
+                    'increment': 0,
+                }  # voltage
             ],
             'links': [
                 {'interface_id': 0, 'device_id': 0},
@@ -1566,11 +1588,15 @@ level_config = {
                 {'interface_id': 1, 'device_id': 4},
                 {'interface_id': 2, 'device_id': 1},
                 {'interface_id': 2, 'device_id': 2},
-                {'interface_id': 2, 'device_id': 3},
-                {'interface_id': 3, 'device_id': 2}
+                {'interface_id': 2, 'device_id': 4},
+                {'interface_id': 3, 'device_id': 1},
+                {'interface_id': 3, 'device_id': 2},
+                {'interface_id': 3, 'device_id': 3},
+                {'interface_id': 4, 'device_id': 2}
             ],
             'relates': [
                 {'device_id': 1, 'property_id': 0},
+                {'device_id': 2, 'property_id': 1},
                 {'device_id': 4, 'property_id': 0}
             ],
             'deaths': []

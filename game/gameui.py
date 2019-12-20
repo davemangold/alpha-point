@@ -735,12 +735,12 @@ class TerminalUI(BaseUI):
                 if asroot:
                     self.output = valid_commands[command_key](*command_args)
                 else:
-                    raise error.CommandError('Permission denied.')
+                    raise error.CommandError('Permission denied. Try sudo [command].')
             elif command_key == 'set-device':
                 if asroot:
                     self.output = valid_commands[command_key](*command_args)
                 else:
-                    raise error.CommandError('Permission denied.')
+                    raise error.CommandError('Permission denied. Try sudo [command].')
             else:
                 raise error.CommandError('Command \'{0}\' not found.'.format(command))
 
@@ -895,7 +895,7 @@ class TerminalUI(BaseUI):
         self.game.ui = self.previous_ui
 
 
-# TODO: implement sensor console UI (pass in console linked to sensors related to properties)
+# TODO: complete sensor console (get_sensor_readout)
 class ConsoleUI(BaseUI):
     """Game user interface for a sensor console object."""
 
@@ -904,7 +904,7 @@ class ConsoleUI(BaseUI):
         self.console = console
         self.previous_ui = self.game.ui
         self.flicker = True
-        self.corrupt = self.terminal.corrupt
+        self.corrupt = self.console.corrupt
 
     @property
     def flicker(self):
@@ -941,77 +941,38 @@ class ConsoleUI(BaseUI):
     def process_input(self, value):
         """Call the appropriate method based on input value."""
 
-        try:
-            # process action input
-            if value.isdigit():
-                self.terminal.do_action(int(value))
-            # process quit input
-            elif value == 'q':
-                self.leave()
-            # the value wasn't handled
-            else:
-                self.alert = "Unrecognized command."
-        except error.ActionError:
-            self.alert = "Unrecognized command."
+        self.leave()
 
     def prompt(self):
         """Prompt the player for input."""
 
-        message = self.decorate_ui(
-            "{0}@apex-{1}:~$ ".format(self.game.player.name, '-'.join(self.terminal.name.split())))
-
-        while True:
-            # update the display
-            self.display()
-            response = self.game.control.get_input(message=message)
-            if utility.is_empty_response(response):
-                continue
-            return response
+        self.display()
+        message = self.decorate_ui("Press Enter to return...")
+        print(message)
+        response = self.game.control.get_keypress()
+        return response
 
     def get_ui(self):
         """Get the full UI text."""
 
         ui_elements = []
 
-        ui_commands = self.get_commands()
-        ui_welcome = self.get_welcome()
-        ui_alert = self.get_alert()
-        ui_action = self.get_action()
+        ui_report_text = self.get_sensor_readout()
 
-        ui_elements.append(ui_commands)
         ui_elements.append(self.separator)
-        ui_elements.append(ui_welcome)
-        if ui_action is not None:
-            ui_elements.append(ui_action)
-        if ui_alert is not None:
-            ui_elements.append(ui_alert)
+        ui_elements.append(ui_report_text)
         ui_elements.append(self.separator)
 
         return '\n' + '\n\n'.join(ui_elements) + '\n'
 
-    def get_action(self):
-        """Return the text that represents available action."""
+    def get_sensor_readout(self):
+        """Get the readout for sensors connected to the console."""
 
-        ui_actions = None
-        ui_actions_list = []
-        for key, action in sorted(self.terminal.actions.items()):
-            ui_actions_list.append('{0}. {1}'.format(key, action.description))
-        if len(ui_actions_list) > 0:
-            ui_actions = '\n'.join(ui_actions_list)
+        properties = list(set([p for device in self.game.level.system.get_interface_devices(self.console)
+                               for p in self.game.level.system.get_device_properties(device)]))
 
-        return ui_actions
-
-    def get_commands(self):
-        """Return the universal commands."""
-
-        commands = ('q - leave the {0}'.format(self.terminal))
-
-        return commands
-
-    def get_welcome(self):
-        """Return terminal welcome message text."""
-
-        return "Terminal {0}".format(self.terminal.address)
+        readout_text = '\n'.join('{0}: {1}'.format(p.description, p.value) for p in properties)
+        return readout_text
 
     def display(self):
         """Display the UI."""
@@ -1080,7 +1041,8 @@ class ConsoleUI(BaseUI):
         print(self.decorate_ui(self.get_ui()))
 
     def leave(self):
-        # reset gameui to the ui that was active at the time this was created
+        """Return to the previous UI."""
+
         self.game.ui = self.previous_ui
 
 

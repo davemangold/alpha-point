@@ -161,6 +161,8 @@ class InterfaceFactory(object):
             return Toggleswitch(system, *args, **kwargs)
         if interface_type.lower() == 'handwheel':
             return Handwheel(system, *args, **kwargs)
+        if interface_type.lower() == 'console':
+            return Console(system, *args, **kwargs)
         # if interface_type.lower() == 'viewer':
         #     return Viewer(system)
         # if interface_type.lower() == 'console':
