@@ -1,7 +1,5 @@
-import os
-import platform
-
-operating_system = platform.system().lower()
+import utility
+operating_system = utility.get_os()
 
 # windows
 if operating_system == 'windows':
@@ -9,16 +7,20 @@ if operating_system == 'windows':
 
 # linux
 elif operating_system == 'linux':
-    import sys, termios, tty, os, time
+    import sys
+    import termios
+    import tty
 
     def getch():
         fd = sys.stdin.fileno()
         old_settings = termios.tcgetattr(fd)
+
         try:
             tty.setraw(sys.stdin.fileno())
             ch = sys.stdin.read(1)
         finally:
             termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+
         return ch
 
 # not supported

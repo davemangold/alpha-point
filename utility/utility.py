@@ -1,3 +1,4 @@
+import platform
 from config import game_config
 from config import level_config
 
@@ -7,6 +8,12 @@ ARTICLE_MAP = game_config['ui']['articles']['mapped']
 
 
 # functions
+def get_os():
+    """Returns base operating system name."""
+
+    return platform.system().lower()
+
+
 def is_empty_response(response):
     """Returns True if the response is valid, otherwise False."""
 

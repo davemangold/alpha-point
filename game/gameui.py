@@ -25,7 +25,14 @@ class BaseUI(object):
     def clear_screen():
         """Clear the screen."""
 
-        os.system('cls')
+        operating_system = utility.get_os()
+
+        if operating_system == 'windows':
+            os.system('cls')
+        elif operating_system == 'linux':
+            os.system('clear')
+        else:
+            raise SystemError('Operating system {0} not supported.'.format(operating_system))
 
     def decorate_ui(self, ui_text):
 
