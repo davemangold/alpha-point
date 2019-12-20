@@ -1275,15 +1275,3 @@ class GameCompleteUI(BaseUI):
     def leave(self):
         # return to the main Levels UI
         self.game.ui = LevelsUI(self.game)
-
-
-# TODO: Complete command parser if needed
-class CommandParser(object):
-    """Parse system terminal commands."""
-
-    def __init__(self):
-        pass
-
-    def parse(self, command):
-        """Parse a command."""
-        pass
