@@ -5,7 +5,7 @@ class GameObject(object):
     """Base class for all game objects."""
 
     def __init__(self, *args, **kwargs):
-        self.id = str(uuid4())
+        self.id = str(uuid4()).split('-')[0]
         self.config_id = None
         self.name = ''
         self.description = 'generic object'

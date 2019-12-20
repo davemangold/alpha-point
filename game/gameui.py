@@ -579,7 +579,6 @@ class InventoryUI(BaseUI):
         self.game.ui = self.previous_ui
 
 
-# TODO: enable terminal to process system commands (hackable, sudo keyword)
 class TerminalUI(BaseUI):
     """Game user interface for a system terminal object."""
 
@@ -633,42 +632,117 @@ class TerminalUI(BaseUI):
     def process_command(self, command):
         """Process a system terminal command."""
 
-        def list_devices():
+        # command functions
+        def help():
 
-            return '\n'.join('{0} ({1})'.format(d, d.id) for d in self.game.level.system.devices)
+            return ('help\n'
+                    'exit\n'
+                    'clear\n'
+                    'get-device [id]\n'
+                    'set-device [id -active value]')
 
-        def activate_device(device_id):
+        def exit():
+            self.leave()
+
+        def clear():
             pass
 
-        def deactivate_device(device_id):
-            pass
+        def get_device(*args):
+            # args: {id} optional
+
+            try:
+                device_id = args[0]
+            except IndexError:
+                device_id = None
+
+            devices = [d for d in self.game.level.system.devices]
+
+            if device_id is not None:
+                devices = [d for d in devices if d.id == device_id]
+
+            if len(devices) > 0:
+                return '\n\n'.join([
+                    '{0}: {1}\n  '
+                      'inet6 {2}\n  '
+                      'enabled: {3}\n  '
+                      'active: {4}'.format(d.id, d.name, d.address, d.enabled, d.active)
+                    for d in devices])
+            else:
+                raise error.CommandError('Device not found.')
+
+        def set_device(*args):
+            # args: {id} {-property} {value}
+
+            # property name: valid values
+            valid_properties = {'active': (0, 1)}
+
+            try:
+                device_id = args[0]
+                property_name = args[1].replace('-', '')
+                property_value = int(args[2])
+            except IndexError:
+                raise error.CommandError('Missing arguments for set-device.')
+            except (AttributeError, ValueError):
+                raise error.CommandError('Invalid arguments for set-device.')
+
+            if property_name not in valid_properties:
+                raise error.CommandError('Invalid arguments for set-device.')
+
+            if property_value not in valid_properties[property_name]:
+                raise error.CommandError('Invalid arguments for set-device.')
+            else:
+                property_value = bool(property_value)
+
+            device = self.game.level.system.get_device(device_id=device_id)
+
+            if device is None:
+                raise error.CommandError('Device not found.')
+
+            if property_name == 'active':
+                if property_value is True:
+                    result = self.game.level.system.activate_device(device)
+                else:
+                    result = self.game.level.system.deactivate_device(device)
+
+            if isinstance(result, str):
+                raise error.CommandError(result)
 
         valid_commands = {
-            'list -device': list_devices,
-            'activate -device': activate_device,
-            'deactivate -device': deactivate_device
+            'help': help,
+            'exit': exit,
+            'clear': clear,
+            'get-device': get_device,
+            'set-device': set_device
         }
 
-        parts = command.strip().lower().split()
-        clean = ' '.join(parts[1:])
+        asroot = False
+        clean = command.lower().strip()
+        parts = clean.split()
 
-        if parts[0] != 'sudo':
-            raise error.CommandError('Unauthorized command: {0}'.format(command))
+        if parts[0] == 'sudo':
+            asroot = True
+            parts = parts[1:]
 
-        if len(parts) == 3:
-
-            if clean == 'list -device':
-                self.output = valid_commands[clean]()
-            else:
-                raise error.CommandError('Invalid command: {0}'.format(command))
-
-        elif len(parts) == 4:
-
-            raise error.CommandError('Invalid command: {0}'.format(command))
-
+        if len(parts) == 0:
+            if asroot:
+                raise error.CommandError('Specify command to execute as root.'.format(command))
         else:
-
-            raise error.CommandError('Invalid command: {0}'.format(command))
+            command_key = parts[0]
+            command_args = parts[1:]
+            if command_key in ('help', 'exit', 'clear'):
+                self.output = valid_commands[command_key]()
+            elif command_key == 'get-device':
+                if asroot:
+                    self.output = valid_commands[command_key](*command_args)
+                else:
+                    raise error.CommandError('Permission denied.')
+            elif command_key == 'set-device':
+                if asroot:
+                    self.output = valid_commands[command_key](*command_args)
+                else:
+                    raise error.CommandError('Permission denied.')
+            else:
+                raise error.CommandError('Command \'{0}\' not found.'.format(command))
 
     def process_input(self, value):
         """Call the appropriate method based on input value."""
