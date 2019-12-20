@@ -1,4 +1,29 @@
-from msvcrt import getch
+import os
+import platform
+
+operating_system = platform.system().lower()
+
+# windows
+if operating_system == 'windows':
+    from msvcrt import getch
+
+# linux
+elif operating_system == 'linux':
+    import sys, termios, tty, os, time
+
+    def getch():
+        fd = sys.stdin.fileno()
+        old_settings = termios.tcgetattr(fd)
+        try:
+            tty.setraw(sys.stdin.fileno())
+            ch = sys.stdin.read(1)
+        finally:
+            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+        return ch
+
+# not supported
+else:
+    raise SystemError('Operating system {0} not supported.'.format(operating_system))
 
 
 class Control(object):
