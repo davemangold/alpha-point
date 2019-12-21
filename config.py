@@ -1569,6 +1569,7 @@ level_config = {
                     'value': 5,
                     'min_value': 0,
                     'max_value': 10,
+                    'units': 'V',
                     'increment': 2,
                 },  # voltage
                 {
@@ -1579,6 +1580,7 @@ level_config = {
                     'value': 40,
                     'min_value': 0,
                     'max_value': 50,
+                    'units': 'Atm.',
                     'increment': 0,
                 }  # voltage
             ],

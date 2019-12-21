@@ -62,6 +62,7 @@ class System(object):
             new_property.description = config_property['description']
             new_property.min_value = config_property['min_value']
             new_property.max_value = config_property['max_value']
+            new_property.units = config_property['units']
             new_property.increment = config_property['increment']
             new_property.value = config_property['value']
 

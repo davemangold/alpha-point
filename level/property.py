@@ -15,7 +15,8 @@ class Property(object):
         self.description = 'property'
         self.min_value = 0
         self.max_value = 0
-        self.increment = 1
+        self.units = ''
+        self.increment = 0
         self.msg_action_verb = 'examine'
         self._value = 0
         self.__add_to_system()
