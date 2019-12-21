@@ -53,20 +53,20 @@ class Control(object):
         while True:
 
             keycode = ord(getch())
+            print(keycode)  # TODO: remove
 
-            # enter
-            if keycode == 13:
-                return keycode
-            # q, r, i
-            if keycode in (113, 114, 105):
+            # enter, i, q, r
+            if keycode in (13, 105, 113, 114):
                 return keycode
             # digits (0-9)
             if 48 <= keycode <= 57:
                 return self.DIGITS[keycode]
 
+            # TODO: fix for linux
             elif keycode == 224:  # special keys (arrows, f-keys, etc...)
 
                 keycode = ord(getch())
+                print(keycode)  # TODO: remove
 
                 # arrow-up, arrow-left, arrow-right, arrow-down
                 if keycode in (72, 75, 77, 80):
