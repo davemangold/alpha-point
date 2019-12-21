@@ -975,6 +975,8 @@ class ConsoleUI(BaseUI):
     def get_sensor_readout(self):
         """Get the readout for sensors connected to the console."""
 
+        # use utility function
+
         properties = list(set([p for device in self.game.level.system.get_interface_devices(self.console)
                                for p in self.game.level.system.get_device_properties(device)]))
 

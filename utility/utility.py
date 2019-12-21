@@ -191,6 +191,14 @@ def build_object_report_text(orientation, d4_objects):
     return report
 
 
+def build_sensor_readout_text(console):
+    """Return text to display in sensor console."""
+
+    # no attached sensors
+
+    # attached sensors
+
+
 def merge_dicts(a, b):
     """Merge two dictionaries."""
 
