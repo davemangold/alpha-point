@@ -43,6 +43,14 @@ class Control(object):
         self.RIGHT = 77
         self.DOWN = 80
         self.NULL = -1
+        self._lookup = {
+            'special': {  # remap special keys from linux to windows codes
+                65: 72,
+                68: 75,
+                67: 77,
+                66: 80
+            }
+        }
 
     def get_input(self, message):
 
@@ -53,7 +61,6 @@ class Control(object):
         while True:
 
             keycode = ord(getch())
-            print(keycode, 'test')  # TODO: remove
 
             # enter, i, q, r
             if keycode in (13, 105, 113, 114):
@@ -62,12 +69,24 @@ class Control(object):
             if 48 <= keycode <= 57:
                 return self.DIGITS[keycode]
 
-            # TODO: fix for linux
-            elif keycode == 224:  # special keys (arrows, f-keys, etc...)
+            if operating_system == 'windows':
+                if keycode == 224:  # special keys (arrows, f-keys, etc...)
 
-                keycode = ord(getch())
-                print(keycode, 'test')  # TODO: remove
+                    keycode = ord(getch())
 
-                # arrow-up, arrow-left, arrow-right, arrow-down
-                if keycode in (72, 75, 77, 80):
-                    return keycode
+                    # arrow-up, arrow-left, arrow-right, arrow-down
+                    if keycode in (72, 75, 77, 80):
+                        return keycode
+
+            if operating_system == 'linux':
+                print(keycode)
+                if keycode == 27:  # special keys (arrows, f-keys, etc...)
+
+                    trash = getch()
+                    keycode = ord(getch())
+
+                    # arrow-up, arrow-left, arrow-right, arrow-down
+                    if keycode in (65, 68, 67, 66):
+                        return self._lookup['special'][keycode]
+
+            return
