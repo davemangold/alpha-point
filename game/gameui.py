@@ -3,12 +3,12 @@ import sys
 import time
 import error
 import utility
+from gameobject.component.device import Sensor
 from random import random
 from random import randrange
 from random import choices
 from random import sample
 from collections import Counter
-from gameobject.component.device import Sensor
 from config import game_config
 from config import level_config
 
@@ -638,7 +638,7 @@ class TerminalUI(BaseUI):
         return output
 
     def process_command(self, command):
-        """Process a system terminal command."""
+        """Process system terminal commands."""
 
         # command functions
         def help():
