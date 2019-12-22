@@ -1558,7 +1558,45 @@ level_config = {
                     'msg_toggle_active_false': 'That electric hum went away.',
                     'msg_unmet_dependencies': 'The circuit switch isn\'t responding.',
                     'dependencies': []
-                }  # door circuit switch
+                },  # door circuit switch
+                {
+                    'id': 5,
+                    'name': 'voltage sensor',
+                    'description': 'circuit voltage sensor',
+                    'type': 'sensor',
+                    'enabled': True,
+                    'active': True,
+                    'visible': False,
+                    'x': 3,
+                    'y': 1,
+                    'msg_action_true': 'turn on',
+                    'msg_action_false': 'turn off',
+                    'msg_active_true': 'The sensor is on.',
+                    'msg_active_false': 'The sensor is off.',
+                    'msg_toggle_active_true': 'The sensor turned on.',
+                    'msg_toggle_active_false': 'THe sensor turned off.',
+                    'msg_unmet_dependencies': 'The sensor is inoperable.',
+                    'dependencies': []
+                },  # voltage sensor
+                {
+                    'id': 6,
+                    'name': 'pressure sensor',
+                    'description': 'outside pressure sensor',
+                    'type': 'sensor',
+                    'enabled': True,
+                    'active': True,
+                    'visible': False,
+                    'x': 3,
+                    'y': 1,
+                    'msg_action_true': 'turn on',
+                    'msg_action_false': 'turn off',
+                    'msg_active_true': 'The sensor is on.',
+                    'msg_active_false': 'The sensor is off.',
+                    'msg_toggle_active_true': 'The sensor turned on.',
+                    'msg_toggle_active_false': 'THe sensor turned off.',
+                    'msg_unmet_dependencies': 'The sensor is inoperable.',
+                    'dependencies': []
+                },  # pressure sensor
             ],
             'properties': [
                 {
@@ -1582,15 +1620,14 @@ level_config = {
                     'max_value': 50,
                     'units': 'Atm.',
                     'increment': 0,
-                }  # voltage
+                }  # pressure
             ],
             'links': [
                 {'interface_id': 0, 'device_id': 0},
                 {'interface_id': 1, 'device_id': 1},
                 {'interface_id': 1, 'device_id': 4},
-                {'interface_id': 2, 'device_id': 1},
-                {'interface_id': 2, 'device_id': 2},
-                {'interface_id': 2, 'device_id': 4},
+                {'interface_id': 2, 'device_id': 5},
+                {'interface_id': 2, 'device_id': 6},
                 {'interface_id': 3, 'device_id': 1},
                 {'interface_id': 3, 'device_id': 2},
                 {'interface_id': 3, 'device_id': 3},
@@ -1599,7 +1636,9 @@ level_config = {
             'relates': [
                 {'device_id': 1, 'property_id': 0},
                 {'device_id': 2, 'property_id': 1},
-                {'device_id': 4, 'property_id': 0}
+                {'device_id': 4, 'property_id': 0},
+                {'device_id': 5, 'property_id': 0},
+                {'device_id': 6, 'property_id': 1}
             ],
             'deaths': []
         }
