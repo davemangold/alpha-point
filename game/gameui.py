@@ -572,7 +572,7 @@ class InventoryUI(BaseUI):
         return ui_items
 
     def get_welcome(self):
-        """Return terminal welcome message text."""
+        """Return inventory welcome message text."""
 
         return "Inventory"
 
@@ -964,9 +964,11 @@ class ConsoleUI(BaseUI):
 
         ui_elements = []
 
+        ui_welcome = self.get_welcome()
         ui_report_text = self.get_sensor_readout()
 
         ui_elements.append(self.separator)
+        ui_elements.append(ui_welcome)
         ui_elements.append(ui_report_text)
         ui_elements.append(self.separator)
 
@@ -979,6 +981,11 @@ class ConsoleUI(BaseUI):
                    if isinstance(d, Sensor)]
 
         return utility.build_sensor_readout_text(sensors)
+
+    def get_welcome(self):
+        """Return sensor console welcome message text."""
+
+        return "Measurements"
 
     def display(self):
         """Display the UI."""
@@ -1024,12 +1031,166 @@ class ConsoleUI(BaseUI):
 
         add_gaps = int((data_cols - hextet_gaps) / number)
 
+        data = [[
+            ''.join(choices(hex_digits, k=hextet_size))
+            for m in range(data_cols)]
+            for n in range(data_rows)]
+
         for n in range(number):
 
-            data = [[
-                ''.join(choices(hex_digits, k=hextet_size))
-                for m in range(data_cols)]
-                for n in range(data_rows)]
+            for row in data:
+                for i in sample(range(data_cols), hextet_gaps):
+                    row[i] = ' ' * hextet_size
+
+            corrupted_text = '\n'.join([' '.join(row) for row in data])
+
+            self.clear_screen()
+            print(self.decorate_ui(utility.merge_text(ui_text, corrupted_text)))
+            time.sleep(duration)
+
+            hextet_gaps += add_gaps
+
+        self.clear_screen()
+        print(self.decorate_ui(self.get_ui()))
+
+    def leave(self):
+        """Return to the previous UI."""
+
+        self.game.ui = self.previous_ui
+
+
+class WeatherStationUI(BaseUI):
+    """Game user interface for a weather station object."""
+
+    def __init__(self, weather_station, *args, **kwargs):
+        super(WeatherStationUI, self).__init__(weather_station.system.level.game, *args, **kwargs)
+        self.weather_station = weather_station
+        self.previous_ui = self.game.ui
+        self.flicker = True
+        self.corrupt = self.weather_station.corrupt
+
+    @property
+    def flicker(self):
+
+        return self._flicker
+
+    @flicker.setter
+    def flicker(self, value):
+
+        if not isinstance(value, bool):
+            raise ValueError("Property flicker must be a boolean value.")
+
+        if value is True:
+            self._corrupt = not value
+
+        self._flicker = value
+
+    @property
+    def corrupt(self):
+
+        return self._corrupt
+
+    @corrupt.setter
+    def corrupt(self, value):
+
+        if not isinstance(value, bool):
+            raise ValueError("Property corrupt must be a boolean value.")
+
+        if value is True:
+            self._flicker = not value
+
+        self._corrupt = value
+
+    def process_input(self, value):
+        """Call the appropriate method based on input value."""
+
+        self.leave()
+
+    def prompt(self):
+        """Prompt the player for input."""
+
+        self.display()
+        message = self.decorate_ui("Press Enter to return...")
+        print(message)
+        response = self.game.control.get_keypress()
+        return response
+
+    def get_ui(self):
+        """Get the full UI text."""
+
+        ui_elements = []
+
+        ui_welcome = self.get_welcome()
+        ui_report_text = self.get_weather_readout()
+
+        ui_elements.append(self.separator)
+        ui_elements.append(ui_welcome)
+        ui_elements.append(ui_report_text)
+        ui_elements.append(self.separator)
+
+        return '\n' + '\n\n'.join(ui_elements) + '\n'
+
+    def get_weather_readout(self):
+        """Get the readout for current weather."""
+
+        return utility.build_weather_readout_text(self.game)
+
+    def get_welcome(self):
+        """Return weather station welcome message text."""
+
+        return "Weather"
+
+    def display(self):
+        """Display the UI."""
+
+        self.game.weather_thread.join()
+        self.clear_screen()
+        print(self.decorate_ui(self.get_ui()))
+
+        if self.flicker is True:
+            self.display_flicker()
+            self.flicker = False
+
+        elif self.corrupt is True:
+            self.display_corrupt()
+            self.corrupt = False
+
+    def display_flicker(self):
+        """Flicker the terminal display."""
+
+        duration = 0.05
+        number = randrange(2, 3, 1)
+        intervals = [random() * duration for i in range(number)]
+
+        for i in intervals:
+            self.clear_screen()
+            time.sleep(i)
+            print(self.decorate_ui(self.get_ui()))
+
+    def display_corrupt(self):
+        """Build the terminal display with corrupted data."""
+
+        ui_text = self.get_ui()
+        hex_digits = ['0', '1', '2', '3', '4', '5', '6', '7',
+                      '8', '9', 'A', 'B', 'C', 'D', 'E', 'F']
+
+        hextet_size = 4
+        hextet_gaps = 4
+
+        data_cols = int(self.width / (hextet_size + 1))  # + 1 to account for spaces
+        data_rows = len(self.get_ui().split('\n')) + 2  # + 2 to account for prompt
+
+        duration = 0.3
+        number = 6
+
+        add_gaps = int((data_cols - hextet_gaps) / number)
+
+        data = [[
+            ''.join(choices(hex_digits, k=hextet_size))
+            for m in range(data_cols)]
+            for n in range(data_rows)]
+
+        for n in range(number):
 
             for row in data:
                 for i in sample(range(data_cols), hextet_gaps):

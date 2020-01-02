@@ -2,6 +2,7 @@ import platform
 from config import game_config
 from config import level_config
 
+
 # constants
 DEFAULT_ARTICLE = game_config['ui']['articles']['default']
 ARTICLE_MAP = game_config['ui']['articles']['mapped']
@@ -197,6 +198,31 @@ def build_sensor_readout_text(sensors):
 
     properties = sorted([p for s in sensors for p in s.get_properties()], key=lambda x: x.description)
     readout_text = '\n'.join(['{0}: {1}'.format(p.description, p.value) for p in properties])
+    return readout_text
+
+
+def build_weather_readout_text(game):
+    """Return text to display in weather station"""
+
+    weather_data = game.weather_data
+
+    readout_text = '\n'.join([
+        'Sol/Time: {0} {1}'.format(
+            weather_data['sol'],
+            weather_data['time']),
+        'Temperature: {0} {1}'.format(
+            weather_data['temperature']['value'],
+            weather_data['temperature']['units']),
+        'Wind speed: {0} {1}'.format(
+            weather_data['wind']['speed']['value'],
+            weather_data['wind']['speed']['units']),
+        'Wind direction: {0} {1}'.format(
+            weather_data['wind']['direction']['value'],
+            weather_data['wind']['direction']['units']),
+        'Pressure: {0} {1}'.format(
+            weather_data['pressure']['value'],
+            weather_data['pressure']['units'])])
+
     return readout_text
 
 

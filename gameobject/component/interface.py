@@ -1,6 +1,7 @@
 import error
 from game.gameui import TerminalUI
 from game.gameui import ConsoleUI
+from game.gameui import WeatherStationUI
 from gameobject.component import Component
 from action import Action
 
@@ -145,6 +146,22 @@ class Console(Interface):
 
         self.system.level.game.ui = ConsoleUI(self)
 
+
+class WeatherStation(Interface):
+    """A station that provides local weather (actual Mars weather from NASA InSight lander)."""
+
+    def __init__(self, *args, **kwargs):
+        super(WeatherStation, self).__init__(*args, **kwargs)
+        self.name = 'weather station'
+        self.description = 'weather station'
+        self.msg_action_verb = 'use'
+
+    def use(self):
+        """Interface loop that allows player to interact with the interface."""
+
+        self.system.level.game.ui = WeatherStationUI(self)
+
+
 # Interface factory
 
 
@@ -163,8 +180,8 @@ class InterfaceFactory(object):
             return Handwheel(system, *args, **kwargs)
         if interface_type.lower() == 'console':
             return Console(system, *args, **kwargs)
+        if interface_type.lower() == 'weatherstation':
+            return WeatherStation(system, *args, **kwargs)
         # if interface_type.lower() == 'viewer':
         #     return Viewer(system)
-        # if interface_type.lower() == 'console':
-        #     return Console(system)
         raise error.FactoryError("The specified interface type does not exist.")

@@ -226,7 +226,19 @@ level_config = {
                     'y': 0,
                     'orientation': 2,
                     'msg_action_verb': 'push'
-                }  # 2 - exit door button
+                },  # 2 - exit door button
+                {
+                    'id': 3,
+                    'name': 'weather',
+                    'description': 'weather station',
+                    'type': 'weatherstation',
+                    'enabled': True,
+                    'corrupt': False,
+                    'x': 2,
+                    'y': 3,
+                    'orientation': 3,
+                    'msg_action_verb': 'use'
+                }  # 3 weather station
             ],
             'devices': [
                 {
@@ -1430,7 +1442,7 @@ level_config = {
                     'description': 'sensor console',
                     'type': 'console',
                     'enabled': True,
-                    'corrupt': False,
+                    'corrupt': True,
                     'x': 0,
                     'y': 1,
                     'orientation': 2,
@@ -1442,7 +1454,7 @@ level_config = {
                     'description': 'system terminal',
                     'type': 'terminal',
                     'enabled': True,
-                    'corrupt': False,
+                    'corrupt': True,
                     'x': 4,
                     'y': 4,
                     'orientation': 0,
