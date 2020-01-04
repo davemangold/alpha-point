@@ -49,24 +49,24 @@ class Game(object):
             return '-' if value in (0, None) else value
 
         weather_data = {
-            'sol': '-',
-            'time': '-',
+            'sol': None,
+            'time': None,
             'temperature': {
-                'value': '-',
+                'value': None,
                 'units': 'C'
             },
             'wind': {
                 'speed': {
-                    'value': '-',
+                    'value': None,
                     'units': 'KPH'
                 },
                 'direction': {
-                    'value': '-',
+                    'value': None,
                     'units': 'Deg'
                 }
             },
             'pressure': {
-                'value': '-',
+                'value': None,
                 'units': 'Pa'
             }
         }
@@ -77,16 +77,16 @@ class Game(object):
             with urllib.request.urlopen(request_url) as response:
                 data = json.loads(response.read())
 
-            latest_sol = data['sol_keys'][0]
-            earliest_weather = data[latest_sol]  # not latest, but older days are more likely complete
+            latest_sol = data['sol_keys'][-1]
+            earliest_weather = data[latest_sol]
 
         except:
             return weather_data
 
         try:
-            timestring = datetime.now().strftime('%H:%M:%S')  # use current local time for game
+            time_string = datetime.now().strftime('%H:%M:%S')  # use current local time for game
             weather_data['sol'] = latest_sol
-            weather_data['time'] = timestring
+            weather_data['time'] = time_string
 
         except (ValueError, TypeError):  # bad or missing timestamp
             return weather_data
@@ -154,7 +154,7 @@ class Game(object):
         enter_coords = map_config['coord_enter']
         enter_orientation = map_config['orientation_enter']
 
-        self.player.orientation = enter_orientation  # set before player move
+        self.player.orientation = enter_orientation
         self.player.move_to(*enter_coords)
         self.player.inventory.clear_items()
 
@@ -185,7 +185,7 @@ class Game(object):
     def mainloop(self):
         """The main game loop."""
 
-        # initialize to zero if not previously set
+        # initialize highest completed level to zero if not previously set
         if self.save.get('highest_level') is None:
             self.save['highest_level'] = 0
 

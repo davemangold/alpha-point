@@ -201,24 +201,40 @@ def build_sensor_readout_text(sensors):
 def build_weather_readout_text(game):
     """Return text to display in weather station"""
 
+    def display_text(value, units):
+
+        if value is not None:
+            return ' '.join((str(value), units)).strip()
+
+        return 'NO DATA'
+
     weather_data = game.weather_data
 
+    sol = display_text(
+        weather_data['sol'],
+        '')
+    time = display_text(
+        weather_data['time'],
+        '')
+    temperature = display_text(
+        weather_data['temperature']['value'],
+        weather_data['temperature']['units'])
+    wind_speed = display_text(
+        weather_data['wind']['speed']['value'],
+        weather_data['wind']['speed']['units'])
+    wind_direction = display_text(
+        weather_data['wind']['direction']['value'],
+        weather_data['wind']['direction']['units'])
+    pressure = display_text(
+        weather_data['pressure']['value'],
+        weather_data['pressure']['units'])
+
     readout_text = '\n'.join([
-        'Sol/Time: {0} {1}'.format(
-            weather_data['sol'],
-            weather_data['time']),
-        'Temperature: {0} {1}'.format(
-            weather_data['temperature']['value'],
-            weather_data['temperature']['units']),
-        'Wind speed: {0} {1}'.format(
-            weather_data['wind']['speed']['value'],
-            weather_data['wind']['speed']['units']),
-        'Wind direction: {0} {1}'.format(
-            weather_data['wind']['direction']['value'],
-            weather_data['wind']['direction']['units']),
-        'Pressure: {0} {1}'.format(
-            weather_data['pressure']['value'],
-            weather_data['pressure']['units'])])
+        'Sol/Time: {0} {1}'.format(sol, time),
+        'Temperature: {0}'.format(temperature),
+        'Wind speed: {0}'.format(wind_speed),
+        'Wind direction: {0}'.format(wind_direction),
+        'Pressure: {0}'.format(pressure)])
 
     return readout_text
 
