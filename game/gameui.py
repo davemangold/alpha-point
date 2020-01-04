@@ -432,6 +432,7 @@ class MainUI(BaseUI):
             debug_text = (
                 'Player X: {0}'.format(self.game.player.x) + '\n' +
                 'Player Y: {0}'.format(self.game.player.y) + '\n' +
+                'Player orientation: {0}'.format(self.game.player.orientation) + '\n' +
                 'Visible items: {0}'.format(self.game.player.get_visible_items()) + '\n' +
                 'Visible devices: {0}'.format(self.game.player.get_visible_devices()) + '\n' +
                 'Visible interfaces: {0}'.format(self.game.player.get_visible_interfaces()) + '\n' +

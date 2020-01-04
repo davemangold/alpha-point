@@ -154,8 +154,8 @@ class Game(object):
         enter_coords = map_config['coord_enter']
         enter_orientation = map_config['orientation_enter']
 
+        self.player.orientation = enter_orientation  # set before player move
         self.player.move_to(*enter_coords)
-        self.player.orientation = enter_orientation
         self.player.inventory.clear_items()
 
     def setup(self, level_number):
