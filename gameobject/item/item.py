@@ -5,7 +5,7 @@ class Item(GameObject):
     """Base class for items found throughout the game."""
 
     def __init__(self, map, *args, **kwargs):
-        super(Item, self).__init__(*args, **kwargs)
+        super(Item, self).__init__(map.level.game, *args, **kwargs)
         self.map = map
         self.inventory = None
         self.description = 'generic item'

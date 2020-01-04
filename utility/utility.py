@@ -55,19 +55,16 @@ def d4_to_player_list(player_orientation, d4_objects_list):
     return player_object_list
 
 
-def d4_descriptions_match(d4_objects_list):
+def d4_duplicate_description(gameobject, d4_objects_list):
     """Returns True if there are any matching descriptions in the list of d4_objects, otherwise False."""
 
     d4_objects = []
 
     for obj_list in d4_objects_list:
         d4_objects += obj_list
-        d4_object_descriptions = [obj.description for obj in d4_objects]
+        d4_object_descriptions = [obj.description.strip().lower() for obj in d4_objects]
 
-    if len(d4_object_descriptions) > len(set(d4_object_descriptions)):
-        return True
-
-    return False
+    return gameobject.description.strip().lower() in d4_object_descriptions
 
 
 def get_direction(x1, y1, x2, y2):

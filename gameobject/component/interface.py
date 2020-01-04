@@ -3,6 +3,7 @@ from game.gameui import TerminalUI
 from game.gameui import ConsoleUI
 from game.gameui import WeatherStationUI
 from gameobject.component import Component
+from gameobject.component.device import Sensor
 from action import Action
 
 
@@ -140,6 +141,14 @@ class Console(Interface):
         self.name = 'monitor'
         self.description = 'monitor'
         self.msg_action_verb = 'use'
+
+    def get_sensors(self):
+        """Return list of sensors connected to the console."""
+
+        sensors = [d for d in self.system.get_interface_devices(self)
+                   if isinstance(d, Sensor)]
+
+        return sensors
 
     def use(self):
         """Interface loop that allows player to interact with the interface."""

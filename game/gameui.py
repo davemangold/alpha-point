@@ -3,7 +3,6 @@ import sys
 import time
 import error
 import utility
-from gameobject.component.device import Sensor
 from random import random
 from random import randrange
 from random import choices
@@ -977,10 +976,7 @@ class ConsoleUI(BaseUI):
     def get_sensor_readout(self):
         """Get the readout for sensors connected to the console."""
 
-        sensors = [d for d in self.game.level.system.get_interface_devices(self.console)
-                   if isinstance(d, Sensor)]
-
-        return utility.build_sensor_readout_text(sensors)
+        return utility.build_sensor_readout_text(self.console.get_sensors())
 
     def get_welcome(self):
         """Return sensor console welcome message text."""
