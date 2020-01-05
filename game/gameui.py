@@ -834,6 +834,7 @@ class TerminalUI(BaseUI):
 
         while True:
             # update the display
+            self.terminal.update_actions()
             self.display()
             response = self.game.control.get_input(message=message)
             if utility.is_empty_response(response):
@@ -869,6 +870,7 @@ class TerminalUI(BaseUI):
 
         ui_actions = None
         ui_actions_list = []
+
         for key, action in sorted(self.terminal.actions.items()):
             ui_actions_list.append('{0}. {1}'.format(key, action.description))
         if len(ui_actions_list) > 0:
