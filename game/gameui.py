@@ -549,13 +549,27 @@ class InventoryUI(BaseUI):
         response = self.game.control.get_keypress()
         return response
 
+    def get_commands(self):
+        """Return the universal commands."""
+
+        commands = (
+            '\n'
+            'up    - prev item\n'
+            'down  - next item'
+        )
+
+        return commands
+
     def get_ui(self):
         """Get the full UI text."""
 
         ui_elements = []
+
+        ui_commands = self.get_commands()
         ui_welcome = self.get_welcome()
         ui_items = self.get_items()
 
+        ui_elements.append(ui_commands)
         ui_elements.append(self.separator)
         ui_elements.append(ui_welcome)
         if ui_items is not None:
