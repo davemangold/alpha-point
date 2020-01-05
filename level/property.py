@@ -9,7 +9,7 @@ class Property(object):
 
     def __init__(self, system, *args, **kwargs):
         self.system = system
-        self.id = str(uuid4())
+        self.id = str(uuid4()).split('-')[0]
         self.config_id = None
         self.name = 'property'
         self.description = 'property'
