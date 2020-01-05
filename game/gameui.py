@@ -671,9 +671,9 @@ class TerminalUI(BaseUI):
             if len(devices) > 0:
                 return '\n\n'.join([
                     '{0}: {1}\n  '
-                      'inet6 {2}\n  '
-                      'enabled: {3}\n  '
-                      'active: {4}'.format(d.id, d.name, d.address, d.enabled, d.active)
+                    'address: {2}\n  '
+                    'enabled: {3}\n  '
+                    'active: {4}'.format(d.id, d.name, d.address, d.enabled, d.active)
                     for d in devices])
             else:
                 raise error.CommandError('Device not found.')
@@ -750,7 +750,7 @@ class TerminalUI(BaseUI):
                 else:
                     raise error.CommandError('Permission denied. Try sudo [command].')
             else:
-                raise error.CommandError('Command \'{0}\' not found.'.format(command))
+                raise error.CommandError('Command \'{0}\' not found.'.format(' '.join(parts)))
 
     def process_input(self, value):
         """Call the appropriate method based on input value."""
@@ -835,9 +835,6 @@ class TerminalUI(BaseUI):
     def display(self):
         """Display the UI."""
 
-        self.clear_screen()
-        print(self.decorate_ui(self.get_ui()))
-
         if self.flicker is True:
             self.display_flicker()
             self.flicker = False
@@ -846,8 +843,15 @@ class TerminalUI(BaseUI):
             self.display_corrupt()
             # self.corrupt = False
 
+        else:
+            self.clear_screen()
+            print(self.decorate_ui(self.get_ui()))
+
     def display_flicker(self):
         """Flicker the terminal display."""
+
+        self.clear_screen()
+        print(self.decorate_ui(self.get_ui()))
 
         duration = 0.05
         number = randrange(2, 3, 1)
@@ -869,7 +873,7 @@ class TerminalUI(BaseUI):
         hextet_gaps = 4
 
         data_cols = int(self.width / (hextet_size + 1))  # + 1 to account for spaces
-        data_rows = len(self.get_ui().split('\n')) + 2  # + 2 to account for prompt
+        data_rows = len(ui_text.split('\n')) + 2  # + 2 to account for prompt
 
         duration = 0.3
         number = 6
@@ -896,7 +900,7 @@ class TerminalUI(BaseUI):
             hextet_gaps += add_gaps
 
         self.clear_screen()
-        print(self.decorate_ui(self.get_ui()))
+        print(self.decorate_ui(ui_text))
 
     def leave(self):
         # reset gameui to the ui that was active at the time this was created
@@ -982,13 +986,10 @@ class ConsoleUI(BaseUI):
     def get_welcome(self):
         """Return sensor console welcome message text."""
 
-        return "Measurements"
+        return "Sensors"
 
     def display(self):
         """Display the UI."""
-
-        self.clear_screen()
-        print(self.decorate_ui(self.get_ui()))
 
         if self.flicker is True:
             self.display_flicker()
@@ -996,10 +997,17 @@ class ConsoleUI(BaseUI):
 
         elif self.corrupt is True:
             self.display_corrupt()
-            self.corrupt = False
+            # self.corrupt = False
+
+        else:
+            self.clear_screen()
+            print(self.decorate_ui(self.get_ui()))
 
     def display_flicker(self):
         """Flicker the terminal display."""
+
+        self.clear_screen()
+        print(self.decorate_ui(self.get_ui()))
 
         duration = 0.05
         number = randrange(2, 3, 1)
@@ -1021,7 +1029,7 @@ class ConsoleUI(BaseUI):
         hextet_gaps = 4
 
         data_cols = int(self.width / (hextet_size + 1))  # + 1 to account for spaces
-        data_rows = len(self.get_ui().split('\n')) + 2  # + 2 to account for prompt
+        data_rows = len(ui_text.split('\n')) + 2  # + 2 to account for prompt
 
         duration = 0.3
         number = 6
@@ -1048,7 +1056,7 @@ class ConsoleUI(BaseUI):
             hextet_gaps += add_gaps
 
         self.clear_screen()
-        print(self.decorate_ui(self.get_ui()))
+        print(self.decorate_ui(ui_text))
 
     def leave(self):
         """Return to the previous UI."""
@@ -1140,20 +1148,23 @@ class WeatherStationUI(BaseUI):
     def display(self):
         """Display the UI."""
 
-        self.game.weather_thread.join()
-        self.clear_screen()
-        print(self.decorate_ui(self.get_ui()))
-
         if self.flicker is True:
             self.display_flicker()
             self.flicker = False
 
         elif self.corrupt is True:
             self.display_corrupt()
-            self.corrupt = False
+            # self.corrupt = False
+
+        else:
+            self.clear_screen()
+            print(self.decorate_ui(self.get_ui()))
 
     def display_flicker(self):
         """Flicker the terminal display."""
+
+        self.clear_screen()
+        print(self.decorate_ui(self.get_ui()))
 
         duration = 0.05
         number = randrange(2, 3, 1)
@@ -1175,7 +1186,7 @@ class WeatherStationUI(BaseUI):
         hextet_gaps = 4
 
         data_cols = int(self.width / (hextet_size + 1))  # + 1 to account for spaces
-        data_rows = len(self.get_ui().split('\n')) + 2  # + 2 to account for prompt
+        data_rows = len(ui_text.split('\n')) + 2  # + 2 to account for prompt
 
         duration = 0.3
         number = 6
@@ -1202,7 +1213,7 @@ class WeatherStationUI(BaseUI):
             hextet_gaps += add_gaps
 
         self.clear_screen()
-        print(self.decorate_ui(self.get_ui()))
+        print(self.decorate_ui(ui_text))
 
     def leave(self):
         """Return to the previous UI."""

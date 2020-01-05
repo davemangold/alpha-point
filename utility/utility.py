@@ -193,8 +193,37 @@ def build_object_report_text(orientation, d4_objects):
 def build_sensor_readout_text(sensors):
     """Return text to display in sensor console."""
 
+    def value_bar(property):
+
+        empty_char = '='
+        value_char = '|'
+        bar_length = 40
+        value_length = int(
+            (property.value - property.min_value) /
+            (property.max_value - property.min_value) *
+            bar_length)
+        empty_string = empty_char * bar_length
+        value_string = value_char * value_length
+
+        return merge_text(empty_string, value_string)
+
+    def value_text(value):
+
+        return merge_text('   ', str(value)[:3])
+
     properties = sorted([p for s in sensors for p in s.get_properties()], key=lambda x: x.description)
-    readout_text = '\n'.join(['{0}: {1}'.format(p.description, p.value) for p in properties])
+    # readout_text = '\n'.join(['{0}: {1}'.format(p.description, p.value) for p in properties])
+
+    readout_text = '\n\n'.join([
+        '{0}: {1}\n{2} {3} {4} {5}'.format(
+            p.description,
+            str(p.value)[:3],
+            value_text(p.min_value),
+            value_bar(p),
+            value_text(p.max_value),
+            p.units)
+        for p in properties])
+
     return readout_text
 
 

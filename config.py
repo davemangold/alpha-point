@@ -1442,7 +1442,7 @@ level_config = {
                     'description': 'sensor console',
                     'type': 'console',
                     'enabled': True,
-                    'corrupt': True,
+                    'corrupt': False,
                     'x': 0,
                     'y': 1,
                     'orientation': 2,
@@ -1630,7 +1630,7 @@ level_config = {
                     'value': 40,
                     'min_value': 0,
                     'max_value': 50,
-                    'units': 'Atm.',
+                    'units': 'Pa',
                     'increment': 0,
                 }  # pressure
             ],
