@@ -524,11 +524,21 @@ class InventoryUI(BaseUI):
         super(InventoryUI, self).__init__(inventory.owner.game, *args, **kwargs)
         self.inventory = inventory
         self.previous_ui = self.game.ui
+        self.selected = None
 
     def process_input(self, value):
         """Call the appropriate method based on input value."""
 
-        self.leave()
+        try:
+            # process selection changes
+            if value == self.game.control.UP:
+                self.select_prev_item()
+            elif value == self.game.control.DOWN:
+                self.select_next_item()
+            else:
+                self.leave()
+        except:
+            pass
 
     def prompt(self):
         """Prompt the player for input."""
@@ -557,19 +567,51 @@ class InventoryUI(BaseUI):
     def get_items(self):
         """Return the text that represents available action."""
 
-        ui_items = None
         ui_items_list = []
-        item_counts = Counter([item.description for item in self.inventory.items])
+        description_counts = Counter([item.description for item in self.inventory.items])
+        inventory_list = sorted(description_counts.items())
 
-        for item, count in sorted(item_counts.items()):
-            ui_items_list.append('{0} ({1})'.format(item, count))
+        if self.selected is None and len(inventory_list) > 0:
+            self.selected = inventory_list[0][0]
+
+        for description, count in inventory_list:
+            item_text = '{0} ({1})'.format(description, count)
+            if description == self.selected:
+                item_text = '> ' + item_text
+            else:
+                item_text = '  ' + item_text
+            ui_items_list.append(item_text)
 
         if len(ui_items_list) == 0:
             ui_items_list.append('-- empty --')
 
-        ui_items = '\n'.join(ui_items_list)
+        ui_items_text = '\n'.join(ui_items_list)
 
-        return ui_items
+        return ui_items_text
+
+    def select_next_item(self):
+        """Select the next item in the inventory."""
+
+        item_descriptions = sorted(set([item.description for item in self.inventory.items]))
+        selected_index = item_descriptions.index(self.selected)
+        next_index = selected_index + 1
+
+        if next_index >= len(item_descriptions):
+            return self.selected
+
+        self.selected = item_descriptions[next_index]
+
+    def select_prev_item(self):
+        """Select the previous item in the inventory."""
+
+        item_descriptions = sorted(set([item.description for item in self.inventory.items]))
+        selected_index = item_descriptions.index(self.selected)
+        prev_index = selected_index - 1
+
+        if prev_index < 0:
+            return self.selected
+
+        self.selected = item_descriptions[prev_index]
 
     def get_welcome(self):
         """Return inventory welcome message text."""
