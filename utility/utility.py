@@ -189,7 +189,6 @@ def build_object_report_text(orientation, d4_objects):
     return report
 
 
-# TODO: finish function to show measurement bar
 def build_sensor_readout_text(sensors):
     """Return text to display in sensor console."""
 
@@ -212,7 +211,6 @@ def build_sensor_readout_text(sensors):
         return merge_text('   ', str(value)[:3])
 
     properties = sorted([p for s in sensors for p in s.get_properties()], key=lambda x: x.description)
-    # readout_text = '\n'.join(['{0}: {1}'.format(p.description, p.value) for p in properties])
 
     readout_text = '\n\n'.join([
         '{0}: {1}\n{2} {3} {4} {5}'.format(
