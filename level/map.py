@@ -305,6 +305,8 @@ class Map(object):
             new_tool = ToolFactory.make_tool(self, config_tool['type'])
             new_tool.name = config_tool['name']
             new_tool.description = config_tool['description']
+            new_tool.report = config_tool['report']
+            new_tool.inspectable = config_tool['inspectable']
             new_tool.visible = config_tool['visible']
             new_tool.interactive = config_tool['interactive']
             new_tool.blocking = config_tool['blocking']
@@ -316,6 +318,8 @@ class Map(object):
             new_part = PartFactory.make_part(self, config_part['type'])
             new_part.name = config_part['name']
             new_part.description = config_part['description']
+            new_part.report = config_part['report']
+            new_part.inspectable = config_part['inspectable']
             new_part.visible = config_part['visible']
             new_part.interactive = config_part['interactive']
             new_part.blocking = config_part['blocking']
