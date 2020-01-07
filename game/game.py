@@ -78,7 +78,7 @@ class Game(object):
                 data = json.loads(response.read())
 
             latest_sol = data['sol_keys'][-1]
-            earliest_weather = data[latest_sol]
+            latest_weather = data[latest_sol]
 
         except:
             return weather_data
@@ -94,7 +94,7 @@ class Game(object):
         # get weather measurements
         try:
             weather_data['temperature']['value'] = clean(
-                earliest_weather
+                latest_weather
                 .get('AT')
                 .get('av'))
 
@@ -103,7 +103,7 @@ class Game(object):
 
         try:
             weather_data['wind']['speed']['value'] = clean(
-                earliest_weather
+                latest_weather
                 .get('HWS')
                 .get('av'))
 
@@ -112,7 +112,7 @@ class Game(object):
 
         try:
             weather_data['wind']['direction']['value'] = clean(
-                earliest_weather
+                latest_weather
                 .get('WD')
                 .get('most_common')
                 .get('compass_degrees'))
@@ -122,7 +122,7 @@ class Game(object):
 
         try:
             weather_data['pressure']['value'] = clean(
-                earliest_weather
+                latest_weather
                 .get('PRE')
                 .get('av'))
 

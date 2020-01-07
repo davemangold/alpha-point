@@ -515,7 +515,6 @@ class ExaminationUI(BaseUI):
         self.game.ui = self.previous_ui
 
 
-# TODO: refactor to support inventory artifact examination
 class InventoryUI(BaseUI):
     """Game user interface for player inventory."""
 

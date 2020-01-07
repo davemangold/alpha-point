@@ -5,7 +5,7 @@ from inventory import Inventory
 
 
 class Character(object):
-    """Character class used for player and NPCs."""
+    """Character class used for player."""
 
     def __init__(self, game, *args, **kwargs):
         self.game = game
@@ -274,10 +274,6 @@ class Character(object):
 
         # parts in the player inventory
         player_part_list = self.inventory.get_parts()
-
-        # TODO: add examination of inventory artifacts (requires UI refactor)
-        # artifacts in the player inventory
-        player_artifact_list = self.inventory.get_artifacts()
 
         # visible devices on the map
         map_device_list = [device
