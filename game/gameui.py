@@ -275,7 +275,7 @@ class LevelsUI(BaseUI):
     def get_commands(self):
         """Return the universal commands."""
 
-        commands = '\nr - reset the game\nq - leave the game'
+        commands = '\nq - leave the game\nr - reset the game'
 
         return commands
 
@@ -415,8 +415,8 @@ class MainUI(BaseUI):
 
         commands = (
             '\n'
-            'up    - move up          r - restart level      {0} - Player\n'
-            'down  - move down        q - main menu          . - Path\n'
+            'up    - move up          q - main menu          {0} - Player\n'
+            'down  - move down        r - restart level      . - Path\n'
             'left  - move left        i - inventory\n'
             'right - move right'
         ).format(player_symbol)
@@ -526,36 +526,55 @@ class InventoryUI(BaseUI):
         self.previous_ui = self.game.ui
         self.selected = None
 
+    def get_selected_item(self):
+        """Return the selected item."""
+
+        items = self.inventory.get_items_by_description(self.selected)
+
+        if len(items) > 0:
+            return items[0]
+
+        return None
+
     def process_input(self, value):
         """Call the appropriate method based on input value."""
 
         try:
-            # process selection changes
+            # change selected item
             if value == self.game.control.UP:
                 self.select_prev_item()
             elif value == self.game.control.DOWN:
                 self.select_next_item()
-            else:
+            # examine selected item
+            elif value == self.game.control.EXAMINE:
+                self.game.ui = ExaminationUI(self.get_selected_item())
+            elif value == self.game.control.QUIT:
                 self.leave()
+            else:
+                pass
         except:
             pass
 
     def prompt(self):
         """Prompt the player for input."""
 
-        self.display()
-        message = self.decorate_ui("Press Enter to return...")
-        print(message)
-        response = self.game.control.get_keypress()
-        return response
+        while True:
+
+            self.display()
+
+            response = self.game.control.get_keypress()
+            if response is None:
+                continue
+
+            return response
 
     def get_commands(self):
         """Return the universal commands."""
 
         commands = (
             '\n'
-            'up    - prev item\n'
-            'down  - next item'
+            'up    - prev item        q - back to game\n'
+            'down  - next item        e - examine item'
         )
 
         return commands
@@ -874,7 +893,7 @@ class TerminalUI(BaseUI):
     def get_commands(self):
         """Return the universal commands."""
 
-        commands = ('exit - leave the {0}'.format(self.terminal))
+        commands = 'help - show commands'
 
         return commands
 

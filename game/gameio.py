@@ -38,6 +38,7 @@ class Control(object):
         self.QUIT = 113
         self.RESTART = 114
         self.INVENTORY = 105
+        self.EXAMINE = 101
         self.UP = 72
         self.LEFT = 75
         self.RIGHT = 77
@@ -62,8 +63,8 @@ class Control(object):
 
             keycode = ord(getch())
 
-            # enter, i, q, r
-            if keycode in (13, 105, 113, 114):
+            # enter, e, i, q, r
+            if keycode in (13, 101, 105, 113, 114):
                 return keycode
             # digits (0-9)
             if 48 <= keycode <= 57:

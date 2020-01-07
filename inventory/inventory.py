@@ -74,3 +74,8 @@ class Inventory(object):
         """Return all items that match the provided name."""
 
         return [item for item in self.items if name.lower() in item.name.lower()]
+
+    def get_items_by_description(self, description):
+        """Return all items that match the provided name."""
+
+        return [item for item in self.items if description.lower() in item.description.lower()]
