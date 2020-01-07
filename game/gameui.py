@@ -699,30 +699,27 @@ class TerminalUI(BaseUI):
         # command functions
         def help():
 
-            return ('help\n'
-                    'exit\n'
-                    'clear\n'
-                    'get-device [id]\n'
-                    'set-device [id -active value]')
+            return ('Available commands:\n'
+                    '  help - display information about terminal commands\n'
+                    '  exit - log out and leave the terminal\n'
+                    '  get-device [id] - list system devices\n'
+                    '  set-device {id} {-active} {0 | 1} - set device state')
 
         def exit():
             self.leave()
 
-        def clear():
-            pass
-
         def get_device(*args):
-            # args: {id} optional
+            # args: [id]
 
             try:
                 device_id = args[0]
             except IndexError:
                 device_id = None
 
-            devices = [d for d in self.game.level.system.devices]
-
-            if device_id is not None:
-                devices = [d for d in devices if d.id == device_id]
+            if device_id is None:
+                devices = self.game.level.system.devices
+            else:
+                devices = [self.game.level.system.get_device(device_id)]
 
             if len(devices) > 0:
                 return '\n\n'.join([
@@ -735,7 +732,7 @@ class TerminalUI(BaseUI):
                 raise error.CommandError('Device not found.')
 
         def set_device(*args):
-            # args: {id} {-property} {value}
+            # args: {id} {-active} {value}
 
             # property name: valid values
             valid_properties = {'active': (0, 1)}
@@ -774,7 +771,6 @@ class TerminalUI(BaseUI):
         valid_commands = {
             'help': help,
             'exit': exit,
-            'clear': clear,
             'get-device': get_device,
             'set-device': set_device
         }
@@ -793,18 +789,18 @@ class TerminalUI(BaseUI):
         else:
             command_key = parts[0]
             command_args = parts[1:]
-            if command_key in ('help', 'exit', 'clear'):
+            if command_key in ('help', 'exit'):
                 self.output = valid_commands[command_key]()
             elif command_key == 'get-device':
                 if asroot:
                     self.output = valid_commands[command_key](*command_args)
                 else:
-                    raise error.CommandError('Permission denied. Try sudo [command].')
+                    raise error.CommandError('Permission denied. Try sudo <command>.')
             elif command_key == 'set-device':
                 if asroot:
                     self.output = valid_commands[command_key](*command_args)
                 else:
-                    raise error.CommandError('Permission denied. Try sudo [command].')
+                    raise error.CommandError('Permission denied. Try sudo <command>.')
             else:
                 raise error.CommandError('Command \'{0}\' not found.'.format(' '.join(parts)))
 
@@ -812,11 +808,8 @@ class TerminalUI(BaseUI):
         """Call the appropriate method based on input value."""
 
         try:
-            # process quit input
-            if value == 'q':
-                self.leave()
             # process action input
-            elif value.isdigit():
+            if value.isdigit():
                 self.terminal.do_action(int(value))
             # process as system command
             else:
@@ -848,7 +841,7 @@ class TerminalUI(BaseUI):
 
         ui_commands = self.get_commands()
         ui_welcome = self.get_welcome()
-        ui_alert = self.get_alert()
+        # ui_alert = self.get_alert()
         ui_action = self.get_action()
         ui_output = self.get_output()
 
@@ -857,8 +850,8 @@ class TerminalUI(BaseUI):
         ui_elements.append(ui_welcome)
         if ui_action is not None:
             ui_elements.append(ui_action)
-        if ui_alert is not None:
-            ui_elements.append(ui_alert)
+        # if ui_alert is not None:
+        #     ui_elements.append(ui_alert)
         ui_elements.append(self.separator)
         if ui_output is not None:
             ui_elements.append(ui_output)
@@ -881,7 +874,7 @@ class TerminalUI(BaseUI):
     def get_commands(self):
         """Return the universal commands."""
 
-        commands = ('q - leave the {0}'.format(self.terminal))
+        commands = ('exit - leave the {0}'.format(self.terminal))
 
         return commands
 

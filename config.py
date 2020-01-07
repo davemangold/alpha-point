@@ -985,7 +985,7 @@ level_config = {
                     'x': 4,
                     'y': 8,
                     'orientation': 0,
-                    'msg_action_verb': 'login to'
+                    'msg_action_verb': 'log in to'
                 }  # system terminal
             ],
             'devices': [
