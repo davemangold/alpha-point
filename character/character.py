@@ -287,11 +287,12 @@ class Character(object):
             for interface in interface_list
             if interface.interactive is True]
 
-        # visible artifacts on the map
-        map_artifact_list = [artifact
-            for artifact_list in utility.d4_to_player_list(self.orientation, self.get_visible_artifacts())
-            for artifact in artifact_list
-            if artifact.inspectable is True]
+        # visible game objects on the map
+        map_gameobject_list = [gameobject
+            for gameobject_list in
+            utility.d4_to_player_list(self.orientation, self.get_visible_objects())
+            for gameobject in gameobject_list
+            if gameobject.inspectable is True]
 
         # visible items on the map (includes tools)
         map_item_list = [item
@@ -315,16 +316,16 @@ class Character(object):
         interface_actions = [Action(interface.use, interface.action_text())
             for interface in map_interface_list]
 
-        # action to examine artifacts
-        artifact_actions = [Action(artifact.examine, artifact.examine_action_text())
-            for artifact in map_artifact_list]
+        # action to examine game objects
+        gameobject_actions = [Action(gameobject.examine, gameobject.examine_action_text())
+            for gameobject in map_gameobject_list]
 
         # action to take items from map
         item_actions = [Action(item.map_to_player, item.take_action_text())
             for item in map_item_list]
 
         # combined list of all action
-        actions_list = interface_actions + tool_actions + part_actions + artifact_actions + item_actions
+        actions_list = interface_actions + tool_actions + part_actions + gameobject_actions + item_actions
 
         # dictionary of action keys associated with Action object
         actions = {actions_list.index(action) + 1: action for action in actions_list}

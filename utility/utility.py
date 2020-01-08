@@ -68,6 +68,7 @@ def d4_duplicate_description(gameobject, d4_objects_list):
 
     return len(matching_object_descriptions) > 1
 
+
 def get_direction(x1, y1, x2, y2):
     """Return the d4 direction from location 1 (x1, y1) to location 2 (x2, y2) for adjacent locations."""
 

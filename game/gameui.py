@@ -470,9 +470,9 @@ class MainUI(BaseUI):
 class ExaminationUI(BaseUI):
     """Game user interface used to present detailed artifact examination report."""
 
-    def __init__(self, artifact, *args, **kwargs):
-        super(ExaminationUI, self).__init__(artifact.map.level.game, *args, **kwargs)
-        self.artifact = artifact
+    def __init__(self, gameobject, *args, **kwargs):
+        super(ExaminationUI, self).__init__(gameobject.game, *args, **kwargs)
+        self.gameobject = gameobject
         self.previous_ui = self.game.ui
 
     def process_input(self, value):
@@ -505,7 +505,7 @@ class ExaminationUI(BaseUI):
     def get_examination_report(self):
         """Get the report associated with the examined artifact."""
 
-        report_text = self.artifact.report
+        report_text = self.gameobject.report
         formatted_text = utility.format_ui_text(report_text)
         return formatted_text
 
