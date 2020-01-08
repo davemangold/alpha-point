@@ -65,23 +65,23 @@ level_config = {
     1: {
         'name': 'Approach',
         'map': {
-            'x_dimension': 5,
+            'x_dimension': 7,
             'y_dimension': 5,
             'path_cells': [
-                {'coordinates': (2, 4), 'story': None},
-                {'coordinates': (2, 3), 'story': {'title': None,
+                {'coordinates': (3, 4), 'story': None},
+                {'coordinates': (3, 3), 'story': {'title': None,
                                                   'text': 'Faint clouds of dust fell from his boots as {0} climbed down the rover ladder. "Something is very wrong", he thought, while surveying his surroundings for any sign of disaster. Everything was in place. There was no evidence of an explosion or collapse. The light over the external airlock door glowed green indicating its pressure matched that of the external environment. According to his suit\'s computer, he still had active comm and telemetry links with Alpha Point but all he could hear was the sound of his own breathing. "What the hell?", {0} wondered, as he headed toward the airlock.'.format(
                                                       player_config['name'])}},
-                {'coordinates': (2, 2), 'story': None},
-                {'coordinates': (2, 1), 'story': None},
-                {'coordinates': (2, 0), 'story': None},
-                {'coordinates': (3, 3), 'story': None},
+                {'coordinates': (3, 2), 'story': None},
+                {'coordinates': (3, 1), 'story': None},
+                {'coordinates': (3, 0), 'story': None},
                 {'coordinates': (4, 3), 'story': None},
-                {'coordinates': (1, 1), 'story': None},
-                {'coordinates': (0, 1), 'story': None}
+                {'coordinates': (5, 3), 'story': None},
+                {'coordinates': (2, 1), 'story': None},
+                {'coordinates': (1, 1), 'story': None}
             ],
-            'coord_enter': (2, 3),  # begin
-            'coord_exit': (2, 0),  # end
+            'coord_enter': (3, 3),  # begin
+            'coord_exit': (3, 0),  # end
             'orientation_enter': 0,
             'tools': [],
             'parts': [],
@@ -90,12 +90,12 @@ level_config = {
                     'type': 'generic',
                     'name': 'rover',
                     'description': 'rover',
-                    'report': '',
-                    'inspectable': False,
+                    'report': 'It\'s a medium range rover with a small Musk Space Industries logo on the side.',
+                    'inspectable': True,
                     'visible': True,
                     'interactive': False,
                     'blocking': True,
-                    'x': 2,
+                    'x': 3,
                     'y': 4
                 },  # rover
                 {
@@ -119,7 +119,7 @@ level_config = {
                     'visible': True,
                     'interactive': False,
                     'blocking': True,
-                    'x': 4,
+                    'x': 6,
                     'y': 3
                 },  # communications array
             ]
@@ -135,7 +135,7 @@ level_config = {
                     'inspectable': False,
                     'enabled': True,
                     'corrupt': False,
-                    'x': 2,
+                    'x': 3,
                     'y': 0,
                     'orientation': 2,
                     'msg_action_verb': 'push'
@@ -152,7 +152,7 @@ level_config = {
                     'enabled': True,
                     'active': False,
                     'visible': True,
-                    'x': 2,
+                    'x': 3,
                     'y': 0,
                     'msg_action_true': 'open',
                     'msg_action_false': 'close',
