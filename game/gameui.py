@@ -735,9 +735,9 @@ class TerminalUI(BaseUI):
                 device_id = None
 
             if device_id is None:
-                devices = self.game.level.system.devices
+                devices = self.game.level.system.get_devices(device_id='')
             else:
-                devices = [self.game.level.system.get_device(device_id)]
+                devices = self.game.level.system.get_devices(device_id=device_id)
 
             if len(devices) > 0:
                 return '\n\n'.join([
@@ -772,10 +772,15 @@ class TerminalUI(BaseUI):
             else:
                 property_value = bool(property_value)
 
-            device = self.game.level.system.get_device(device_id=device_id)
+            devices = self.game.level.system.get_devices(device_id=device_id)
 
-            if device is None:
+            if len(devices) == 0:
                 raise error.CommandError('Device not found.')
+
+            if len(devices) > 1:
+                raise error.CommandError('Device not set. Multiple matching devices.')
+
+            device = devices[0]
 
             if property_name == 'active':
                 if property_value is True:
