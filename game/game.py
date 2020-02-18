@@ -22,7 +22,7 @@ class Game(object):
 
     def __init__(self, debug=False):
 
-        self.save = self.init_save()
+        self.save = self.__init_save()
         self.weather_data = None
         self.weather_thread = threading.Thread(target=self.__set_weather_data)
         self.weather_thread.start()
@@ -131,7 +131,7 @@ class Game(object):
 
         self.weather_data = weather_data
 
-    def init_save(self):
+    def __init_save(self):
         """Setup save environment, if necessary."""
 
         if not os.path.isdir('.save'):

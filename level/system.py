@@ -129,21 +129,17 @@ class System(object):
     def get_device(self, device_id=None, config_id=None):
         """Return the device if it exists."""
 
-        device = None
-
+        # return device uniquely matched on device_id
         if device_id is not None:
-            for check_device in self.devices:
-                if check_device.id == device_id:
-                    device = check_device
-                    break
+            did_matches = [dev for dev in self.devices if device_id == dev.id[:len(device_id)]]
+            if len(did_matches) == 1:
+                return did_matches[0]
 
+        # return device exactly matched on config_id
         elif config_id is not None:
             for check_device in self.devices:
                 if check_device.config_id == config_id:
-                    device = check_device
-                    break
-
-        return device
+                    return check_device
 
     def get_property(self, property_id=None, config_id=None):
         """Return the property if it exists."""
