@@ -839,7 +839,7 @@ level_config = {
                 {'coordinates': (1, 1), 'story': None},
                 {'coordinates': (1, 2), 'story': None},
                 {'coordinates': (1, 3), 'story': None},
-                {'coordinates': (1, 4), 'story': {'title': None, 'text': 'Galley story...'}},
+                {'coordinates': (1, 4), 'story': {'title': None, 'text': 'As he entered Alpha Point\'s modest galley, Marcus lost his balance. He suddenly felt like he\'d stepped over a ledge and instinctively swung his arms forward in a desparate attempt to regain solid ground. His reaction had little effect and Marcus grasped wildly at the air as he fell to the floor. Then the feeling evaporated. Marcus found himself on all fours staring in adrenaline-spiked confusion at the wildly contorted door at the opposite end of the module. A shifting, shimmering surface passed away from him, through the opposing module wall, and out of sight. Marcus carefully picked himself up, wondering what in the world had just happened.'}},
                 {'coordinates': (1, 5), 'story': None},
                 {'coordinates': (1, 6), 'story': None},
                 {'coordinates': (1, 7), 'story': None},
@@ -1004,7 +1004,19 @@ level_config = {
                     'blocking': True,
                     'x': 0,
                     'y': 2
-                }  # counter
+                },  # counter
+                {
+                    'type': 'generic',
+                    'name': 'handprint',
+                    'description': 'bloody hand print',
+                    'report': 'It looks like a partial, bloody hand print at the edge of the table and there are a few drops of what looks like dried blood on the floor.',
+                    'inspectable': True,
+                    'visible': True,
+                    'interactive': False,
+                    'blocking': False,
+                    'x': 5,
+                    'y': 6
+                }  # bloody hand print
             ]
         },
         'system': {
@@ -1063,7 +1075,7 @@ level_config = {
                 {
                     'id': 1,
                     'name': 'exit door',
-                    'description': 'door',
+                    'description': 'exit door',
                     'type': 'door',
                     'report': '',
                     'inspectable': False,
