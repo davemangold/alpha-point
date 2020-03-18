@@ -428,20 +428,6 @@ class MainUI(BaseUI):
 
         ui_elements = []
 
-        if self.game.debug is True:
-            debug_text = (
-                'Player X: {0}'.format(self.game.player.x) + '\n' +
-                'Player Y: {0}'.format(self.game.player.y) + '\n' +
-                'Player orientation: {0}'.format(self.game.player.orientation) + '\n' +
-                'Visible items: {0}'.format(self.game.player.get_visible_items()) + '\n' +
-                'Visible devices: {0}'.format(self.game.player.get_visible_devices()) + '\n' +
-                'Visible interfaces: {0}'.format(self.game.player.get_visible_interfaces()) + '\n' +
-                'Map items: {0}'.format(', '.join(str(i) for i in self.game.level.map.items)) + '\n' +
-                'Map devices: {0}'.format(', '.join(str(i) for i in self.game.level.map.devices)) + '\n' +
-                'Map interfaces: {0}'.format(', '.join(str(i) for i in self.game.level.map.interfaces)) + '\n' +
-                'System properties: {0}'.format(', '.join('{0} ({1})'.format(i, i.value) for i in self.game.level.system.properties)))
-            ui_elements.append(debug_text)
-
         ui_commands = self.get_commands()
         ui_map = self.get_map()
         ui_alert = self.get_alert()
@@ -458,6 +444,20 @@ class MainUI(BaseUI):
         if ui_alert is not None:
             ui_elements.append(ui_alert)
         ui_elements.append(self.separator)
+
+        if self.game.debug is True:
+            debug_text = (
+                'Player X: {0}'.format(self.game.player.x) + '\n' +
+                'Player Y: {0}'.format(self.game.player.y) + '\n' +
+                'Player orientation: {0}'.format(self.game.player.orientation) + '\n' +
+                'Visible items: {0}'.format(self.game.player.get_visible_items()) + '\n' +
+                'Visible devices: {0}'.format(self.game.player.get_visible_devices()) + '\n' +
+                'Visible interfaces: {0}'.format(self.game.player.get_visible_interfaces()) + '\n' +
+                'Map items: {0}'.format(', '.join(str(i) for i in self.game.level.map.items)) + '\n' +
+                'Map devices: {0}'.format(', '.join(str(i) for i in self.game.level.map.devices)) + '\n' +
+                'Map interfaces: {0}'.format(', '.join(str(i) for i in self.game.level.map.interfaces)) + '\n' +
+                'System properties: {0}'.format(', '.join('{0} ({1})'.format(i, i.value) for i in self.game.level.system.properties)))
+            ui_elements.append(debug_text)
 
         return '\n\n'.join(ui_elements) + '\n'
 
@@ -484,7 +484,7 @@ class ExaminationUI(BaseUI):
         """Prompt the player for input."""
 
         self.display()
-        message = self.decorate_ui("Press Enter to return...")
+        message = self.decorate_ui("Press any key to return...")
         print(message)
         response = self.game.control.get_keypress()
         return response
@@ -1378,7 +1378,7 @@ class StoryUI(BaseUI):
         """Prompt the player for input."""
 
         self.display()
-        message = self.decorate_ui("Press Enter to continue...")
+        message = self.decorate_ui("Press any key to continue...")
         print(message)
         response = self.game.control.get_keypress()
         return response
