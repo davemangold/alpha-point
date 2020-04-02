@@ -833,7 +833,10 @@ class TerminalUI(BaseUI):
         try:
             # process action input
             if value.isdigit():
-                self.terminal.do_action(int(value))
+                if self.corrupt:
+                    raise error.CommandError('Memory access error 0x3D14F8')
+                else:
+                    self.terminal.do_action(int(value))
             # process as system command
             else:
                 self.process_command(value)
@@ -1189,7 +1192,7 @@ class WeatherStationUI(BaseUI):
         """Prompt the player for input."""
 
         self.display()
-        message = self.decorate_ui("Press Enter to return...")
+        message = self.decorate_ui("Press any key to return...")
         print(message)
         response = self.game.control.get_keypress()
         return response
