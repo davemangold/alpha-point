@@ -1,7 +1,5 @@
 import error
-import utility
 from gameobject.item import Item
-from game.gameui import ExaminationUI
 
 
 class Artifact(Item):
