@@ -156,7 +156,20 @@ level_config = {
             'orientation_enter': 0,
             'tools': [],
             'parts': [],
-            'artifacts': []
+            'artifacts': [
+                {
+                    'type': 'generic',
+                    'name': 'placard',
+                    'description': 'warning placard',
+                    'report': 'WARNING - Use manual override only in emergency. If automated environment management system is not functional, contact base control for assistance.',
+                    'inspectable': True,
+                    'visible': True,
+                    'interactive': False,
+                    'blocking': False,
+                    'x': 0,
+                    'y': 1
+                }
+            ]
         },
         'system': {
             'interfaces': [
