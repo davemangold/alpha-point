@@ -545,7 +545,7 @@ class InventoryUI(BaseUI):
             elif value == self.game.control.DOWN:
                 self.select_next_item()
             # examine selected item
-            elif value == self.game.control.EXAMINE:
+            elif value == self.game.control.ENTER:
                 self.game.ui = ExaminationUI(self.get_selected_item())
             elif value == self.game.control.QUIT:
                 self.leave()
@@ -573,7 +573,7 @@ class InventoryUI(BaseUI):
         commands = (
             '\n'
             'up    - prev item        q - back to game\n'
-            'down  - next item        e - examine item'
+            'down  - next item        enter - examine item'
         )
 
         return commands

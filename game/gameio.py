@@ -38,7 +38,6 @@ class Control(object):
         self.QUIT = 113
         self.RESTART = 114
         self.INVENTORY = 105
-        self.EXAMINE = 101
         self.UP = 72
         self.LEFT = 75
         self.RIGHT = 77
