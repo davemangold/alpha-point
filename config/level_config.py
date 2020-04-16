@@ -35,7 +35,7 @@ level_config = {
             'path_cells': [
                 {'coordinates': (3, 4), 'story': None},
                 {'coordinates': (3, 3), 'story': {'title': None,
-                                                  'text': 'Faint clouds of dust fell from his boots as {0} climbed down the rover ladder. "Something is very wrong", he thought, while surveying his surroundings for any sign of disaster. Everything was in place. There was no evidence of an explosion or collapse. The light over the external airlock door glowed green indicating its pressure matched that of the external environment. According to his suit\'s computer, he still had active comm and telemetry links with Alpha Point but all he could hear was the sound of his own breathing. "What the hell?", {0} wondered, as he headed toward the airlock.'.format(
+                                                  'text': 'Faint clouds of dust fell from his boots as {0} climbed down the rover ladder. "Something\'s wrong", he thought, while surveying his surroundings for any sign of disaster. Everything was in place. There was no evidence of an explosion or collapse. The light over the external airlock door glowed green indicating its pressure matched that of the external environment. According to his suit\'s computer, he still had active comm and telemetry links with Alpha Point but all he could hear was the sound of his own breathing. "What the hell?", {0} wondered, as he headed toward the airlock.'.format(
                                                       player_config['name'])}},
                 {'coordinates': (3, 2), 'story': None},
                 {'coordinates': (3, 1), 'story': None},
@@ -326,7 +326,7 @@ level_config = {
                 {'coordinates': (4, 5), 'story': None},
                 {'coordinates': (4, 6), 'story': None},
                 {'coordinates': (4, 7), 'story': {'title': None,
-                                                  'text': 'As he removed his helmet, {0} noticed three empty excursion suit alcoves and wondered who else was outside the hab. Ad-hoc departures weren\'t that unusual. Even Martian research stations have fences that need mending. The lights flickered briefly and {0} detected the caustic smell of overheated electronics. "That can\'t be good", he told himself. After stowing his suit in an open alcove {0} headed for the door of the crew meeting area at the far end of the equipment bay.'.format(
+                                                  'text': 'As he removed his helmet, {0} noticed two empty excursion suit alcoves and wondered who else was outside the hab. Ad-hoc departures weren\'t that unusual. Even Martian research stations have fences that need mending. The lights flickered briefly and {0} detected the caustic smell of overheated electronics. "That can\'t be good", he told himself. After stowing his suit in an open alcove {0} headed for the door of the crew meeting area at the far end of the equipment bay.'.format(
                                                       player_config['name'])}},
                 {'coordinates': (4, 8), 'story': None},
                 {'coordinates': (3, 6), 'story': None},
