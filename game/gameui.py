@@ -246,7 +246,7 @@ class LevelsUI(BaseUI):
 
         ui_commands = self.get_commands()
         ui_alert = self.get_alert()
-        ui_action = self.get_action()
+        ui_action = self.get_actions()
 
         ui_elements.append(ui_commands)
         ui_elements.append(self.separator)
@@ -257,7 +257,7 @@ class LevelsUI(BaseUI):
 
         return '\n\n'.join(ui_elements) + '\n'
 
-    def get_action(self):
+    def get_actions(self):
         """Return the text that represents available action."""
 
         highest_level = self.game.save['highest_level']
@@ -394,7 +394,7 @@ class MainUI(BaseUI):
         text_map = '\n'.join([' ' * buffer_width + line for line in text_map.split('\n')])
         return text_map
 
-    def get_action(self):
+    def get_actions(self):
         """Return the text that represents available actions."""
 
         ui_actions = None
@@ -432,7 +432,7 @@ class MainUI(BaseUI):
         ui_map = self.get_map()
         ui_alert = self.get_alert()
         ui_report = utility.format_ui_text(self.game.player.report_visible_objects())
-        ui_action = self.get_action()
+        ui_action = self.get_actions()
 
         ui_elements.append(ui_commands)
         ui_elements.append(self.separator)
@@ -814,12 +814,7 @@ class TerminalUI(BaseUI):
             command_args = parts[1:]
             if command_key in ('help', 'exit'):
                 self.output = valid_commands[command_key]()
-            elif command_key == 'get-device':
-                if asroot:
-                    self.output = valid_commands[command_key](*command_args)
-                else:
-                    raise error.CommandError('Permission denied. Try sudo <command>.')
-            elif command_key == 'set-device':
+            elif command_key in ('get-device', 'set-device'):
                 if asroot:
                     self.output = valid_commands[command_key](*command_args)
                 else:
@@ -868,7 +863,7 @@ class TerminalUI(BaseUI):
         ui_commands = self.get_commands()
         ui_welcome = self.get_welcome()
         # ui_alert = self.get_alert()
-        ui_action = self.get_action()
+        ui_action = self.get_actions()
         ui_output = self.get_output()
 
         ui_elements.append(ui_commands)
@@ -884,8 +879,8 @@ class TerminalUI(BaseUI):
 
         return '\n' + '\n\n'.join(ui_elements) + '\n'
 
-    def get_action(self):
-        """Return the text that represents available action."""
+    def get_actions(self):
+        """Return the text that represents available actions."""
 
         ui_actions = None
         ui_actions_list = []
