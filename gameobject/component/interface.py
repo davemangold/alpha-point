@@ -32,10 +32,15 @@ class Interface(Component):
 
         return " ".join([self.msg_action_verb.capitalize(), "the", str(self)])
 
-    def get_devices(self):
+    def get_devices(self, device_id=None):
         """Return the devices linked to this interface."""
 
-        return self.system.get_interface_devices(self)
+        devices = self.system.get_interface_devices(self)
+
+        if device_id is not None:
+            devices = [d for d in devices if device_id == d.id[:len(device_id)]]
+
+        return devices
 
     def use(self):
         """Use the interface."""

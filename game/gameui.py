@@ -684,7 +684,7 @@ class TerminalUI(BaseUI):
             raise ValueError("Property flicker must be a boolean value.")
 
         if value is True:
-            self._corrupt = not value
+            self._corrupt = False
 
         self._flicker = value
 
@@ -700,7 +700,7 @@ class TerminalUI(BaseUI):
             raise ValueError("Property corrupt must be a boolean value.")
 
         if value is True:
-            self._flicker = not value
+            self._flicker = False
 
         self._corrupt = value
 
@@ -719,7 +719,7 @@ class TerminalUI(BaseUI):
 
             return ('Available commands:\n'
                     '  help - display information about terminal commands\n'
-                    '  exit - log out and leave the terminal\n'
+                    '  exit - log out of the terminal session\n'
                     '  get-device [id] - list system devices\n'
                     '  set-device {id} {-active} {0 | 1} - set device state')
 
@@ -734,10 +734,7 @@ class TerminalUI(BaseUI):
             except IndexError:
                 device_id = None
 
-            if device_id is None:
-                devices = self.game.level.system.get_devices(device_id='')
-            else:
-                devices = self.game.level.system.get_devices(device_id=device_id)
+            devices = self.terminal.get_devices(device_id=device_id)
 
             if len(devices) > 0:
                 return '\n\n'.join([
@@ -772,7 +769,7 @@ class TerminalUI(BaseUI):
             else:
                 property_value = bool(property_value)
 
-            devices = self.game.level.system.get_devices(device_id=device_id)
+            devices = self.terminal.get_devices(device_id=device_id)
 
             if len(devices) == 0:
                 raise error.CommandError('Device not found.')
