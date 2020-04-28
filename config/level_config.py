@@ -446,18 +446,18 @@ level_config = {
                 },  # 0 - exit door button
                 {
                     'id': 1,
-                    'name': 'door circuit toggleswitch',
-                    'description': 'switch',
-                    'type': 'toggleswitch',
-                    'report': '',
-                    'inspectable': False,
+                    'name': 'inventory terminal',
+                    'description': 'system terminal',
+                    'type': 'terminal',
+                    'report': 'It\'s a system terminal labeled "Maintenance Bay - Remote".',
+                    'inspectable': True,
                     'enabled': True,
                     'corrupt': False,
-                    'x': 0,
-                    'y': 2,
-                    'orientation': 1,
-                    'msg_action_verb': 'flip'
-                },  # 1 - door circuit toggleswitch
+                    'x': 1,
+                    'y': 1,
+                    'orientation': 2,
+                    'msg_action_verb': 'use'
+                },  # 1 - maintenance bay terminal
             ],
             'devices': [
                 {
@@ -506,29 +506,73 @@ level_config = {
                 },  # 1 - exit door
                 {
                     'id': 2,
-                    'name': 'door circuit switch',
-                    'description': 'door circuit',
+                    'name': 'exit door circuit',
+                    'description': 'exit door circuit',
                     'type': 'switch',
                     'report': '',
                     'inspectable': False,
                     'enabled': False,
                     'active': False,
                     'visible': False,
-                    'x': 0,
-                    'y': 2,
+                    'x': 5,
+                    'y': 1,
                     'msg_action_true': 'close',
                     'msg_action_false': 'open',
-                    'msg_active_true': 'The circuit is closed.',
-                    'msg_active_false': 'The circuit is open.',
-                    'msg_toggle_active_true': 'Do you hear that? It sounds like electric current.',
-                    'msg_toggle_active_false': 'That electric hum went away.',
-                    'msg_unmet_dependencies': 'The circuit switch isn\'t responding.',
+                    'msg_active_true': 'The switch is closed.',
+                    'msg_active_false': 'The switch is open.',
+                    'msg_toggle_active_true': 'The switch closed.',
+                    'msg_toggle_active_false': 'The switch opened.',
+                    'msg_unmet_dependencies': 'The switch is unresponsive.',
                     'dependencies': []
-                },  # 2 - door circuit
+                },  # 2 - exit door switch
+                {
+                    'id': 3,
+                    'name': 'maintenance bay access door',
+                    'description': 'door',
+                    'type': 'door',
+                    'report': 'The door is labeled "Maintenance Bay Access". There\'s a rover and a large bay door visible on the other side.',
+                    'inspectable': True,
+                    'enabled': False,
+                    'active': False,
+                    'visible': True,
+                    'x': 0,
+                    'y': 2,
+                    'msg_action_true': 'open',
+                    'msg_action_false': 'close',
+                    'msg_active_true': 'The door is open.',
+                    'msg_active_false': 'The door is closed.',
+                    'msg_toggle_active_true': 'The door opened.',
+                    'msg_toggle_active_false': 'The door closed.',
+                    'msg_unmet_dependencies': 'The door is unresponsive.',
+                    'dependencies': []
+                },  # 3 - maintenance bay access door
+                {
+                    'id': 4,
+                    'name': 'maintenance bay main door',
+                    'description': 'bay door',
+                    'type': 'door',
+                    'report': '',
+                    'inspectable': False,
+                    'enabled': True,
+                    'active': False,
+                    'visible': False,
+                    'x': 0,
+                    'y': 0,
+                    'msg_action_true': 'open',
+                    'msg_action_false': 'close',
+                    'msg_active_true': 'The bay door is open.',
+                    'msg_active_false': 'The bay door is closed.',
+                    'msg_toggle_active_true': 'The large bay door opened.',
+                    'msg_toggle_active_false': 'The large bay door closed.',
+                    'msg_unmet_dependencies': 'The bay door is unresponsive.',
+                    'dependencies': []
+                }   # 4 - maintenance bay main doors
             ],
             'properties': [],
             'links': [
-                {'interface_id': 0, 'device_id': 1}
+                {'interface_id': 0, 'device_id': 1},
+                {'interface_id': 1, 'device_id': 3},
+                {'interface_id': 1, 'device_id': 4}
             ],
             'relates': [],
             'deaths': []
