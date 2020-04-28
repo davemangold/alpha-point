@@ -270,10 +270,10 @@ class Character(object):
         """Return dictionary of action based on d4 visible objects."""
 
         # tools in the player inventory
-        player_tool_list = self.inventory.get_tools()
+        character_tool_list = self.inventory.get_tools()
 
         # parts in the player inventory
-        player_part_list = self.inventory.get_parts()
+        character_part_list = self.inventory.get_parts()
 
         # visible devices on the map
         map_device_list = [device
@@ -289,8 +289,7 @@ class Character(object):
 
         # visible game objects on the map
         map_gameobject_list = [gameobject
-            for gameobject_list in
-            utility.d4_to_player_list(self.orientation, self.get_visible_objects())
+            for gameobject_list in utility.d4_to_player_list(self.orientation, self.get_visible_objects())
             for gameobject in gameobject_list
             if gameobject.inspectable is True]
 
@@ -300,34 +299,34 @@ class Character(object):
             for item in item_list
             if item.interactive is True]
 
-        # action to use tools on devices
+        # actions to use tools on devices
         tool_actions = [Action(tool.get_use_action(device), tool.use_action_text(device))
-            for tool in player_tool_list
+            for tool in character_tool_list
             for device in map_device_list
             if tool.can_activate(device)]
 
-        # action to use parts on devices
+        # actions to use parts on devices
         part_actions = [Action(part.get_use_action(device), part.use_action_text(device))
-            for part in player_part_list
+            for part in character_part_list
             for device in map_device_list
             if part.can_enable(device)]
 
-        # action to use interfaces
+        # actions to use interfaces
         interface_actions = [Action(interface.use, interface.action_text())
             for interface in map_interface_list]
 
-        # action to examine game objects
+        # actions to examine game objects
         gameobject_actions = [Action(gameobject.examine, gameobject.examine_action_text())
             for gameobject in map_gameobject_list]
 
-        # action to take items from map
+        # actions to take items from map
         item_actions = [Action(item.map_to_player, item.take_action_text())
             for item in map_item_list]
 
-        # combined list of all action
+        # combined list of all actions
         actions_list = interface_actions + tool_actions + part_actions + gameobject_actions + item_actions
 
-        # dictionary of action keys associated with Action object
+        # dictionary of key: action object pairs
         actions = {actions_list.index(action) + 1: action for action in actions_list}
 
         return actions
@@ -338,7 +337,7 @@ class Character(object):
         self.actions = self.get_actions()
 
     def do_action(self, key):
-        """Call the function associated with the provided key."""
+        """Call the action function associated with the provided key."""
 
         try:
             action = self.actions[key]
@@ -346,4 +345,4 @@ class Character(object):
             self.update_actions()
 
         except KeyError:
-            raise error.ActionError("There is no action defined for that key.")
+            raise error.ActionError("There is no action defined for the provided key.")
