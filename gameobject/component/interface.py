@@ -163,7 +163,7 @@ class Console(Interface):
 
 
 class WeatherStation(Interface):
-    """A station that provides local weather (actual Mars weather from NASA InSight lander)."""
+    """A station that provides local weather (actual Mars weather from NASA InSight lander) but accepts no commands."""
 
     def __init__(self, *args, **kwargs):
         super(WeatherStation, self).__init__(*args, **kwargs)
