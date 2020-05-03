@@ -505,7 +505,7 @@ class ExaminationUI(BaseUI):
     def get_examination_report(self):
         """Get the report associated with the examined artifact."""
 
-        report_text = self.gameobject.report
+        report_text = utility.build_examination_report_text(self.gameobject, self.game.level)
         formatted_text = utility.format_ui_text(report_text)
         return formatted_text
 

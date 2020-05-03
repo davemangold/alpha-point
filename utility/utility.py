@@ -1,4 +1,6 @@
+import re
 import platform
+from datetime import datetime
 from config import game_config
 from config import level_config
 
@@ -238,6 +240,7 @@ def build_weather_readout_text(game):
         return 'NO DATA'
 
     weather_data = game.weather_data
+    weather_data['time'] = datetime.now().strftime('%H:%M:%S')
 
     sol = display_text(
         weather_data['sol'],
@@ -266,6 +269,38 @@ def build_weather_readout_text(game):
         'Pressure: {0}'.format(pressure)])
 
     return readout_text
+
+
+def build_examination_report_text(gameobject, level):
+    """Return text to display for examined game objects."""
+
+    report_text = gameobject.report
+    matches = re.findall(r"(\[.*?\])", report_text)
+
+    for m in matches:
+        clean = m.replace('[', '').replace(']', '')
+        parts = clean.split('-')
+        object_type = parts[0]
+        config_id = int(parts[1])
+
+        if object_type.lower() == 'device':
+            device = level.system.get_device(config_id=config_id)
+            device_description = ' '.join((
+                device.msg_active_true if device.active else device.msg_active_false,
+                device.description))
+            device_text = ' '.join((
+                get_article(device_description),
+                device_description))
+            report_text = report_text.replace(m, device_text)
+
+        elif object_type.lower() == 'interface':
+            interface = level.system.get_interface(config_id=config_id)
+            interface_text = ' '.join((
+                get_article(interface.description),
+                interface.description))
+            report_text = report_text.replace(m, interface_text)
+
+    return report_text
 
 
 def merge_dicts(a, b):
