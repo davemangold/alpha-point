@@ -147,7 +147,6 @@ def build_object_report_body(text_part_list):
 
     conjunction = 'and'
     delimiter = ','
-
     body_text = ''
 
     if len(text_part_list) == 1:

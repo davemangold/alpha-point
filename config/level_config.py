@@ -307,13 +307,11 @@ level_config = {
                 {'configuration': [
                     {'device_id': 1, 'active_state': False},
                     {'device_id': 2, 'active_state': True}],
-                    'description': 'Alarms sound in the attached module as air rushes out of the open valve. The gravity of your mistake hits you hard. You just depressurized the habitat. As the fog of panic envelopes your mind you desparately wish you could go back and make a different choice.',
+                    'description': 'Alarms sound in the attached module as air rushes out of the open valve. The gravity of your mistake hits you hard. You just depressurized the habitat. As a fog of panic envelopes your mind you desparately wish you could go back and make a different choice.',
                     'location': None}  # None if all locations are valid
             ]
         }
     },  # airlock
-    # TODO: add artifacts to shelves
-    # TODO: make interactive items inspectable
     3: {
         'name': 'Equipment',
         'map': {
@@ -328,7 +326,7 @@ level_config = {
                 {'coordinates': (4, 5), 'story': None},
                 {'coordinates': (4, 6), 'story': None},
                 {'coordinates': (4, 7), 'story': {'title': None,
-                                                  'text': 'As he removed his helmet, {0} noticed two empty excursion suit alcoves and wondered who else was outside the hab. Ad-hoc departures weren\'t that unusual. Even Martian research stations have fences that need mending. The lights flickered briefly and {0} detected the caustic smell of overheated electronics. "That can\'t be good", he told himself. After stowing his suit in an open alcove {0} headed for the door of the crew meeting area at the far end of the equipment bay.'.format(
+                                                  'text': 'As he removed his helmet, {0} noticed two empty excursion suit alcoves and wondered who else was outside the hab. Ad-hoc departures weren\'t that unusual. Even Martian research stations have fences that need mending. The lights flickered briefly and {0} detected the caustic smell of overheated electronics. "That can\'t be good", he told himself. After stowing his suit in an open alcove {0} headed past rows pf storage shelves toward the door of the crew meeting area at the far end of the equipment module.'.format(
                                                       player_config['name'])}},
                 {'coordinates': (4, 8), 'story': None},
                 {'coordinates': (3, 6), 'story': None},
@@ -361,8 +359,8 @@ level_config = {
                     'visible': True,
                     'interactive': True,
                     'blocking': False,
-                    'x': 1,
-                    'y': 4
+                    'x': 2,
+                    'y': 3
                 }  # prybar
             ],
             'parts': [
@@ -370,8 +368,8 @@ level_config = {
                     'type': 'wires',
                     'name': 'wire_bundle',
                     'description': 'bundle of wires and circuitry',
-                    'report': 'Multi-colored wires and a small circuit board.',
-                    'inspectable': False,
+                    'report': 'A small circuit board with multi-colored wires attached.',
+                    'inspectable': True,
                     'visible': True,
                     'interactive': True,
                     'blocking': False,
@@ -632,9 +630,9 @@ level_config = {
                 {
                     'type': 'wires',
                     'name': 'wires',
-                    'description': 'bundle of wires',
-                    'report': '',
-                    'inspectable': False,
+                    'description': 'wiring',
+                    'report': 'Some wires attached to a light that looks like it was pulled from the ceiling.',
+                    'inspectable': True,
                     'visible': True,
                     'interactive': True,
                     'blocking': False,
@@ -659,8 +657,8 @@ level_config = {
                     'type': 'generic',
                     'name': 'debris',
                     'description': 'pile of debris',
-                    'report': '',
-                    'inspectable': False,
+                    'report': 'A pile of various equipment and furniture, including some lighting that was mounted to the ceiling.',
+                    'inspectable': True,
                     'visible': False,
                     'interactive': False,
                     'blocking': True,
@@ -819,8 +817,8 @@ level_config = {
                     'name': 'switchbox',
                     'description': 'exposed switchbox',
                     'type': 'switch',
-                    'report': '',
-                    'inspectable': False,
+                    'report': 'The box panel is missing, and you can see some electrical components and wiring.',
+                    'inspectable': True,
                     'enabled': False,
                     'active': True,
                     'visible': True,
@@ -847,7 +845,7 @@ level_config = {
                     'configuration': [
                         {'device_id': 2, 'active_state': True}
                     ],
-                    'description': 'The habitat wall failed catastrophically and you were blown into the frigid near-vacuum of the Martian landscape.',
+                    'description': 'As you strain to move a large piece of debris there is a sudden bang that sends you tumbling out of a gaping hole in the habitat wall. Your vision fades to red and then black as you claw in agony at the rusty red grit of the crater floor you\'ve called home for the past seven months.',
                     'location': None  # None if all locations are valid
                 }
             ]
@@ -1176,17 +1174,18 @@ level_config = {
                     'inspectable': False,
                     'enabled': True,
                     'corrupt': True,
-                    'x': 4,
-                    'y': 8,
-                    'orientation': 0,
+                    'x': 8,
+                    'y': 5,
+                    'orientation': 3,
                     'msg_action_verb': 'log in to'
                 }  # system terminal
             ],
             'devices': [
                 {
                     'id': 0,
-                    'name': 'entrance door',
-                    'description': 'door',
+                    'name': 'crew planning door',
+                    'description': 'crew planning door',
+                    'description': 'crew planning door',
                     'type': 'door',
                     'report': '',
                     'inspectable': False,
@@ -1206,8 +1205,8 @@ level_config = {
                 },  # 0 - entrance door
                 {
                     'id': 1,
-                    'name': 'exit door',
-                    'description': 'exit door',
+                    'name': 'crew quarters door',
+                    'description': 'crew quarters door',
                     'type': 'door',
                     'report': '',
                     'inspectable': False,

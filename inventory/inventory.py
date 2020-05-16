@@ -61,7 +61,7 @@ class Inventory(object):
         return [item for item in self.items if isinstance(item, Part)]
 
     def get_artifacts(self):
-        """Return all items that are Tool instances."""
+        """Return all items that are Artifact instances."""
 
         return [item for item in self.items if isinstance(item, Artifact)]
 
@@ -76,6 +76,6 @@ class Inventory(object):
         return [item for item in self.items if name.lower() in item.name.lower()]
 
     def get_items_by_description(self, description):
-        """Return all items that match the provided name."""
+        """Return all items that match the provided description."""
 
         return [item for item in self.items if description.lower() in item.description.lower()]
