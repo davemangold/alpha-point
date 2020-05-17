@@ -27,7 +27,7 @@ class Item(GameObject):
         """Move an item from the map to the player's inventory."""
 
         game = self.inventory.owner.level.game
-        map_cell = game.level.map.get_cell(*self.location())
+        map_cell = game.level.map.get_cell(*self.location)
         game.player.inventory.add_item(self.inventory.remove_item(self))
         map_cell.remove_item(self)
         game.player.update_actions()

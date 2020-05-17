@@ -174,8 +174,7 @@ class Character(object):
         for device_list in d4_devices:
             visible_devices = []
             for device in device_list:
-                # device_cell = self.game.level.map.get_cell(*device.location())
-                if device.visible is True:  # and self.game.level.map.path.has_cell(device_cell):
+                if device.visible is True:
                     visible_devices.append(device)
             d4_visible_devices.append(visible_devices)
 
