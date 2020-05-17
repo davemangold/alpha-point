@@ -40,7 +40,7 @@ class GameObject(object):
         # add relative direction to descriptions for visible map objects with same base description
         if (self.game.level.map.inventory.has_item(self)
         and utility.d4_duplicate_description(self, player.get_visible_objects())):
-            direction = utility.get_direction(*player.location(), *self.location())
+            direction = utility.get_direction(*player.location, *self.location())
             action_text += " " + utility.get_relative_direction_text(player.orientation, direction)
 
         return action_text

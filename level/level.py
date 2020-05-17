@@ -24,7 +24,7 @@ class Level(object):
     def is_complete(self):
         """Returns True if the player is at the final cell of the level, otherwise False."""
 
-        return self.map.get_cell(*self.game.player.location()) is self.map.exit_cell
+        return self.map.get_cell(*self.game.player.location) is self.map.exit_cell
 
     def has_next_level(self):
         """Returns True if a next level exists in the config, otherwise False."""

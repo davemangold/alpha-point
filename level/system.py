@@ -394,7 +394,7 @@ class System(object):
                     config_satisfied = False
                     break
 
-            if death['location'] is not None and death['location'] != self.level.game.player.location():
+            if death['location'] is not None and death['location'] != self.level.game.player.location:
                 location_satisfied = False
 
             if config_satisfied is True and location_satisfied is True:

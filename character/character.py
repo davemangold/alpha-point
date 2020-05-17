@@ -39,10 +39,11 @@ class Character(object):
         self.cell = self.get_map_cell()
         for item in self.inventory.items:
             item.x, item.y = self.x, self.y
-        for cell in self.game.level.map.get_d4_cells(*self.location()):
+        for cell in self.game.level.map.get_d4_cells(*self.location):
             if cell is not None:
                 cell.seen = True
 
+    @property
     def location(self):
         """Returns character location as (x, y) tuple."""
 
@@ -51,7 +52,7 @@ class Character(object):
     def get_map_cell(self):
         """Get the cell at the location of this character."""
 
-        return self.game.level.map.get_cell(*self.location())
+        return self.game.level.map.get_cell(*self.location)
 
     def move_to(self, x, y):
         """Move character to cell at x, y if it's a valid move."""
@@ -105,7 +106,7 @@ class Character(object):
         """Return d4 tools visible to the player."""
 
         d4_visible_tools = []
-        d4_tools = self.game.level.map.get_d4_tools(*self.location())
+        d4_tools = self.game.level.map.get_d4_tools(*self.location)
 
         for tool_list in d4_tools:
             visible_tools = [tool for tool in tool_list if tool.visible is True]
@@ -117,7 +118,7 @@ class Character(object):
         """Return d4 tools visible to the player."""
 
         d4_visible_parts = []
-        d4_parts = self.game.level.map.get_d4_parts(*self.location())
+        d4_parts = self.game.level.map.get_d4_parts(*self.location)
 
         for part_list in d4_parts:
             visible_parts = [part for part in part_list if part.visible is True]
@@ -129,7 +130,7 @@ class Character(object):
         """Return d4 artifacts visible to the player."""
 
         d4_visible_artifacts = []
-        d4_artifacts = self.game.level.map.get_d4_artifacts(*self.location())
+        d4_artifacts = self.game.level.map.get_d4_artifacts(*self.location)
 
         for artifact_list in d4_artifacts:
             visible_artifacts = [artifact for artifact in artifact_list if artifact.visible is True]
@@ -152,7 +153,7 @@ class Character(object):
         """Return d4 interfaces visible to the player."""
 
         d4_visible_interfaces = []
-        d4_interfaces = self.game.level.map.get_d4_interfaces(*self.location())
+        d4_interfaces = self.game.level.map.get_d4_interfaces(*self.location)
 
         for interface_list in d4_interfaces:
             visible_interfaces = []
@@ -168,7 +169,7 @@ class Character(object):
         """Return d4 devices visible to the player."""
 
         d4_visible_devices = []
-        d4_devices = self.game.level.map.get_d4_devices(*self.location())
+        d4_devices = self.game.level.map.get_d4_devices(*self.location)
 
         for device_list in d4_devices:
             visible_devices = []
