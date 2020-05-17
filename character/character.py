@@ -312,7 +312,7 @@ class Character(object):
             if part.can_enable(device)]
 
         # actions to use interfaces
-        interface_actions = [Action(interface.use, interface.action_text())
+        interface_actions = [Action(interface.use, interface.action_text)
             for interface in map_interface_list]
 
         # actions to examine game objects

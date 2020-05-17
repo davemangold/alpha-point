@@ -27,6 +27,7 @@ class Interface(Component):
 
         self.system.add_interface(self)
 
+    @property
     def action_text(self):
         """Return text description of the currently available action."""
 
@@ -75,7 +76,7 @@ class Terminal(Interface):
         """Return dictionary of action based on enabled, terminal-linked devices."""
 
         device_list = self.get_devices()
-        actions_list = [Action(device.use, device.action_text())
+        actions_list = [Action(device.use, device.action_text)
                         for device in device_list
                         if device.enabled is True]
         actions = {actions_list.index(action) + 1: action

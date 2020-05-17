@@ -31,6 +31,7 @@ class Device(Component):
 
         self.system.add_device(self)
 
+    @property
     def action_text(self):
         """Return text description of the currently available action."""
 
