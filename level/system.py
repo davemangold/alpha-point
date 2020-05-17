@@ -13,11 +13,11 @@ class System(object):
 
     def __init__(self, level):
         self.level = level
-        self.interfaces = []  # [<interface>,...]
-        self.devices = []  # [<device>,...]
-        self.properties = []  # [<property>,...]
-        self.links = []  # [{'interface_id': <device id>},...]
-        self.relates = []  # [{'device_id': <property_id>},...]
+        self.interfaces = []    # [<interface>,...]
+        self.devices = []       # [<device>,...]
+        self.properties = []    # [<property>,...]
+        self.links = []         # [{'interface_id': <device id>},...]
+        self.relates = []       # [{'device_id': <property_id>},...]
         self.deaths = []
 
     def build(self):
@@ -379,7 +379,6 @@ class System(object):
 
         return device.toggle_active_state()
 
-    #TODO: simplify; don't need *_satisifed init; handle all in loop with external return for no deaths configured
     def get_death(self):
         """Return the first death config satisfied, otherwise None."""
 

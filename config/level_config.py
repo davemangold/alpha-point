@@ -425,7 +425,19 @@ level_config = {
                     'blocking': False,
                     'x': 7,
                     'y': 3
-                }  # excursion suit helmet
+                },  # excursion suit helmet
+                {
+                    'type': 'generic',
+                    'name': 'sticky_note',
+                    'description': 'sticky note on the terminal',
+                    'report': 'Not sure why we changed them but just type "help" if you forget the commands. For all the other non-comps, you\'re welcome. -Emily',
+                    'inspectable': True,
+                    'visible': True,
+                    'interactive': False,
+                    'blocking': False,
+                    'x': 1,
+                    'y': 1
+                },  # sticky note
             ]
         },
         'system': {
@@ -845,7 +857,7 @@ level_config = {
                     'configuration': [
                         {'device_id': 2, 'active_state': True}
                     ],
-                    'description': 'As you strain to move a large piece of debris there is a sudden bang that sends you tumbling out of a gaping hole in the habitat wall. Your vision fades to red and then black as you claw in agony at the rusty red grit of the crater floor you\'ve called home for the past seven months.',
+                    'description': 'As you strain to move a large piece of debris there is a sudden bang that sends you tumbling out of a gaping hole in the habitat wall. Your vision fades to red and then black as you claw in agony at the rusty red grit of the crater floor.',
                     'location': None  # None if all locations are valid
                 }
             ]
@@ -1139,7 +1151,7 @@ level_config = {
                     'type': 'generic',
                     'name': 'handprint',
                     'description': 'bloody hand print',
-                    'report': 'It looks like a partial, bloody hand print at the edge of the table and there are a few drops of what looks like dried blood on the floor.',
+                    'report': 'It looks like a partial, bloody hand print at the edge of the table and there are a few drops of dried blood on the floor.',
                     'inspectable': True,
                     'visible': True,
                     'interactive': False,
@@ -1178,7 +1190,7 @@ level_config = {
                     'y': 5,
                     'orientation': 3,
                     'msg_action_verb': 'log in to'
-                }  # system terminal
+                }  # 1 system terminal
             ],
             'devices': [
                 {
@@ -1206,7 +1218,7 @@ level_config = {
                 {
                     'id': 1,
                     'name': 'crew quarters door',
-                    'description': 'crew quarters door',
+                    'description': 'door',
                     'type': 'door',
                     'report': '',
                     'inspectable': False,
@@ -1227,7 +1239,7 @@ level_config = {
             ],
             'properties': [],
             'links': [
-                {'interface_id': 0, 'device_id': 1},
+                # {'interface_id': 0, 'device_id': 1},
                 {'interface_id': 1, 'device_id': 1}
             ],
             'relates': [],
