@@ -379,11 +379,9 @@ class System(object):
 
         return device.toggle_active_state()
 
+    #TODO: simplify; don't need *_satisifed init; handle all in loop with external return for no deaths configured
     def get_death(self):
-        """Return the first death dictionary satisfied, otherwise None."""
-
-        config_satisfied = False
-        location_satisfied = False
+        """Return the first death config satisfied, otherwise None."""
 
         for death in self.deaths:
 
@@ -400,8 +398,8 @@ class System(object):
             if death['location'] is not None and death['location'] != self.level.game.player.location():
                 location_satisfied = False
 
-        if config_satisfied is True and location_satisfied is True:
-            return death
+            if config_satisfied is True and location_satisfied is True:
+                return death
 
         return None
 
