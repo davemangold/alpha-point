@@ -386,6 +386,34 @@ def nested_list_to_text_map(nested_list):
     return '\n'.join([' '.join(i) for i in nested_list])
 
 
+def debone_ui_text(text):
+    """Split text into two lists: characters and newlines."""
+
+    characters = []
+    newlines = []
+
+    clean = text.strip()
+    last_char = ''
+
+    for char in clean:
+
+        if char == '\n':
+            if len(newlines) == 0 or last_char != '\n':
+                newlines.append(char)
+            else:
+                newlines[-1] = newlines[-1] + char
+        else:
+            if len(characters) == 0 or last_char == '\n':
+                characters.append(char)
+            else:
+                characters[-1] = characters[-1] + char
+
+        last_char = char
+
+    return characters, newlines
+
+
+# TODO: keep inner newline characters
 def format_ui_text(text):
     """Format text to fit within UI."""
 
