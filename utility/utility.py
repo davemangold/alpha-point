@@ -387,10 +387,10 @@ def nested_list_to_text_map(nested_list):
 
 
 def debone_ui_text(text):
-    """Split text into two lists: characters and newlines."""
+    """Split text into two lists containing continuous blocks of characters and newlines, respectively."""
 
-    characters = []
-    newlines = []
+    text_blocks = []
+    newline_blocks = []
 
     clean = text.strip()
     last_char = ''
@@ -398,40 +398,52 @@ def debone_ui_text(text):
     for char in clean:
 
         if char == '\n':
-            if len(newlines) == 0 or last_char != '\n':
-                newlines.append(char)
+            if len(newline_blocks) == 0 or last_char != '\n':
+                newline_blocks.append(char)
             else:
-                newlines[-1] = newlines[-1] + char
+                newline_blocks[-1] = newline_blocks[-1] + char
         else:
-            if len(characters) == 0 or last_char == '\n':
-                characters.append(char)
+            if len(text_blocks) == 0 or last_char == '\n':
+                text_blocks.append(char)
             else:
-                characters[-1] = characters[-1] + char
+                text_blocks[-1] = text_blocks[-1] + char
 
         last_char = char
 
-    return characters, newlines
+    return text_blocks, newline_blocks
 
 
-# TODO: keep inner newline characters
 def format_ui_text(text):
     """Format text to fit within UI."""
 
-    width = game_config['ui']['width']
-    words = text.split()
-    lines = []
-    line = ''
-    for w in words:
-        if len(line + w) + 1 <= width:
-            line += ' ' + w
-        else:
-            lines.append(line.strip())
-            line = ''
-            line += ' ' + w
-    lines.append(line.strip())
-    keep_lines = [line for line in lines if len(line) > 0]
-    formatted_text = '\n'.join(keep_lines)
-    return formatted_text
+    final_text = ''
+    formatted_blocks = []
+
+    text_blocks, newline_blocks = debone_ui_text(text)
+    newline_blocks.append('')  # add empty string to match size of text_blocks for zip
+
+    for text in text_blocks:
+
+        width = game_config['ui']['width']
+        words = text.split()
+        lines = []
+        line = ''
+        for w in words:
+            if len(line + w) + 1 <= width:
+                line += ' ' + w
+            else:
+                lines.append(line.strip())
+                line = ''
+                line += ' ' + w
+        lines.append(line.strip())
+        keep_lines = [line for line in lines if len(line) > 0]
+        formatted_text = '\n'.join(keep_lines)
+        formatted_blocks.append(formatted_text)
+
+    for pair in zip(formatted_blocks, newline_blocks):
+        final_text += (pair[0] + pair[1])
+
+    return final_text
 
 
 def level_exists(number):
