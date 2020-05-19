@@ -29,7 +29,8 @@ game_config = {
                 'open airlock door': 'an',
                 'exposed switchbox': 'an',
                 'open bay door': 'an',
-                'wiring': 'some'
+                'wiring': 'some',
+                'unlocked tablet': 'an'
             }
         }
     }

@@ -857,7 +857,7 @@ level_config = {
                     'configuration': [
                         {'device_id': 2, 'active_state': True}
                     ],
-                    'description': 'As you strain to move a large piece of debris there is a sudden bang that sends you tumbling out of a gaping hole in the habitat wall. Your vision fades to red and then black as you claw in agony at the rusty red grit of the crater floor.',
+                    'description': 'As you strain to move a large piece of debris there is a sudden bang that sends you tumbling out of a gaping hole in the habitat wall. Your vision fades to red and then black as you claw in agony at the rusty red grit of the crater floor. Perhaps, in another life, you made a wiser choice.',
                     'location': None  # None if all locations are valid
                 }
             ]
@@ -1158,7 +1158,19 @@ level_config = {
                     'blocking': False,
                     'x': 5,
                     'y': 6
-                }  # bloody hand print
+                },  # bloody hand print
+                {
+                    'type': 'generic',
+                    'name': 'tablet',
+                    'description': 'unlocked tablet',
+                    'report': 'A standard tablet with a partially written message on-screen: "Gravimetric readings from the bore site suggest denser material than we were expecting from geological surveys. Tonia gave the go ahead to continue but we expect progress to slow soon. It\'s unfortunate but it isn\'t like we have..."',
+                    'inspectable': True,
+                    'visible': True,
+                    'interactive': True,
+                    'blocking': False,
+                    'x': 2,
+                    'y': 6
+                }  # tablet
             ]
         },
         'system': {
