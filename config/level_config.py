@@ -326,7 +326,7 @@ level_config = {
                 {'coordinates': (4, 5), 'story': None},
                 {'coordinates': (4, 6), 'story': None},
                 {'coordinates': (4, 7), 'story': {'title': None,
-                                                  'text': 'As he removed his helmet, {0} noticed two empty excursion suit alcoves and wondered who else was outside the hab. Ad-hoc departures weren\'t that unusual. Even Martian research stations have fences that need mending. The lights flickered briefly and {0} detected the caustic smell of overheated electronics. "That can\'t be good", he told himself. After stowing his suit in an open alcove {0} headed past rows pf storage shelves toward the door of the crew meeting area at the far end of the equipment module.'.format(
+                                                  'text': 'As he removed his helmet, {0} noticed an empty excursion suit alcove and wondered who else was outside the hab. Ad-hoc departures weren\'t that unusual. Even Martian research stations have fences that need mending. The lights flickered briefly and {0} detected the caustic smell of overheated electronics. "That can\'t be good", he told himself. After stowing his suit in an open alcove {0} headed past rows pf storage shelves toward the door of the crew meeting area at the far end of the equipment module.'.format(
                                                       player_config['name'])}},
                 {'coordinates': (4, 8), 'story': None},
                 {'coordinates': (3, 6), 'story': None},
@@ -430,7 +430,7 @@ level_config = {
                     'type': 'generic',
                     'name': 'sticky_note',
                     'description': 'sticky note on the terminal',
-                    'report': 'Not sure why we changed them but just type "help" if you forget the commands. For all the other non-comps, you\'re welcome. -Emily',
+                    'report': 'Not sure why we changed them but just type "help" if you forget the commands. For all the other non-comps, you\'re welcome.\n\n-Emilia',
                     'inspectable': True,
                     'visible': True,
                     'interactive': False,
@@ -857,7 +857,7 @@ level_config = {
                     'configuration': [
                         {'device_id': 2, 'active_state': True}
                     ],
-                    'description': 'As you strain to move a large piece of debris there is a sudden bang that sends you tumbling out of a gaping hole in the habitat wall. Your vision fades to red and then black as you claw in agony at the rusty red grit of the crater floor. Perhaps, in another life, you made a wiser choice.',
+                    'description': 'As you strain to move a large piece of debris there is a sudden bang that sends you tumbling out of a gaping hole in the habitat wall. Your vision fades to red and then black as you claw in agony at the rusty red grit of the crater floor. Perhaps in another life you made a wiser choice.',
                     'location': None  # None if all locations are valid
                 }
             ]
@@ -1137,16 +1137,40 @@ level_config = {
                 },  # knife
                 {
                     'type': 'generic',
+                    'name': 'cutting_board',
+                    'description': 'cutting board',
+                    'report': 'A cutting board with some chopped water cress.',
+                    'inspectable': True,
+                    'visible': True,
+                    'interactive': False,
+                    'blocking': False,
+                    'x': 2,
+                    'y': 2
+                },  # cutting board
+                {
+                    'type': 'generic',
                     'name': 'microwave',
-                    'description': 'microwave',
-                    'report': '',
-                    'inspectable': False,
+                    'description': 'microwave oven',
+                    'report': 'A small microwave oven with a bowl inside.',
+                    'inspectable': True,
                     'visible': True,
                     'interactive': False,
                     'blocking': False,
                     'x': 4,
                     'y': 0
                 },  # microwave
+                {
+                    'type': 'generic',
+                    'name': 'cook_surface',
+                    'description': 'cook surface',
+                    'report': 'A slightly dirty glass cook surface.',
+                    'inspectable': True,
+                    'visible': True,
+                    'interactive': False,
+                    'blocking': False,
+                    'x': 4,
+                    'y': 0
+                },  # cook surface
                 {
                     'type': 'generic',
                     'name': 'handprint',
@@ -1163,7 +1187,7 @@ level_config = {
                     'type': 'generic',
                     'name': 'tablet',
                     'description': 'unlocked tablet',
-                    'report': 'A standard tablet with a partially written message on-screen: "Gravimetric readings from the bore site suggest denser material than we were expecting from geological surveys. Tonia gave the go ahead to continue but we expect progress to slow soon. It\'s unfortunate but it isn\'t like we have..."',
+                    'report': 'A tablet computer with a partially written email on screen.\n\nFrom: Emilia Perez\nTo: James O\'Reilly\n\nHey Jim,\n\nQuantum gravimeter readings from the bore site suggest denser material than we were expecting from our geological surveys. Tonia gave the go ahead to continue but we expect progress to slow soon. It\'s unfortunate but it\'s not like we have an',
                     'inspectable': True,
                     'visible': True,
                     'interactive': True,
