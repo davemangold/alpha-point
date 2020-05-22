@@ -386,7 +386,7 @@ def nested_list_to_text_map(nested_list):
     return '\n'.join([' '.join(i) for i in nested_list])
 
 
-def debone_ui_text(text):
+def explode_ui_text(text):
     """Split text into two lists containing continuous blocks of characters and newlines, respectively."""
 
     text_blocks = []
@@ -419,7 +419,7 @@ def format_ui_text(text):
     final_text = ''
     formatted_blocks = []
 
-    text_blocks, newline_blocks = debone_ui_text(text)
+    text_blocks, newline_blocks = explode_ui_text(text)
     newline_blocks.append('')  # add empty string to match size of text_blocks for zip
 
     for text in text_blocks:
