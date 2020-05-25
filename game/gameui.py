@@ -464,6 +464,7 @@ class MainUI(BaseUI):
     def leave(self):
         """Leave the game and return to the levels menu."""
 
+        self.game.player.inventory.clear_items()
         self.game.ui = LevelsUI(self.game)
 
 
