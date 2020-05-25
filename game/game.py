@@ -161,6 +161,10 @@ class Game(object):
     def setup(self, level_number):
         """Setup game elements."""
 
+        # initialize highest completed level to zero if not previously set
+        if self.save.get('highest_level') is None:
+            self.save['highest_level'] = 0
+
         # setup level before player
         self.setup_level(level_number)
         self.setup_player()
@@ -184,10 +188,6 @@ class Game(object):
 
     def mainloop(self):
         """The main game loop."""
-
-        # initialize highest completed level to zero if not previously set
-        if self.save.get('highest_level') is None:
-            self.save['highest_level'] = 0
 
         while True:
 
