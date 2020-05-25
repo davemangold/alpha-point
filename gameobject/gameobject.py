@@ -10,6 +10,7 @@ class GameObject(object):
         self.game = game
         self.id = str(uuid4()).split('-')[0]
         self.config_id = None
+        self.level_number = None
         self.name = ''
         self.description = 'generic object'
         self.inspectable = False

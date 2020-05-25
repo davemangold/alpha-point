@@ -303,6 +303,7 @@ class Map(object):
 
         for config_tool in map_config['tools']:
             new_tool = ToolFactory.make_tool(self, config_tool['type'])
+            new_tool.level_number = self.level.number
             new_tool.name = config_tool['name']
             new_tool.description = config_tool['description']
             new_tool.report = config_tool['report']
@@ -316,6 +317,7 @@ class Map(object):
 
         for config_part in map_config['parts']:
             new_part = PartFactory.make_part(self, config_part['type'])
+            new_part.level_number = self.level.number
             new_part.name = config_part['name']
             new_part.description = config_part['description']
             new_part.report = config_part['report']
@@ -329,6 +331,7 @@ class Map(object):
 
         for config_artifact in map_config['artifacts']:
             new_artifact = ArtifactFactory.make_artifact(self, config_artifact['type'])
+            new_artifact.level_number = self.level.number
             new_artifact.name = config_artifact['name']
             new_artifact.description = config_artifact['description']
             new_artifact.report = config_artifact['report']

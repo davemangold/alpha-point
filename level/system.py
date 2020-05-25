@@ -28,6 +28,7 @@ class System(object):
         for config_interface in system_config['interfaces']:
             new_interface = InterfaceFactory.make_interface(self, config_interface['type'])
             new_interface.config_id = config_interface['id']
+            new_interface.level_number = self.level.number
             new_interface.name = config_interface['name']
             new_interface.description = config_interface['description']
             new_interface.report = config_interface['report']
@@ -42,6 +43,7 @@ class System(object):
         for config_device in system_config['devices']:
             new_device = DeviceFactory.make_device(self, config_device['type'])
             new_device.config_id = config_device['id']
+            new_device.level_number = self.level.number
             new_device.name = config_device['name']
             new_device.description = config_device['description']
             new_device.report = config_device['report']
@@ -62,6 +64,7 @@ class System(object):
         for config_property in system_config['properties']:
             new_property = PropertyFactory.make_property(self, config_property['type'])
             new_property.config_id = config_property['id']
+
             new_property.name = config_property['name']
             new_property.description = config_property['description']
             new_property.min_value = config_property['min_value']
