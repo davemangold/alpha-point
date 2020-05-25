@@ -12,12 +12,10 @@ class Tool(Item):
     def can_activate(self, test_device):
         """Returns True if this tool activates the type of device provided, otherwise False."""
 
-        if (test_device.enabled is True
-        and test_device.active is False
-        and isinstance(test_device, device.Device)):
-            return True
-
-        return False
+        return (test_device.enabled is True
+                and test_device.active is False
+                and isinstance(test_device, device.Device)
+                and self.level_number == test_device.level_number)
 
     def get_use_action(self, target_device):
         """Return an ad-hoc function for activating the device."""
@@ -45,12 +43,10 @@ class Wrench(Tool):
     def can_activate(self, test_device):
         """Returns True if this tool activates the type of device provided, otherwise False."""
 
-        if (test_device.enabled is True 
-        and test_device.active is False
-        and isinstance(test_device, device.Valve)):
-            return True
-
-        return False
+        return (test_device.enabled is True
+                and test_device.active is False
+                and isinstance(test_device, device.Valve)
+                and self.level_number == test_device.level_number)
 
 
 class PryBar(Tool):
@@ -62,12 +58,10 @@ class PryBar(Tool):
     def can_activate(self, test_device):
         """Returns True if this tool activates the type of device provided, otherwise False."""
 
-        if (test_device.enabled is True
-        and test_device.active is False
-        and isinstance(test_device, device.Door)):
-            return True
-
-        return False
+        return (test_device.enabled is True
+                and test_device.active is False
+                and isinstance(test_device, device.Door)
+                and self.level_number == test_device.level_number)
 
 
 class ToolFactory(object):
