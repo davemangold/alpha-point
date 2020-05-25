@@ -12,9 +12,8 @@ class Part(Item):
     def can_enable(self, test_device):
         """Returns True if this tool activates the type of device provided, otherwise False."""
 
-        if (test_device.enabled is False
-        and isinstance(test_device, device.Device)):
-            return True
+        return (test_device.enabled is False
+                and isinstance(test_device, device.Device))
 
     def get_use_action(self, target_device):
         """Return an ad-hoc function for enabling the device."""

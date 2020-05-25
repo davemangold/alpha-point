@@ -1949,5 +1949,5 @@ level_config = {
             ],
             'deaths': []
         }
-    },  # testing
+    }  # testing
 }

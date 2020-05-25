@@ -267,7 +267,7 @@ class Character(object):
         return utility.build_object_report_text(self.orientation, visible_objects)
 
     def get_actions(self):
-        """Return dictionary of action based on d4 visible objects."""
+        """Return dictionary of actions based on player inventory and d4 visible objects."""
 
         # tools in the player inventory
         character_tool_list = self.inventory.get_tools()
@@ -332,7 +332,7 @@ class Character(object):
         return actions
 
     def update_actions(self):
-        """Set the currently available action."""
+        """Set the currently available actions."""
 
         self.actions = self.get_actions()
 
