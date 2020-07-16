@@ -156,7 +156,7 @@ class Game(object):
 
         self.player.orientation = enter_orientation
         self.player.move_to(*enter_coords)
-        # self.player.inventory.clear_items()
+        self.player.inventory.clear_items()
 
     def setup(self, level_number):
         """Setup game elements."""
