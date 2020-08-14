@@ -326,7 +326,7 @@ level_config = {
                 {'coordinates': (4, 5), 'story': None},
                 {'coordinates': (4, 6), 'story': None},
                 {'coordinates': (4, 7), 'story': {'title': None,
-                                                  'text': 'As he removed his helmet, {0} noticed an empty excursion suit alcove and wondered who else was outside the hab. Ad-hoc departures weren\'t that unusual. Even Martian research stations have fences that need mending. The lights flickered briefly and {0} detected the caustic smell of overheated electronics. "That can\'t be good", he told himself. After stowing his suit in an open alcove {0} headed past rows pf storage shelves toward the door of the crew meeting area at the far end of the equipment module.'.format(
+                                                  'text': 'As he removed his helmet, {0} noticed an empty excursion suit alcove and wondered who else was outside the hab. Ad-hoc departures weren\'t that unusual. Even Martian research stations have fences that need mending. The lights flickered briefly and {0} detected the caustic smell of overheated electronics. "That can\'t be good", he told himself. After stowing his suit in an open alcove {0} headed past rows of storage shelves toward the door of the crew meeting area at the far end of the equipment module.'.format(
                                                       player_config['name'])}},
                 {'coordinates': (4, 8), 'story': None},
                 {'coordinates': (3, 6), 'story': None},
@@ -430,7 +430,7 @@ level_config = {
                     'type': 'generic',
                     'name': 'sticky_note',
                     'description': 'sticky note on the terminal',
-                    'report': 'Not sure why we changed them but just type "help" if you forget the commands. For all the other non-comps, you\'re welcome.\n\n-Emilia',
+                    'report': 'Not sure why we changed them but just type "help" if you forget the commands. At least we don\'t have to type full device IDs anymore. For all the other non-comps, you\'re welcome.\n\n-Emilia',
                     'inspectable': True,
                     'visible': True,
                     'interactive': False,
