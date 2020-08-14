@@ -359,64 +359,43 @@ class Map(object):
     def interfaces(self):
         """Interfaces from all map cells"""
 
-        interfaces = []
-        for cell in self.cells:
-            interfaces += cell.interfaces
-        return interfaces
+        return [i for c in self.cells for i in c.interfaces]
 
     @property
     def devices(self):
         """Devices from all map cells"""
 
-        devices = []
-        for cell in self.cells:
-            devices += cell.devices
-        return devices
+        return [d for c in self.cells for d in c.devices]
 
     @property
     def components(self):
         """Components from all map cells."""
 
-        components = []
-        for cell in self.cells:
-            components += cell.components
-        return components
+        return [o for c in self.cells for o in c.components]
 
     @property
     def tools(self):
         """Tools from all map cells"""
 
-        tools = []
-        for cell in self.cells:
-            tools += cell.tools
-        return tools
+        return [t for c in self.cells for t in c.tools]
 
     @property
     def parts(self):
         """Parts from all map cells"""
 
-        parts = []
-        for cell in self.cells:
-            parts += cell.parts
-        return parts
+        return [p for c in self.cells for p in c.parts]
 
     @property
     def artifacts(self):
         """Artifacts from all map cells"""
 
-        artifacts = []
-        for cell in self.cells:
-            artifacts += cell.artifacts
-        return artifacts
+        return [a for c in self.cells for a in c.artifacts]
 
     @property
     def items(self):
         """Items from all map cells."""
 
-        items = []
-        for cell in self.cells:
-            items += cell.items
-        return items
+        return [i for c in self.cells for i in c.items]
 
     def get_cell(self, x, y):
         """Return the cell at the provided coordinates if it exists, otherwise None."""
