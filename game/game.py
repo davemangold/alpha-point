@@ -1,10 +1,6 @@
 import os
-import json
 import shelve
-import threading
-import urllib.request
 import utility
-from datetime import datetime
 from level import Level
 from game.gameio import Control
 from game.gameui import MainUI
@@ -23,9 +19,6 @@ class Game(object):
     def __init__(self, debug=False):
 
         self.save = self.__init_save()
-        self.weather_data = None
-        self.weather_thread = threading.Thread(target=self.__set_weather_data)
-        self.weather_thread.start()
         self.debug = debug
         self.control = Control(self)
         self.level = Level(self)
@@ -40,96 +33,6 @@ class Game(object):
     def __exit__(self, exc_type, exc_value, exc_traceback):
 
         self.save.close()
-
-    def __set_weather_data(self):
-        """Get latest Mars weather from NASA InSight API."""
-
-        def clean(value):
-
-            return '-' if value in (0, None) else value
-
-        weather_data = {
-            'sol': None,
-            'time': None,
-            'temperature': {
-                'value': None,
-                'units': 'C'
-            },
-            'wind': {
-                'speed': {
-                    'value': None,
-                    'units': 'KPH'
-                },
-                'direction': {
-                    'value': None,
-                    'units': 'Deg'
-                }
-            },
-            'pressure': {
-                'value': None,
-                'units': 'Pa'
-            }
-        }
-
-        request_url = 'https://mars.nasa.gov/rss/api?feed=weather&category=insight&feedtype=json&ver=1.0'
-
-        try:
-            with urllib.request.urlopen(request_url) as response:
-                data = json.loads(response.read())
-
-            latest_sol = data['sol_keys'][-1]
-            latest_weather = data[latest_sol]
-
-        except:
-            return weather_data
-
-        try:
-            time_string = datetime.now().strftime('%H:%M:%S')  # use current local time for game
-            weather_data['sol'] = latest_sol
-            weather_data['time'] = time_string
-
-        except (ValueError, TypeError):  # bad or missing timestamp
-            return weather_data
-
-        # get weather measurements
-        try:
-            weather_data['temperature']['value'] = clean(
-                latest_weather
-                .get('AT')
-                .get('av'))
-
-        except (KeyError, AttributeError):
-            pass
-
-        try:
-            weather_data['wind']['speed']['value'] = clean(
-                latest_weather
-                .get('HWS')
-                .get('av'))
-
-        except (KeyError, AttributeError):
-            pass
-
-        try:
-            weather_data['wind']['direction']['value'] = clean(
-                latest_weather
-                .get('WD')
-                .get('most_common')
-                .get('compass_degrees'))
-
-        except (KeyError, AttributeError):
-            pass
-
-        try:
-            weather_data['pressure']['value'] = clean(
-                latest_weather
-                .get('PRE')
-                .get('av'))
-
-        except (KeyError, AttributeError):
-            pass
-
-        self.weather_data = weather_data
 
     def __init_save(self):
         """Setup save environment, if necessary."""

@@ -1,5 +1,6 @@
 import re
 import platform
+import pickle
 from datetime import datetime
 from config import game_config
 from config import level_config
@@ -228,7 +229,7 @@ def build_sensor_readout_text(sensors):
     return readout_text
 
 
-def build_weather_readout_text(game):
+def build_weather_readout_text(weather_data):
     """Return text to display in weather station"""
 
     def display_text(value, units):
@@ -238,7 +239,6 @@ def build_weather_readout_text(game):
 
         return 'NO DATA'
 
-    weather_data = game.weather_data
     weather_data['time'] = datetime.now().strftime('%H:%M:%S')
 
     sol = display_text(
@@ -462,3 +462,19 @@ def start_level(save_obj):
             return next_level
 
     return 1
+
+
+def set_save_game(game):
+    """Serialize game object and save to file."""
+
+    with open('.save/pickle_save', "wb") as save_file:
+        pickle.dump(game, save_file)
+
+
+def get_save_game():
+    """De-serialize save file and return game object."""
+
+    with open('.save/pickle_save', "rb") as save_file:
+        game = pickle.load(save_file)
+
+    return game

@@ -11,6 +11,7 @@ class Level(object):
         self.game = game
         self.number = number
         self.name = level_config[self.number]['name']
+        self.weather = level_config[self.number]['weather']
         self.map = Map(self)
         self.system = System(self)
 

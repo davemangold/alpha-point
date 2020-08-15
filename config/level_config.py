@@ -25,6 +25,23 @@ level_config = {
             'links': [],
             'relates': [],
             'deaths': []
+        },
+        'weather': {
+            'sol': '609',
+            'time': '12:05:41',
+            'temperature': {
+                'value': -59.957,
+                'units': 'C'},
+            'wind': {
+                'speed': {
+                    'value': 7.958,
+                    'units': 'KPH'},
+                'direction': {
+                    'value': 292.5,
+                    'units': 'Deg'}},
+            'pressure': {
+                'value': 789.166,
+                'units': 'Pa'}
         }
     },  # void
     1: {
@@ -135,6 +152,23 @@ level_config = {
             ],
             'relates': [],
             'deaths': []
+        },
+        'weather': {
+            'sol': '609',
+            'time': '12:05:41',
+            'temperature': {
+                'value': -59.957,
+                'units': 'C'},
+            'wind': {
+                'speed': {
+                    'value': 7.958,
+                    'units': 'KPH'},
+                'direction': {
+                    'value': 292.5,
+                    'units': 'Deg'}},
+            'pressure': {
+                'value': 789.166,
+                'units': 'Pa'}
         }
     },  # approach
     2: {
@@ -310,6 +344,23 @@ level_config = {
                     'description': 'Alarms sound in the attached module as air rushes out of the open valve. The gravity of your mistake hits you hard. You just depressurized the habitat. As a fog of panic envelopes your mind you desparately wish you could go back and make a different choice.',
                     'location': None}  # None if all locations are valid
             ]
+        },
+        'weather': {
+            'sol': '609',
+            'time': '12:05:41',
+            'temperature': {
+                'value': -59.957,
+                'units': 'C'},
+            'wind': {
+                'speed': {
+                    'value': 7.958,
+                    'units': 'KPH'},
+                'direction': {
+                    'value': 292.5,
+                    'units': 'Deg'}},
+            'pressure': {
+                'value': 789.166,
+                'units': 'Pa'}
         }
     },  # airlock
     3: {
@@ -588,6 +639,23 @@ level_config = {
             ],
             'relates': [],
             'deaths': []
+        },
+        'weather': {
+            'sol': '609',
+            'time': '12:05:41',
+            'temperature': {
+                'value': -59.957,
+                'units': 'C'},
+            'wind': {
+                'speed': {
+                    'value': 7.958,
+                    'units': 'KPH'},
+                'direction': {
+                    'value': 292.5,
+                    'units': 'Deg'}},
+            'pressure': {
+                'value': 789.166,
+                'units': 'Pa'}
         }
     },  # equipment
     4: {
@@ -861,6 +929,23 @@ level_config = {
                     'location': None  # None if all locations are valid
                 }
             ]
+        },
+        'weather': {
+            'sol': '609',
+            'time': '12:05:41',
+            'temperature': {
+                'value': -59.957,
+                'units': 'C'},
+            'wind': {
+                'speed': {
+                    'value': 7.958,
+                    'units': 'KPH'},
+                'direction': {
+                    'value': 292.5,
+                    'units': 'Deg'}},
+            'pressure': {
+                'value': 789.166,
+                'units': 'Pa'}
         }
     },  # crew
     5: {
@@ -1280,6 +1365,23 @@ level_config = {
             ],
             'relates': [],
             'deaths': []
+        },
+        'weather': {
+            'sol': '609',
+            'time': '12:05:41',
+            'temperature': {
+                'value': -59.957,
+                'units': 'C'},
+            'wind': {
+                'speed': {
+                    'value': 7.958,
+                    'units': 'KPH'},
+                'direction': {
+                    'value': 292.5,
+                    'units': 'Deg'}},
+            'pressure': {
+                'value': 789.166,
+                'units': 'Pa'}
         }
     },  # galley
     6: {
@@ -1366,6 +1468,23 @@ level_config = {
             ],
             'relates': [],
             'deaths': []
+        },
+        'weather': {
+            'sol': '609',
+            'time': '12:05:41',
+            'temperature': {
+                'value': -59.957,
+                'units': 'C'},
+            'wind': {
+                'speed': {
+                    'value': 7.958,
+                    'units': 'KPH'},
+                'direction': {
+                    'value': 292.5,
+                    'units': 'Deg'}},
+            'pressure': {
+                'value': 789.166,
+                'units': 'Pa'}
         }
     },  # quarters
     7: {
@@ -1452,6 +1571,23 @@ level_config = {
             ],
             'relates': [],
             'deaths': []
+        },
+        'weather': {
+            'sol': '609',
+            'time': '12:05:41',
+            'temperature': {
+                'value': -59.957,
+                'units': 'C'},
+            'wind': {
+                'speed': {
+                    'value': 7.958,
+                    'units': 'KPH'},
+                'direction': {
+                    'value': 292.5,
+                    'units': 'Deg'}},
+            'pressure': {
+                'value': 789.166,
+                'units': 'Pa'}
         }
     },  # wet lab
     8: {
@@ -1538,6 +1674,23 @@ level_config = {
             ],
             'relates': [],
             'deaths': []
+        },
+        'weather': {
+            'sol': '609',
+            'time': '12:05:41',
+            'temperature': {
+                'value': -59.957,
+                'units': 'C'},
+            'wind': {
+                'speed': {
+                    'value': 7.958,
+                    'units': 'KPH'},
+                'direction': {
+                    'value': 292.5,
+                    'units': 'Deg'}},
+            'pressure': {
+                'value': 789.166,
+                'units': 'Pa'}
         }
     },  # dry lab
     9: {
@@ -1624,6 +1777,23 @@ level_config = {
             ],
             'relates': [],
             'deaths': []
+        },
+        'weather': {
+            'sol': '609',
+            'time': '12:05:41',
+            'temperature': {
+                'value': -59.957,
+                'units': 'C'},
+            'wind': {
+                'speed': {
+                    'value': 7.958,
+                    'units': 'KPH'},
+                'direction': {
+                    'value': 292.5,
+                    'units': 'Deg'}},
+            'pressure': {
+                'value': 789.166,
+                'units': 'Pa'}
         }
     },  # excavation
     99: {
@@ -1948,6 +2118,23 @@ level_config = {
                 {'device_id': 6, 'property_id': 1}
             ],
             'deaths': []
+        },
+        'weather': {
+            'sol': '609',
+            'time': '12:05:41',
+            'temperature': {
+                'value': -59.957,
+                'units': 'C'},
+            'wind': {
+                'speed': {
+                    'value': 7.958,
+                    'units': 'KPH'},
+                'direction': {
+                    'value': 292.5,
+                    'units': 'Deg'}},
+            'pressure': {
+                'value': 789.166,
+                'units': 'Pa'}
         }
     }  # testing
 }

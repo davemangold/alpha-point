@@ -1207,7 +1207,7 @@ class WeatherStationUI(BaseUI):
     def get_weather_readout(self):
         """Get the readout for current weather."""
 
-        return utility.build_weather_readout_text(self.game)
+        return utility.build_weather_readout_text(self.game.level.weather)
 
     def get_welcome(self):
         """Return weather station welcome message text."""
