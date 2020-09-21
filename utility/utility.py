@@ -1,4 +1,5 @@
 import re
+import os
 import platform
 import pickle
 from datetime import datetime
@@ -452,29 +453,35 @@ def level_exists(number):
     return bool(level_config.get(number))
 
 
-def start_level(save_obj):
-    """Returns the number of the next uncompleted level if it exists, otherwise zero."""
+def save_exists(name):
+    """Return true if save game file exists, otherwise False."""
 
-    highest_level = save_obj.get('highest_level')
-    if highest_level is not None:
-        next_level = save_obj.get('highest_level') + 1
-        if level_exists(next_level):
-            return next_level
+    check_filepath = os.path.join('.save', name)
 
-    return 1
+    return os.path.exists(check_filepath)
 
 
-def set_save_game(game):
+def save_object(obj, name):
     """Serialize game object and save to file."""
 
-    with open('.save/pickle_save', "wb") as save_file:
-        pickle.dump(game, save_file)
+    save_filepath = os.path.join('.save', name)
+
+    if hasattr(obj, 'player'):
+        obj.player.actions = {}  # clear all ad-hoc, local action functions so object can be serialized
+
+    with open(save_filepath, "wb") as save_file:
+        pickle.dump(obj, save_file)
 
 
-def get_save_game():
+def load_object(name):
     """De-serialize save file and return game object."""
 
-    with open('.save/pickle_save', "rb") as save_file:
-        game = pickle.load(save_file)
+    load_filepath = os.path.join('.save', name)
 
-    return game
+    with open(load_filepath, "rb") as save_file:
+        obj = pickle.load(save_file)
+
+        if hasattr(obj, 'player'):
+            obj.player.move_to(*obj.player.location)  # move player to current location; trigger action functions update
+
+    return obj

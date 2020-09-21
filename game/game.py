@@ -1,5 +1,4 @@
 import os
-import shelve
 import utility
 from level import Level
 from game.gameio import Control
@@ -8,7 +7,6 @@ from game.gameui import StartUI
 from game.gameui import StoryUI
 from game.gameui import GameCompleteUI
 from game.gameui import PlayerDeadUI
-from game.gameui import LevelsUI
 from character.player import Player
 from config import level_config
 
@@ -18,13 +16,12 @@ class Game(object):
 
     def __init__(self, debug=False):
 
-        self.save = self.__init_save()
         self.debug = debug
         self.control = Control(self)
         self.level = Level(self)
         self.player = Player(self)
         self.ui = StartUI(self)
-        self.setup(level_number=utility.start_level(self.save))
+        self.setup(level_number=1)
 
     def __enter__(self):
 
@@ -32,23 +29,15 @@ class Game(object):
 
     def __exit__(self, exc_type, exc_value, exc_traceback):
 
-        self.save.close()
-
-    def __init_save(self):
-        """Setup save environment, if necessary."""
-
-        if not os.path.isdir('.save'):
-            os.mkdir('.save')
-
-        save = shelve.open('.save/save', writeback=True)
-        return save
+        utility.save_object(self, 'game_exit')
 
     def setup_level(self, level_number):
         """Setup the game level."""
 
-        level = Level(self, level_number)
-        level.build()
-        self.level = level
+        self.level = Level(self, level_number)
+        self.level.build()
+        # self.level = level
+        utility.save_object(self, 'level_start')
 
     def setup_player(self):
         """Setup the player based on the game level"""
@@ -59,14 +48,16 @@ class Game(object):
 
         self.player.orientation = enter_orientation
         self.player.move_to(*enter_coords)
-        self.player.inventory.clear_items()
+        # TODO: reset inventory to level start state on level restart
+        # self.player.inventory.clear_items()
+        # utility.save_object(self.player.inventory, 'inventory')
 
     def setup(self, level_number):
         """Setup game elements."""
 
-        # initialize highest completed level to zero if not previously set
-        if self.save.get('highest_level') is None:
-            self.save['highest_level'] = 0
+        # create save folder, if needed
+        if not os.path.isdir('.save'):
+            os.mkdir('.save')
 
         # setup level before player
         self.setup_level(level_number)
@@ -75,19 +66,7 @@ class Game(object):
     def reset(self):
         """Reset the game."""
 
-        # close save files
-        self.save.close()
-
-        # delete save files
-        save_dir = '.save'
-        for file_name in os.listdir(save_dir):
-            file_path = os.path.join(save_dir, file_name)
-            if os.path.isfile(file_path):
-                os.remove(file_path)
-
-        # launch a new game instance
-        with Game(debug=self.debug) as game:
-            game.mainloop()
+        self.__init__()
 
     def mainloop(self):
         """The main game loop."""
@@ -97,10 +76,7 @@ class Game(object):
             if isinstance(self.ui, StartUI):
                 # skip StartUI in debug mode
                 if self.debug is True:
-                    self.ui = LevelsUI(game=self)
-                # skip intro text if returning to game
-                if self.save.get('intro_seen') is True:
-                    self.ui.skip_intro = True
+                    self.ui = MainUI(game=self)
 
             if isinstance(self.ui, MainUI):
                 if self.player.cell.has_story() and not self.player.cell.story_seen:
@@ -109,14 +85,9 @@ class Game(object):
                     death = self.level.system.get_death()
                     self.ui = PlayerDeadUI(game=self, message=death['description'])
                 if self.level.is_complete():
-                    if self.level.number > self.save['highest_level']:
-                        self.save['highest_level'] = self.level.number
-                    if self.level.number == 0:
-                        self.ui = LevelsUI(game=self)
-                    elif self.level.has_next_level():
+                    if self.level.has_next_level():
                         self.ui.next_level()
                     else:
-                        self.save['game_complete'] = True
                         self.ui = GameCompleteUI(game=self)
                     continue
 

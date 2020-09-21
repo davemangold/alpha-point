@@ -1,49 +1,6 @@
 from config.player_config import player_config
 
 level_config = {
-    0: {
-        'name': 'Void',
-        'map': {
-            'x_dimension': 1,
-            'y_dimension': 2,
-            'path_cells': [
-                {'coordinates': (0, 0), 'story': None},
-                {'coordinates': (0, 1),
-                 'story': {'title': 'Void', 'text': 'This place is not for you. Run along now...'}}
-            ],
-            'coord_enter': (0, 1),  # begin
-            'coord_exit': (0, 0),  # end
-            'orientation_enter': 0,
-            'tools': [],
-            'parts': [],
-            'artifacts': []
-        },
-        'system': {
-            'interfaces': [],
-            'devices': [],
-            'properties': [],
-            'links': [],
-            'relates': [],
-            'deaths': []
-        },
-        'weather': {
-            'sol': '609',
-            'time': '12:05:41',
-            'temperature': {
-                'value': -59.957,
-                'units': 'C'},
-            'wind': {
-                'speed': {
-                    'value': 7.958,
-                    'units': 'KPH'},
-                'direction': {
-                    'value': 292.5,
-                    'units': 'Deg'}},
-            'pressure': {
-                'value': 789.166,
-                'units': 'Pa'}
-        }
-    },  # void
     1: {
         'name': 'Approach',
         'map': {
@@ -481,7 +438,7 @@ level_config = {
                     'type': 'generic',
                     'name': 'sticky_note',
                     'description': 'sticky note on the terminal',
-                    'report': 'Not sure why we changed them but just type "help" if you forget the commands. At least we don\'t have to type full device IDs anymore. For all the other non-comps, you\'re welcome.\n\n-Emilia',
+                    'report': 'Not sure why we changed them but just type "help" if you forget the commands. At least we don\'t have to type full device IDs anymore. To all the other non-comps, you\'re welcome.\n\n-Emilia',
                     'inspectable': True,
                     'visible': True,
                     'interactive': False,

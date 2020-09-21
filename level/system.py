@@ -64,7 +64,6 @@ class System(object):
         for config_property in system_config['properties']:
             new_property = PropertyFactory.make_property(self, config_property['type'])
             new_property.config_id = config_property['id']
-
             new_property.name = config_property['name']
             new_property.description = config_property['description']
             new_property.min_value = config_property['min_value']

@@ -1,4 +1,5 @@
 import argparse
+import utility
 from game import Game
 
 parser = argparse.ArgumentParser()
@@ -8,8 +9,13 @@ args = parser.parse_args()
 
 def main():
 
-    with Game(debug=args.debug) as game:
-        game.mainloop()
+    if utility.save_exists('game_exit'):
+        with utility.load_object('game_exit') as game:
+            game.debug = args.debug
+            game.mainloop()
+    else:
+        with Game(debug=args.debug) as game:
+            game.mainloop()
 
 
 if __name__ == "__main__":

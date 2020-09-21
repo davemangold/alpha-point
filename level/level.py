@@ -1,4 +1,5 @@
 import utility
+from copy import deepcopy
 from level.map import Map
 from level.system import System
 from config import level_config
@@ -7,7 +8,7 @@ from config import level_config
 class Level(object):
     """Level with which the player interacts."""
 
-    def __init__(self, game, number=0):
+    def __init__(self, game, number=1):
         self.game = game
         self.number = number
         self.name = level_config[self.number]['name']
