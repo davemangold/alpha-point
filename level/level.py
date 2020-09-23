@@ -1,5 +1,4 @@
 import utility
-from copy import deepcopy
 from level.map import Map
 from level.system import System
 from config import level_config
@@ -13,8 +12,8 @@ class Level(object):
         self.number = number
         self.name = level_config[self.number]['name']
         self.weather = level_config[self.number]['weather']
-        self.map = Map(self)
         self.system = System(self)
+        self.map = Map(self)
 
     def build(self):
         """Build the specified level."""

@@ -25,6 +25,7 @@ class System(object):
 
         system_config = level_config[self.level.number]['system']
 
+        # TODO: add ..._from_config() methods to factories to cleanup gameobject creation
         for config_interface in system_config['interfaces']:
             new_interface = InterfaceFactory.make_interface(self, config_interface['type'])
             new_interface.config_id = config_interface['id']

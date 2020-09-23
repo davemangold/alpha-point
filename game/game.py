@@ -47,9 +47,6 @@ class Game(object):
 
         self.player.orientation = enter_orientation
         self.player.move_to(*enter_coords)
-        # TODO: reset inventory to level start state on level restart
-        # self.player.inventory.clear_items()
-        # utility.save_object(self.player.inventory, 'inventory')
 
     def setup(self, level_number):
         """Setup game elements."""
