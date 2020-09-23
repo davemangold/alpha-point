@@ -91,6 +91,8 @@ class BaseUI(object):
     def restart_level(self):
         """Restart the current level."""
 
+        save_game = utility.load_object('level_start')
+        utility.transfer_inventory(save_game.player, self.game.player)
         self.game.setup(self.game.level.number)
         self.game.ui = MainUI(self.game)
 
@@ -375,7 +377,6 @@ class MainUI(BaseUI):
         sys.exit()
 
 
-# TODO: hangs when looking at inventory item examination UI after restarting subsequent level
 class ExaminationUI(BaseUI):
     """Game user interface used to present detailed artifact examination report."""
 

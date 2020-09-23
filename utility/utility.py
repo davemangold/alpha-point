@@ -482,6 +482,18 @@ def load_object(name):
         obj = pickle.load(save_file)
 
         if hasattr(obj, 'player'):
-            obj.player.move_to(*obj.player.location)  # move player to current location; trigger action functions update
+            obj.player.update_actions()  # update action functions
 
     return obj
+
+
+def transfer_inventory(src_player, tgt_player):
+    """Replace target player inventory with source player inventory."""
+
+    tgt_player.inventory = src_player.inventory
+    tgt_player.inventory.owner = tgt_player
+
+    for item in tgt_player.inventory.items:
+        item.game = tgt_player.game
+
+    return

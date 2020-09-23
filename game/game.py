@@ -36,7 +36,6 @@ class Game(object):
 
         self.level = Level(self, level_number)
         self.level.build()
-        # self.level = level
         utility.save_object(self, 'level_start')
 
     def setup_player(self):
