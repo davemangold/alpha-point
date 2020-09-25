@@ -9,7 +9,6 @@ from random import choices
 from random import sample
 from collections import Counter
 from config import game_config
-from config import level_config
 
 
 class BaseUI(object):
