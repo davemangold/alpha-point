@@ -14,14 +14,14 @@ from config import level_config
 class Game(object):
     """Game class that contains all the game mechanics."""
 
-    def __init__(self, debug=False):
+    def __init__(self, debug=False, level=1):
 
         self.debug = debug
         self.control = Control(self)
         self.level = Level(self)
         self.player = Player(self)
         self.ui = StartUI(self)
-        self.setup(level_number=1)
+        self.setup(level_number=level)
 
     def __enter__(self):
 
@@ -29,14 +29,17 @@ class Game(object):
 
     def __exit__(self, exc_type, exc_value, exc_traceback):
 
-        utility.save_object(self, 'game_exit')
+        if not self.debug:
+            utility.save_object(self, 'game_exit')
 
     def setup_level(self, level_number):
         """Setup the game level."""
 
         self.level = Level(self, level_number)
         self.level.build()
-        utility.save_object(self, 'level_start')
+
+        if not self.debug:
+            utility.save_object(self, 'level_start')
 
     def setup_player(self):
         """Setup the player based on the game level"""
