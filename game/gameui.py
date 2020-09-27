@@ -409,13 +409,6 @@ class ExaminationUI(BaseUI):
         ui_elements.append(ui_report_text)
         ui_elements.append(self.separator)
 
-        if self.game.debug is True:
-            debug_text = (
-                '{0}'.format(self.previous_ui) + '\n' +
-                '{0}'.format(self.gameobject)
-            )
-            ui_elements.append(debug_text)
-
         return '\n' + '\n\n'.join(ui_elements) + '\n'
 
     def get_examination_report(self):
