@@ -52,7 +52,7 @@ class Interface(Component):
             device.use()
 
 
-# Interface sub-classes with which character can interact
+# Interface sub-classes which can be used to control devices
 
 
 class Terminal(Interface):

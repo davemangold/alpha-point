@@ -140,7 +140,7 @@ class Device(Component):
                     property.decrease()
 
 
-# Device sub-classes that can be controlled by interfaces
+# Device sub-classes that can be controlled by interfaces, activated with tools, and repaired with parts
 
 
 class Door(Device):
