@@ -185,6 +185,7 @@ class InterfaceFactory(object):
 
     @staticmethod
     def make_interface(system, interface_type, *args, **kwargs):
+
         if interface_type.lower() == 'terminal':
             return Terminal(system, *args, **kwargs)
         if interface_type.lower() == 'button':
@@ -200,3 +201,22 @@ class InterfaceFactory(object):
         # if interface_type.lower() == 'viewer':
         #     return Viewer(system)
         raise error.FactoryError("The specified interface type does not exist.")
+
+    def make_from_config(self, system, interface_config, level_number):
+
+        new_interface = self.make_interface(system, interface_config['type'])
+        new_interface.config_id = interface_config['id']
+        new_interface.level_number = level_number
+        new_interface.name = interface_config['name']
+        new_interface.description = interface_config['description']
+        new_interface.report = interface_config['report']
+        new_interface.inspectable = interface_config['inspectable']
+        new_interface.enabled = interface_config['enabled']
+        new_interface.corrupt = interface_config['corrupt']
+        new_interface.x = interface_config['x']
+        new_interface.y = interface_config['y']
+        new_interface.orientation = interface_config['orientation']
+        new_interface.msg_action_verb = interface_config['msg_action_verb']
+
+        return new_interface
+

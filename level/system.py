@@ -23,77 +23,42 @@ class System(object):
     def build(self):
         """Build system from config dictionary."""
 
+        interface_factory = InterfaceFactory()
+        device_factory = DeviceFactory()
+        property_factory = PropertyFactory()
+
         system_config = level_config[self.level.number]['system']
 
-        # TODO: add ..._from_config() methods to factories to cleanup gameobject creation
-        for config_interface in system_config['interfaces']:
-            new_interface = InterfaceFactory.make_interface(self, config_interface['type'])
-            new_interface.config_id = config_interface['id']
-            new_interface.level_number = self.level.number
-            new_interface.name = config_interface['name']
-            new_interface.description = config_interface['description']
-            new_interface.report = config_interface['report']
-            new_interface.inspectable = config_interface['inspectable']
-            new_interface.enabled = config_interface['enabled']
-            new_interface.corrupt = config_interface['corrupt']
-            new_interface.x = config_interface['x']
-            new_interface.y = config_interface['y']
-            new_interface.orientation = config_interface['orientation']
-            new_interface.msg_action_verb = config_interface['msg_action_verb']
+        for interface_config in system_config['interfaces']:
+            interface_factory.make_from_config(self, interface_config, self.level.number)
 
-        for config_device in system_config['devices']:
-            new_device = DeviceFactory.make_device(self, config_device['type'])
-            new_device.config_id = config_device['id']
-            new_device.level_number = self.level.number
-            new_device.name = config_device['name']
-            new_device.description = config_device['description']
-            new_device.report = config_device['report']
-            new_device.inspectable = config_device['inspectable']
-            new_device.enabled = config_device['enabled']
-            new_device.active = config_device['active']
-            new_device.visible = config_device['visible']
-            new_device.x = config_device['x']
-            new_device.y = config_device['y']
-            new_device.msg_action_true = config_device['msg_action_true']
-            new_device.msg_action_false = config_device['msg_action_false']
-            new_device.msg_active_true = config_device['msg_active_true']
-            new_device.msg_active_false = config_device['msg_active_false']
-            new_device.msg_toggle_active_true = config_device['msg_toggle_active_true']
-            new_device.msg_toggle_active_false = config_device['msg_toggle_active_false']
-            new_device.msg_unmet_dependencies = config_device['msg_unmet_dependencies']
+        for device_config in system_config['devices']:
+            device_factory.make_from_config(self, device_config, self.level.number)
 
-        for config_property in system_config['properties']:
-            new_property = PropertyFactory.make_property(self, config_property['type'])
-            new_property.config_id = config_property['id']
-            new_property.name = config_property['name']
-            new_property.description = config_property['description']
-            new_property.min_value = config_property['min_value']
-            new_property.max_value = config_property['max_value']
-            new_property.units = config_property['units']
-            new_property.increment = config_property['increment']
-            new_property.value = config_property['value']
+        for property_config in system_config['properties']:
+            property_factory.make_from_config(self, property_config)
 
-        for config_device in system_config['devices']:
-            system_device = self.get_device(config_id=config_device['id'])
-            for config_dependency in config_device['dependencies']:
-                dependency_device = self.get_device(config_id=config_dependency['device_id'])
+        for device_config in system_config['devices']:
+            system_device = self.get_device(config_id=device_config['id'])
+            for dependency_config in device_config['dependencies']:
+                dependency_device = self.get_device(config_id=dependency_config['device_id'])
                 system_device.add_dependency(
                     dependency_device.id,
-                    config_dependency['enabled_state'],
-                    config_dependency['active_state'])
+                    dependency_config['enabled_state'],
+                    dependency_config['active_state'])
 
-        for config_link in system_config['links']:
-            link_interface = self.get_interface(config_id=config_link['interface_id'])
-            link_device = self.get_device(config_id=config_link['device_id'])
+        for link_config in system_config['links']:
+            link_interface = self.get_interface(config_id=link_config['interface_id'])
+            link_device = self.get_device(config_id=link_config['device_id'])
             self.link_device(link_interface, link_device)
 
-        for config_relate in system_config['relates']:
-            relate_device = self.get_device(config_id=config_relate['device_id'])
-            relate_property = self.get_property(config_id=config_relate['property_id'])
+        for relate_config in system_config['relates']:
+            relate_device = self.get_device(config_id=relate_config['device_id'])
+            relate_property = self.get_property(config_id=relate_config['property_id'])
             self.relate_property(relate_device, relate_property)
 
-        for config_death in system_config['deaths']:
-            self.deaths.append(config_death)
+        for death_config in system_config['deaths']:
+            self.deaths.append(death_config)
 
     def has_interface(self, interface):
         """Returns True if the system contains the interface, otherwise False."""

@@ -276,6 +276,10 @@ class Map(object):
     def build(self):
         """Build the map from the config for the provided level number."""
 
+        tool_factory = ToolFactory()
+        part_factory = PartFactory()
+        artifact_factory = ArtifactFactory()
+
         map_config = level_config[self.level.number]['map']
 
         self.x_dim = map_config['x_dimension']
@@ -288,71 +292,41 @@ class Map(object):
         self.enter_cell = self.get_cell(*enter_coord)
         self.exit_cell = self.get_cell(*exit_coord)
 
-        for config_path_cell in map_config['path_cells']:
-            path_cell = self.get_cell(*config_path_cell['coordinates'])
-            path_cell.story = config_path_cell['story']
+        for path_cell_config in map_config['path_cells']:
+            path_cell = self.get_cell(*path_cell_config['coordinates'])
+            path_cell.story = path_cell_config['story']
             self.path.add_cell(path_cell)
 
         for system_interface in self.level.system.interfaces:
-            interface_cell = self.get_cell(system_interface.x, system_interface.y)
+            interface_cell = self.get_cell(*system_interface.location)
             interface_cell.add_interface(system_interface)
 
         for system_device in self.level.system.devices:
-            device_cell = self.get_cell(system_device.x, system_device.y)
+            device_cell = self.get_cell(*system_device.location)
             device_cell.add_device(system_device)
 
-        for config_tool in map_config['tools']:
-            new_tool = ToolFactory.make_tool(self, config_tool['type'])
-            new_tool.level_number = self.level.number
-            new_tool.name = config_tool['name']
-            new_tool.description = config_tool['description']
-            new_tool.report = config_tool['report']
-            new_tool.inspectable = config_tool['inspectable']
-            new_tool.visible = config_tool['visible']
-            new_tool.interactive = config_tool['interactive']
-            new_tool.blocking = config_tool['blocking']
-            new_tool.x = config_tool['x']
-            new_tool.y = config_tool['y']
+        for tool_config in map_config['tools']:
+            new_tool = tool_factory.make_from_config(self, tool_config, self.level.number)
             self.inventory.add_item(new_tool)
 
-        for config_part in map_config['parts']:
-            new_part = PartFactory.make_part(self, config_part['type'])
-            new_part.level_number = self.level.number
-            new_part.name = config_part['name']
-            new_part.description = config_part['description']
-            new_part.report = config_part['report']
-            new_part.inspectable = config_part['inspectable']
-            new_part.visible = config_part['visible']
-            new_part.interactive = config_part['interactive']
-            new_part.blocking = config_part['blocking']
-            new_part.x = config_part['x']
-            new_part.y = config_part['y']
+        for part_config in map_config['parts']:
+            new_part = part_factory.make_from_config(self, part_config, self.level.number)
             self.inventory.add_item(new_part)
 
-        for config_artifact in map_config['artifacts']:
-            new_artifact = ArtifactFactory.make_artifact(self, config_artifact['type'])
-            new_artifact.level_number = self.level.number
-            new_artifact.name = config_artifact['name']
-            new_artifact.description = config_artifact['description']
-            new_artifact.report = config_artifact['report']
-            new_artifact.inspectable = config_artifact['inspectable']
-            new_artifact.visible = config_artifact['visible']
-            new_artifact.interactive = config_artifact['interactive']
-            new_artifact.blocking = config_artifact['blocking']
-            new_artifact.x = config_artifact['x']
-            new_artifact.y = config_artifact['y']
+        for artifact_config in map_config['artifacts']:
+            new_artifact = artifact_factory.make_from_config(self, artifact_config, self.level.number)
             self.inventory.add_item(new_artifact)
 
         for map_tool in self.inventory.get_tools():
-            tool_cell = self.get_cell(map_tool.x, map_tool.y)
+            tool_cell = self.get_cell(*map_tool.location)
             tool_cell.add_tool(map_tool)
 
         for map_part in self.inventory.get_parts():
-            part_cell = self.get_cell(map_part.x, map_part.y)
+            part_cell = self.get_cell(*map_part.location)
             part_cell.add_part(map_part)
 
         for map_artifact in self.inventory.get_artifacts():
-            artifact_cell = self.get_cell(map_artifact.x, map_artifact.y)
+            artifact_cell = self.get_cell(*map_artifact.location)
             artifact_cell.add_artifact(map_artifact)
 
     @property

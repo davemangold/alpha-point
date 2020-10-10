@@ -69,8 +69,25 @@ class ToolFactory(object):
 
     @staticmethod
     def make_tool(map, tool_type, *args, **kwargs):
+
         if tool_type.lower() == 'wrench':
             return Wrench(map, *args, **kwargs)
         if tool_type.lower() == 'prybar':
             return PryBar(map, *args, **kwargs)
         raise error.FactoryError("The specified tool type does not exist.")
+
+    def make_from_config(self, map, tool_config, level_number):
+
+        new_tool = self.make_tool(map, tool_config['type'])
+        new_tool.level_number = level_number
+        new_tool.name = tool_config['name']
+        new_tool.description = tool_config['description']
+        new_tool.report = tool_config['report']
+        new_tool.inspectable = tool_config['inspectable']
+        new_tool.visible = tool_config['visible']
+        new_tool.interactive = tool_config['interactive']
+        new_tool.blocking = tool_config['blocking']
+        new_tool.x = tool_config['x']
+        new_tool.y = tool_config['y']
+
+        return new_tool

@@ -78,3 +78,17 @@ class PropertyFactory(object):
             return Voltage(system, *args, **kwargs)
 
         raise error.FactoryError("The specified property type does not exist.")
+    
+    def make_from_config(self, system, property_config):
+
+        new_property = self.make_property(system, property_config['type'])
+        new_property.config_id = property_config['id']
+        new_property.name = property_config['name']
+        new_property.description = property_config['description']
+        new_property.min_value = property_config['min_value']
+        new_property.max_value = property_config['max_value']
+        new_property.units = property_config['units']
+        new_property.increment = property_config['increment']
+        new_property.value = property_config['value']
+
+        return new_property

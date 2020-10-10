@@ -249,3 +249,27 @@ class DeviceFactory(object):
             return Sensor(system, *args, **kwargs)
 
         raise error.FactoryError("The specified device type does not exist.")
+
+    def make_from_config(self, system, device_config, level_number):
+
+        new_device = self.make_device(system, device_config['type'])
+        new_device.config_id = device_config['id']
+        new_device.level_number = level_number
+        new_device.name = device_config['name']
+        new_device.description = device_config['description']
+        new_device.report = device_config['report']
+        new_device.inspectable = device_config['inspectable']
+        new_device.enabled = device_config['enabled']
+        new_device.active = device_config['active']
+        new_device.visible = device_config['visible']
+        new_device.x = device_config['x']
+        new_device.y = device_config['y']
+        new_device.msg_action_true = device_config['msg_action_true']
+        new_device.msg_action_false = device_config['msg_action_false']
+        new_device.msg_active_true = device_config['msg_active_true']
+        new_device.msg_active_false = device_config['msg_active_false']
+        new_device.msg_toggle_active_true = device_config['msg_toggle_active_true']
+        new_device.msg_toggle_active_false = device_config['msg_toggle_active_false']
+        new_device.msg_unmet_dependencies = device_config['msg_unmet_dependencies']
+
+        return new_device

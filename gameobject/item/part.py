@@ -54,6 +54,23 @@ class PartFactory(object):
 
     @staticmethod
     def make_part(map, part_type, *args, **kwargs):
+
         if part_type.lower() == 'wires':
             return Wires(map, *args, **kwargs)
         raise error.FactoryError("The specified part type does not exist.")
+
+    def make_from_config(self, map, part_config, level_number):
+
+        new_part = self.make_part(map, part_config['type'])
+        new_part.level_number = level_number
+        new_part.name = part_config['name']
+        new_part.description = part_config['description']
+        new_part.report = part_config['report']
+        new_part.inspectable = part_config['inspectable']
+        new_part.visible = part_config['visible']
+        new_part.interactive = part_config['interactive']
+        new_part.blocking = part_config['blocking']
+        new_part.x = part_config['x']
+        new_part.y = part_config['y']
+
+        return new_part

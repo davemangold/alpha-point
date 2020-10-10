@@ -22,6 +22,23 @@ class ArtifactFactory(object):
 
     @staticmethod
     def make_artifact(map, artifact_type, *args, **kwargs):
+
         if artifact_type.lower() == 'generic':
             return Generic(map, *args, **kwargs)
         raise error.FactoryError("The specified artifact type does not exist.")
+
+    def make_from_config(self, map, artifact_config, level_number):
+
+        new_artifact = self.make_artifact(map, artifact_config['type'])
+        new_artifact.level_number = level_number
+        new_artifact.name = artifact_config['name']
+        new_artifact.description = artifact_config['description']
+        new_artifact.report = artifact_config['report']
+        new_artifact.inspectable = artifact_config['inspectable']
+        new_artifact.visible = artifact_config['visible']
+        new_artifact.interactive = artifact_config['interactive']
+        new_artifact.blocking = artifact_config['blocking']
+        new_artifact.x = artifact_config['x']
+        new_artifact.y = artifact_config['y']
+
+        return new_artifact
