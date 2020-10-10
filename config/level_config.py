@@ -438,7 +438,7 @@ level_config = {
                     'type': 'generic',
                     'name': 'sticky_note',
                     'description': 'sticky note on the terminal',
-                    'report': 'Not sure why we changed them but just type "help" if you forget the manual commands. At least we don\'t have to type full device IDs anymore. To all the other non-comps, you\'re welcome.\n\n-Emilia',
+                    'report': 'Not sure why we changed them but just type "help" if you forget the manual commands. At least we don\'t have to type full device IDs anymore. To all the other non-comps (Marcus), you\'re welcome.\n\n-Emilia',
                     'inspectable': True,
                     'visible': True,
                     'interactive': False,
@@ -958,7 +958,20 @@ level_config = {
             'coord_enter': (1, 4),
             'coord_exit': (8, 4),
             'orientation_enter': 1,
-            'tools': [],
+            'tools': [
+                {
+                    'type': 'prybar',
+                    'name': 'knife',
+                    'description': 'knife',
+                    'report': 'A stainless steel kitchen knife.',
+                    'inspectable': True,
+                    'visible': True,
+                    'interactive': True,
+                    'blocking': False,
+                    'x': 2,
+                    'y': 2
+                }  # knife
+            ],
             'parts': [],
             'artifacts': [
                 {
@@ -1165,18 +1178,6 @@ level_config = {
                     'x': 7,
                     'y': 0
                 },  # counter
-                {
-                    'type': 'generic',
-                    'name': 'knife',
-                    'description': 'knife',
-                    'report': 'A stainless steel kitchen knife.',
-                    'inspectable': True,
-                    'visible': True,
-                    'interactive': True,
-                    'blocking': False,
-                    'x': 2,
-                    'y': 2
-                },  # knife
                 {
                     'type': 'generic',
                     'name': 'cutting_board',
@@ -1473,6 +1474,132 @@ level_config = {
                     'msg_unmet_dependencies': 'The door is unresponsive.',
                     'dependencies': []
                 },  # 0 - entrance door
+                {
+                    'id': 0,
+                    'name': 'room_1',
+                    'description': 'door',
+                    'type': 'door',
+                    'report': '',
+                    'inspectable': False,
+                    'enabled': False,
+                    'active': False,
+                    'visible': True,
+                    'x': 2,
+                    'y': 3,
+                    'msg_action_true': 'open',
+                    'msg_action_false': 'close',
+                    'msg_active_true': 'open',
+                    'msg_active_false': 'closed',
+                    'msg_toggle_active_true': 'The door opened.',
+                    'msg_toggle_active_false': 'The door closed.',
+                    'msg_unmet_dependencies': 'The door is unresponsive.',
+                    'dependencies': []
+                },  # 0 - room 1
+                {
+                    'id': 0,
+                    'name': 'room_1',
+                    'description': 'door',
+                    'type': 'door',
+                    'report': '',
+                    'inspectable': False,
+                    'enabled': True,
+                    'active': True,
+                    'visible': True,
+                    'x': 2,
+                    'y': 5,
+                    'msg_action_true': 'open',
+                    'msg_action_false': 'close',
+                    'msg_active_true': 'open',
+                    'msg_active_false': 'closed',
+                    'msg_toggle_active_true': 'The door opened.',
+                    'msg_toggle_active_false': 'The door closed.',
+                    'msg_unmet_dependencies': 'The door is unresponsive.',
+                    'dependencies': []
+                },  # 0 - room 2
+                {
+                    'id': 0,
+                    'name': 'room_1',
+                    'description': 'door',
+                    'type': 'door',
+                    'report': '',
+                    'inspectable': False,
+                    'enabled': True,
+                    'active': True,
+                    'visible': True,
+                    'x': 6,
+                    'y': 3,
+                    'msg_action_true': 'open',
+                    'msg_action_false': 'close',
+                    'msg_active_true': 'open',
+                    'msg_active_false': 'closed',
+                    'msg_toggle_active_true': 'The door opened.',
+                    'msg_toggle_active_false': 'The door closed.',
+                    'msg_unmet_dependencies': 'The door is unresponsive.',
+                    'dependencies': []
+                },  # 0 - room 3
+                {
+                    'id': 0,
+                    'name': 'room_1',
+                    'description': 'door',
+                    'type': 'door',
+                    'report': '',
+                    'inspectable': False,
+                    'enabled': False,
+                    'active': False,
+                    'visible': True,
+                    'x': 7,
+                    'y': 5,
+                    'msg_action_true': 'open',
+                    'msg_action_false': 'close',
+                    'msg_active_true': 'open',
+                    'msg_active_false': 'closed',
+                    'msg_toggle_active_true': 'The door opened.',
+                    'msg_toggle_active_false': 'The door closed.',
+                    'msg_unmet_dependencies': 'The door is unresponsive.',
+                    'dependencies': []
+                },  # 0 - room 4
+                {
+                    'id': 0,
+                    'name': 'room_1',
+                    'description': 'door',
+                    'type': 'door',
+                    'report': '',
+                    'inspectable': False,
+                    'enabled': True,
+                    'active': True,
+                    'visible': True,
+                    'x': 11,
+                    'y': 3,
+                    'msg_action_true': 'open',
+                    'msg_action_false': 'close',
+                    'msg_active_true': 'open',
+                    'msg_active_false': 'closed',
+                    'msg_toggle_active_true': 'The door opened.',
+                    'msg_toggle_active_false': 'The door closed.',
+                    'msg_unmet_dependencies': 'The door is unresponsive.',
+                    'dependencies': []
+                },  # 0 - room 5
+                {
+                    'id': 0,
+                    'name': 'room_1',
+                    'description': 'door',
+                    'type': 'door',
+                    'report': '',
+                    'inspectable': False,
+                    'enabled': True,
+                    'active': True,
+                    'visible': True,
+                    'x': 11,
+                    'y': 5,
+                    'msg_action_true': 'open',
+                    'msg_action_false': 'close',
+                    'msg_active_true': 'open',
+                    'msg_active_false': 'closed',
+                    'msg_toggle_active_true': 'The door opened.',
+                    'msg_toggle_active_false': 'The door closed.',
+                    'msg_unmet_dependencies': 'The door is unresponsive.',
+                    'dependencies': []
+                },  # 0 - room 6
                 {
                     'id': 1,
                     'name': 'exit door',
