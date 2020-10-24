@@ -161,7 +161,7 @@ class Door(Device):
     def __str__(self):
         """Overload the default string conversion for doors."""
 
-        return '{0} {1}'.format('open' if self.active else 'closed', self.description)
+        return '{0} {1}'.format(self.msg_active_true if self.active else self.msg_active_false, self.description)
 
 
 class Switch(Device):
