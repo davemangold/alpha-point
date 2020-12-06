@@ -30,7 +30,8 @@ game_config = {
                 'exposed switchbox': 'an',
                 'open bay door': 'an',
                 'wiring': 'some',
-                'unlocked tablet': 'an'
+                'unlocked tablet': 'an',
+                'open wall panel': 'an'
             }
         }
     }

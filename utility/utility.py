@@ -7,12 +7,10 @@ from config import game_config
 from config import level_config
 
 
-# constants
 DEFAULT_ARTICLE = game_config['ui']['articles']['default']
 ARTICLE_MAP = game_config['ui']['articles']['mapped']
 
 
-# functions
 def get_os():
     """Returns base operating system name."""
 

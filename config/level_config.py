@@ -1371,6 +1371,7 @@ level_config = {
                 {'coordinates': (3, 6), 'story': None},
                 {'coordinates': (3, 7), 'story': None},
                 {'coordinates': (3, 8), 'story': None},
+                {'coordinates': (4, 1), 'story': None},
                 {'coordinates': (4, 4), 'story': None},
                 {'coordinates': (5, 0), 'story': None},
                 {'coordinates': (5, 1), 'story': None},
@@ -1431,9 +1432,35 @@ level_config = {
             'coord_enter': (1, 4),
             'coord_exit': (13, 4),
             'orientation_enter': 1,
-            'tools': [],
+            'tools': [
+                {
+                    'type': 'prybar',
+                    'name': 'prybar',
+                    'description': 'prybar',
+                    'report': 'A steel-tipped titanium prybar.',
+                    'inspectable': True,
+                    'visible': True,
+                    'interactive': True,
+                    'blocking': False,
+                    'x': 5,
+                    'y': 1
+                }  # prybar - TESTING
+            ],
             'parts': [],
-            'artifacts': []
+            'artifacts': [
+                {
+                    'type': 'generic',
+                    'name': 'emilia perez',
+                    'description': 'crew member',
+                    'report': 'It\'s Emilla Perez. She\'s unconscious and non-responsive with a slow pulse. She has a cut and abrasions on her right arm but the bleeding has stopped. She\'s stable and out of danger. It\'s probably best not to move her without knowing what happened.',
+                    'inspectable': True,
+                    'visible': True,
+                    'interactive': False,
+                    'blocking': True,
+                    'x': 2,
+                    'y': 1
+                }  # emilia perez
+            ]
         },
         'system': {
             'interfaces': [
@@ -1475,7 +1502,7 @@ level_config = {
                     'dependencies': []
                 },  # 0 - entrance door
                 {
-                    'id': 0,
+                    'id': 1,
                     'name': 'room_1',
                     'description': 'door',
                     'type': 'door',
@@ -1494,9 +1521,9 @@ level_config = {
                     'msg_toggle_active_false': 'The door closed.',
                     'msg_unmet_dependencies': 'The door is unresponsive.',
                     'dependencies': []
-                },  # 0 - room 1
+                },  # 1 - room 1
                 {
-                    'id': 0,
+                    'id': 2,
                     'name': 'room_1',
                     'description': 'door',
                     'type': 'door',
@@ -1515,9 +1542,9 @@ level_config = {
                     'msg_toggle_active_false': 'The door closed.',
                     'msg_unmet_dependencies': 'The door is unresponsive.',
                     'dependencies': []
-                },  # 0 - room 2
+                },  # 2 - room 2
                 {
-                    'id': 0,
+                    'id': 3,
                     'name': 'room_1',
                     'description': 'door',
                     'type': 'door',
@@ -1536,9 +1563,30 @@ level_config = {
                     'msg_toggle_active_false': 'The door closed.',
                     'msg_unmet_dependencies': 'The door is unresponsive.',
                     'dependencies': []
-                },  # 0 - room 3
+                },  # 3 - room 3
                 {
-                    'id': 0,
+                    'id': 7,
+                    'name': 'room_1_panel',
+                    'description': 'wall panel',
+                    'type': 'door',
+                    'report': '',
+                    'inspectable': True,
+                    'enabled': True,
+                    'active': False,
+                    'visible': True,
+                    'x': 4,
+                    'y': 1,
+                    'msg_action_true': 'pry open',
+                    'msg_action_false': 'close up',
+                    'msg_active_true': 'open',
+                    'msg_active_false': 'loose',
+                    'msg_toggle_active_true': 'The wall panel broke free.',
+                    'msg_toggle_active_false': 'The wall panel closed.',
+                    'msg_unmet_dependencies': 'The wall panel can\'t be moved.',
+                    'dependencies': []
+                },  # 7 - room 3 - panel
+                {
+                    'id': 4,
                     'name': 'room_1',
                     'description': 'door',
                     'type': 'door',
@@ -1557,9 +1605,9 @@ level_config = {
                     'msg_toggle_active_false': 'The door closed.',
                     'msg_unmet_dependencies': 'The door is unresponsive.',
                     'dependencies': []
-                },  # 0 - room 4
+                },  # 4 - room 4
                 {
-                    'id': 0,
+                    'id': 5,
                     'name': 'room_1',
                     'description': 'door',
                     'type': 'door',
@@ -1578,9 +1626,9 @@ level_config = {
                     'msg_toggle_active_false': 'The door closed.',
                     'msg_unmet_dependencies': 'The door is unresponsive.',
                     'dependencies': []
-                },  # 0 - room 5
+                },  # 5 - room 5
                 {
-                    'id': 0,
+                    'id': 6,
                     'name': 'room_1',
                     'description': 'door',
                     'type': 'door',
@@ -1599,9 +1647,9 @@ level_config = {
                     'msg_toggle_active_false': 'The door closed.',
                     'msg_unmet_dependencies': 'The door is unresponsive.',
                     'dependencies': []
-                },  # 0 - room 6
+                },  # 6 - room 6
                 {
-                    'id': 1,
+                    'id': 8,
                     'name': 'exit door',
                     'description': 'door',
                     'type': 'door',
@@ -1620,7 +1668,7 @@ level_config = {
                     'msg_toggle_active_false': 'The door closed.',
                     'msg_unmet_dependencies': 'The door is unresponsive.',
                     'dependencies': []
-                }  # 1 - exit door
+                }  # 8 - exit door
             ],
             'properties': [],
             'links': [
