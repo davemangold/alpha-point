@@ -1451,8 +1451,8 @@ level_config = {
                 {
                     'type': 'generic',
                     'name': 'emilia perez',
-                    'description': 'crew member',
-                    'report': 'It\'s Emilla Perez. She\'s unconscious and non-responsive with a slow pulse. She has a cut and abrasions on her right arm but the bleeding has stopped. She\'s stable and out of danger. It\'s probably best not to move her without knowing what happened.',
+                    'description': 'crew member on the floor',
+                    'report': 'It\'s Emilla Perez. She\'s unconscious and non-responsive with a slow pulse. She has a cut and abrasions on her right arm but the bleeding has stopped. She\'s stable. It\'s probably best not to move her without knowing what happened.',
                     'inspectable': True,
                     'visible': True,
                     'interactive': False,

@@ -52,6 +52,16 @@ class Control(object):
             }
         }
 
+    @property
+    def _special(self):
+
+        if operating_system == 'windows':
+            return 224
+        elif operating_system == 'linux':
+            return 27
+        else:
+            raise SystemError('Operating system {0} not recognized.'.format(operating_system))
+
     def get_input(self, message):
 
         return input(message)
@@ -63,31 +73,31 @@ class Control(object):
             keycode = ord(getch())
 
             # enter, e, i, q, r
-            if keycode in (13, 101, 105, 113, 114):
+            if keycode in (self.ENTER, self.INVENTORY, self.QUIT, self.RESTART):
                 return keycode
             # digits (0-9)
-            if 48 <= keycode <= 57:
+            if keycode in self.DIGITS.keys():
                 return self.DIGITS[keycode]
 
             # windows special keys (arrows, f-keys, etc...)
             if operating_system == 'windows':
-                if keycode == 224:
+                if keycode == self._special:
 
                     keycode = ord(getch())
 
                     # arrow-up, arrow-left, arrow-right, arrow-down
-                    if keycode in (72, 75, 77, 80):
+                    if keycode in (self.UP, self.LEFT, self.DOWN, self.RIGHT):
                         return keycode
 
             # linux special keys (arrows, f-keys, etc...)
             if operating_system == 'linux':
-                if keycode == 27:
+                if keycode == self._special:
 
                     trash = getch()
                     keycode = ord(getch())
 
                     # arrow-up, arrow-left, arrow-right, arrow-down
-                    if keycode in (65, 68, 67, 66):
+                    if keycode in self._translate['special'].keys():
                         return self._translate['special'][keycode]
 
             return
