@@ -81,6 +81,46 @@ class BaseUI(object):
         self.clear_screen()
         print(self.decorate_ui(self.get_ui()))
 
+    def display_corrupt(self):
+        """Build the terminal display with corrupted data."""
+
+        ui_text = self.get_ui()
+        hex_digits = ['0', '1', '2', '3', '4', '5', '6', '7',
+                      '8', '9', 'A', 'B', 'C', 'D', 'E', 'F']
+
+        hextet_size = 2
+        hextet_gaps = 4
+
+        data_cols = int(self.width / (hextet_size + 1))  # + 1 to account for spaces
+        data_rows = len(ui_text.split('\n')) + 2  # + 2 to account for prompt
+
+        duration = 0.3
+        number = 6
+
+        add_gaps = int((data_cols - hextet_gaps) / number)
+
+        data = [[
+            ''.join(choices(hex_digits, k=hextet_size))
+            for m in range(data_cols)]
+            for n in range(data_rows)]
+
+        for n in range(number):
+
+            for row in data:
+                for i in sample(range(data_cols), hextet_gaps):
+                    row[i] = ' ' * hextet_size
+
+            corrupted_text = '\n'.join([' '.join(row) for row in data])
+
+            self.clear_screen()
+            print(self.decorate_ui(utility.merge_text(ui_text, corrupted_text)))
+            time.sleep(duration)
+
+            hextet_gaps += add_gaps
+
+        self.clear_screen()
+        print(self.decorate_ui(ui_text))
+
     def next_level(self):
         """Go to the next level."""
 
@@ -840,46 +880,6 @@ class TerminalUI(BaseUI):
             time.sleep(i)
             print(self.decorate_ui(self.get_ui()))
 
-    def display_corrupt(self):
-        """Build the terminal display with corrupted data."""
-
-        ui_text = self.get_ui()
-        hex_digits = ['0', '1', '2', '3', '4', '5', '6', '7',
-                      '8', '9', 'A', 'B', 'C', 'D', 'E', 'F']
-
-        hextet_size = 4
-        hextet_gaps = 4
-
-        data_cols = int(self.width / (hextet_size + 1))  # + 1 to account for spaces
-        data_rows = len(ui_text.split('\n')) + 2  # + 2 to account for prompt
-
-        duration = 0.3
-        number = 6
-
-        add_gaps = int((data_cols - hextet_gaps) / number)
-
-        data = [[
-            ''.join(choices(hex_digits, k=hextet_size))
-            for m in range(data_cols)]
-            for n in range(data_rows)]
-
-        for n in range(number):
-
-            for row in data:
-                for i in sample(range(data_cols), hextet_gaps):
-                    row[i] = ' ' * hextet_size
-
-            corrupted_text = '\n'.join([' '.join(row) for row in data])
-
-            self.clear_screen()
-            print(self.decorate_ui(utility.merge_text(ui_text, corrupted_text)))
-            time.sleep(duration)
-
-            hextet_gaps += add_gaps
-
-        self.clear_screen()
-        print(self.decorate_ui(ui_text))
-
     def leave(self):
         # reset gameui to the ui that was active at the time this was created
         self.game.ui = self.previous_ui
@@ -995,46 +995,6 @@ class ConsoleUI(BaseUI):
             self.clear_screen()
             time.sleep(i)
             print(self.decorate_ui(self.get_ui()))
-
-    def display_corrupt(self):
-        """Build the terminal display with corrupted data."""
-
-        ui_text = self.get_ui()
-        hex_digits = ['0', '1', '2', '3', '4', '5', '6', '7',
-                      '8', '9', 'A', 'B', 'C', 'D', 'E', 'F']
-
-        hextet_size = 4
-        hextet_gaps = 4
-
-        data_cols = int(self.width / (hextet_size + 1))  # + 1 to account for spaces
-        data_rows = len(ui_text.split('\n')) + 2  # + 2 to account for prompt
-
-        duration = 0.3
-        number = 6
-
-        add_gaps = int((data_cols - hextet_gaps) / number)
-
-        data = [[
-            ''.join(choices(hex_digits, k=hextet_size))
-            for m in range(data_cols)]
-            for n in range(data_rows)]
-
-        for n in range(number):
-
-            for row in data:
-                for i in sample(range(data_cols), hextet_gaps):
-                    row[i] = ' ' * hextet_size
-
-            corrupted_text = '\n'.join([' '.join(row) for row in data])
-
-            self.clear_screen()
-            print(self.decorate_ui(utility.merge_text(ui_text, corrupted_text)))
-            time.sleep(duration)
-
-            hextet_gaps += add_gaps
-
-        self.clear_screen()
-        print(self.decorate_ui(ui_text))
 
     def leave(self):
         """Return to the previous UI."""
@@ -1152,46 +1112,6 @@ class WeatherStationUI(BaseUI):
             self.clear_screen()
             time.sleep(i)
             print(self.decorate_ui(self.get_ui()))
-
-    def display_corrupt(self):
-        """Build the terminal display with corrupted data."""
-
-        ui_text = self.get_ui()
-        hex_digits = ['0', '1', '2', '3', '4', '5', '6', '7',
-                      '8', '9', 'A', 'B', 'C', 'D', 'E', 'F']
-
-        hextet_size = 4
-        hextet_gaps = 4
-
-        data_cols = int(self.width / (hextet_size + 1))  # + 1 to account for spaces
-        data_rows = len(ui_text.split('\n')) + 2  # + 2 to account for prompt
-
-        duration = 0.3
-        number = 6
-
-        add_gaps = int((data_cols - hextet_gaps) / number)
-
-        data = [[
-            ''.join(choices(hex_digits, k=hextet_size))
-            for m in range(data_cols)]
-            for n in range(data_rows)]
-
-        for n in range(number):
-
-            for row in data:
-                for i in sample(range(data_cols), hextet_gaps):
-                    row[i] = ' ' * hextet_size
-
-            corrupted_text = '\n'.join([' '.join(row) for row in data])
-
-            self.clear_screen()
-            print(self.decorate_ui(utility.merge_text(ui_text, corrupted_text)))
-            time.sleep(duration)
-
-            hextet_gaps += add_gaps
-
-        self.clear_screen()
-        print(self.decorate_ui(ui_text))
 
     def leave(self):
         """Return to the previous UI."""
