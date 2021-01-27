@@ -300,13 +300,13 @@ class Character(object):
             if item.interactive is True]
 
         # actions to use tools on devices
-        tool_actions = [Action(tool.get_use_action(device), tool.use_action_text(device))
+        tool_actions = [Action(tool.get_use_function(device), tool.use_action_text(device))
             for tool in character_tool_list
             for device in map_device_list
             if tool.can_activate(device)]
 
         # actions to use parts on devices
-        part_actions = [Action(part.get_use_action(device), part.use_action_text(device))
+        part_actions = [Action(part.get_use_function(device), part.use_action_text(device))
             for part in character_part_list
             for device in map_device_list
             if part.can_enable(device)]

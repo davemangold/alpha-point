@@ -17,7 +17,7 @@ class Tool(Item):
                 and isinstance(test_device, device.Device)
                 and self.level_number == test_device.level_number)
 
-    def get_use_action(self, target_device):
+    def get_use_function(self, target_device):
         """Return an ad-hoc function for activating the device."""
 
         def use_device():

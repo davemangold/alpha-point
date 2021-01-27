@@ -15,7 +15,7 @@ class Part(Item):
         return (test_device.enabled is False
                 and isinstance(test_device, device.Device))
 
-    def get_use_action(self, target_device):
+    def get_use_function(self, target_device):
         """Return an ad-hoc function for enabling the device."""
 
         part_inventory = self.inventory
