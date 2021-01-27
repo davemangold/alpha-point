@@ -72,10 +72,10 @@ class Terminal(Interface):
         self.system.level.game.ui = TerminalUI(self)
 
     def get_actions(self):
-        """Return dictionary of action based on enabled, terminal-linked devices."""
+        """Return dictionary of actions based on enabled, terminal-linked devices."""
 
         device_list = self.get_devices()
-        actions_list = [Action(device, device.use, device.action_text())
+        actions_list = [Action(self.system.level.game, self, device, device.use, device.action_text())
                         for device in device_list
                         if device.enabled is True]
         actions = {actions_list.index(action) + 1: action

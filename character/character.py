@@ -300,27 +300,27 @@ class Character(object):
             if item.interactive is True]
 
         # actions to use tools on devices
-        tool_actions = [Action(tool, tool.get_use_function(device), tool.use_action_text(device))
+        tool_actions = [Action(self.game, tool, device, tool.get_use_function(device), tool.use_action_text(device))
             for tool in character_tool_list
             for device in map_device_list
             if tool.can_activate(device)]
 
         # actions to use parts on devices
-        part_actions = [Action(part, part.get_use_function(device), part.use_action_text(device))
+        part_actions = [Action(self.game, part, device, part.get_use_function(device), part.use_action_text(device))
             for part in character_part_list
             for device in map_device_list
             if part.can_enable(device)]
 
         # actions to use interfaces
-        interface_actions = [Action(interface, interface.use, interface.action_text())
+        interface_actions = [Action(self.game, self, interface, interface.use, interface.action_text())
             for interface in map_interface_list]
 
         # actions to examine game objects
-        gameobject_actions = [Action(gameobject, gameobject.examine, gameobject.examine_action_text())
+        gameobject_actions = [Action(self.game, self, gameobject, gameobject.examine, gameobject.examine_action_text())
             for gameobject in map_gameobject_list]
 
         # actions to take items from map
-        item_actions = [Action(item, item.map_to_player, item.take_action_text())
+        item_actions = [Action(self.game, self, item, item.map_to_player, item.take_action_text())
             for item in map_item_list]
 
         # combined list of all actions

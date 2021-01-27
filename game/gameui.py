@@ -394,6 +394,10 @@ class MainUI(BaseUI):
         ui_elements.append(self.separator)
 
         if self.game.debug is True:
+
+            system_properties = self.game.level.system.properties
+            system_properties_text = ', '.join('{0} ({1})'.format(i, i.value) for i in system_properties)
+
             debug_text = (
                 'Player X: {0}'.format(self.game.player.x) + '\n' +
                 'Player Y: {0}'.format(self.game.player.y) + '\n' +
@@ -404,7 +408,9 @@ class MainUI(BaseUI):
                 'Map items: {0}'.format(', '.join(str(i) for i in self.game.level.map.items)) + '\n' +
                 'Map devices: {0}'.format(', '.join(str(i) for i in self.game.level.map.devices)) + '\n' +
                 'Map interfaces: {0}'.format(', '.join(str(i) for i in self.game.level.map.interfaces)) + '\n' +
-                'System properties: {0}'.format(', '.join('{0} ({1})'.format(i, i.value) for i in self.game.level.system.properties)))
+                'System properties: {0}'.format(system_properties_text if len(system_properties) > 0 else None) + '\n' +
+                'Last player action: {0}'.format(self.game.player.last_action)
+            )
             ui_elements.append(debug_text)
 
         return '\n\n'.join(ui_elements) + '\n'

@@ -8,3 +8,4 @@ class Player(Character):
     def __init__(self, *args, **kwargs):
         super(Player, self).__init__(*args, **kwargs)
         self.name = player_config['name']
+        self.last_action = None
