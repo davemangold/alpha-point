@@ -1,6 +1,5 @@
 from config.player_config import player_config
 
-# TODO: move deaths config to up one level from system to level
 level_config = {
     1: {
         'name': 'Approach',
@@ -2355,7 +2354,7 @@ level_config = {
                     'max_value': 10,
                     'units': 'V',
                     'increment': 2,
-                },  # voltage
+                },  # 0 - voltage
                 {
                     'id': 1,
                     'name': 'pressure',
@@ -2366,7 +2365,7 @@ level_config = {
                     'max_value': 50,
                     'units': 'Pa',
                     'increment': 0,
-                }  # pressure
+                }  # 1 - pressure
             ],
             'links': [
                 {'interface_id': 0, 'device_id': 0},
@@ -2387,7 +2386,17 @@ level_config = {
                 {'device_id': 6, 'property_id': 1}
             ]
         },
-        'deaths': [],
+        'deaths': [
+                {
+                    'device_states': None,
+                    'property_states': [
+                        {'property_id': 0, 'operator': 'gt', 'value': 7}  # operators: gt, lt, eq
+                    ],
+                    'action': None,
+                    'location': None,
+                    'description': 'You died just cuz...'
+                }
+            ],
         'weather': {
             'sol': '609',
             'time': '12:05:41',

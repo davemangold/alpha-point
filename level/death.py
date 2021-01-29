@@ -10,19 +10,26 @@ class Death(object):
     def __init__(self, level, *args, **kwargs):
         self.level = level
         self.device_states = []
+        self.property_states = []
         self.action = None
         self.location = None
         self.description = 'You died.'
 
     def is_valid(self):
 
-        return len(self.device_states) > 0 or self.action is not None or self.location is not None
+        return any([
+            len(self.device_states) > 0,
+            len(self.property_states) > 0,
+            self.action is not None,
+            self.location is not None
+        ])
 
     def add_device_state(self, config_id, active_state):
         """Add a device state to the death scenario."""
 
-        if config_id in [i for device in self.device_states for i in device.keys()]:
-            raise ValueError("The device with config_id {0} has already been added.".format(config_id))
+        for state in self.device_states:
+            if config_id == state['device'].config_id:
+                raise ValueError("The device with config_id {0} has already been added to the death scenario.".format(config_id))
 
         device = self.level.system.get_device(config_id=config_id)
         self.device_states.append({'device': device, 'active_state': active_state})
@@ -30,15 +37,38 @@ class Death(object):
     def remove_device_state(self, config_id):
         """Remove a device state from the death scenario."""
 
-        for device_config in self.device_states:
-            if device_config['device'].config_id == config_id:
-                self.device_states.remove(device_config['device'])
+        for state in self.device_states:
+            if state['device'].config_id == config_id:
+                self.device_states.remove(state)
 
     def add_device_states(self, device_states_config):
         """Add device states from config."""
 
         for config in device_states_config:
             self.add_device_state(config['device_id'], config['active_state'])
+
+    def add_property_state(self, config_id, operator, value):
+        """Add a property state to the death scenario."""
+
+        for state in self.property_states:
+            if config_id == state['property'].config_id:
+                raise ValueError("The property with config_id {0} has already been added to the death scenario.".format(config_id))
+
+        prop = self.level.system.get_property(config_id=config_id)
+        self.property_states.append({'property': prop, 'operator': operator, 'value': value})
+
+    def remove_property_state(self, config_id):
+        """Add a property state to the death scenario."""
+
+        for state in self.property_states:
+            if state['property'].config_id == config_id:
+                self.property_states.remove(state)
+
+    def add_property_states(self, property_states_config):
+        """Add a property state to the death scenario."""
+
+        for config in property_states_config:
+            self.add_property_state(config['property_id'], config['operator'], config['value'])
 
     def set_action_player(self, verb, target_type, target_config_id):
         """Add a player action to the death scenario."""
@@ -136,6 +166,7 @@ class Death(object):
         """Returns True if current game conditions match the death scenario, otherwise False."""
 
         devices_match = True
+        properties_match = True
         action_match = True
         location_match = True
 
@@ -144,22 +175,39 @@ class Death(object):
             for device_state in self.device_states:
                 device = device_state['device']
                 expected_state = device_state['active_state']
+                devices_match = device.active == expected_state
 
-                if device.active != expected_state:
-                    devices_match = False
+                if not devices_match:
+                    break
+
+        # check property states
+        if len(self.property_states) > 0:
+            for property_state in self.property_states:
+                prop = property_state['property']
+                oper = property_state['operator']
+                value = property_state['value']
+
+                if oper == 'gt':
+                    properties_match = prop.value > value
+                elif oper == 'lt':
+                    properties_match = prop.value < value
+                elif oper == 'eq':
+                    properties_match = prop.value == value
+                else:
+                    raise ValueError("Operator must be one of greater, less, equal.")
+
+                if not properties_match:
                     break
 
         # check action
         if self.action is not None:
-            if self.action != self.level.game.player.last_action:
-                action_match = False
+            action_match = self.action == self.level.game.player.last_action
 
         # check location
         if self.location is not None:
-            if self.location != self.level.game.player.location:
-                location_match = False
+            location_match = self.location == self.level.game.player.location
 
-        return devices_match and action_match and location_match
+        return devices_match and properties_match and action_match and location_match
 
 
 class DeathFactory(object):
@@ -169,11 +217,15 @@ class DeathFactory(object):
     def make_from_config(level, death_config):
 
         device_states_config = death_config['device_states']
+        property_states_config = death_config['property_states']
         action_config = death_config['action']
         death = Death(level=level)
 
         if device_states_config is not None:
             death.add_device_states(device_states_config)
+
+        if property_states_config is not None:
+            death.add_property_states(property_states_config)
 
         if action_config is not None:
             death.set_action(action_config)
