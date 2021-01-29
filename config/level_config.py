@@ -1,5 +1,6 @@
 from config.player_config import player_config
 
+# TODO: move deaths config to up one level from system to level
 level_config = {
     1: {
         'name': 'Approach',
@@ -26,6 +27,7 @@ level_config = {
             'parts': [],
             'artifacts': [
                 {
+                    'id': 1,
                     'type': 'generic',
                     'name': 'rover',
                     'description': 'rover',
@@ -38,6 +40,7 @@ level_config = {
                     'y': 4
                 },  # rover
                 {
+                    'id': 2,
                     'type': 'generic',
                     'name': 'generator',
                     'description': 'generator cluster in the distance',
@@ -50,6 +53,7 @@ level_config = {
                     'y': 1
                 },  # generator array
                 {
+                    'id': 3,
                     'type': 'generic',
                     'name': 'communicationsarray',
                     'description': 'communications array on top of the crater wall',
@@ -107,9 +111,9 @@ level_config = {
             'links': [
                 {'interface_id': 0, 'device_id': 1}
             ],
-            'relates': [],
-            'deaths': []
+            'relates': []
         },
+        'deaths': [],
         'weather': {
             'sol': '609',
             'time': '12:05:41',
@@ -149,6 +153,7 @@ level_config = {
             'parts': [],
             'artifacts': [
                 {
+                    'id': 1,
                     'type': 'generic',
                     'name': 'placard',
                     'description': 'warning placard',
@@ -293,15 +298,19 @@ level_config = {
                 {'interface_id': 1, 'device_id': 1},
                 {'interface_id': 2, 'device_id': 2}
             ],
-            'relates': [],
-            'deaths': [
-                {'configuration': [
-                    {'device_id': 1, 'active_state': False},
-                    {'device_id': 2, 'active_state': True}],
-                    'description': 'Alarms sound in the attached module as air rushes out of the open valve. The gravity of your mistake hits you hard. You just depressurized the habitat. As a fog of panic envelopes your mind you desparately wish you could go back and make a different choice.',
-                    'location': None}  # None if all locations are valid
-            ]
+            'relates': []
         },
+        'deaths': [
+                {
+                    'device_states': [
+                        {'device_id': 1, 'active_state': False},
+                        {'device_id': 2, 'active_state': True}
+                    ],  # None if no device states defined
+                    'action': None,  # None if no action defined
+                    'location': None,  # None if all locations are valid
+                    'description': 'Alarms sound in the attached module as air rushes out of the open valve. The gravity of your mistake hits you hard. You just depressurized the habitat. As a fog of panic envelopes your mind you desparately wish you could go back and make a different choice.'
+                }
+            ],
         'weather': {
             'sol': '609',
             'time': '12:05:41',
@@ -359,6 +368,7 @@ level_config = {
             'orientation_enter': 0,
             'tools': [
                 {
+                    'id': 1,
                     'type': 'prybar',
                     'name': 'prybar',
                     'description': 'prybar',
@@ -369,10 +379,11 @@ level_config = {
                     'blocking': False,
                     'x': 2,
                     'y': 3
-                }  # prybar
+                }  # 1 - prybar
             ],
             'parts': [
                 {
+                    'id': 1,
                     'type': 'wires',
                     'name': 'wire_bundle',
                     'description': 'bundle of wires and circuitry',
@@ -383,10 +394,11 @@ level_config = {
                     'blocking': False,
                     'x': 6,
                     'y': 1
-                }  # bundle of wires and circuitry
+                }  # 1 - bundle of wires and circuitry
             ],
             'artifacts': [
                 {
+                    'id': 1,
                     'type': 'generic',
                     'name': 'suit_1',
                     'description': 'excursion suit',
@@ -397,8 +409,9 @@ level_config = {
                     'blocking': True,
                     'x': 3,
                     'y': 6
-                },  # excursion suit
+                },  # 1 - excursion suit
                 {
+                    'id': 2,
                     'type': 'generic',
                     'name': 'suit_2',
                     'description': 'excursion suit',
@@ -409,8 +422,9 @@ level_config = {
                     'blocking': True,
                     'x': 3,
                     'y': 7
-                },  # excursion suit
+                },  # 2 - excursion suit
                 {
+                    'id': 3,
                     'type': 'generic',
                     'name': 'suit_3',
                     'description': 'excursion suit',
@@ -421,8 +435,9 @@ level_config = {
                     'blocking': True,
                     'x': 5,
                     'y': 7
-                },  # excursion suit
+                },  # 3 - excursion suit
                 {
+                    'id': 4,
                     'type': 'generic',
                     'name': 'helmet_1',
                     'description': 'excursion suit helmet',
@@ -433,8 +448,9 @@ level_config = {
                     'blocking': False,
                     'x': 7,
                     'y': 3
-                },  # excursion suit helmet
+                },  # 4 - excursion suit helmet
                 {
+                    'id': 5,
                     'type': 'generic',
                     'name': 'sticky_note',
                     'description': 'sticky note on the terminal',
@@ -445,7 +461,7 @@ level_config = {
                     'blocking': False,
                     'x': 1,
                     'y': 1
-                },  # sticky note
+                },  # 5 - sticky note
             ]
         },
         'system': {
@@ -594,9 +610,9 @@ level_config = {
                 {'interface_id': 1, 'device_id': 3},
                 {'interface_id': 1, 'device_id': 4}
             ],
-            'relates': [],
-            'deaths': []
+            'relates': []
         },
+        'deaths': [],
         'weather': {
             'sol': '609',
             'time': '12:05:41',
@@ -665,6 +681,7 @@ level_config = {
             'tools': [],
             'parts': [
                 {
+                    'id': 1,
                     'type': 'wires',
                     'name': 'wires',
                     'description': 'wiring',
@@ -679,6 +696,7 @@ level_config = {
             ],
             'artifacts': [
                 {
+                    'id': 1,
                     'type': 'generic',
                     'name': 'window',
                     'description': 'window',
@@ -691,6 +709,7 @@ level_config = {
                     'y': 3
                 },  # window
                 {  # use artifact to make debris pile blocking
+                    'id': 2,
                     'type': 'generic',
                     'name': 'debris',
                     'description': 'pile of debris',
@@ -703,6 +722,7 @@ level_config = {
                     'y': 0
                 },  # pile of debris
                 {
+                    'id': 3,
                     'type': 'generic',
                     'name': 'blood',
                     'description': 'red stain on the wall',
@@ -715,6 +735,7 @@ level_config = {
                     'y': 1
                 },  # blood stain
                 {
+                    'id': 4,
                     'type': 'generic',
                     'name': 'table',
                     'description': 'table',
@@ -727,6 +748,7 @@ level_config = {
                     'y': 3
                 },  # table
                 {
+                    'id': 5,
                     'type': 'generic',
                     'name': 'table',
                     'description': 'table',
@@ -739,6 +761,7 @@ level_config = {
                     'y': 3
                 },  # table
                 {
+                    'id': 6,
                     'type': 'generic',
                     'name': 'coffee',
                     'description': 'cup of coffee spilled on the table',
@@ -876,17 +899,18 @@ level_config = {
                 {'interface_id': 0, 'device_id': 2},
                 {'interface_id': 1, 'device_id': 1}
             ],
-            'relates': [],
-            'deaths': [
+            'relates': []
+        },
+        'deaths': [
                 {
-                    'configuration': [
+                    'device_states': [
                         {'device_id': 2, 'active_state': True}
                     ],
-                    'description': 'As you strain to move a large piece of debris there is a sudden bang that sends you tumbling out of a gaping hole in the habitat wall. Your vision fades to red and then black as you claw in agony at the rusty red grit of the crater floor. Perhaps in another life you made a wiser choice.',
-                    'location': None  # None if all locations are valid
+                    'action': None,
+                    'location': None,
+                    'description': 'As you strain to move a large piece of debris there is a sudden bang that sends you tumbling out of a gaping hole in the habitat wall. Your vision fades to red and then black as you claw in agony at the rusty red grit of the crater floor. Perhaps in another life you made a wiser choice.'
                 }
-            ]
-        },
+            ],
         'weather': {
             'sol': '609',
             'time': '12:05:41',
@@ -960,9 +984,10 @@ level_config = {
             'orientation_enter': 1,
             'tools': [
                 {
+                    'id': 1,
                     'type': 'prybar',
                     'name': 'knife',
-                    'description': 'knife',
+                    'description': 'kitchen knife',
                     'report': 'A stainless steel kitchen knife.',
                     'inspectable': True,
                     'visible': True,
@@ -970,11 +995,12 @@ level_config = {
                     'blocking': False,
                     'x': 2,
                     'y': 2
-                }  # knife
+                }  # 1 - knife
             ],
             'parts': [],
             'artifacts': [
                 {
+                    'id': 1,
                     'type': 'generic',
                     'name': 'table',
                     'description': 'table',
@@ -985,8 +1011,9 @@ level_config = {
                     'blocking': True,
                     'x': 2,
                     'y': 6
-                },  # table
+                },  # 1 - table
                 {
+                    'id': 2,
                     'type': 'generic',
                     'name': 'table',
                     'description': 'table',
@@ -997,8 +1024,9 @@ level_config = {
                     'blocking': True,
                     'x': 3,
                     'y': 6
-                },  # table
+                },  # 2 - table
                 {
+                    'id': 3,
                     'type': 'generic',
                     'name': 'table',
                     'description': 'table',
@@ -1009,8 +1037,9 @@ level_config = {
                     'blocking': True,
                     'x': 5,
                     'y': 6
-                },  # table
+                },  # 3 - table
                 {
+                    'id': 4,
                     'type': 'generic',
                     'name': 'table',
                     'description': 'table',
@@ -1021,8 +1050,9 @@ level_config = {
                     'blocking': True,
                     'x': 6,
                     'y': 6
-                },  # table
+                },  # 4 - table
                 {
+                    'id': 5,
                     'type': 'generic',
                     'name': 'counter',
                     'description': 'metal counter',
@@ -1033,8 +1063,9 @@ level_config = {
                     'blocking': True,
                     'x': 2,
                     'y': 2
-                },  # counter
+                },  # 5 - counter
                 {
+                    'id': 6,
                     'type': 'generic',
                     'name': 'counter',
                     'description': 'metal counter',
@@ -1045,8 +1076,9 @@ level_config = {
                     'blocking': True,
                     'x': 3,
                     'y': 2
-                },  # counter
+                },  # 6 - counter
                 {
+                    'id': 7,
                     'type': 'generic',
                     'name': 'counter',
                     'description': 'metal counter',
@@ -1057,8 +1089,9 @@ level_config = {
                     'blocking': True,
                     'x': 5,
                     'y': 2
-                },  # counter
+                },  # 7 - counter
                 {
+                    'id': 8,
                     'type': 'generic',
                     'name': 'counter',
                     'description': 'metal counter',
@@ -1069,8 +1102,9 @@ level_config = {
                     'blocking': True,
                     'x': 6,
                     'y': 2
-                },  # counter
+                },  # 8 - counter
                 {
+                    'id': 9,
                     'type': 'generic',
                     'name': 'counter',
                     'description': 'metal counter',
@@ -1081,8 +1115,9 @@ level_config = {
                     'blocking': True,
                     'x': 0,
                     'y': 1
-                },  # counter
+                },  # 9 - counter
                 {
+                    'id': 10,
                     'type': 'generic',
                     'name': 'counter',
                     'description': 'metal counter',
@@ -1093,8 +1128,9 @@ level_config = {
                     'blocking': True,
                     'x': 0,
                     'y': 2
-                },  # counter
+                },  # 10 - counter
                 {
+                    'id': 11,
                     'type': 'generic',
                     'name': 'counter',
                     'description': 'metal counter',
@@ -1105,8 +1141,9 @@ level_config = {
                     'blocking': True,
                     'x': 1,
                     'y': 0
-                },  # counter
+                },  # 11 - counter
                 {
+                    'id': 12,
                     'type': 'generic',
                     'name': 'counter',
                     'description': 'metal counter',
@@ -1117,8 +1154,9 @@ level_config = {
                     'blocking': True,
                     'x': 2,
                     'y': 0
-                },  # counter
+                },  # 12 - counter
                 {
+                    'id': 13,
                     'type': 'generic',
                     'name': 'counter',
                     'description': 'metal counter',
@@ -1129,8 +1167,9 @@ level_config = {
                     'blocking': True,
                     'x': 3,
                     'y': 0
-                },  # counter
+                },  # 13 - counter
                 {
+                    'id': 14,
                     'type': 'generic',
                     'name': 'counter',
                     'description': 'metal counter',
@@ -1141,8 +1180,9 @@ level_config = {
                     'blocking': True,
                     'x': 4,
                     'y': 0
-                },  # counter
+                },  # 14 - counter
                 {
+                    'id': 15,
                     'type': 'generic',
                     'name': 'counter',
                     'description': 'metal counter',
@@ -1153,8 +1193,9 @@ level_config = {
                     'blocking': True,
                     'x': 5,
                     'y': 0
-                },  # counter
+                },  # 15 - counter
                 {
+                    'id': 16,
                     'type': 'generic',
                     'name': 'counter',
                     'description': 'metal counter',
@@ -1165,8 +1206,9 @@ level_config = {
                     'blocking': True,
                     'x': 6,
                     'y': 0
-                },  # counter
+                },  # 16 - counter
                 {
+                    'id': 17,
                     'type': 'generic',
                     'name': 'counter',
                     'description': 'metal counter',
@@ -1177,8 +1219,9 @@ level_config = {
                     'blocking': True,
                     'x': 7,
                     'y': 0
-                },  # counter
+                },  # 17 - counter
                 {
+                    'id': 18,
                     'type': 'generic',
                     'name': 'cutting_board',
                     'description': 'cutting board',
@@ -1189,8 +1232,9 @@ level_config = {
                     'blocking': False,
                     'x': 2,
                     'y': 2
-                },  # cutting board
+                },  # 18 - cutting board
                 {
+                    'id': 19,
                     'type': 'generic',
                     'name': 'microwave',
                     'description': 'microwave oven',
@@ -1201,8 +1245,9 @@ level_config = {
                     'blocking': False,
                     'x': 4,
                     'y': 0
-                },  # microwave
+                },  # 19 - microwave
                 {
+                    'id': 20,
                     'type': 'generic',
                     'name': 'cook_surface',
                     'description': 'cook surface',
@@ -1213,8 +1258,9 @@ level_config = {
                     'blocking': False,
                     'x': 4,
                     'y': 0
-                },  # cook surface
+                },  # 20 - cook surface
                 {
+                    'id': 21,
                     'type': 'generic',
                     'name': 'handprint',
                     'description': 'bloody hand print',
@@ -1225,8 +1271,9 @@ level_config = {
                     'blocking': False,
                     'x': 5,
                     'y': 6
-                },  # bloody hand print
+                },  # 21 - bloody hand print
                 {
+                    'id': 22,
                     'type': 'generic',
                     'name': 'tablet',
                     'description': 'unlocked tablet',
@@ -1237,7 +1284,7 @@ level_config = {
                     'blocking': False,
                     'x': 2,
                     'y': 6
-                }  # tablet
+                }  # 22 - tablet
             ]
         },
         'system': {
@@ -1320,9 +1367,19 @@ level_config = {
                 # {'interface_id': 0, 'device_id': 1},
                 {'interface_id': 1, 'device_id': 1}
             ],
-            'relates': [],
-            'deaths': []
+            'relates': []
         },
+        'deaths': [
+                {
+                    'device_states': None,
+                    'action': {
+                        'origin': {'type': 'tool', 'id': 1, 'verb': 'use'},
+                        'target': {'type': 'device', 'id': 1}
+                    },
+                    'location': None,
+                    'description': 'Still disoriented from your strange encounter, you brace yourself against the door and jam the knife into the seal between the door and frame. You begin to pry, shaking from the strain. You can feel movement, a slight give, then the knife snaps and your wrist slams onto the jagged edge of the broken blade. You see a bright red spurt of blood before the pain fully hits you. You instantly clamp your other hand over the wound but the blood won\'t stop flowing, and you wonder how you could have been so stupid. You were not supposed to die on Mars prying open an airlock with a kitchen knife supplied by the lowest bidder.'
+                }
+            ],
         'weather': {
             'sol': '609',
             'time': '12:05:41',
@@ -1434,6 +1491,7 @@ level_config = {
             'orientation_enter': 1,
             'tools': [
                 {
+                    'id': 1,
                     'type': 'prybar',
                     'name': 'prybar',
                     'description': 'prybar',
@@ -1449,6 +1507,7 @@ level_config = {
             'parts': [],
             'artifacts': [
                 {
+                    'id': 1,
                     'type': 'generic',
                     'name': 'emilia perez',
                     'description': 'crew member on the floor',
@@ -1674,9 +1733,9 @@ level_config = {
             'links': [
                 {'interface_id': 0, 'device_id': 1}
             ],
-            'relates': [],
-            'deaths': []
+            'relates': []
         },
+        'deaths': [],
         'weather': {
             'sol': '609',
             'time': '12:05:41',
@@ -1777,9 +1836,9 @@ level_config = {
             'links': [
                 {'interface_id': 0, 'device_id': 1}
             ],
-            'relates': [],
-            'deaths': []
+            'relates': []
         },
+        'deaths': [],
         'weather': {
             'sol': '609',
             'time': '12:05:41',
@@ -1880,9 +1939,9 @@ level_config = {
             'links': [
                 {'interface_id': 0, 'device_id': 1}
             ],
-            'relates': [],
-            'deaths': []
+            'relates': []
         },
+        'deaths': [],
         'weather': {
             'sol': '609',
             'time': '12:05:41',
@@ -1983,9 +2042,9 @@ level_config = {
             'links': [
                 {'interface_id': 0, 'device_id': 1}
             ],
-            'relates': [],
-            'deaths': []
+            'relates': []
         },
+        'deaths': [],
         'weather': {
             'sol': '609',
             'time': '12:05:41',
@@ -2032,6 +2091,7 @@ level_config = {
             'tools': [],
             'parts': [
                 {
+                    'id': 1,
                     'type': 'wires',
                     'name': 'wires',
                     'description': 'wire bundle',
@@ -2042,10 +2102,11 @@ level_config = {
                     'blocking': False,
                     'x': 3,
                     'y': 2
-                }  # wire bundle
+                }  # 1 - wire bundle
             ],
             'artifacts': [
                 {
+                    'id': 1,
                     'type': 'generic',
                     'name': 'helmet_1',
                     'description': 'excursion suit helmet',
@@ -2056,7 +2117,7 @@ level_config = {
                     'blocking': False,
                     'x': 0,
                     'y': 2
-                }  # excursion suit helmet
+                }  # 1 - excursion suit helmet
             ]
         },
         'system': {
@@ -2324,9 +2385,9 @@ level_config = {
                 {'device_id': 4, 'property_id': 0},
                 {'device_id': 5, 'property_id': 0},
                 {'device_id': 6, 'property_id': 1}
-            ],
-            'deaths': []
+            ]
         },
+        'deaths': [],
         'weather': {
             'sol': '609',
             'time': '12:05:41',

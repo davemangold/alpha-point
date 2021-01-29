@@ -130,8 +130,10 @@ class BaseUI(object):
     def restart_level(self):
         """Restart the current level."""
 
-        save_game = utility.load_object('level_start')
-        utility.transfer_inventory(save_game.player, self.game.player)
+        if not self.game.debug:
+            save_game = utility.load_object('level_start')
+            utility.transfer_inventory(save_game.player, self.game.player)
+
         self.game.setup(self.game.level.number)
         self.game.ui = MainUI(self.game)
 

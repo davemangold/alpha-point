@@ -55,15 +55,60 @@ class Inventory(object):
 
         return [item for item in self.items if isinstance(item, Tool)]
 
+    def get_tool(self, tool_id=None, config_id=None):
+        """Return the device if it exists."""
+
+        tools = self.get_tools()
+
+        if tool_id is not None:
+            for check_tool in tools:
+                if check_tool.id == tool_id:
+                    return check_tool
+
+        elif config_id is not None:
+            for check_tool in tools:
+                if check_tool.config_id == config_id:
+                    return check_tool
+
     def get_parts(self):
         """Return all items that are Part instances."""
 
         return [item for item in self.items if isinstance(item, Part)]
 
+    def get_part(self, part_id=None, config_id=None):
+        """Return the device if it exists."""
+
+        parts = self.get_parts()
+
+        if part_id is not None:
+            for check_part in parts:
+                if check_part.id == part_id:
+                    return check_part
+
+        elif config_id is not None:
+            for check_part in parts:
+                if check_part.config_id == config_id:
+                    return check_part
+
     def get_artifacts(self):
         """Return all items that are Artifact instances."""
 
         return [item for item in self.items if isinstance(item, Artifact)]
+
+    def get_artifact(self, artifact_id=None, config_id=None):
+        """Return the device if it exists."""
+
+        artifacts = self.get_artifacts()
+
+        if artifact_id is not None:
+            for check_artifact in artifacts:
+                if check_artifact.id == artifact_id:
+                    return check_artifact
+
+        elif config_id is not None:
+            for check_artifact in artifacts:
+                if check_artifact.config_id == config_id:
+                    return check_artifact
 
     def get_items_by_type(self, instance):
         """Return all items that match the type of the provided instance."""

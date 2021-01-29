@@ -62,6 +62,7 @@ class PartFactory(object):
     def make_from_config(self, map, part_config, level_number):
 
         new_part = self.make_part(map, part_config['type'])
+        new_part.config_id = part_config['id']
         new_part.level_number = level_number
         new_part.name = part_config['name']
         new_part.description = part_config['description']

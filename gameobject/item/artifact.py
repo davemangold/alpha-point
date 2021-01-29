@@ -30,6 +30,7 @@ class ArtifactFactory(object):
     def make_from_config(self, map, artifact_config, level_number):
 
         new_artifact = self.make_artifact(map, artifact_config['type'])
+        new_artifact.config_id = artifact_config['id']
         new_artifact.level_number = level_number
         new_artifact.name = artifact_config['name']
         new_artifact.description = artifact_config['description']

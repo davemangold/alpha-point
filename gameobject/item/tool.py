@@ -79,6 +79,7 @@ class ToolFactory(object):
     def make_from_config(self, map, tool_config, level_number):
 
         new_tool = self.make_tool(map, tool_config['type'])
+        new_tool.config_id = tool_config['id']
         new_tool.level_number = level_number
         new_tool.name = tool_config['name']
         new_tool.description = tool_config['description']

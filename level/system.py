@@ -18,7 +18,6 @@ class System(object):
         self.properties = []    # [<property>,...]
         self.links = []         # [{'interface_id': <device id>},...]
         self.relates = []       # [{'device_id': <property_id>},...]
-        self.deaths = []
 
     def build(self):
         """Build system from config dictionary."""
@@ -56,9 +55,6 @@ class System(object):
             relate_device = self.get_device(config_id=relate_config['device_id'])
             relate_property = self.get_property(config_id=relate_config['property_id'])
             self.relate_property(relate_device, relate_property)
-
-        for death_config in system_config['deaths']:
-            self.deaths.append(death_config)
 
     def has_interface(self, interface):
         """Returns True if the system contains the interface, otherwise False."""
@@ -346,36 +342,3 @@ class System(object):
             return "The device is already inactive."
 
         return device.toggle_active_state()
-
-    def get_death(self):
-        """Return the first death config satisfied, otherwise None."""
-
-        for death in self.deaths:
-
-            config_satisfied = True
-            location_satisfied = True
-
-            for device_state in death['configuration']:
-                this_device = self.get_device(config_id=device_state['device_id'])
-
-                if this_device.active != device_state['active_state']:
-                    config_satisfied = False
-                    break
-
-            if death['location'] is not None and death['location'] != self.level.game.player.location:
-                location_satisfied = False
-
-            if config_satisfied is True and location_satisfied is True:
-                return death
-
-        return None
-
-    def kills_player(self):
-        """Return True if the level is in a state that kills the player, otherwise False."""
-
-        death = self.get_death()
-
-        if death is not None:
-            return True
-
-        return False

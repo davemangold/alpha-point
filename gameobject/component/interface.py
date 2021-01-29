@@ -4,7 +4,7 @@ from game.gameui import ConsoleUI
 from game.gameui import WeatherStationUI
 from gameobject.component import Component
 from gameobject.component.device import Sensor
-from action import Action
+from action import InterfaceAction
 
 
 # Base Interface class
@@ -75,9 +75,15 @@ class Terminal(Interface):
         """Return dictionary of actions based on enabled, terminal-linked devices."""
 
         device_list = self.get_devices()
-        actions_list = [Action(self.system.level.game, self, device, device.use, device.action_text())
-                        for device in device_list
-                        if device.enabled is True]
+        actions_list = [
+            InterfaceAction(
+                game=self.system.level.game,
+                function=device.use,
+                description=device.action_text(),
+                interface=self,
+                device=device)
+            for device in device_list
+            if device.enabled is True]
         actions = {actions_list.index(action) + 1: action
                    for action in actions_list}
 

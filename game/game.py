@@ -80,9 +80,9 @@ class Game(object):
             if isinstance(self.ui, MainUI):
                 if self.player.cell.has_story() and not self.player.cell.story_seen:
                     self.ui = StoryUI(game=self)
-                if self.level.system.kills_player():
-                    death = self.level.system.get_death()
-                    self.ui = PlayerDeadUI(game=self, message=death['description'])
+                if self.level.kills_player():
+                    death = self.level.get_death()
+                    self.ui = PlayerDeadUI(game=self, message=death.description)
                 if self.level.is_complete():
                     if self.level.has_next_level():
                         self.ui.next_level()

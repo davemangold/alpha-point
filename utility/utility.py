@@ -1,5 +1,6 @@
 import re
 import os
+import shutil
 import platform
 import pickle
 from datetime import datetime
@@ -462,13 +463,30 @@ def save_exists(name):
 def save_object(obj, name):
     """Serialize game object and save to file."""
 
-    save_filepath = os.path.join('.save', name)
+    save_file_path = os.path.join('.save', name)
+    save_backup_path = save_file_path + '_bak'
 
     if hasattr(obj, 'player'):
-        obj.player.actions = {}  # clear all ad-hoc, local action functions so object can be serialized
 
-    with open(save_filepath, "wb") as save_file:
-        pickle.dump(obj, save_file)
+        # reset player Actions (which include ad-hoc, local functions) so object can be serialized
+        obj.player.actions = {}
+        obj.player.last_action = None
+
+    if os.path.isfile(save_file_path):
+        shutil.copy(save_file_path, save_backup_path)
+
+    try:
+
+        with open(save_file_path, "wb") as save_file:
+            pickle.dump(obj, save_file)
+
+        if os.path.isfile(save_backup_path):
+            os.remove(save_backup_path)
+
+    except:
+
+        os.remove(save_file_path)
+        os.rename(save_backup_path, save_file_path)
 
 
 def load_object(name):
@@ -480,6 +498,7 @@ def load_object(name):
         obj = pickle.load(save_file)
 
         if hasattr(obj, 'player'):
+            # update player actions that were reset on save
             obj.player.update_actions()  # update action functions
 
     return obj
