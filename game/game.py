@@ -50,6 +50,7 @@ class Game(object):
 
         self.player.orientation = enter_orientation
         self.player.move_to(*enter_coords)
+        self.player.last_action = None
 
     def setup(self, level_number):
         """Setup game elements."""
