@@ -82,7 +82,7 @@ def get_direction(x1, y1, x2, y2):
         raise ValueError("The locations must be adjacent and orthogonal to each other.")
 
     if dx == 0:
-        return 0 if dy == 1 else 2
+        return 2 if dy == 1 else 0
     else:
         return 1 if dx == 1 else 3
 

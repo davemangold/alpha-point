@@ -27,6 +27,10 @@ class GameObject(object):
 
         return self.description
 
+    def __repr__(self):
+
+        return "{0} ({1}, {2})".format(self.description, self.x, self.y)
+
     @property
     def location(self):
         """Return the (x, y) location of the item."""
@@ -40,8 +44,7 @@ class GameObject(object):
         action_text = " ".join([self.msg_examine_verb.capitalize(), "the", str(self)])
 
         # add relative direction to descriptions for visible map objects with same base description
-        if (self.game.level.map.inventory.has_item(self)
-        and utility.d4_duplicate_description(self, player.get_visible_objects())):
+        if utility.d4_duplicate_description(self, player.get_visible_objects()):
             direction = utility.get_direction(*player.location, *self.location)
             action_text += " " + utility.get_relative_direction_text(player.orientation, direction)
 

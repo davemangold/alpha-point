@@ -407,7 +407,8 @@ class MainUI(BaseUI):
                 'Visible items: {0}'.format(self.game.player.get_visible_items()) + '\n' +
                 'Visible devices: {0}'.format(self.game.player.get_visible_devices()) + '\n' +
                 'Visible interfaces: {0}'.format(self.game.player.get_visible_interfaces()) + '\n' +
-                'Map items: {0}'.format(', '.join(str(i) for i in self.game.level.map.items)) + '\n' +
+                'Visible objects: {0}'.format(self.game.player.get_visible_objects()) + '\n' +
+                # 'Map items: {0}'.format(', '.join(str(i) for i in self.game.level.map.items)) + '\n' +
                 'Map devices: {0}'.format(', '.join(str(i) for i in self.game.level.map.devices)) + '\n' +
                 'Map interfaces: {0}'.format(', '.join(str(i) for i in self.game.level.map.interfaces)) + '\n' +
                 'System properties: {0}'.format(system_properties_text if len(system_properties) > 0 else None) + '\n' +
