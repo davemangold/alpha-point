@@ -304,9 +304,10 @@ level_config = {
                     'device_states': [
                         {'device_id': 1, 'active_state': False},
                         {'device_id': 2, 'active_state': True}
-                    ],  # None if no device states defined
-                    'action': None,  # None if no action defined
-                    'location': None,  # None if all locations are valid
+                    ],  # [] or None if no device states defined
+                    'property_states': None,  # [] or None if no property states defined,
+                    'action': None,  # {} or None if no action defined
+                    'location': None,  # (x, y) or None if all locations are valid
                     'description': 'Alarms sound in the attached module as air rushes out of the open valve. The gravity of your mistake hits you hard. You just depressurized the habitat. As a fog of panic envelopes your mind you desparately wish you could go back and make a different choice.'
                 }
             ],
@@ -452,11 +453,11 @@ level_config = {
                     'id': 5,
                     'type': 'generic',
                     'name': 'sticky_note',
-                    'description': 'sticky note on the terminal',
+                    'description': 'sticky note',
                     'report': 'Not sure why we changed them but just type "help" if you forget the manual commands. At least we don\'t have to type full device IDs anymore. To all the other non-comps (Marcus), you\'re welcome.\n\n-Emilia',
                     'inspectable': True,
                     'visible': True,
-                    'interactive': False,
+                    'interactive': True,
                     'blocking': False,
                     'x': 1,
                     'y': 1
@@ -565,7 +566,7 @@ level_config = {
                     'name': 'maintenance bay access door',
                     'description': 'door',
                     'type': 'door',
-                    'report': 'The door is labeled "Maintenance Bay Access". There\'s a rover and [device-4] visible on the other side.',
+                    'report': 'The door is labeled "Maintenance Bay Access". It\'s locked. There\'s a rover and [device-4] visible on the other side.',
                     'inspectable': True,
                     'enabled': False,
                     'active': False,
@@ -905,6 +906,7 @@ level_config = {
                     'device_states': [
                         {'device_id': 2, 'active_state': True}
                     ],
+                    'property_states': None,
                     'action': None,
                     'location': None,
                     'description': 'As you strain to move a large piece of debris there is a sudden bang that sends you tumbling out of a gaping hole in the habitat wall. Your vision fades to red and then black as you claw in agony at the rusty red grit of the crater floor. Perhaps in another life you made a wiser choice.'
@@ -1371,6 +1373,7 @@ level_config = {
         'deaths': [
                 {
                     'device_states': None,
+                    'property_states': None,
                     'action': {
                         'origin': {'type': 'tool', 'id': 1, 'verb': 'use'},
                         'target': {'type': 'device', 'id': 1}
@@ -1499,8 +1502,8 @@ level_config = {
                     'visible': True,
                     'interactive': True,
                     'blocking': False,
-                    'x': 5,
-                    'y': 1
+                    'x': 2,
+                    'y': 4
                 }  # prybar - TESTING
             ],
             'parts': [],
@@ -1585,8 +1588,8 @@ level_config = {
                     'name': 'room_1',
                     'description': 'door',
                     'type': 'door',
-                    'report': '',
-                    'inspectable': False,
+                    'report': 'It\'s the door to mission commander Tonia Cherneyev\'s quarters.',
+                    'inspectable': True,
                     'enabled': True,
                     'active': True,
                     'visible': True,
@@ -1669,8 +1672,8 @@ level_config = {
                     'name': 'room_1',
                     'description': 'door',
                     'type': 'door',
-                    'report': '',
-                    'inspectable': False,
+                    'report': 'This is a door.',
+                    'inspectable': True,
                     'enabled': True,
                     'active': True,
                     'visible': True,
@@ -1690,8 +1693,8 @@ level_config = {
                     'name': 'room_1',
                     'description': 'door',
                     'type': 'door',
-                    'report': '',
-                    'inspectable': False,
+                    'report': 'This is a door.',
+                    'inspectable': True,
                     'enabled': True,
                     'active': True,
                     'visible': True,
