@@ -194,7 +194,7 @@ class Death(object):
                 elif oper == 'eq':
                     properties_match = prop.value == value
                 else:
-                    raise ValueError("Operator must be one of greater, less, equal.")
+                    raise ValueError("Operator must be one of: gt, lt, eq.")
 
                 if not properties_match:
                     break
