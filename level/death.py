@@ -29,7 +29,8 @@ class Death(object):
 
         for state in self.device_states:
             if config_id == state['device'].config_id:
-                raise ValueError("The device with config_id {0} has already been added to the death scenario.".format(config_id))
+                raise ValueError(
+                    "The device with config_id {0} has already been added to the death scenario.".format(config_id))
 
         device = self.level.system.get_device(config_id=config_id)
         self.device_states.append({'device': device, 'active_state': active_state})
@@ -52,7 +53,8 @@ class Death(object):
 
         for state in self.property_states:
             if config_id == state['property'].config_id:
-                raise ValueError("The property with config_id {0} has already been added to the death scenario.".format(config_id))
+                raise ValueError(
+                    "The property with config_id {0} has already been added to the death scenario.".format(config_id))
 
         prop = self.level.system.get_property(config_id=config_id)
         self.property_states.append({'property': prop, 'operator': operator, 'value': value})
@@ -82,7 +84,8 @@ class Death(object):
         elif target_type == 'artifact':
             target = self.level.map.inventory.get_artifact(config_id=target_config_id)
         else:
-            raise ValueError("Argument target_type {0} must be one of: interface, tool, part, artifact.".format(target_type))
+            raise ValueError(
+                "Argument target_type {0} must be one of: interface, tool, part, artifact.".format(target_type))
 
         if verb == 'use':
             player_action = PlayerAction(
@@ -160,7 +163,8 @@ class Death(object):
             origin_config_id = action_config['origin']['id']
             self.set_action_item(origin_type, origin_config_id, target_config_id)
         else:
-            raise ValueError("Configuration origin_type {0} must be one of: player, interface, tool, part.".format(origin_type))
+            raise ValueError(
+                "Configuration origin_type {0} must be one of: player, interface, tool, part.".format(origin_type))
 
     def scenario_satisfied(self):
         """Returns True if current game conditions match the death scenario, otherwise False."""
