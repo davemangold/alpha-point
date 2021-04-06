@@ -77,7 +77,7 @@ class PropertyFactory(object):
         if property_type.lower() == 'voltage':
             return Voltage(system, *args, **kwargs)
 
-        raise error.FactoryError("The specified property type does not exist.")
+        raise error.GameFactoryError("The specified property type does not exist.")
     
     def make_from_config(self, system, property_config):
 

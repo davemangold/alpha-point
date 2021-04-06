@@ -81,7 +81,7 @@ class Device(Component):
         """Add a dependency that must be met before this device can be activated."""
 
         if not self.system.has_device(self.system.get_device(device_id)):
-            raise error.SystemError("The specified device is not in the system.")
+            raise error.GameSystemError("The specified device is not in the system.")
 
         if not isinstance(enabled_state, bool):
             raise TypeError("The enabled state must be a boolean value.")
@@ -95,7 +95,7 @@ class Device(Component):
             'active_state': active_state}
 
         if dependency in self.dependencies:
-            raise error.DeviceError("The dependency already exists for the device.")
+            raise error.GameDeviceError("The dependency already exists for the device.")
 
         self.dependencies.append(dependency)
 
@@ -248,7 +248,7 @@ class DeviceFactory(object):
         if device_type.lower() == 'sensor':
             return Sensor(system, *args, **kwargs)
 
-        raise error.FactoryError("The specified device type does not exist.")
+        raise error.GameFactoryError("The specified device type does not exist.")
 
     def make_from_config(self, system, device_config, level_number):
 

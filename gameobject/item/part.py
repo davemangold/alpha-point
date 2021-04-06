@@ -57,7 +57,7 @@ class PartFactory(object):
 
         if part_type.lower() == 'wires':
             return Wires(map, *args, **kwargs)
-        raise error.FactoryError("The specified part type does not exist.")
+        raise error.GameFactoryError("The specified part type does not exist.")
 
     def make_from_config(self, map, part_config, level_number):
 

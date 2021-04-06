@@ -1,50 +1,50 @@
-class InventoryError(Exception):
+class GameInventoryError(Exception):
     pass
 
 
-class SystemError(Exception):
+class GameSystemError(Exception):
     pass
 
 
-class InterfaceError(Exception):
+class GameInterfaceError(Exception):
     pass
 
 
-class DeviceError(Exception):
+class GameDeviceError(Exception):
     pass
 
 
-class ItemError(Exception):
+class GameItemError(Exception):
     pass
 
 
-class ToolError(Exception):
+class GameToolError(Exception):
     pass
 
 
-class FactoryError(Exception):
+class GameFactoryError(Exception):
     pass
 
 
-class MapError(Exception):
+class GameMapError(Exception):
     pass
 
 
-class PlayerError(Exception):
+class GamePlayerError(Exception):
     pass
 
 
-class MoveError(Exception):
+class GameMoveError(Exception):
     pass
 
 
-class ActionError(Exception):
+class GameActionError(Exception):
     pass
 
 
-class CommandError(Exception):
+class GameCommandError(Exception):
     pass
 
 
-class ConfigError(Exception):
+class GameConfigError(Exception):
     pass

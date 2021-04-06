@@ -273,11 +273,11 @@ class MainUI(BaseUI):
             else:
                 pass
 
-        except error.MoveError:
+        except error.GameMoveError:
             self.alert = "I can't move there."
-        except error.ActionError:
+        except error.GameActionError:
             self.alert = "That's not an option."
-        except error.InterfaceError:
+        except error.GameInterfaceError:
             self.alert = "This doesn't work."
 
     def prompt(self):
@@ -702,7 +702,7 @@ class TerminalUI(BaseUI):
                     'active: {4}'.format(d.id, d.name, d.address, d.enabled, d.active)
                     for d in devices])
             else:
-                raise error.CommandError('Device not found.')
+                raise error.GameCommandError('Device not found.')
 
         def set_device(*args):
             # args: {id} {-active} {value}
@@ -715,25 +715,25 @@ class TerminalUI(BaseUI):
                 property_name = args[1].replace('-', '')
                 property_value = int(args[2])
             except IndexError:
-                raise error.CommandError('Missing arguments for set-device.')
+                raise error.GameCommandError('Missing arguments for set-device.')
             except (AttributeError, ValueError):
-                raise error.CommandError('Invalid arguments for set-device.')
+                raise error.GameCommandError('Invalid arguments for set-device.')
 
             if property_name not in valid_properties:
-                raise error.CommandError('Invalid arguments for set-device.')
+                raise error.GameCommandError('Invalid arguments for set-device.')
 
             if property_value not in valid_properties[property_name]:
-                raise error.CommandError('Invalid arguments for set-device.')
+                raise error.GameCommandError('Invalid arguments for set-device.')
             else:
                 property_value = bool(property_value)
 
             devices = self.terminal.get_devices(device_id=device_id)
 
             if len(devices) == 0:
-                raise error.CommandError('Device not found.')
+                raise error.GameCommandError('Device not found.')
 
             if len(devices) > 1:
-                raise error.CommandError('Device not set. Multiple matching devices.')
+                raise error.GameCommandError('Device not set. Multiple matching devices.')
 
             device = devices[0]
 
@@ -744,7 +744,7 @@ class TerminalUI(BaseUI):
                     result = self.game.level.system.deactivate_device(device)
 
             if isinstance(result, str):
-                raise error.CommandError(result)
+                raise error.GameCommandError(result)
 
         valid_commands = {
             'help': help,
@@ -763,7 +763,7 @@ class TerminalUI(BaseUI):
 
         if len(parts) == 0:
             if asroot:
-                raise error.CommandError('Specify command to execute as root.'.format(command))
+                raise error.GameCommandError('Specify command to execute as root.'.format(command))
         else:
             command_key = parts[0]
             command_args = parts[1:]
@@ -773,9 +773,9 @@ class TerminalUI(BaseUI):
                 if asroot:
                     self.output = valid_commands[command_key](*command_args)
                 else:
-                    raise error.CommandError('Permission denied. Try sudo <command>.')
+                    raise error.GameCommandError('Permission denied. Try sudo <command>.')
             else:
-                raise error.CommandError('Command \'{0}\' not found.'.format(' '.join(parts)))
+                raise error.GameCommandError('Command \'{0}\' not found.'.format(' '.join(parts)))
 
     def process_input(self, value):
         """Call the appropriate method based on input value."""
@@ -784,15 +784,15 @@ class TerminalUI(BaseUI):
             # process action input
             if value.isdigit():
                 if self.corrupt:
-                    raise error.CommandError('Memory access error 0x3D14F8')
+                    raise error.GameCommandError('Memory access error 0x3D14F8')
                 else:
                     self.terminal.do_action(int(value))
             # process as system command
             else:
                 self.process_command(value)
-        except error.ActionError:
+        except error.GameActionError:
             self.alert = "Invalid option."
-        except error.CommandError as e:
+        except error.GameCommandError as e:
             self.output = str(e)
 
     def prompt(self):

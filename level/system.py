@@ -136,7 +136,7 @@ class System(object):
             raise TypeError("Object not of type 'Device'.")
 
         if not self.has_device(device):
-            raise error.SystemError("The device is not a component of the system.")
+            raise error.GameSystemError("The device is not a component of the system.")
 
         interface_ids = []
 
@@ -157,7 +157,7 @@ class System(object):
                 raise TypeError("Object not of type 'Interface'.")
 
             if not self.has_interface(interface):
-                raise error.SystemError("The interface is not in the system.")
+                raise error.GameSystemError("The interface is not in the system.")
 
             for link in self.links:
                 if link['interface_id'] == interface.id:
@@ -169,7 +169,7 @@ class System(object):
                 raise TypeError("Object not of type 'Property'.")
 
             if not self.has_property(property):
-                raise error.SystemError("The property is not in the system.")
+                raise error.GameSystemError("The property is not in the system.")
 
             for relate in self.relates:
                 if relate['property_id'] == property.id:
@@ -184,7 +184,7 @@ class System(object):
             raise TypeError("Object not of type 'Device'.")
 
         if not self.has_device(device):
-            raise error.SystemError("The device is not in the system.")
+            raise error.GameSystemError("The device is not in the system.")
 
         property_ids = []
 
@@ -239,7 +239,7 @@ class System(object):
         """Add an interface to the system."""
 
         if interface in self.interfaces:
-            raise error.SystemError("The interface is already in the system.")
+            raise error.GameSystemError("The interface is already in the system.")
 
         self.interfaces.append(interface)
 
@@ -247,7 +247,7 @@ class System(object):
         """Remove an interface from the system and return it."""
 
         if interface not in self.interfaces:
-            raise error.SystemError("The interface is not in the system.")
+            raise error.GameSystemError("The interface is not in the system.")
 
         for link in self.links:
             if link['interface_id'] == interface.id:
@@ -259,7 +259,7 @@ class System(object):
         """Add a device to the system."""
 
         if device in self.devices:
-            raise error.SystemError("The device is already in the system.")
+            raise error.GameSystemError("The device is already in the system.")
 
         self.devices.append(device)
 
@@ -267,7 +267,7 @@ class System(object):
         """Remove a device from the system and return it."""
 
         if device not in self.devices:
-            raise error.SystemError("The device is not in the system.")
+            raise error.GameSystemError("The device is not in the system.")
 
         for link in self.links:
             if link['device_id'] == device.id:
@@ -279,7 +279,7 @@ class System(object):
         """Add a property to the system."""
 
         if property in self.properties:
-            raise error.SystemError("The property is already in the system.")
+            raise error.GameSystemError("The property is already in the system.")
 
         self.properties.append(property)
 
@@ -287,7 +287,7 @@ class System(object):
         """Remove a property from the system and return it."""
 
         if property not in self.properties:
-            raise error.SystemError("The property is not in the system.")
+            raise error.GameSystemError("The property is not in the system.")
 
         for relate in self.relates:
             if relate['property_id'] == property.id:
@@ -299,15 +299,15 @@ class System(object):
         """Link an interface to a device."""
 
         if interface not in self.interfaces:
-            raise error.SystemError("The interface is not in the system.")
+            raise error.GameSystemError("The interface is not in the system.")
 
         if device not in self.devices:
-            raise error.SystemError("The device is not in the system.")
+            raise error.GameSystemError("The device is not in the system.")
 
         link = {'interface_id': interface.id, 'device_id': device.id}
 
         if link in self.links:
-            raise error.SystemError("The link already exists in the system.")
+            raise error.GameSystemError("The link already exists in the system.")
 
         self.links.append(link)
 
@@ -315,15 +315,15 @@ class System(object):
         """Relate a device to a property."""
 
         if device not in self.devices:
-            raise error.SystemError("The device is not in the system.")
+            raise error.GameSystemError("The device is not in the system.")
 
         if property not in self.properties:
-            raise error.SystemError("The property is not in the system.")
+            raise error.GameSystemError("The property is not in the system.")
 
         relate = {'device_id': device.id, 'property_id': property.id}
 
         if relate in self.relates:
-            raise error.SystemError("The relate already exists in the system.")
+            raise error.GameSystemError("The relate already exists in the system.")
 
         self.relates.append(relate)
 

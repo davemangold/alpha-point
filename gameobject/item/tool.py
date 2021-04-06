@@ -74,7 +74,7 @@ class ToolFactory(object):
             return Wrench(map, *args, **kwargs)
         if tool_type.lower() == 'prybar':
             return PryBar(map, *args, **kwargs)
-        raise error.FactoryError("The specified tool type does not exist.")
+        raise error.GameFactoryError("The specified tool type does not exist.")
 
     def make_from_config(self, map, tool_config, level_number):
 

@@ -119,7 +119,7 @@ class MapCell(object):
         """Adds an interface to the map cell."""
 
         if interface in self.interfaces:
-            raise error.MapError("The interface is already assigned to the map cell.")
+            raise error.GameMapError("The interface is already assigned to the map cell.")
 
         self.interfaces.append(interface)
 
@@ -127,7 +127,7 @@ class MapCell(object):
         """Removes the interface from the map cell and return it."""
 
         if interface not in self.interfaces:
-            raise error.MapError("The interface is not assigned to the map cell.")
+            raise error.GameMapError("The interface is not assigned to the map cell.")
 
         return self.interfaces.pop(self.interfaces.index(interface))
 
@@ -135,7 +135,7 @@ class MapCell(object):
         """Adds an interface to the map cell."""
 
         if device in self.devices:
-            raise error.MapError("The device is already assigned to the map cell.")
+            raise error.GameMapError("The device is already assigned to the map cell.")
 
         self.devices.append(device)
 
@@ -143,7 +143,7 @@ class MapCell(object):
         """Removes the interface from the map cell and returns it."""
 
         if device not in self.interfaces:
-            raise error.MapError("The device is not assigned to the map cell.")
+            raise error.GameMapError("The device is not assigned to the map cell.")
 
         return self.devices.pop(self.devices.index(device))
 
@@ -161,7 +161,7 @@ class MapCell(object):
         """Adds a tool to the map cell."""
 
         if tool in self.tools:
-            raise error.MapError("The tool is already assigned to the map cell.")
+            raise error.GameMapError("The tool is already assigned to the map cell.")
 
         self.tools.append(tool)
 
@@ -169,7 +169,7 @@ class MapCell(object):
         """Removes the interface from the map cell"""
 
         if tool not in self.tools:
-            raise error.MapError("The tool is not assigned to the map cell.")
+            raise error.GameMapError("The tool is not assigned to the map cell.")
 
         return self.tools.pop(self.tools.index(tool))
 
@@ -177,7 +177,7 @@ class MapCell(object):
         """Adds a tool to the map cell."""
 
         if part in self.parts:
-            raise error.MapError("The part is already assigned to the map cell.")
+            raise error.GameMapError("The part is already assigned to the map cell.")
 
         self.parts.append(part)
 
@@ -185,7 +185,7 @@ class MapCell(object):
         """Removes the interface from the map cell"""
 
         if part not in self.parts:
-            raise error.MapError("The part is not assigned to the map cell.")
+            raise error.GameMapError("The part is not assigned to the map cell.")
 
         return self.parts.pop(self.parts.index(part))
 
@@ -193,7 +193,7 @@ class MapCell(object):
         """Adds a tool to the map cell."""
 
         if artifact in self.artifacts:
-            raise error.MapError("The artifact is already assigned to the map cell.")
+            raise error.GameMapError("The artifact is already assigned to the map cell.")
 
         self.artifacts.append(artifact)
 
@@ -201,7 +201,7 @@ class MapCell(object):
         """Removes the interface from the map cell"""
 
         if artifact not in self.artifacts:
-            raise error.MapError("The artifact is not assigned to the map cell.")
+            raise error.GameMapError("The artifact is not assigned to the map cell.")
 
         return self.artifacts.pop(self.artifacts.index(artifact))
 
@@ -229,7 +229,7 @@ class MapPath(object):
         """Add a map cell to the path."""
 
         if self.has_cell(cell):
-            raise error.MapError("The cell is already in the path.")
+            raise error.GameMapError("The cell is already in the path.")
 
         self.cells.append(cell)
 
@@ -237,7 +237,7 @@ class MapPath(object):
         """Remove a map cell from the path and return it."""
 
         if not self.has_cell(cell):
-            raise error.MapError("The cell is not in the path.")
+            raise error.GameMapError("The cell is not in the path.")
 
         return self.cells.pop(self.cells.index(cell))
 

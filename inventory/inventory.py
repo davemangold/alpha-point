@@ -16,10 +16,10 @@ class Inventory(object):
         """Add the item to the inventory."""
 
         if not isinstance(item, Item):
-            raise error.InventoryError("Inventory can only store object of type 'Item'.")
+            raise error.GameInventoryError("Inventory can only store object of type 'Item'.")
 
         if item in self.items:
-            raise error.InventoryError("The item already exists in the inventory.")
+            raise error.GameInventoryError("The item already exists in the inventory.")
 
         item.inventory = self
         self.items.append(item)
@@ -28,7 +28,7 @@ class Inventory(object):
         """Remove the item from the inventory and return it."""
 
         if item not in self.items:
-            raise error.InventoryError("The item does not exist in the inventory.")
+            raise error.GameInventoryError("The item does not exist in the inventory.")
 
         item.inventory = None
         return self.items.pop(self.items.index(item))

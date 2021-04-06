@@ -1,7 +1,7 @@
+import error
 from action import PlayerAction
 from action import InterfaceAction
 from action import ItemAction
-from error import ConfigError
 
 
 class Death(object):
@@ -234,6 +234,6 @@ class DeathFactory(object):
         death.description = death_config['description']
 
         if not death.is_valid():
-            raise ConfigError("The provided death configuration is invalid.")
+            raise error.GameConfigError("The provided death configuration is invalid.")
 
         return death

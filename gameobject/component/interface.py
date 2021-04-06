@@ -47,7 +47,7 @@ class Interface(Component):
 
         device_list = self.get_devices()
         if len(device_list) == 0:
-            raise error.InterfaceError("No devices linked to interface.")
+            raise error.GameInterfaceError("No devices linked to interface.")
         for device in device_list:
             device.use()
 
@@ -102,7 +102,7 @@ class Terminal(Interface):
             action.do()
             self.update_actions()
         except KeyError:
-            raise error.ActionError("There is no action defined for that key.")
+            raise error.GameActionError("There is no action defined for that key.")
 
 
 class Button(Interface):
@@ -206,7 +206,7 @@ class InterfaceFactory(object):
             return WeatherStation(system, *args, **kwargs)
         # if interface_type.lower() == 'viewer':
         #     return Viewer(system)
-        raise error.FactoryError("The specified interface type does not exist.")
+        raise error.GameFactoryError("The specified interface type does not exist.")
 
     def make_from_config(self, system, interface_config, level_number):
 

@@ -68,7 +68,7 @@ class Character(object):
             self.__on_move_update()
         else:
             self.__on_move_update()
-            raise error.MoveError("The requested move is invalid.")
+            raise error.GameMoveError("The requested move is invalid.")
 
     def move_up(self):
         """Move character up one cell if possible"""
@@ -374,4 +374,4 @@ class Character(object):
             self.update_actions()
 
         except KeyError:
-            raise error.ActionError("There is no action defined for the provided key.")
+            raise error.GameActionError("There is no action defined for the provided key.")

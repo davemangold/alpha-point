@@ -25,7 +25,7 @@ class ArtifactFactory(object):
 
         if artifact_type.lower() == 'generic':
             return Generic(map, *args, **kwargs)
-        raise error.FactoryError("The specified artifact type does not exist.")
+        raise error.GameFactoryError("The specified artifact type does not exist.")
 
     def make_from_config(self, map, artifact_config, level_number):
 
