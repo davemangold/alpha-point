@@ -454,7 +454,7 @@ level_config = {
                     'type': 'generic',
                     'name': 'sticky_note',
                     'description': 'sticky note',
-                    'report': 'Not sure why we changed them but just type "help" if you forget the manual commands. At least we don\'t have to type full device IDs anymore. To all the other non-comps (Marcus), you\'re welcome.\n\n-Emilia',
+                    'report': 'Not sure why we changed them but just type "help" if you forget the console commands. At least we don\'t have to type full device IDs anymore. To all the other non-comps (Marcus), you\'re welcome.\n\n-Emilia',
                     'inspectable': True,
                     'visible': True,
                     'interactive': True,
@@ -1694,7 +1694,21 @@ level_config = {
                     'y': 5,
                     'orientation': 3,
                     'msg_action_verb': 'push'
-                }  # 0 - exit door button
+                },  # 0 - exit door button
+                {
+                    'id': 1,
+                    'name': 'room 3 door button',
+                    'description': 'button',
+                    'type': 'button',
+                    'report': '',
+                    'inspectable': False,
+                    'enabled': True,
+                    'corrupt': False,
+                    'x': 2,
+                    'y': 4,
+                    'orientation': 0,
+                    'msg_action_verb': 'push'
+                }   # 1 - room 3 door button
             ],
             'devices': [
                 {
@@ -1725,7 +1739,7 @@ level_config = {
                     'type': 'door',
                     'report': 'It\'s the door to geologist Emilia Perez\'s quarters.',
                     'inspectable': True,
-                    'enabled': False,
+                    'enabled': True,
                     'active': False,
                     'visible': True,
                     'x': 2,
@@ -1738,7 +1752,7 @@ level_config = {
                     'msg_toggle_active_false': 'The door closed.',
                     'msg_unmet_dependencies': 'The door is unresponsive.',
                     'dependencies': []
-                },  # 1 - room 1
+                },  # 1 - room 1 - door
                 {
                     'id': 2,
                     'name': 'room_1',
@@ -1759,7 +1773,7 @@ level_config = {
                     'msg_toggle_active_false': 'The door closed.',
                     'msg_unmet_dependencies': 'The door is unresponsive.',
                     'dependencies': []
-                },  # 2 - room 2
+                },  # 2 - room 2 - door
                 {
                     'id': 3,
                     'name': 'room_1',
@@ -1780,13 +1794,13 @@ level_config = {
                     'msg_toggle_active_false': 'The door closed.',
                     'msg_unmet_dependencies': 'The door is unresponsive.',
                     'dependencies': []
-                },  # 3 - room 3
+                },  # 3 - room 3 - door
                 {
                     'id': 7,
                     'name': 'room_1_panel',
                     'description': 'wall panel',
                     'type': 'door',
-                    'report': '',
+                    'report': 'It\'s [device-7].',
                     'inspectable': True,
                     'enabled': True,
                     'active': False,
@@ -1822,7 +1836,7 @@ level_config = {
                     'msg_toggle_active_false': 'The door closed.',
                     'msg_unmet_dependencies': 'The door is unresponsive.',
                     'dependencies': []
-                },  # 4 - room 4
+                },  # 4 - room 4 - door
                 {
                     'id': 5,
                     'name': 'room_1',
@@ -1843,7 +1857,7 @@ level_config = {
                     'msg_toggle_active_false': 'The door closed.',
                     'msg_unmet_dependencies': 'The door is unresponsive.',
                     'dependencies': []
-                },  # 5 - room 5
+                },  # 5 - room 5 - door
                 {
                     'id': 6,
                     'name': 'room_1',
@@ -1864,7 +1878,7 @@ level_config = {
                     'msg_toggle_active_false': 'The door closed.',
                     'msg_unmet_dependencies': 'The door is unresponsive.',
                     'dependencies': []
-                },  # 6 - room 6
+                },  # 6 - room 6 - door
                 {
                     'id': 8,
                     'name': 'exit door',
@@ -1885,11 +1899,12 @@ level_config = {
                     'msg_toggle_active_false': 'The door closed.',
                     'msg_unmet_dependencies': 'The door is unresponsive.',
                     'dependencies': []
-                }  # 8 - exit door
+                }   # 8 - exit door
             ],
             'properties': [],
             'links': [
-                {'interface_id': 0, 'device_id': 1}
+                {'interface_id': 0, 'device_id': 8},
+                {'interface_id': 1, 'device_id': 1}
             ],
             'relates': []
         },
