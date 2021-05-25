@@ -261,11 +261,11 @@ class MainUI(BaseUI):
             # process restart or quit input
             elif value == self.game.control.RESTART:
                 self.display()
-                if input(self.decorate_ui('Are you sure you want to restart (y/n)? ')) == 'y':
+                if input(self.decorate_ui('Are you sure you want to restart this level (y/n)? ')) == 'y':
                     self.restart_level()
             elif value == self.game.control.QUIT:
                 self.display()
-                if input(self.decorate_ui('Are you sure you want to quit (y/n)? ')) == 'y':
+                if input(self.decorate_ui('Are you sure you want to quit the game (y/n)? ')) == 'y':
                     self.leave()
             elif value == self.game.control.INVENTORY:
                 self.game.ui = InventoryUI(self.game.player.inventory)
@@ -505,7 +505,7 @@ class InventoryUI(BaseUI):
             # examine selected item
             elif value == self.game.control.ENTER:
                 self.game.ui = ExaminationUI(self.get_selected_item())
-            elif value == self.game.control.QUIT:
+            elif value == self.game.control.INVENTORY:
                 self.leave()
             else:
                 pass
@@ -530,7 +530,7 @@ class InventoryUI(BaseUI):
 
         commands = (
             '\n'
-            'up    - prev item        q - back to game\n'
+            'up    - prev item        i - close inventory\n'
             'down  - next item        enter - examine item'
         )
 
