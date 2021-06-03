@@ -59,11 +59,11 @@ class PartFactory(object):
             return Wires(map, *args, **kwargs)
         raise error.GameFactoryError("The specified part type does not exist.")
 
-    def make_from_config(self, map, part_config, level_number):
+    def make_from_config(self, map, part_config):
 
         new_part = self.make_part(map, part_config['type'])
         new_part.config_id = part_config['id']
-        new_part.level_number = level_number
+        new_part.level_number = map.level.number
         new_part.name = part_config['name']
         new_part.description = part_config['description']
         new_part.report = part_config['report']

@@ -306,15 +306,15 @@ class Map(object):
             device_cell.add_device(system_device)
 
         for tool_config in map_config['tools']:
-            new_tool = tool_factory.make_from_config(self, tool_config, self.level.number)
+            new_tool = tool_factory.make_from_config(self, tool_config)
             self.inventory.add_item(new_tool)
 
         for part_config in map_config['parts']:
-            new_part = part_factory.make_from_config(self, part_config, self.level.number)
+            new_part = part_factory.make_from_config(self, part_config)
             self.inventory.add_item(new_part)
 
         for artifact_config in map_config['artifacts']:
-            new_artifact = artifact_factory.make_from_config(self, artifact_config, self.level.number)
+            new_artifact = artifact_factory.make_from_config(self, artifact_config)
             self.inventory.add_item(new_artifact)
 
         for map_tool in self.inventory.get_tools():

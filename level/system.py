@@ -29,10 +29,10 @@ class System(object):
         system_config = level_config[self.level.number]['system']
 
         for interface_config in system_config['interfaces']:
-            interface_factory.make_from_config(self, interface_config, self.level.number)
+            interface_factory.make_from_config(self, interface_config)
 
         for device_config in system_config['devices']:
-            device_factory.make_from_config(self, device_config, self.level.number)
+            device_factory.make_from_config(self, device_config)
 
         for property_config in system_config['properties']:
             property_factory.make_from_config(self, property_config)

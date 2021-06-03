@@ -250,11 +250,11 @@ class DeviceFactory(object):
 
         raise error.GameFactoryError("The specified device type does not exist.")
 
-    def make_from_config(self, system, device_config, level_number):
+    def make_from_config(self, system, device_config):
 
         new_device = self.make_device(system, device_config['type'])
         new_device.config_id = device_config['id']
-        new_device.level_number = level_number
+        new_device.level_number = system.level.number
         new_device.name = device_config['name']
         new_device.description = device_config['description']
         new_device.report = device_config['report']

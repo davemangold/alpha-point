@@ -208,11 +208,11 @@ class InterfaceFactory(object):
         #     return Viewer(system)
         raise error.GameFactoryError("The specified interface type does not exist.")
 
-    def make_from_config(self, system, interface_config, level_number):
+    def make_from_config(self, system, interface_config):
 
         new_interface = self.make_interface(system, interface_config['type'])
         new_interface.config_id = interface_config['id']
-        new_interface.level_number = level_number
+        new_interface.level_number = system.level.number
         new_interface.name = interface_config['name']
         new_interface.description = interface_config['description']
         new_interface.report = interface_config['report']

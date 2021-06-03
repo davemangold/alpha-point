@@ -27,11 +27,11 @@ class ArtifactFactory(object):
             return Generic(map, *args, **kwargs)
         raise error.GameFactoryError("The specified artifact type does not exist.")
 
-    def make_from_config(self, map, artifact_config, level_number):
+    def make_from_config(self, map, artifact_config):
 
         new_artifact = self.make_artifact(map, artifact_config['type'])
         new_artifact.config_id = artifact_config['id']
-        new_artifact.level_number = level_number
+        new_artifact.level_number = map.level.number
         new_artifact.name = artifact_config['name']
         new_artifact.description = artifact_config['description']
         new_artifact.report = artifact_config['report']
