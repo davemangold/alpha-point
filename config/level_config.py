@@ -1410,7 +1410,7 @@ level_config = {
                 {'coordinates': (1, 1), 'story': None},
                 {'coordinates': (1, 2), 'story': None},
                 {'coordinates': (1, 3), 'story': None},
-                {'coordinates': (1, 5), 'story': {'title': None, 'text': 'Marcus stood in the open doorway, his long shadow pointing him into unseen space. A lonely glow pushed out against the darkness from the exercise room about ten meters down the corridor. Vaporous, ghostly clouds bloomed before his eyes with each of his anxious, rapid breaths. It was cold. He thought of his crew. With a determined exhale to steel himself against the lurking, superstitious terrors of his subconscious, Marcus stepped onward toward the light.'}},
+                {'coordinates': (1, 5), 'story': {'title': None, 'text': 'Marcus stood in the open doorway, his long shadow pointing into a tunnel-like abyss. A lonely glow pushed out against the darkness from the exercise room about ten meters down the corridor. Vaporous, ghostly clouds bloomed before his eyes with each anxious breath. It was cold. He thought of his crew. With a determined exhale to steel himself against the lurking, superstitious terrors of his subconscious, Marcus stepped onward toward the light.'}},
                 {'coordinates': (1, 7), 'story': None},
                 {'coordinates': (1, 8), 'story': None},
                 {'coordinates': (1, 9), 'story': None},
