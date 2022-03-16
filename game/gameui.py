@@ -145,13 +145,12 @@ class StartUI(BaseUI):
         super(StartUI, self).__init__(*args, **kwargs)
         self.skip_intro = False
         self.splash_seen = False
-        self.intro_seen_1 = False
-        self.intro_seen_2 = False
+        self.intro_index = 0
 
     def process_input(self, value):
         """Call the appropriate method based on input value."""
 
-        if self.intro_seen_2 is True:
+        if self.intro_index == len(game_config['intro_scenes']):
             self.leave()
 
     def prompt(self):
@@ -175,15 +174,12 @@ class StartUI(BaseUI):
         ui_elements = []
 
         ui_splash_text = self.get_splash_text()
-        ui_intro_text_1 = self.get_intro_text_1()
-        ui_intro_text_2 = self.get_intro_text_2()
+        ui_intro_text = self.get_intro_text(self.intro_index)
 
-        if self.splash_seen is False:
-            ui_body_text = ui_splash_text
-        elif self.splash_seen is True and self.intro_seen_1 is False:
-            ui_body_text = ui_intro_text_1
+        if self.splash_seen is True:
+            ui_body_text = ui_intro_text
         else:
-            ui_body_text = ui_intro_text_2
+            ui_body_text = ui_splash_text
 
         ui_elements.append(self.separator)
         ui_elements.append(ui_body_text)
@@ -204,29 +200,21 @@ class StartUI(BaseUI):
             self.clear_screen()
             print(show_text)
 
-        if self.intro_seen_1 is True:
-            self.intro_seen_2 = True
         if self.splash_seen is True:
-            self.intro_seen_1 = True
-
-        self.splash_seen = True
+            self.intro_index += 1
+        else:
+            self.splash_seen = True
 
     def get_splash_text(self):
         """Get the game splash screen text."""
 
         return game_config['splash_text']
 
-    def get_intro_text_1(self):
-        """Return the story intro text."""
+    def get_intro_text(self, index):
+        """Return the story intro scene text at index position."""
 
-        intro_text = game_config['intro_text_1']
-        formatted_text = utility.format_ui_text(intro_text)
-        return formatted_text
-
-    def get_intro_text_2(self):
-        """Return the story intro text."""
-
-        intro_text = game_config['intro_text_2']
+        intro_scenes = game_config['intro_scenes']
+        intro_text = intro_scenes[index]
         formatted_text = utility.format_ui_text(intro_text)
         return formatted_text
 
