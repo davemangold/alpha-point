@@ -74,7 +74,6 @@ class Game(object):
         while True:
 
             if isinstance(self.ui, StartUI):
-                # skip StartUI in debug mode
                 if self.debug is True:
                     self.ui = MainUI(game=self)
 

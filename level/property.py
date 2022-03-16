@@ -64,6 +64,15 @@ class Voltage(Property):
         self.description = 'voltage'
 
 
+class Temperature(Property):
+    """Thermal temperature."""
+
+    def __init__(self, *args, **kwargs):
+        super(Temperature, self).__init__(*args, **kwargs)
+        self.name = 'temperature'
+        self.description = 'temperature'
+
+
 # Property factory for making properties
 
 class PropertyFactory(object):
@@ -76,6 +85,8 @@ class PropertyFactory(object):
             return Pressure(system, *args, **kwargs)
         if property_type.lower() == 'voltage':
             return Voltage(system, *args, **kwargs)
+        if property_type.lower() == 'temperature':
+            return Temperature(system, *args, **kwargs)
 
         raise error.GameFactoryError("The specified property type does not exist.")
     

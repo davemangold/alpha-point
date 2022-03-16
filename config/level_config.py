@@ -454,7 +454,7 @@ level_config = {
                     'type': 'generic',
                     'name': 'sticky_note',
                     'description': 'sticky note',
-                    'report': 'Not sure why we changed them but just type "help" if you forget the console commands. At least we don\'t have to type full device IDs anymore. To all the other non-comps (Marcus), you\'re welcome.\n\n-Emilia',
+                    'report': 'Not sure why we changed them but just type "help" if you forget the console commands. At least we don\'t have to type full device IDs anymore. To all the other non-techies (Marcus), you\'re welcome.\n\n-Emilia',
                     'inspectable': True,
                     'visible': True,
                     'interactive': True,
@@ -909,7 +909,7 @@ level_config = {
                     'property_states': None,
                     'action': None,
                     'location': None,
-                    'description': 'As you strain to move a large piece of debris there is a sudden bang that sends you tumbling out of a gaping hole in the habitat wall. Your vision fades to red and then black as you claw in agony at the rusty red grit of the crater floor. Perhaps in another life you made a wiser choice.'
+                    'description': 'As you strain to move a large piece of debris there is a sudden bang that sends you tumbling through a gaping hole in the habitat wall. Your vision fades to red and then black as you claw in agony at the rusty grit of the crater floor. Perhaps in another life you made a wiser choice.'
                 }
             ],
         'weather': {
@@ -1410,7 +1410,7 @@ level_config = {
                 {'coordinates': (1, 1), 'story': None},
                 {'coordinates': (1, 2), 'story': None},
                 {'coordinates': (1, 3), 'story': None},
-                {'coordinates': (1, 5), 'story': {'title': None, 'text': 'Marcus stood in the open doorway, his long shadow pointing into a tunnel-like abyss. A lonely glow pushed out against the darkness from the exercise room about ten meters down the corridor. Vaporous, ghostly clouds bloomed before his eyes with each anxious breath. It was cold. He thought of his crew. With a determined exhale to steel himself against the lurking, superstitious terrors of his subconscious, Marcus stepped onward toward the light.'}},
+                {'coordinates': (1, 5), 'story': {'title': None, 'text': 'Marcus stood in the open doorway, his long shadow cast into spreading darkness before him. A lonely glow pushed out into the gloom from the open door of a module about ten meters down the corridor. Vaporous, ghostly clouds bloomed before his eyes with each anxious breath. It was cold. He thought of his crew. With a determined exhale to steel himself against the lurking, superstitious anxieties of his subconscious, Marcus stepped through the door and toward the light.'}},
                 {'coordinates': (1, 7), 'story': None},
                 {'coordinates': (1, 8), 'story': None},
                 {'coordinates': (1, 9), 'story': None},
@@ -1511,6 +1511,19 @@ level_config = {
                 {
                     'id': 1,
                     'type': 'generic',
+                    'name': 'notebook',
+                    'description': 'notebook',
+                    'report': 'Lab Notebook\n\nNotes...',
+                    'inspectable': True,
+                    'visible': True,
+                    'interactive': True,
+                    'blocking': False,
+                    'x': 2,
+                    'y': 2
+                },  # notebook
+                {
+                    'id': 2,
+                    'type': 'generic',
                     'name': 'emilia perez',
                     'description': 'crew member on the floor',
                     'report': 'It\'s Emilla Perez. She\'s unconscious and non-responsive with a slow pulse. She has a cut and abrasions on her right arm but the bleeding has stopped. She\'s stable. It\'s probably best not to move her without knowing what happened.',
@@ -1522,7 +1535,7 @@ level_config = {
                     'y': 2
                 },  # emilia perez
                 {
-                    'id': 2,
+                    'id': 3,
                     'type': 'generic',
                     'name': 'alcove 1',
                     'description': 'sleeping alcove',
@@ -1535,7 +1548,7 @@ level_config = {
                     'y': 0
                 },  # sleeping alcove
                 {
-                    'id': 3,
+                    'id': 4,
                     'type': 'generic',
                     'name': 'alcove 2',
                     'description': 'sleeping alcove',
@@ -1548,7 +1561,7 @@ level_config = {
                     'y': 0
                 },  # sleeping alcove
                 {
-                    'id': 4,
+                    'id': 5,
                     'type': 'generic',
                     'name': 'alcove 3',
                     'description': 'sleeping alcove',
@@ -1561,7 +1574,7 @@ level_config = {
                     'y': 0
                 },  # sleeping alcove
                 {
-                    'id': 5,
+                    'id': 6,
                     'type': 'generic',
                     'name': 'alcove 4',
                     'description': 'sleeping alcove',
@@ -1574,7 +1587,7 @@ level_config = {
                     'y': 0
                 },  # sleeping alcove
                 {
-                    'id': 6,
+                    'id': 7,
                     'type': 'generic',
                     'name': 'alcove 5',
                     'description': 'sleeping alcove',
@@ -1587,7 +1600,7 @@ level_config = {
                     'y': 0
                 },  # sleeping alcove
                 {
-                    'id': 7,
+                    'id': 8,
                     'type': 'generic',
                     'name': 'alcove 6',
                     'description': 'sleeping alcove',
@@ -1600,7 +1613,7 @@ level_config = {
                     'y': 0
                 },  # sleeping alcove
                 {
-                    'id': 8,
+                    'id': 9,
                     'type': 'generic',
                     'name': 'alcove 7',
                     'description': 'sleeping alcove',
@@ -1613,7 +1626,7 @@ level_config = {
                     'y': 10
                 },  # sleeping alcove
                 {
-                    'id': 9,
+                    'id': 10,
                     'type': 'generic',
                     'name': 'alcove 8',
                     'description': 'sleeping alcove',
@@ -1626,7 +1639,7 @@ level_config = {
                     'y': 10
                 },  # sleeping alcove
                 {
-                    'id': 10,
+                    'id': 11,
                     'type': 'generic',
                     'name': 'alcove 9',
                     'description': 'sleeping alcove',
@@ -1639,7 +1652,7 @@ level_config = {
                     'y': 10
                 },  # sleeping alcove
                 {
-                    'id': 11,
+                    'id': 12,
                     'type': 'generic',
                     'name': 'alcove 10',
                     'description': 'sleeping alcove',
@@ -1652,7 +1665,7 @@ level_config = {
                     'y': 10
                 },  # sleeping alcove
                 {
-                    'id': 12,
+                    'id': 13,
                     'type': 'generic',
                     'name': 'alcove 11',
                     'description': 'sleeping alcove',
@@ -1665,7 +1678,7 @@ level_config = {
                     'y': 10
                 },  # sleeping alcove
                 {
-                    'id': 13,
+                    'id': 14,
                     'type': 'generic',
                     'name': 'alcove 12',
                     'description': 'sleeping alcove',
@@ -1737,9 +1750,9 @@ level_config = {
                     'name': 'room_1',
                     'description': 'door',
                     'type': 'door',
-                    'report': 'It\'s the door to geologist Emilia Perez\'s quarters.',
+                    'report': 'It\'s the door to geologist Emilia Perez\'s quarters. The door is locked.',
                     'inspectable': True,
-                    'enabled': True,
+                    'enabled': False,
                     'active': False,
                     'visible': True,
                     'x': 2,
