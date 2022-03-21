@@ -225,11 +225,8 @@ class DeathFactory(object):
         action_config = death_config['action']
         death = Death(level=level)
 
-        if device_states_config is not None:
-            death.add_device_states(device_states_config)
-
-        if property_states_config is not None:
-            death.add_property_states(property_states_config)
+        death.add_device_states(device_states_config)
+        death.add_property_states(property_states_config)
 
         if action_config is not None:
             death.set_action(action_config)

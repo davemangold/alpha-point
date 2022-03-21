@@ -40,11 +40,18 @@ class System(object):
         for device_config in system_config['devices']:
             system_device = self.get_device(config_id=device_config['id'])
             for dependency_config in device_config['dependencies']:
-                dependency_device = self.get_device(config_id=dependency_config['device_id'])
-                system_device.add_dependency(
-                    dependency_device.id,
-                    dependency_config['enabled_state'],
-                    dependency_config['active_state'])
+                if dependency_config['type'] == 'device':
+                    dependency_device = self.get_device(config_id=dependency_config['device_id'])
+                    system_device.add_dependency_device(
+                        dependency_device.id,
+                        dependency_config['enabled_state'],
+                        dependency_config['active_state'])
+                if dependency_config['type'] == 'property':
+                    dependency_property = self.get_property(config_id=dependency_config['property_id'])
+                    system_device.add_dependency_property(
+                        dependency_property.id,
+                        dependency_config['operator'],
+                        dependency_config['value'])
 
         for link_config in system_config['links']:
             link_interface = self.get_interface(config_id=link_config['interface_id'])
@@ -113,21 +120,15 @@ class System(object):
     def get_property(self, property_id=None, config_id=None):
         """Return the property if it exists."""
 
-        property = None
-
         if property_id is not None:
             for check_property in self.properties:
                 if check_property.id == property_id:
-                    property = check_property
-                    break
+                    return check_property
 
         elif config_id is not None:
             for check_property in self.properties:
                 if check_property.config_id == config_id:
-                    property = check_property
-                    break
-
-        return property
+                    return check_property
 
     def get_interface_ids(self, device):
         """Return list of interface ids related to device."""
@@ -336,7 +337,7 @@ class System(object):
         return device.toggle_active_state()
 
     def deactivate_device(self, device):
-        """Deactivate and active device."""
+        """Deactivate an active device."""
 
         if device.active is False:
             return "The device is already inactive."

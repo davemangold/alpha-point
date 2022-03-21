@@ -198,7 +198,7 @@ def build_sensor_readout_text(sensors):
 
     def value_bar(property):
 
-        empty_char = '='
+        empty_char = '-'
         value_char = '|'
         bar_length = 40
         value_length = int(

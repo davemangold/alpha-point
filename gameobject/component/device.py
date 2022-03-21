@@ -48,11 +48,11 @@ class Device(Component):
 
         if self.enabled is False:
             self.system.level.game.ui.alert = self.msg_disabled
-            return
+            return toggled
 
         if not self.dependencies_met():
             self.system.level.game.ui.alert = self.msg_unmet_dependencies
-            return
+            return toggled
 
         self.active = not self.active
         toggled = True
@@ -77,8 +77,8 @@ class Device(Component):
 
         return toggled
 
-    def add_dependency(self, device_id, enabled_state, active_state):
-        """Add a dependency that must be met before this device can be activated."""
+    def add_dependency_device(self, device_id, enabled_state, active_state):
+        """Add a device dependency that must be met before this device can be activated."""
 
         if not self.system.has_device(self.system.get_device(device_id)):
             raise error.GameSystemError("The specified device is not in the system.")
@@ -90,6 +90,7 @@ class Device(Component):
             raise TypeError("The active state must be a boolean value.")
 
         dependency = {
+            'type': 'device',
             'device_id': device_id,
             'enabled_state': enabled_state,
             'active_state': active_state}
@@ -99,26 +100,79 @@ class Device(Component):
 
         self.dependencies.append(dependency)
 
-    def remove_dependency(self, device_id):
+    def add_dependency_property(self, property_id, operator, value):
+        """Add a property dependency that must be met before this device can be activated."""
+
+        if not self.system.has_property(self.system.get_property(property_id)):
+            raise error.GameSystemError("The specified property is not in the system.")
+
+        if operator not in ('lt', 'gt', 'eq'):
+            raise TypeError("The operator value must be one of: lt, gt, eq.")
+
+        if not isinstance(value, int) or isinstance(value, float):
+            raise TypeError("The provided value must be a number.")
+
+        dependency = {
+            'type': 'property',
+            'property_id': property_id,
+            'operator': operator,
+            'value': value}
+
+        if dependency in self.dependencies:
+            raise error.GameDeviceError("The dependency already exists for the device.")
+
+        self.dependencies.append(dependency)
+
+    def remove_dependency(self, dependency_type, system_id):
         """Remove the dependencies from the device."""
 
-        remove_dependencies = [d for d in self.dependencies if d['device_id'] == device_id]
-        for dependency in remove_dependencies:
-            self.dependencies.remove(dependency)
+        if dependency_type == 'device':
+            device_id = system_id
+            remove_dependencies = [d for d in self.dependencies if d.get('device_id') == device_id]
+            for dependency in remove_dependencies:
+                self.dependencies.remove(dependency)
+        elif dependency_type == 'property':
+            property_id = system_id
+            remove_dependencies = [d for d in self.dependencies if d.get('property_id') == property_id]
+            for dependency in remove_dependencies:
+                self.dependencies.remove(dependency)
+        else:
+            raise ValueError("The dependency_type value is invalid.")
 
     def dependencies_met(self):
         """True if all dependencies have been met, otherwise False."""
+
+        result = True
 
         if self.override_dependencies is True:
             return True
 
         for dependency in self.dependencies:
-            device = self.system.get_device(dependency['device_id'])
-            if device.enabled != dependency['enabled_state']:
-                return False
-            if device.active != dependency['active_state']:
-                return False
-        return True
+
+            if dependency['type'] == 'device':
+                device = self.system.get_device(dependency['device_id'])
+                if device.enabled != dependency['enabled_state']:
+                    result = False
+                    break
+                if device.active != dependency['active_state']:
+                    result = False
+                    break
+
+            if dependency['type'] == 'property':
+                property = self.system.get_property(dependency['property_id'])
+                operator = dependency['operator']
+
+                if operator == 'gt' and not (property.value > dependency['value']):
+                    result = False
+                    break
+                if operator == 'lt' and not (property.value < dependency['value']):
+                    result = False
+                    break
+                if operator == 'eq' and not (property.value == dependency['value']):
+                    result = False
+                    break
+
+        return result
 
     def get_properties(self):
         """Return the properties related to this device."""

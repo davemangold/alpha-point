@@ -304,10 +304,10 @@ level_config = {
                     'device_states': [
                         {'device_id': 1, 'active_state': False},
                         {'device_id': 2, 'active_state': True}
-                    ],  # [] or None if no device states defined
-                    'property_states': None,  # [] or None if no property states defined,
-                    'action': None,  # {} or None if no action defined
-                    'location': None,  # (x, y) or None if all locations are valid
+                    ],
+                    'property_states': [],
+                    'action': None,
+                    'location': None,
                     'description': 'Alarms sound in the attached module as air rushes out of the open valve. The gravity of your mistake hits you hard. You just depressurized the habitat. As a fog of panic envelopes your mind you desparately wish you could go back and make a different choice.'
                 }
             ],
@@ -906,7 +906,7 @@ level_config = {
                     'device_states': [
                         {'device_id': 2, 'active_state': True}
                     ],
-                    'property_states': None,
+                    'property_states': [],
                     'action': None,
                     'location': None,
                     'description': 'As you strain to move a large piece of debris there is a sudden bang that sends you tumbling through a gaping hole in the habitat wall. Your vision fades to red and then black as you claw in agony at the rusty grit of the crater floor. Perhaps in another life you made a wiser choice.'
@@ -1372,8 +1372,8 @@ level_config = {
         },
         'deaths': [
                 {
-                    'device_states': None,
-                    'property_states': None,
+                    'device_states': [],
+                    'property_states': [],
                     'action': {
                         'origin': {'type': 'tool', 'id': 1, 'verb': 'use'},
                         'target': {'type': 'device', 'id': 1}
@@ -2442,7 +2442,8 @@ level_config = {
                     'msg_toggle_active_false': 'The door closed.',
                     'msg_unmet_dependencies': 'An indicator shows the door is locked.',
                     'dependencies': [
-                        {'device_id': 1, 'enabled_state': True, 'active_state': True}
+                        {'type': 'device', 'device_id': 1, 'enabled_state': True, 'active_state': True},
+                        {'type': 'property', 'property_id': 1, 'operator': 'lt', 'value': 5}
                     ]
                 },  # exit door
                 {
@@ -2574,15 +2575,17 @@ level_config = {
             ]
         },
         'deaths': [
-                {
-                    'device_states': None,
-                    'property_states': [
-                        {'property_id': 0, 'operator': 'gt', 'value': 7}  # operators: gt, lt, eq
-                    ],
-                    'action': None,
-                    'location': None,
-                    'description': 'You died just cuz...'
-                }
+                # {
+                #     'device_states': [
+                #         {'device_id': 2, 'active_state': True}
+                #     ],  # [{},...] or [] if no device states defined
+                #     'property_states': [
+                #         # {'property_id': 0, 'operator': 'gt', 'value': 7}  # operators: gt, lt, eq
+                #     ],  # [{},...] or [] if no property states defined
+                #     'action': None,  # {} or None if no action defined
+                #     'location': None,  # (x, y) or None if all locations are valid
+                #     'description': 'You died just cuz...'
+                # }
             ],
         'weather': {
             'sol': '609',
