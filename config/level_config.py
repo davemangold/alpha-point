@@ -2321,7 +2321,7 @@ level_config = {
                     'y': 4,
                     'orientation': 0,
                     'msg_action_verb': 'push'
-                },  # entrance door button
+                },  # 0 - entrance door button
                 {
                     'id': 1,
                     'name': 'door circuit toggleswitch',
@@ -2335,7 +2335,7 @@ level_config = {
                     'y': 0,
                     'orientation': 2,
                     'msg_action_verb': 'flip'
-                },  # door circuit toggleswitch
+                },  # 1 - door circuit toggleswitch
                 {
                     'id': 2,
                     'name': 'console',
@@ -2349,7 +2349,7 @@ level_config = {
                     'y': 1,
                     'orientation': 2,
                     'msg_action_verb': 'use'
-                },  # sensor console
+                },  # 2 - sensor console
                 {
                     'id': 3,
                     'name': 'system',
@@ -2358,12 +2358,12 @@ level_config = {
                     'report': '',
                     'inspectable': False,
                     'enabled': True,
-                    'corrupt': True,
+                    'corrupt': False,
                     'x': 4,
                     'y': 4,
                     'orientation': 0,
                     'msg_action_verb': 'use'
-                },  # system terminal
+                },  # 3 - system terminal
                 {
                     'id': 4,
                     'name': 'exit door button',
@@ -2377,7 +2377,7 @@ level_config = {
                     'y': 0,
                     'orientation': 2,
                     'msg_action_verb': 'push'
-                }  # exit door button
+                }  # 4 - exit door button
             ],
             'devices': [
                 {
@@ -2400,7 +2400,7 @@ level_config = {
                     'msg_toggle_active_false': 'The door closed.',
                     'msg_unmet_dependencies': 'The door is unresponsive.',
                     'dependencies': []
-                },  # entrance door
+                },  # 0 - entrance door
                 {
                     'id': 1,
                     'name': 'door circuit switch',
@@ -2421,7 +2421,7 @@ level_config = {
                     'msg_toggle_active_false': 'That electric hum went away.',
                     'msg_unmet_dependencies': 'The circuit switch isn\'t responding.',
                     'dependencies': []
-                },  # door circuit switch
+                },  # 1 - door circuit switch
                 {
                     'id': 2,
                     'name': 'exit door',
@@ -2443,9 +2443,9 @@ level_config = {
                     'msg_unmet_dependencies': 'An indicator shows the door is locked.',
                     'dependencies': [
                         {'type': 'device', 'device_id': 1, 'enabled_state': True, 'active_state': True},
-                        {'type': 'property', 'property_id': 1, 'operator': 'lt', 'value': 5}
+                        {'type': 'property', 'property_id': 1, 'operator': 'gt', 'value': 7}
                     ]
-                },  # exit door
+                },  # 2 - exit door
                 {
                     'id': 3,
                     'name': 'exit door camera',
@@ -2466,7 +2466,7 @@ level_config = {
                     'msg_toggle_active_false': 'The camera viewer went dark.',
                     'msg_unmet_dependencies': 'The camera isn\'t responding.',
                     'dependencies': []
-                },  # security camera
+                },  # 3 - security camera
                 {
                     'id': 4,
                     'name': 'door circuit switch',
@@ -2487,7 +2487,7 @@ level_config = {
                     'msg_toggle_active_false': 'That electric hum went away.',
                     'msg_unmet_dependencies': 'The circuit switch isn\'t responding.',
                     'dependencies': []
-                },  # door circuit switch
+                },  # 4 - door circuit switch
                 {
                     'id': 5,
                     'name': 'voltage sensor',
@@ -2508,7 +2508,7 @@ level_config = {
                     'msg_toggle_active_false': 'THe sensor turned off.',
                     'msg_unmet_dependencies': 'The sensor is inoperable.',
                     'dependencies': []
-                },  # voltage sensor
+                },  # 5 - voltage sensor
                 {
                     'id': 6,
                     'name': 'pressure sensor',
@@ -2529,7 +2529,7 @@ level_config = {
                     'msg_toggle_active_false': 'THe sensor turned off.',
                     'msg_unmet_dependencies': 'The sensor is inoperable.',
                     'dependencies': []
-                },  # pressure sensor
+                },  # 6 - pressure sensor
             ],
             'properties': [
                 {
@@ -2552,7 +2552,7 @@ level_config = {
                     'min_value': 0,
                     'max_value': 50,
                     'units': 'Pa',
-                    'increment': 0,
+                    'increment': 2,
                 }  # 1 - pressure
             ],
             'links': [
@@ -2569,6 +2569,7 @@ level_config = {
             'relates': [
                 {'device_id': 1, 'property_id': 0},
                 {'device_id': 2, 'property_id': 1},
+                {'device_id': 3, 'property_id': 0},
                 {'device_id': 4, 'property_id': 0},
                 {'device_id': 5, 'property_id': 0},
                 {'device_id': 6, 'property_id': 1}

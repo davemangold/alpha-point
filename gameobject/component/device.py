@@ -62,6 +62,16 @@ class Device(Component):
         else:
             self.system.level.game.ui.alert = self.msg_toggle_active_false
 
+        property_list = self.get_properties()
+
+        # sensors do not affect related property values (no quantum strangeness here)
+        if not isinstance(self, Sensor):
+            for property in property_list:
+                if toggled and self.active is True:
+                    property.increase()
+                elif toggled and self.active is False:
+                    property.decrease()
+
         return toggled
 
     def toggle_enabled_state(self):
@@ -182,16 +192,7 @@ class Device(Component):
     def use(self):
         """Use the device."""
 
-        property_list = self.get_properties()
-        toggled = self.toggle_active_state()
-
-        # sensors do not affect related property values (no quantum strangeness here)
-        if not isinstance(self, Sensor):
-            for property in property_list:
-                if toggled and self.active is True:
-                    property.increase()
-                elif toggled and self.active is False:
-                    property.decrease()
+        return self.toggle_active_state()
 
 
 # Device sub-classes that can be controlled by interfaces, activated with tools, and repaired with parts
