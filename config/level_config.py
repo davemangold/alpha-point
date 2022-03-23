@@ -288,7 +288,7 @@ level_config = {
                     'msg_toggle_active_false': 'The door closed.',
                     'msg_unmet_dependencies': 'The door is unresponsive.',
                     'dependencies': [
-                        {'device_id': 1, 'enabled_state': True, 'active_state': True}
+                        {'type': 'device', 'device_id': 1, 'enabled_state': True, 'active_state': True}
                     ]
                 }  # 2 - exit door
             ],
@@ -537,7 +537,7 @@ level_config = {
                     'msg_toggle_active_false': 'The door closed.',
                     'msg_unmet_dependencies': 'The door is unresponsive.',
                     'dependencies': [
-                        {'device_id': 2, 'enabled_state': True, 'active_state': True}
+                        {'type': 'device', 'device_id': 2, 'enabled_state': True, 'active_state': True}
                     ]
                 },  # 1 - exit door
                 {
@@ -848,7 +848,7 @@ level_config = {
                     'msg_toggle_active_false': 'The door closed.',
                     'msg_unmet_dependencies': 'The door is unresponsive.',
                     'dependencies': [
-                        {'device_id': 3, 'enabled_state': True, 'active_state': True}
+                        {'type': 'device', 'device_id': 3, 'enabled_state': True, 'active_state': True}
                     ]
                 },  # 1 - exit door
                 {  # use device to model wall that fails when debris pile is used

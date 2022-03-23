@@ -104,6 +104,7 @@ class Character(object):
 
         return self.inventory.remove_item(item)
 
+    # TODO: update get_visible_ methods to return only objects at player positions 1,2,3 but not 4
     def get_visible_tools(self):
         """Return d4 tools visible to the player."""
 
