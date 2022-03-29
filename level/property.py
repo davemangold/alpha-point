@@ -46,6 +46,13 @@ class Property(object):
 
 # Property sub-classes that can be affected by devices
 
+class Generic(Property):
+    """An arbitrary property."""
+
+    def __init__(self, *args, **kwargs):
+        super(Generic, self).__init__(*args, **kwargs)
+
+
 class Pressure(Property):
     """Fluid pressure."""
 
@@ -81,6 +88,8 @@ class PropertyFactory(object):
     @staticmethod
     def make_property(system, property_type, *args, **kwargs):
 
+        if property_type.lower() == 'generic':
+            return Generic(system, *args, **kwargs)
         if property_type.lower() == 'pressure':
             return Pressure(system, *args, **kwargs)
         if property_type.lower() == 'voltage':

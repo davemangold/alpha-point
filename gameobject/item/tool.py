@@ -8,6 +8,7 @@ class Tool(Item):
 
     def __init__(self, *args, **kwargs):
         super(Tool, self).__init__(*args, **kwargs)
+        self.description = 'tool'
 
     def can_activate(self, test_device):
         """Returns True if this tool activates the type of device provided, otherwise False."""
@@ -34,11 +35,19 @@ class Tool(Item):
         return "Use the {0} on the {1}".format(self, target_device)
 
 
+class Generic(Tool):
+    """An arbitrary tool."""
+
+    def __init__(self, *args, **kwargs):
+        super(Generic, self).__init__(*args, **kwargs)
+
+
 class Wrench(Tool):
     """A tool that can be used to activate a valve."""
 
     def __init__(self, *args, **kwargs):
         super(Wrench, self).__init__(*args, **kwargs)
+        self.description = 'wrench'
 
     def can_activate(self, test_device):
         """Returns True if this tool activates the type of device provided, otherwise False."""
@@ -54,6 +63,7 @@ class PryBar(Tool):
 
     def __init__(self, *args, **kwargs):
         super(PryBar, self).__init__(*args, **kwargs)
+        self.description = 'prybar'
 
     def can_activate(self, test_device):
         """Returns True if this tool activates the type of device provided, otherwise False."""
@@ -70,10 +80,13 @@ class ToolFactory(object):
     @staticmethod
     def make_tool(map, tool_type, *args, **kwargs):
 
+        if tool_type.lower() == 'generic':
+            return Generic(map, *args, **kwargs)
         if tool_type.lower() == 'wrench':
             return Wrench(map, *args, **kwargs)
         if tool_type.lower() == 'prybar':
             return PryBar(map, *args, **kwargs)
+
         raise error.GameFactoryError("The specified tool type does not exist.")
 
     def make_from_config(self, map, tool_config):

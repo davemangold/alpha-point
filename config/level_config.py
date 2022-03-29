@@ -1410,7 +1410,7 @@ level_config = {
                 {'coordinates': (1, 1), 'story': None},
                 {'coordinates': (1, 2), 'story': None},
                 {'coordinates': (1, 3), 'story': None},
-                {'coordinates': (1, 5), 'story': {'title': None, 'text': 'Marcus stood in the open doorway, his long shadow cast into spreading darkness before him. A lonely glow pushed out into the gloom from the open door of a module about ten meters down the corridor. Vaporous, ghostly clouds bloomed before his eyes with each anxious breath. It was cold. He thought of his crew. With a determined exhale to steel himself against the lurking, superstitious anxieties of his subconscious, Marcus stepped through the door and toward the light.'}},
+                {'coordinates': (1, 5), 'story': {'title': None, 'text': 'Marcus stood in the open doorway, his long shadow stretched into spreading darkness before him. A lonely glow pushed out into the gloom from the open door of a module about ten meters down the corridor. Vaporous, ghostly clouds bloomed before his eyes with each anxious breath. It was cold. He thought of his crew. With a determined exhale to steel himself against the lurking, superstitious anxieties of his subconscious, Marcus stepped through the door and toward the light.'}},
                 {'coordinates': (1, 7), 'story': None},
                 {'coordinates': (1, 8), 'story': None},
                 {'coordinates': (1, 9), 'story': None},
@@ -2301,7 +2301,7 @@ level_config = {
                     'blocking': False,
                     'x': 4,
                     'y': 1
-                }  # 1 - wire bundle
+                }  # 2 - wire bundle
             ],
             'artifacts': [
                 {

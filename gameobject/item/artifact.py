@@ -7,10 +7,11 @@ class Artifact(Item):
 
     def __init__(self, *args, **kwargs):
         super(Artifact, self).__init__(*args, **kwargs)
+        self.description = 'artifact'
 
 
 class Generic(Artifact):
-    """A class for arbitrary objects that are non-interactive."""
+    """An arbitrary artifact."""
 
     def __init__(self, *args, **kwargs):
         super(Generic, self).__init__(*args, **kwargs)
@@ -25,6 +26,7 @@ class ArtifactFactory(object):
 
         if artifact_type.lower() == 'generic':
             return Generic(map, *args, **kwargs)
+
         raise error.GameFactoryError("The specified artifact type does not exist.")
 
     def make_from_config(self, map, artifact_config):

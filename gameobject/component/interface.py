@@ -63,6 +63,12 @@ class Interface(Component):
 
 # Interface sub-classes which can be used to control devices
 
+class Generic(Interface):
+    """An arbitrary interface."""
+
+    def __init__(self, *args, **kwargs):
+        super(Generic, self).__init__(*args, **kwargs)
+
 
 class Terminal(Interface):
     """A terminal that provides system information and accepts user commands to control many remote devices."""
@@ -201,6 +207,8 @@ class InterfaceFactory(object):
     @staticmethod
     def make_interface(system, interface_type, *args, **kwargs):
 
+        if interface_type.lower() == 'generic':
+            return Generic(system, *args, **kwargs)
         if interface_type.lower() == 'terminal':
             return Terminal(system, *args, **kwargs)
         if interface_type.lower() == 'button':

@@ -9,7 +9,7 @@ class Item(GameObject):
         super(Item, self).__init__(map.level.game, *args, **kwargs)
         self.map = map
         self.inventory = None
-        self.description = 'generic item'
+        self.description = 'item'
         self.visible = True
         self.interactive = True
         self.blocking = False

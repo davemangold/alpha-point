@@ -8,6 +8,7 @@ class Part(Item):
 
     def __init__(self, *args, **kwargs):
         super(Part, self).__init__(*args, **kwargs)
+        self.description = 'part'
 
     def can_enable(self, test_device):
         """Returns True if this tool activates the type of device provided, otherwise False."""
@@ -33,11 +34,19 @@ class Part(Item):
         return "Repair the {0} with the {1}".format(target_device, self)
 
 
+class Generic(Part):
+    """An arbitrary part."""
+
+    def __init__(self, *args, **kwargs):
+        super(Generic, self).__init__(*args, **kwargs)
+
+
 class Wires(Part):
     """A part that can be used to enable a switch."""
 
     def __init__(self, *args, **kwargs):
         super(Wires, self).__init__(*args, **kwargs)
+        self.description = 'wires'
 
     def can_enable(self, test_device):
         """Returns True if this part enables the type of device provided, otherwise False."""
@@ -55,6 +64,8 @@ class PartFactory(object):
     @staticmethod
     def make_part(map, part_type, *args, **kwargs):
 
+        if part_type.lower() == 'generic':
+            return Generic(map, *args, **kwargs)
         if part_type.lower() == 'wires':
             return Wires(map, *args, **kwargs)
         raise error.GameFactoryError("The specified part type does not exist.")

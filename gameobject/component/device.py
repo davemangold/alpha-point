@@ -197,6 +197,12 @@ class Device(Component):
 
 # Device sub-classes that can be controlled by interfaces, activated with tools, and repaired with parts
 
+class Generic(Device):
+    """An arbitrary device."""
+
+    def __init__(self, *args, **kwargs):
+        super(Generic, self).__init__(*args, **kwargs)
+
 
 class Door(Device):
     """A portal to a passageway that can be opened or closed."""
@@ -292,6 +298,8 @@ class DeviceFactory(object):
     @staticmethod
     def make_device(system, device_type, *args, **kwargs):
 
+        if device_type.lower() == 'generic':
+            return Generic(system, *args, **kwargs)
         if device_type.lower() == 'door':
             return Door(system, *args, **kwargs)
         if device_type.lower() == 'switch':
