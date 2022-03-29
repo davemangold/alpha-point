@@ -2281,13 +2281,26 @@ level_config = {
                     'type': 'wires',
                     'name': 'wires',
                     'description': 'wire bundle',
-                    'report': '',
+                    'report': 'A wire bundle',
                     'inspectable': False,
                     'visible': True,
                     'interactive': True,
                     'blocking': False,
                     'x': 3,
                     'y': 2
+                },  # 1 - wire bundle
+                {
+                    'id': 2,
+                    'type': 'wires',
+                    'name': 'wires',
+                    'description': 'wire bundle',
+                    'report': 'A wire bundle',
+                    'inspectable': False,
+                    'visible': True,
+                    'interactive': True,
+                    'blocking': False,
+                    'x': 4,
+                    'y': 1
                 }  # 1 - wire bundle
             ],
             'artifacts': [
@@ -2377,7 +2390,21 @@ level_config = {
                     'y': 0,
                     'orientation': 2,
                     'msg_action_verb': 'push'
-                }  # 4 - exit door button
+                },  # 4 - exit door button
+                {
+                    'id': 5,
+                    'name': 'system',
+                    'description': 'system terminal',
+                    'type': 'terminal',
+                    'report': '',
+                    'inspectable': False,
+                    'enabled': True,
+                    'corrupt': False,
+                    'x': 3,
+                    'y': 3,
+                    'orientation': 1,
+                    'msg_action_verb': 'use'
+                }  # 5 - system terminal
             ],
             'devices': [
                 {
@@ -2564,6 +2591,7 @@ level_config = {
                 {'interface_id': 3, 'device_id': 1},
                 {'interface_id': 3, 'device_id': 2},
                 {'interface_id': 3, 'device_id': 3},
+                {'interface_id': 5, 'device_id': 1},
                 {'interface_id': 4, 'device_id': 2}
             ],
             'relates': [

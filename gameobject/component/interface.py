@@ -1,3 +1,4 @@
+import utility
 import error
 from game.gameui import TerminalUI
 from game.gameui import ConsoleUI
@@ -30,7 +31,15 @@ class Interface(Component):
     def action_text(self):
         """Return text description of the currently available action."""
 
-        return " ".join([self.msg_action_verb.capitalize(), "the", str(self)])
+        player = self.game.player
+        action_text = " ".join([self.msg_action_verb.capitalize(), "the", str(self)])
+
+        # add relative direction to descriptions for visible map objects with same base description
+        if utility.d4_duplicate_description(self, player.get_visible_objects()):
+            direction = utility.get_direction(*player.location, *self.location)
+            action_text += " " + utility.get_relative_direction_text(player.orientation, direction)
+
+        return action_text
 
     def get_devices(self, device_id=None):
         """Return the devices linked to this interface."""

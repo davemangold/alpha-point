@@ -87,19 +87,31 @@ def get_direction(x1, y1, x2, y2):
         return 1 if dx == 1 else 3
 
 
+def get_direction_text(direction):
+    """Return text description of direction from player perspective."""
+
+    player_directions = {
+        0: 'in front of me',
+        1: 'to my right',
+        2: 'to my left',
+        3: 'behind me'}
+
+    return player_directions[direction]
+
+
 def get_relative_direction_text(orientation, direction):
     """Returns the text description of the direction based on orientation."""
 
-    relative_directions = {
+    d4_directions = {
         0: 'in front of me',
         1: 'to my right',
         2: 'behind me',
         3: 'to my left'}
 
-    dirkeys = sorted(relative_directions.keys())
+    dirkeys = sorted(d4_directions.keys())
     keyindex = direction - orientation
 
-    return relative_directions[dirkeys[keyindex]]
+    return d4_directions[dirkeys[keyindex]]
 
 
 def get_article(object_description):
@@ -165,22 +177,22 @@ def build_object_report_body(text_part_list):
     return body_text
 
 
-def build_object_report_text(orientation, d4_objects):
+def build_object_report_text(orientation, visible_objects):
     """Return string description of d4 objects relative to orientation."""
 
-    report_order = d4_to_player_order(orientation)
+    # report_order = d4_to_player_order(orientation)
     report_open = 'There\'s '
     report_body = ''
     report_close = '.'
 
     body_part_list = []
 
-    for direction in report_order:
-        component_list = d4_objects[direction]
+    for component_list in visible_objects:
+        direction = visible_objects.index(component_list)
 
         if len(component_list) > 0:
             this_text_part = build_object_list_text(component_list)
-            this_text_part += ' ' + get_relative_direction_text(orientation, direction)
+            this_text_part += ' ' + get_direction_text(direction)
             body_part_list.append(this_text_part)
 
     if len(body_part_list) > 0:

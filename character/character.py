@@ -104,42 +104,48 @@ class Character(object):
 
         return self.inventory.remove_item(item)
 
-    # TODO: update get_visible_ methods to return only objects at player positions 1,2,3 but not 4
+    # TODO: update get_visible_ methods to return only objects at player positions 0,1,2 but not 3
     def get_visible_tools(self):
         """Return d4 tools visible to the player."""
 
-        d4_visible_tools = []
+        player_visible_tools = []
         d4_tools = self.game.level.map.get_d4_tools(*self.location)
+        player_tools = utility.d4_to_player_list(self.orientation, d4_tools)
 
-        for tool_list in d4_tools:
+        for tool_list in player_tools:
             visible_tools = [tool for tool in tool_list if tool.visible is True]
-            d4_visible_tools.append(visible_tools)
+            player_visible_tools.append(visible_tools)
 
-        return d4_visible_tools
+        player_visible_tools[3] = []
+        return player_visible_tools
 
     def get_visible_parts(self):
         """Return d4 tools visible to the player."""
 
-        d4_visible_parts = []
+        player_visible_parts = []
         d4_parts = self.game.level.map.get_d4_parts(*self.location)
+        player_parts = utility.d4_to_player_list(self.orientation, d4_parts)
 
-        for part_list in d4_parts:
+        for part_list in player_parts:
             visible_parts = [part for part in part_list if part.visible is True]
-            d4_visible_parts.append(visible_parts)
+            player_visible_parts.append(visible_parts)
 
-        return d4_visible_parts
+        player_visible_parts[3] = []
+        return player_visible_parts
 
     def get_visible_artifacts(self):
         """Return d4 artifacts visible to the player."""
 
-        d4_visible_artifacts = []
+        player_visible_artifacts = []
         d4_artifacts = self.game.level.map.get_d4_artifacts(*self.location)
+        player_artifacts = utility.d4_to_player_list(self.orientation, d4_artifacts)
 
-        for artifact_list in d4_artifacts:
+        for artifact_list in player_artifacts:
             visible_artifacts = [artifact for artifact in artifact_list if artifact.visible is True]
-            d4_visible_artifacts.append(visible_artifacts)
+            player_visible_artifacts.append(visible_artifacts)
 
-        return d4_visible_artifacts
+        player_visible_artifacts[3] = []
+        return player_visible_artifacts
 
     def get_visible_items(self):
         """Return d4 items visible to the player."""
@@ -155,33 +161,37 @@ class Character(object):
     def get_visible_interfaces(self):
         """Return d4 interfaces visible to the player."""
 
-        d4_visible_interfaces = []
+        player_visible_interfaces = []
         d4_interfaces = self.game.level.map.get_d4_interfaces(*self.location)
+        player_interfaces = utility.d4_to_player_list(self.orientation, d4_interfaces)
 
-        for interface_list in d4_interfaces:
+        for interface_list in player_interfaces:
             visible_interfaces = []
             for interface in interface_list:
                 if interface.visible is True:
                     if utility.d4_inverse(interface.orientation) == d4_interfaces.index(interface_list):
                         visible_interfaces.append(interface)
-            d4_visible_interfaces.append(visible_interfaces)
+            player_visible_interfaces.append(visible_interfaces)
 
-        return d4_visible_interfaces
+        player_visible_interfaces[3] = []
+        return player_visible_interfaces
 
     def get_visible_devices(self):
         """Return d4 devices visible to the player."""
 
-        d4_visible_devices = []
+        player_visible_devices = []
         d4_devices = self.game.level.map.get_d4_devices(*self.location)
+        player_devices = utility.d4_to_player_list(self.orientation, d4_devices)
 
-        for device_list in d4_devices:
+        for device_list in player_devices:
             visible_devices = []
             for device in device_list:
                 if device.visible is True:
                     visible_devices.append(device)
-            d4_visible_devices.append(visible_devices)
+            player_visible_devices.append(visible_devices)
 
-        return d4_visible_devices
+        player_visible_devices[3] = []
+        return player_visible_devices
 
     def get_visible_components(self):
         """Return d4 components visible to the player."""
@@ -280,25 +290,25 @@ class Character(object):
 
         # visible devices on the map
         map_device_list = [device
-            for device_list in utility.d4_to_player_list(self.orientation, self.get_visible_devices())
+            for device_list in self.get_visible_devices()
             for device in device_list
             if device.interactive is True]
 
         # visible interfaces on the map
         map_interface_list = [interface
-            for interface_list in utility.d4_to_player_list(self.orientation, self.get_visible_interfaces())
+            for interface_list in self.get_visible_interfaces()
             for interface in interface_list
             if interface.interactive is True]
 
         # visible game objects on the map
         map_gameobject_list = [gameobject
-            for gameobject_list in utility.d4_to_player_list(self.orientation, self.get_visible_objects())
+            for gameobject_list in self.get_visible_objects()
             for gameobject in gameobject_list
             if gameobject.inspectable is True]
 
         # visible items on the map (includes tools)
         map_item_list = [item
-            for item_list in utility.d4_to_player_list(self.orientation, self.get_visible_items())
+            for item_list in self.get_visible_items()
             for item in item_list
             if item.interactive is True]
 
