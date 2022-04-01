@@ -130,6 +130,16 @@ class Button(Interface):
         self.msg_action_verb = 'push'
 
 
+class Handle(Interface):
+    """A handle that controls a door."""
+
+    def __init__(self, *args, **kwargs):
+        super(Handle, self).__init__(*args, **kwargs)
+        self.name = 'handle'
+        self.description = 'handle'
+        self.msg_action_verb = 'pull'
+
+
 class Toggleswitch(Interface):
     """A toggle that controls an electrical switch."""
 
@@ -213,6 +223,8 @@ class InterfaceFactory(object):
             return Terminal(system, *args, **kwargs)
         if interface_type.lower() == 'button':
             return Button(system, *args, **kwargs)
+        if interface_type.lower() == 'handle':
+            return Handle(system, *args, **kwargs)
         if interface_type.lower() == 'toggleswitch':
             return Toggleswitch(system, *args, **kwargs)
         if interface_type.lower() == 'handwheel':
