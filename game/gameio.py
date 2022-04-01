@@ -1,4 +1,5 @@
 import utility
+
 operating_system = utility.get_os()
 
 # windows
@@ -10,6 +11,7 @@ elif operating_system == 'linux':
     import sys
     import termios
     import tty
+    import readline
 
     def getch():
         fd = sys.stdin.fileno()
