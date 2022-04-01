@@ -1546,7 +1546,7 @@ level_config = {
                     'blocking': False,
                     'x': 1,
                     'y': 0
-                },  # sleeping alcove
+                },  # sleeping alcove 1-1
                 {
                     'id': 4,
                     'type': 'generic',
@@ -1559,7 +1559,7 @@ level_config = {
                     'blocking': False,
                     'x': 2,
                     'y': 0
-                },  # sleeping alcove
+                },  # sleeping alcove 1-2
                 {
                     'id': 5,
                     'type': 'generic',
@@ -1572,7 +1572,7 @@ level_config = {
                     'blocking': False,
                     'x': 3,
                     'y': 0
-                },  # sleeping alcove
+                },  # sleeping alcove 1-3
                 {
                     'id': 6,
                     'type': 'generic',
@@ -1585,7 +1585,7 @@ level_config = {
                     'blocking': False,
                     'x': 10,
                     'y': 0
-                },  # sleeping alcove
+                },  # sleeping alcove 3-1
                 {
                     'id': 7,
                     'type': 'generic',
@@ -1598,7 +1598,7 @@ level_config = {
                     'blocking': False,
                     'x': 11,
                     'y': 0
-                },  # sleeping alcove
+                },  # sleeping alcove 3-2
                 {
                     'id': 8,
                     'type': 'generic',
@@ -1611,7 +1611,7 @@ level_config = {
                     'blocking': False,
                     'x': 12,
                     'y': 0
-                },  # sleeping alcove
+                },  # sleeping alcove 3-3
                 {
                     'id': 9,
                     'type': 'generic',
@@ -1624,7 +1624,7 @@ level_config = {
                     'blocking': False,
                     'x': 10,
                     'y': 10
-                },  # sleeping alcove
+                },  # sleeping alcove 6-1
                 {
                     'id': 10,
                     'type': 'generic',
@@ -1637,7 +1637,7 @@ level_config = {
                     'blocking': False,
                     'x': 11,
                     'y': 10
-                },  # sleeping alcove
+                },  # sleeping alcove 6-2
                 {
                     'id': 11,
                     'type': 'generic',
@@ -1650,7 +1650,7 @@ level_config = {
                     'blocking': False,
                     'x': 12,
                     'y': 10
-                },  # sleeping alcove
+                },  # sleeping alcove 6-3
                 {
                     'id': 12,
                     'type': 'generic',
@@ -1663,7 +1663,7 @@ level_config = {
                     'blocking': False,
                     'x': 1,
                     'y': 10
-                },  # sleeping alcove
+                },  # sleeping alcove 2-1
                 {
                     'id': 13,
                     'type': 'generic',
@@ -1676,7 +1676,7 @@ level_config = {
                     'blocking': False,
                     'x': 2,
                     'y': 10
-                },  # sleeping alcove
+                },  # sleeping alcove 2-2
                 {
                     'id': 14,
                     'type': 'generic',
@@ -1689,7 +1689,34 @@ level_config = {
                     'blocking': False,
                     'x': 3,
                     'y': 10
-                }  # sleeping alcove
+                },  # sleeping alcove 2-3
+                {
+                    'id': 15,
+                    'type': 'generic',
+                    'name': 'sink 4',
+                    'description': 'sink',
+                    'report': None,
+                    'inspectable': False,
+                    'visible': True,
+                    'interactive': False,
+                    'blocking': False,
+                    'x': 0,
+                    'y': 8
+                },  # sink 2
+                {
+                    'id': 16,
+                    'type': 'generic',
+                    'name': 'mirror 4',
+                    'description': 'mirror',
+                    'report': None,
+                    'inspectable': False,
+                    'visible': True,
+                    'interactive': False,
+                    'blocking': False,
+                    'x': 0,
+                    'y': 8
+                }  # mirror 2
+
             ]
         },
         'system': {
@@ -1721,7 +1748,21 @@ level_config = {
                     'y': 4,
                     'orientation': 0,
                     'msg_action_verb': 'push'
-                }   # 1 - room 3 door button
+                },  # 1 - room 3 door button
+                {
+                    'id': 2,
+                    'name': 'room 3 closet door handle',
+                    'description': 'closet door handle',
+                    'type': 'handle',
+                    'report': '',
+                    'inspectable': False,
+                    'enabled': True,
+                    'corrupt': False,
+                    'x': 4,
+                    'y': 8,
+                    'orientation': 3,
+                    'msg_action_verb': 'pull'
+                }   # 2 - closet door handle
             ],
             'devices': [
                 {
@@ -1787,6 +1828,27 @@ level_config = {
                     'msg_unmet_dependencies': 'The door is unresponsive.',
                     'dependencies': []
                 },  # 2 - room 2 - door
+                {
+                    'id': 9,
+                    'name': 'closet door 2',
+                    'description': 'closet door',
+                    'type': 'door',
+                    'report': '',
+                    'inspectable': False,
+                    'enabled': True,
+                    'active': False,
+                    'visible': True,
+                    'x': 4,
+                    'y': 8,
+                    'msg_action_true': 'open',
+                    'msg_action_false': 'close',
+                    'msg_active_true': 'open',
+                    'msg_active_false': 'closed',
+                    'msg_toggle_active_true': 'The door opened.',
+                    'msg_toggle_active_false': 'The door closed.',
+                    'msg_unmet_dependencies': 'The door is unresponsive.',
+                    'dependencies': []
+                },  # 9 - room 2 - closet door
                 {
                     'id': 3,
                     'name': 'room_1',
@@ -1917,7 +1979,8 @@ level_config = {
             'properties': [],
             'links': [
                 {'interface_id': 0, 'device_id': 8},
-                {'interface_id': 1, 'device_id': 1}
+                {'interface_id': 1, 'device_id': 1},
+                {'interface_id': 2, 'device_id': 9}
             ],
             'relates': []
         },
