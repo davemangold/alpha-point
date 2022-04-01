@@ -34,10 +34,10 @@ class Device(Component):
     def action_text(self):
         """Return text description of the currently available action."""
 
-        action = self.msg_action_true
-
         if self.active is True:
             action = self.msg_action_false
+        else:
+            action = self.msg_action_true
 
         return " ".join([action.capitalize(), "the", self.description])
 

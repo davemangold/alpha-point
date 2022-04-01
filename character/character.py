@@ -67,7 +67,7 @@ class Character(object):
             self.y = y
             self.__on_move_update()
         else:
-            self.__on_move_update()
+            self.__on_move_update()  # call to update for new orientation
             raise error.GameMoveError("The requested move is invalid.")
 
     def move_up(self):
@@ -104,7 +104,6 @@ class Character(object):
 
         return self.inventory.remove_item(item)
 
-    # TODO: update get_visible_ methods to return only objects at player positions 0,1,2 but not 3
     def get_visible_tools(self):
         """Return d4 tools visible to the player."""
 
