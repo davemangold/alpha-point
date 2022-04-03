@@ -177,10 +177,9 @@ def build_object_report_body(text_part_list):
     return body_text
 
 
-def build_object_report_text(orientation, visible_objects):
+def build_object_report_text(visible_objects):
     """Return string description of d4 objects relative to orientation."""
 
-    # report_order = d4_to_player_order(orientation)
     report_open = 'There\'s '
     report_body = ''
     report_close = '.'
