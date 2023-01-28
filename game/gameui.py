@@ -105,7 +105,6 @@ class BaseUI(object):
             for n in range(data_rows)]
 
         for n in range(number):
-
             for row in data:
                 for i in sample(range(data_cols), hextet_gaps):
                     row[i] = ' ' * hextet_size

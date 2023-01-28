@@ -667,7 +667,7 @@ level_config = {
                             'away. He often thought they were lucky that The Agency selected this site. The lake that '
                             'once filled the crater had escaped eons ago when a portion of the crater wall collapsed, '
                             'leaving behind a passable access route. A last remnant of the lake still existed as tons '
-                            'of water ice along the perpetually shaded southern wall while near the center of the '
+                            'of water ice along the perpetually shaded southern wall. Near the center of the '
                             'crater the stirling reactors produced power for the habitat at a safe distance. The hab '
                             'itself, nestled along the northeastern wall, adjacent to the subterranean portion of the '
                             'base, was well protected from the prevailing, dusty winds above.'.format(
@@ -1432,13 +1432,11 @@ level_config = {
                 {'coordinates': (3, 9), 'story': None},
                 {'coordinates': (4, 2), 'story': None},
                 {'coordinates': (4, 5), 'story': None},
+                {'coordinates': (4, 8), 'story': None},
                 {'coordinates': (5, 1), 'story': None},
                 {'coordinates': (5, 2), 'story': None},
                 {'coordinates': (5, 3), 'story': None},
                 {'coordinates': (5, 5), 'story': None},
-                {'coordinates': (5, 7), 'story': None},
-                {'coordinates': (5, 8), 'story': None},
-                {'coordinates': (5, 9), 'story': None},
                 {'coordinates': (6, 1), 'story': None},
                 {'coordinates': (6, 2), 'story': None},
                 {'coordinates': (6, 3), 'story': None},
@@ -1715,8 +1713,46 @@ level_config = {
                     'blocking': False,
                     'x': 0,
                     'y': 8
-                }  # mirror 2
-
+                },  # mirror 2
+                {
+                    'id': 17,
+                    'type': 'generic',
+                    'name': 'clothes 2',
+                    'description': 'flight suit hanging up',
+                    'report': None,
+                    'inspectable': False,
+                    'visible': True,
+                    'interactive': False,
+                    'blocking': False,
+                    'x': 5,
+                    'y': 8
+                },  # clothes 2
+                {
+                    'id': 17,
+                    'type': 'generic',
+                    'name': 'picture 2',
+                    'description': 'picture of Tonya in front of a legacy Soyuz rocket on the shelf',
+                    'report': None,
+                    'inspectable': False,
+                    'visible': True,
+                    'interactive': False,
+                    'blocking': False,
+                    'x': 4,
+                    'y': 7
+                },  # picture 2
+                {
+                    'id': 17,
+                    'type': 'generic',
+                    'name': 'lockbox 2',
+                    'description': 'personal lockbox',
+                    'report': None,
+                    'inspectable': False,
+                    'visible': True,
+                    'interactive': False,
+                    'blocking': False,
+                    'x': 4,
+                    'y': 9
+                }  # safe 2
             ]
         },
         'system': {
@@ -1752,7 +1788,7 @@ level_config = {
                 {
                     'id': 2,
                     'name': 'room 3 closet door handle',
-                    'description': 'closet door handle',
+                    'description': 'closet door',
                     'type': 'handle',
                     'report': '',
                     'inspectable': False,
@@ -1837,16 +1873,16 @@ level_config = {
                     'inspectable': False,
                     'enabled': True,
                     'active': False,
-                    'visible': True,
+                    'visible': False,
                     'x': 4,
                     'y': 8,
                     'msg_action_true': 'open',
                     'msg_action_false': 'close',
                     'msg_active_true': 'open',
                     'msg_active_false': 'closed',
-                    'msg_toggle_active_true': 'The door opened.',
-                    'msg_toggle_active_false': 'The door closed.',
-                    'msg_unmet_dependencies': 'The door is unresponsive.',
+                    'msg_toggle_active_true': 'The closet door opened.',
+                    'msg_toggle_active_false': 'The closet door closed.',
+                    'msg_unmet_dependencies': 'The closet door is unresponsive.',
                     'dependencies': []
                 },  # 9 - room 2 - closet door
                 {

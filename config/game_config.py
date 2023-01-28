@@ -33,7 +33,8 @@ game_config = {
                 'open bay door': 'an',
                 'wiring': 'some',
                 'unlocked tablet': 'an',
-                'open wall panel': 'an'
+                'open wall panel': 'an',
+                'clothes hanging': 'some'
             }
         }
     }
