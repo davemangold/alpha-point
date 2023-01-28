@@ -33,7 +33,7 @@ class Game(object):
             utility.save_object(self, 'game_exit')
 
     def setup_level(self, level_number):
-        """Setup the game level."""
+        """Set up the game level."""
 
         self.level = Level(self, level_number)
         self.level.build()
@@ -42,7 +42,7 @@ class Game(object):
             utility.save_object(self, 'level_start')
 
     def setup_player(self):
-        """Setup the player based on the game level"""
+        """Set up the player based on the game level"""
 
         map_config = level_config[self.level.number]['map']
         enter_coords = map_config['coord_enter']
@@ -53,7 +53,7 @@ class Game(object):
         self.player.last_action = None
 
     def setup(self, level_number):
-        """Setup game elements."""
+        """Set up game elements."""
 
         # create save folder, if needed
         if not os.path.isdir('.save'):
