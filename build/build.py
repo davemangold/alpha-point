@@ -9,6 +9,7 @@ from config import level_config
 class Construct(Game):
     """Customized derivative of Game class used as level builder."""
 
+    # TODO: do I need to init parent class?
     def __init__(self, level=1):
 
         self.debug = True

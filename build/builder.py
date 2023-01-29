@@ -1,4 +1,4 @@
-from character.player import Character
+from character import Character
 
 
 class Builder(Character):
