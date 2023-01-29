@@ -2,11 +2,11 @@ from game import Game
 from level import Level
 from build.buildio import Control
 from build.buildui import MainUI
-from character.player import Player
+from build.builder import Builder
 from config import level_config
 
 
-class Builder(Game):
+class Construct(Game):
     """Customized derivative of Game class used as level builder."""
 
     def __init__(self, level=1):
@@ -15,7 +15,7 @@ class Builder(Game):
         self.build = True
         self.control = Control(self)
         self.level = Level(self)
-        self.player = Player(self)
+        self.player = Builder(self)
         self.ui = MainUI(self)
         self.setup(level_number=level)
 

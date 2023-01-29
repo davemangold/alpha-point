@@ -24,16 +24,6 @@ class Character(object):
 
         return self.name
 
-    def __is_valid_move(self, cell):
-        """Returns True if moving to cell is valid in current map, otherwise False."""
-
-        valid_move = True
-
-        if cell is None or cell.is_blocked() or not cell.is_on_path():
-            valid_move = False
-
-        return valid_move
-
     def __on_move_update(self):
         """Update attributes that are location-dependent."""
 
@@ -56,11 +46,21 @@ class Character(object):
 
         return self.game.level.map.get_cell(*self.location)
 
+    def is_valid_move(self, cell):
+        """Returns True if moving to cell is valid in current map, otherwise False."""
+
+        valid_move = True
+
+        if cell is None or cell.is_blocked() or not cell.is_on_path():
+            valid_move = False
+
+        return valid_move
+
     def move_to(self, x, y):
         """Move character to cell at x, y if it's a valid move."""
 
         to_cell = self.game.level.map.get_cell(x, y)
-        valid_move = self.__is_valid_move(to_cell)
+        valid_move = self.is_valid_move(to_cell)
 
         if valid_move:
             self.x = x

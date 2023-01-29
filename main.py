@@ -1,7 +1,7 @@
 import argparse
 import utility
 from game import Game
-from build import Builder
+from build import Construct
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-d', '--debug', required=False, help='run the game in debug mode', action='store_true')
@@ -12,19 +12,16 @@ args = parser.parse_args()
 
 def main():
 
+    level = args.level[0] if args.level else 1
+
     if args.build:
 
-        level = args.level[0] if args.level else 1
-
-        with Builder(level=level) as builder:
-            builder.mainloop()
+        with Construct(level=level) as construct:
+            construct.mainloop()
 
     elif args.debug:
 
-        debug = args.debug
-        level = args.level[0] if args.level else 1
-
-        with Game(debug=debug, level=level) as game:
+        with Game(debug=args.debug, level=level) as game:
             game.mainloop()
 
     else:
