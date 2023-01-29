@@ -1,7 +1,7 @@
 import argparse
 import utility
 from game import Game
-from build import Game as Builder
+from build import Builder
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-d', '--debug', required=False, help='run the game in debug mode', action='store_true')

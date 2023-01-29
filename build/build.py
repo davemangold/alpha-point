@@ -1,3 +1,4 @@
+from game import Game
 from level import Level
 from build.buildio import Control
 from build.buildui import MainUI
@@ -5,8 +6,8 @@ from character.player import Player
 from config import level_config
 
 
-class Game(object):
-    """Customized Game class used as level builder."""
+class Builder(Game):
+    """Customized derivative of Game class used as level builder."""
 
     def __init__(self, level=1):
 
@@ -17,10 +18,6 @@ class Game(object):
         self.player = Player(self)
         self.ui = MainUI(self)
         self.setup(level_number=level)
-
-    def __enter__(self):
-
-        return self
 
     def __exit__(self, exc_type, exc_value, exc_traceback):
 
@@ -50,11 +47,6 @@ class Game(object):
         # setup level before player
         self.setup_level(level_number)
         self.setup_player()
-
-    def reset(self):
-        """Reset the game."""
-
-        self.__init__()
 
     def mainloop(self):
         """The main game loop."""
