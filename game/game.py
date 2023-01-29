@@ -16,6 +16,7 @@ class Game(object):
 
     def __init__(self, debug=False, level=1):
 
+        self.build = False
         self.debug = debug
         self.control = Control(self)
         self.level = Level(self)
