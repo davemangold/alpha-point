@@ -33,13 +33,8 @@ class Construct(Game):
     def setup_player(self):
         """Set up the player based on the game level"""
 
-        # TODO: refactor to place player at center regardless of map config and un-restrict movement
-        map_config = level_config[self.level.number]['map']
-        enter_coords = map_config['coord_enter']
-        enter_orientation = map_config['orientation_enter']
-
-        self.player.orientation = enter_orientation
-        self.player.move_to(*enter_coords)
+        self.player.orientation = 2
+        self.player.move_to(0, 0)
         self.player.last_action = None
 
     def setup(self, level_number):

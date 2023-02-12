@@ -12,3 +12,13 @@ class Builder(Character):
         """Override to allow movement anywhere in map."""
 
         return False if cell is None else True
+
+    def add_component(self):
+        pass
+
+    def add_item(self):
+        pass
+
+    def add_property(self):
+        pass
+

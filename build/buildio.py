@@ -38,8 +38,6 @@ class Control(object):
                        53: 5, 54: 6, 55: 7, 56: 8, 57: 9}
         self.ENTER = 13
         self.QUIT = 113
-        self.RESTART = 114
-        self.INVENTORY = 105
         self.UP = 72
         self.LEFT = 75
         self.RIGHT = 77
@@ -75,7 +73,7 @@ class Control(object):
             keycode = ord(getch())
 
             # enter, e, i, q, r
-            if keycode in (self.ENTER, self.INVENTORY, self.QUIT, self.RESTART):
+            if keycode in (self.ENTER, self.QUIT):
                 return keycode
             # digits (0-9)
             if keycode in self.DIGITS.keys():
