@@ -72,11 +72,10 @@ class Game(object):
     def mainloop(self):
         """The main game loop."""
 
-        while True:
+        if isinstance(self.ui, StartUI) and self.debug is True:
+            self.ui = MainUI(game=self)
 
-            if isinstance(self.ui, StartUI):
-                if self.debug is True:
-                    self.ui = MainUI(game=self)
+        while True:
 
             if isinstance(self.ui, MainUI):
                 if self.player.cell.has_story() and not self.player.cell.story_seen:
